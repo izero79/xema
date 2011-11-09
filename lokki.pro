@@ -36,7 +36,10 @@ SOURCES += main.cpp \
     bird.cpp \
     birdmodel.cpp \
     locationmodel.cpp \
-    personmodel.cpp
+    personmodel.cpp \
+    modeldataloader.cpp \
+    applicationcontroller.cpp \
+    qmlwindow.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -70,7 +73,20 @@ HEADERS += \
     bird.h \
     birdmodel.h \
     locationmodel.h \
-    personmodel.h
+    personmodel.h \
+    modeldataloader.h \
+    applicationcontroller.h \
+    qmlwindow.h
+
+RESOURCES += \
+    symbianresources.qrc
+
+
+
+
+
+
+
 
 
 

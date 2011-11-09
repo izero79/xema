@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/lokki/HistoryListDelegate.qml</file>
+        <file>qml/lokki/HistoryPage.qml</file>
+        <file>qml/lokki/ListDelegate.qml</file>
+        <file>qml/lokki/ListPage.qml</file>
+        <file>qml/lokki/main.qml</file>
+        <file>qml/lokki/MainPage.qml</file>
+        <file>qml/lokki/myjs.js</file>
+        <file>qml/lokki/ObservationDelegate.qml</file>
+        <file>qml/lokki/ObservationPage.qml</file>
+        <file>qml/lokki/SettingsPage.qml</file>
+    </qresource>
+</RCC>
