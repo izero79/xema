@@ -3,9 +3,16 @@
 
 #include "applicationcontroller.h"
 #include "qmlwindow.h"
+#include "birdmodel.h"
+#include "locationmodel.h"
+#include "personmodel.h"
+#include "modeldataloader.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    mBirdModel( 0 ),
+    mPersonModel( 0 ),
+    mLocationModel( 0 )
 {
     initGUI();
     QTimer::singleShot( 0, this, SLOT(initObjects()) );
@@ -27,7 +34,19 @@ void ApplicationController::initGUI()
 
 void ApplicationController::initObjects()
 {
-//    mQMLWin->init();
+    mQMLWin->init();
+
+    mBirdModel = new BirdModel(this);
+    ModelDataLoader::loadBirdData( mBirdModel );
+    mQMLWin->setBirdModel( mBirdModel );
+
+    mPersonModel = new PersonModel(this);
+    ModelDataLoader::loadPersonData( mPersonModel );
+    mQMLWin->setPersonModel( mPersonModel );
+
+    mLocationModel = new LocationModel(this);
+    ModelDataLoader::loadLocationData( mLocationModel );
+    mQMLWin->setLocationModel( mLocationModel );
 
 }
 

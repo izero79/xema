@@ -10,5 +10,8 @@
         <file>qml/lokki/ObservationDelegate.qml</file>
         <file>qml/lokki/ObservationPage.qml</file>
         <file>qml/lokki/SettingsPage.qml</file>
+        <file>qml/lokki/BirdListDelegate.qml</file>
+        <file>qml/s3icons/back.svg</file>
+        <file>qml/lokki/LocationListDelegate.qml</file>
     </qresource>
 </RCC>

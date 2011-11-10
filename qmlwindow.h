@@ -2,6 +2,12 @@
 #define QMLWINDOW_H
 
 #include <QDeclarativeView>
+#include <QMainWindow>
+
+class FilterModel;
+class BirdModel;
+class PersonModel;
+class LocationModel;
 
 #ifdef Q_OS_SYMBIAN
 class QMLWindow : public QMainWindow
@@ -22,6 +28,10 @@ signals:
 
 public slots:
     void orientationChanged();
+    void init();
+    void setBirdModel( BirdModel *model );
+    void setPersonModel( PersonModel *model );
+    void setLocationModel( LocationModel *model );
 
 private:
 #ifdef Q_OS_SYMBIAN
@@ -29,7 +39,9 @@ private:
 #endif
     QDeclarativeContext *mRootContext;
     QObject *mRootObject;
-
+    FilterModel *mFilteredPersonModel;
+    FilterModel *mFilteredBirdModel;
+    FilterModel *mFilteredLocationModel;
 };
 
 #endif // QMLWINDOW_H

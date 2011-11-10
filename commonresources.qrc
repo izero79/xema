@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>lajilista.csv</file>
+    </qresource>
+</RCC>

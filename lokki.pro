@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     personmodel.cpp \
     modeldataloader.cpp \
     applicationcontroller.cpp \
-    qmlwindow.cpp
+    qmlwindow.cpp \
+    filtermodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -61,7 +62,7 @@ symbian3 = \
 
 qtquickcomponents = \
 "; Qt Quick components" \
-"(0x200346DE),1,0,0,{\"Qt Quick components\"}"
+"(0x200346DE),1,1,0,{\"Qt Quick components\"}"
 
 my_deployment.pkg_prerules += symbian3
 my_deployment.pkg_prerules += qtquickcomponents
@@ -76,10 +77,15 @@ HEADERS += \
     personmodel.h \
     modeldataloader.h \
     applicationcontroller.h \
-    qmlwindow.h
+    qmlwindow.h \
+    filtermodel.h
 
 RESOURCES += \
-    symbianresources.qrc
+    symbianresources.qrc \
+    commonresources.qrc
+
+
+
 
 
 

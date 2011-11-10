@@ -9,14 +9,23 @@
 #include <QDebug>
 
 #include "qmlwindow.h"
+#include "filtermodel.h"
+#include "birdmodel.h"
+#include "locationmodel.h"
+#include "personmodel.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #ifdef Q_OS_SYMBIAN
     QMainWindow(parent),
-    mView(0)
+    mView(0),
     #else
-    QDeclarativeView(parent)
+    QDeclarativeView(parent),
     #endif
+    mRootContext( 0 ),
+    mRootObject( 0 ),
+    mFilteredPersonModel( 0 ),
+    mFilteredBirdModel( 0 ),
+    mFilteredLocationModel( 0 )
 {
 #ifdef Q_OS_SYMBIAN
     mView = new QDeclarativeView(this);
@@ -98,4 +107,31 @@ void QMLWindow::orientationChanged()
     height.setNum( rect().height() );
     mRootContext->setContextProperty( "mainWidth", width );
     mRootContext->setContextProperty( "mainHeight", height );
+}
+
+void QMLWindow::init()
+{
+    mFilteredBirdModel = new FilterModel(this);
+    mFilteredPersonModel = new FilterModel(this);
+    mFilteredLocationModel = new FilterModel(this);
+
+    mRootContext->setContextProperty( "birdModel", mFilteredBirdModel );
+    mRootContext->setContextProperty( "personModel", mFilteredPersonModel );
+    mRootContext->setContextProperty( "locationModel", mFilteredLocationModel );
+
+}
+
+void QMLWindow::setBirdModel( BirdModel *model )
+{
+    mFilteredBirdModel->setSourceModel( model );
+}
+
+void QMLWindow::setPersonModel(PersonModel *model)
+{
+    mFilteredPersonModel->setSourceModel( model );
+}
+
+void QMLWindow::setLocationModel(LocationModel *model)
+{
+    mFilteredLocationModel->setSourceModel( model );
 }

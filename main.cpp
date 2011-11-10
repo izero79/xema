@@ -2,6 +2,7 @@
 #include "qmlapplicationviewer.h"
 #include <QDebug>
 #include "applicationcontroller.h"
+#include <QLabel>
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {/*

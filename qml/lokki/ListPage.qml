@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 
 
 Page {
@@ -114,30 +114,55 @@ Page {
         model: {
             if( listPageType == "birds" )
             {
-                return testModelBirds
+                return birdModel
             }
             else if( listPageType == "places" )
             {
-                return testModelPlaces
+                return locationModel
             }
             else if( listPageType == "regpeople" )
             {
-                return testModelNames
+                return personModel
             }
             else
             {
-                return testModelNames2
+                return personModel
             }
         }
         anchors.top: item1.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        delegate: myTestDelegate
+        delegate: {
+            if( listPageType == "birds" )
+            {
+                return birdDelegate
+            }
+            else if( listPageType == "places" )
+            {
+                return locationDelegate
+            }
+            else if( listPageType == "regpeople" )
+            {
+                return myTestDelegate
+            }
+            else
+            {
+                return myTestDelegate
+            }
+        }
         clip: true
     }
     ListDelegate {
         id: myTestDelegate
+
+    }
+    BirdListDelegate {
+        id: birdDelegate
+
+    }
+    LocationListDelegate {
+        id: locationDelegate
 
     }
 }

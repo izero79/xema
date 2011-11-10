@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import com.nokia.symbian 1.0
+import com.nokia.symbian 1.1
 import "myjs.js" as MyScript
 
 Window {
@@ -65,7 +65,7 @@ Window {
             id: toolBarLayout
             ToolButton {
                 flat: true
-                iconSource: "toolbar-back"
+                iconSource: "/qml/s3icons/back.svg"
                 onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
             }
             ToolButton {

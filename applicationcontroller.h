@@ -4,6 +4,9 @@
 #include <QObject>
 
 class QMLWindow;
+class BirdModel;
+class PersonModel;
+class LocationModel;
 
 class ApplicationController : public QObject
 {
@@ -27,7 +30,9 @@ public slots:
 
 private:
     QMLWindow *mQMLWin;
-
+    BirdModel *mBirdModel;
+    PersonModel *mPersonModel;
+    LocationModel *mLocationModel;
 };
 
 #endif // APPLICATIONCONTROLLER_H

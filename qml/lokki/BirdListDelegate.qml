@@ -8,31 +8,20 @@ Component {
         height: 60
         Text {
             id: delegateTitle
-            anchors.right: delegateAdd.left
+            anchors.right: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: name
-            color: "white"
-        }
-        Text {
-            id: delegateAdd
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            verticalAlignment: Text.AlignVCenter
-            width: 60
-            text: "+"
-            font.pixelSize: 40
+            text: finname + ", " + latinname
             color: "white"
         }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + name)
-                listPage.clicked( name )
+                console.log("click: " + finname)
+                listPage.clicked( finname )
 
             }
         }
