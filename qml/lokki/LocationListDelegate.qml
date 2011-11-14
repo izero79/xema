@@ -20,8 +20,8 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + finname)
-                listPage.clicked( finname )
+                console.log("click: " + town)
+                listPage.clicked( town + ", " + place )
 
             }
         }

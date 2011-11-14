@@ -3,6 +3,8 @@ folder_01.source = qml/lokki
 folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
 
+symbian:DEFINES +=DEBUGONLYTOFILE
+
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
@@ -40,7 +42,10 @@ SOURCES += main.cpp \
     modeldataloader.cpp \
     applicationcontroller.cpp \
     qmlwindow.cpp \
-    filtermodel.cpp
+    filtermodel.cpp \
+    status.cpp \
+    statusmodel.cpp \
+    modeldatawriter.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -78,11 +83,23 @@ HEADERS += \
     modeldataloader.h \
     applicationcontroller.h \
     qmlwindow.h \
-    filtermodel.h
+    filtermodel.h \
+    status.h \
+    statusmodel.h \
+    dummydebugprinter.h \
+    debugprinter.h \
+    modeldatawriter.h
 
 RESOURCES += \
     symbianresources.qrc \
     commonresources.qrc
+
+
+
+
+
+
+
 
 
 

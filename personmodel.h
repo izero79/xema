@@ -13,8 +13,12 @@ public:
 
     enum Roles
     {
-        NameRole = Qt::UserRole + 1,
-        RegisteredRole
+        FilterRole = Qt::UserRole + 1,
+        IndexRole,
+        NameRole,
+        RegisteredRole,
+        DefaultRole,
+        SelectedRole = Qt::EditRole
     };
 
 signals:
@@ -27,6 +31,7 @@ public slots:
     Q_INVOKABLE     bool removeRow ( int row, const QModelIndex & parent = QModelIndex() );
     Q_INVOKABLE     bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
     Q_INVOKABLE     Person getItem( int index );
+    Q_INVOKABLE     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 
                     void setContent( const QList<Person> &newItems );
                     QList<Person> content() const;

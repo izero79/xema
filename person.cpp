@@ -3,14 +3,18 @@
 Person::Person() :
     mFirstName(),
     mSurName(),
-    mRegistered( false )
+    mRegistered( false ),
+    mDefault( false ),
+    mSelected( false )
 {
 }
 
-Person::Person( const QString &firstName, const QString &surName, bool registered ) :
+Person::Person( const QString &firstName, const QString &surName, bool registered, bool defaultName ) :
     mFirstName( firstName),
     mSurName( surName),
-    mRegistered( registered )
+    mRegistered( registered ),
+    mDefault( defaultName ),
+    mSelected( false )
 {
 
 }
@@ -31,6 +35,15 @@ void Person::setRegistered( bool registered )
     mRegistered = registered;
 }
 
+void Person::setDefault( bool defaultName )
+{
+    mDefault = defaultName;
+}
+
+void Person::setSelected( bool selected )
+{
+    mSelected = selected;
+}
 
 QString Person::firstName() const
 {
@@ -52,3 +65,12 @@ bool Person::registered() const
     return mRegistered;
 }
 
+bool Person::defaultName() const
+{
+    return mDefault;
+}
+
+bool Person::selected() const
+{
+    return mSelected;
+}

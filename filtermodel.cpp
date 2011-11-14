@@ -18,7 +18,27 @@ int FilterModel::rowCount()
 
 void FilterModel::setSorting( int type, bool ascending )
 {
+    qDebug() << "SORT type" << type;
     Q_UNUSED( type )
+    if( type == 0 )
+    {
+        setSortRole(Qt::UserRole + 2);
+
+        sort( 0, Qt::AscendingOrder );
+        qDebug() << "SORTattu + 2";
+
+        return;
+    }
+    else if( type == 1 )
+    {
+        setSortRole(Qt::UserRole + 3);
+
+        sort( 0, Qt::AscendingOrder );
+        qDebug() << "SORTattu + 3";
+        return;
+    }
+    qDebug() << "EI TANNE";
+
     if( ascending )
     {
         sort( 0, Qt::AscendingOrder );
@@ -102,8 +122,22 @@ void FilterModel::sectionAlphas()
 
 void FilterModel::filter( const QString &str )
 {
-//    setFilterRole(MediaPieceModel::TitleRole);
+    setFilterRole(Qt::UserRole + 1);
     QString filter = str;
     QRegExp exp( filter, Qt::CaseInsensitive, QRegExp::RegExp );
     setFilterRegExp(exp);
+}
+
+bool FilterModel::setData( int index, const QVariant &data, int role )
+{
+    QModelIndex idx = sourceModel()->index( index, 0 );
+
+    return sourceModel()->setData( idx, data, Qt::EditRole );
+}
+
+QVariant FilterModel::data( int index, int role )
+{
+    QModelIndex idx = sourceModel()->index( index, 0 );
+
+    return sourceModel()->data( idx, role );
 }

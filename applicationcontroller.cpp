@@ -7,12 +7,14 @@
 #include "locationmodel.h"
 #include "personmodel.h"
 #include "modeldataloader.h"
+#include "statusmodel.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
     mBirdModel( 0 ),
     mPersonModel( 0 ),
-    mLocationModel( 0 )
+    mLocationModel( 0 ),
+    mStatusModel( 0 )
 {
     initGUI();
     QTimer::singleShot( 0, this, SLOT(initObjects()) );
@@ -47,6 +49,10 @@ void ApplicationController::initObjects()
     mLocationModel = new LocationModel(this);
     ModelDataLoader::loadLocationData( mLocationModel );
     mQMLWin->setLocationModel( mLocationModel );
+
+    mStatusModel = new StatusModel(this);
+    ModelDataLoader::loadStatusData( mStatusModel );
+    mQMLWin->setStatusModel( mStatusModel );
 
 }
 

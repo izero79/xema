@@ -3,6 +3,31 @@ import com.nokia.symbian 1.1
 
 Item {
     id: item1
+
+    function setStatus( joo )
+    {
+        statusTf.text = joo
+    }
+
+    function delegateData()
+    {
+        var allData = "";
+        var delimiter = "#";
+        allData += countTf.text + delimiter
+        allData += startTimeTf.text + delimiter
+        allData += endTimeTf.text + delimiter
+        allData += sexTf.text + delimiter
+        allData += dressTf.text + delimiter
+        allData += ageTf.text + delimiter
+        allData += statusTf.text + delimiter
+        allData += moreInfoTa.text + delimiter
+        allData += loftTf.text + delimiter
+        allData += watchChkBox.checked + delimiter
+        allData += nestChkBox.checked
+        console.log( "delegate allData: " + allData)
+        return allData;
+    }
+
     anchors.right: parent.right
     anchors.rightMargin: 0
     anchors.left: parent.left
@@ -10,7 +35,7 @@ Item {
     height: 200
     width: parent.width
     TextField {
-        id: textfield1
+        id: countTf
         height: 50
         text: "lukum"
         anchors.top: parent.top
@@ -18,59 +43,78 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: 75
-
     }
     TextField {
-        id: textfield2
+        id: sexTf
         height: 50
         text: "sukup"
         anchors.top: parent.top
         anchors.topMargin: 0
-        anchors.left: textfield1.right
+        anchors.left: countTf.right
         anchors.leftMargin: 0
         width: 75
-
+        visible: detailLevel > 1
+        MouseArea {
+            id: sexTfmouse
+            anchors.fill: parent
+            onClicked: window.showListPage( "sex", sexTf.text, sexTf );
+        }
     }
     TextField {
-        id: textfield3
+        id: ageTf
         height: 50
         text: "ikä"
         anchors.top: parent.top
         anchors.topMargin: 0
-        anchors.left: textfield2.right
+        anchors.left: sexTf.right
         anchors.leftMargin: 0
         width: 75
-        visible: detailLevel > 2
+        visible: detailLevel > 1
+        MouseArea {
+            id: ageTfmouse
+            anchors.fill: parent
+            onClicked: window.showListPage( "age", ageTf.text, ageTf );
+        }
     }
     TextField {
-        id: textfield4
+        id: dressTf
         height: 50
         text: "puku"
         anchors.top: parent.top
         anchors.topMargin: 0
-        anchors.left: textfield3.right
+        anchors.left: ageTf.right
         anchors.leftMargin: 0
         width: 75
-        visible: detailLevel > 2
+        visible: detailLevel > 1
+        MouseArea {
+            id: dressTfmouse
+            anchors.fill: parent
+            onClicked: window.showListPage( "dress", dressTf.text, dressTf );
+        }
     }
     TextField {
-        id: textfield5
+        id: statusTf
         height: 50
         text: "tila"
-        anchors.top: textfield1.bottom
+        anchors.top: countTf.bottom
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: 150
+        MouseArea {
+            id: tf5mouse
+            anchors.fill: parent
+            onClicked: window.showListPage( "status", statusTf.text, statusTf );
+        }
     }
     TextField {
-        id: textfield6
+        id: startTimeTf
         width: 50
         height: 50
         text: "klo"
-        anchors.left: textfield5.right
+        anchors.left: statusTf.right
         anchors.leftMargin: 0
-        y: textfield5.y
+        y: statusTf.y
         visible: detailLevel > 2
     }
 
@@ -79,61 +123,61 @@ Item {
         height: 50
         color: "#ffffff"
         text: qsTr("-")
-        anchors.left: textfield6.right
+        anchors.left: startTimeTf.right
         anchors.leftMargin: 0
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 18
-        y: textfield5.y
+        y: statusTf.y
         width: 20
         visible: detailLevel > 2
     }
 
     TextField {
-        id: textfield7
+        id: endTimeTf
         width: 50
         height: 50
         text: "klo"
         anchors.left: text1.right
         anchors.leftMargin: 0
-        y: textfield5.y
+        y: statusTf.y
         visible: detailLevel > 2
     }
     TextField {
-        id: textfield8
+        id: loftTf
         height: 50
         text: "parvi"
-        anchors.left: textfield7.right
+        anchors.left: endTimeTf.right
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        y: textfield5.y
+        y: statusTf.y
         visible: detailLevel > 2
     }
     CheckBox {
-        id: checkBox1
-        anchors.top: textfield5.bottom
+        id: watchChkBox
+        anchors.top: statusTf.bottom
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: parent.width / 2
         text: qsTr( "Bongaus")
-        visible: detailLevel > 1
+        visible: detailLevel > 2
     }
 
     CheckBox {
-        id: checkBox2
-        anchors.left: checkBox1.right
+        id: nestChkBox
+        anchors.left: watchChkBox.right
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
         text: qsTr( "Pesintä")
-        y: checkBox1.y
-        visible: detailLevel > 1
+        y: watchChkBox.y
+        visible: detailLevel > 2
     }
     TextArea {
-        id: textarea1
-        anchors.top: checkBox1.bottom
+        id: moreInfoTa
+        anchors.top: watchChkBox.bottom
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -141,6 +185,7 @@ Item {
         anchors.rightMargin: 0
         text: qsTr( "Lisätietoja")
         height: 50
+        visible: detailLevel > 2
     }
 
 }

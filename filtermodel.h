@@ -17,7 +17,8 @@ public slots:
     Q_INVOKABLE void setSorting( int type, bool ascending );
     Q_INVOKABLE void sectionAlphas();
     Q_INVOKABLE void filter( const QString &str );
-
+    Q_INVOKABLE bool setData( int index, const QVariant &data, int role );
+    Q_INVOKABLE QVariant data( int index, int role );
 
 private:
 };

@@ -4,12 +4,13 @@ import "myjs.js" as MyScript
 
 Item {
 
-    property int detailLevel: 1
+    property int detailLevel: window.currentDetailLevel
 
     height: parent.height
     width: parent.width
 
     Component.onCompleted: {
+        window.currentDetailLevel = window.defaultDetailLevel
         MyScript.createObjects();
     }
 
@@ -34,6 +35,39 @@ Item {
     {
         otherPeopleTa.text = name
     }
+
+    function readAllData()
+    {
+        var allData = "";
+        var delimiter = "#";
+        allData += birdNameTf.text + delimiter
+        allData += startDateTf.text + delimiter
+        allData += stopDateTf.text + delimiter
+        allData += startTimeTf.text + delimiter
+        allData += endTimeTf.text + delimiter
+        allData += locationTf.text + delimiter
+        allData += moreInfoTa.text + delimiter
+        allData += atlasTa.text + delimiter
+        allData += regPeopleTa.text + delimiter
+        allData += otherPeopleTa.text + delimiter
+        allData += hideChkBox.checked + delimiter
+
+        allData += MyScript.readDelegateDatas()
+
+        allData += weatherTa.text
+
+
+
+
+
+
+
+        console.log( "allData: " + allData)
+        return allData;
+    }
+
+
+
 
     Dialog {
         id: listDialog
@@ -148,8 +182,6 @@ Item {
                         }
                     }
 
-
-
                     /*
                     TextField {
                         id: textfield2
@@ -175,6 +207,8 @@ Item {
                     anchors.top: item1.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
+                    visible: detailLevel > 1
+
                 }
 
                 Item {
@@ -186,6 +220,8 @@ Item {
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    visible: detailLevel > 1
+
 
                     TextField {
                         id: startTimeTf
@@ -265,7 +301,7 @@ Item {
                     anchors.leftMargin: 0
 
                     TextField {
-                        id: textfield3
+                        id: startDateTf
                         width: 160
                         height: 50
                         text: "alkupäivä"
@@ -276,7 +312,7 @@ Item {
                     }
 
                     TextField {
-                        id: textfield4
+                        id: stopDateTf
                         width: 160
                         height: 50
                         text: "loppupäivä"
@@ -284,6 +320,8 @@ Item {
                         anchors.rightMargin: 0
                         anchors.top: parent.top
                         anchors.topMargin: 0
+                        visible: detailLevel > 2
+
                     }
 
                     Text {
@@ -291,81 +329,19 @@ Item {
                         height: 50
                         color: "#ffffff"
                         text: qsTr("-")
-                        anchors.right: textfield4.left
+                        anchors.right: stopDateTf.left
                         anchors.rightMargin: 0
-                        anchors.left: textfield3.right
+                        anchors.left: startDateTf.right
                         anchors.leftMargin: 0
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         font.pixelSize: 18
+                        visible: detailLevel > 2
+
                     }
                 }
-/*
-                Text {
-                    id: text4
-                    color: "#ffffff"
-                    text: qsTr("Havainnointiaika")
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.top: item2.bottom
-                    anchors.topMargin: 8
-                    font.pixelSize: 18
-                }
-
-                Item {
-                    id: item3
-                    height: 50
-                    anchors.top: text4.bottom
-                    anchors.topMargin: 8
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    TextField {
-                        id: textfield5
-                        width: 160
-                        height: 50
-                        text: "alkuaika"
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                    }
-
-                    TextField {
-                        id: textfield6
-                        width: 160
-                        height: 50
-                        text: "loppuaika"
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                    }
-
-                    Text {
-                        id: text5
-                        height: 50
-                        color: "#ffffff"
-                        text: qsTr("-")
-                        anchors.right: textfield6.left
-                        anchors.rightMargin: 0
-                        anchors.left: textfield5.right
-                        anchors.leftMargin: 0
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        font.pixelSize: 18
-                    }
-                }
-                */
                 Text {
                     id: text6
                     color: "#ffffff"
@@ -403,7 +379,7 @@ Item {
                         MouseArea {
                             id: ta1mouse
                             anchors.fill: parent
-                            onClicked: window.showListPage( "regpeople" );
+                            onClicked: window.showListPage( "regpeople", regPeopleTa.text );
                         }
 
                     }
@@ -418,10 +394,12 @@ Item {
                         anchors.topMargin: 8
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        visible: detailLevel > 2
+
                         MouseArea {
                             id: ta2mouse
                             anchors.fill: parent
-                            onClicked: window.showListPage( "people" );
+                            onClicked: window.showListPage( "people", otherPeopleTa.text );
                         }
 
                     }
@@ -438,6 +416,8 @@ Item {
                     anchors.top: item4.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
+                    visible: detailLevel > 1
+
                 }
 
                 Item {
@@ -449,6 +429,8 @@ Item {
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    visible: detailLevel > 1
+
 
                     TextArea {
                         id: weatherTa
@@ -520,7 +502,7 @@ Item {
 
                     }
                     CheckBox {
-                        id: radiobutton1
+                        id: hideChkBox
                         anchors.top: birdNameTf.bottom
                         anchors.topMargin: 0
                         anchors.right: parent.right
@@ -593,6 +575,8 @@ Item {
                     anchors.top: item6.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
+                    visible: detailLevel > 2
+
                 }
                 Item {
                     id: item8
@@ -603,9 +587,11 @@ Item {
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    visible: detailLevel > 2
+
 
                     TextArea {
-                        id: textarea3
+                        id: moreInfoTa
                         height: 150
                         text: "Lisätietoja"
                         anchors.top: parent.top
@@ -614,13 +600,15 @@ Item {
                         anchors.rightMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        visible: detailLevel > 2
+
                     }
 
                     TextArea {
-                        id: textfield8
+                        id: atlasTa
                         height: 50
                         text: "Atlas"
-                        anchors.top: textarea3.bottom
+                        anchors.top: moreInfoTa.bottom
                         anchors.topMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0

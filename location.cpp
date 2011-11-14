@@ -8,11 +8,11 @@ Location::Location() :
 {
 }
 
-Location::Location( const QString &town, const QString &place ) :
+Location::Location( const QString &town, const QString &place, const QString &wgsCoordinate, const QString &ykjCoordinate ) :
     mTown( town ),
     mPlace( place ),
-    mYKJCoordinate(),
-    mWGSCoordinate()
+    mYKJCoordinate(ykjCoordinate),
+    mWGSCoordinate(wgsCoordinate)
 {
 
 }

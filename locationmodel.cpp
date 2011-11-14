@@ -3,6 +3,7 @@
 LocationModel::LocationModel(QObject *parent) :
     QAbstractListModel(parent)
 {
+    roles[FilterRole] = "filter";
     roles[TownRole] = "town";
     roles[PlaceRole] = "place";
     roles[CoordinateRole] = "coordinate";
@@ -31,7 +32,12 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
 
     Location item = items[index.row()];
 
-    if( role == TownRole )
+    if( role == FilterRole )
+    {
+        return QString( item.town() + ", " +
+                        item.place() + ", " );
+    }
+    else if( role == TownRole )
     {
         return item.town();
     }

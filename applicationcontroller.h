@@ -7,6 +7,7 @@ class QMLWindow;
 class BirdModel;
 class PersonModel;
 class LocationModel;
+class StatusModel;
 
 class ApplicationController : public QObject
 {
@@ -33,6 +34,7 @@ private:
     BirdModel *mBirdModel;
     PersonModel *mPersonModel;
     LocationModel *mLocationModel;
+    StatusModel *mStatusModel;
 };
 
 #endif // APPLICATIONCONTROLLER_H

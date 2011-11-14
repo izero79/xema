@@ -13,7 +13,8 @@ public:
 
     enum Roles
     {
-        TownRole = Qt::UserRole + 1,
+        FilterRole = Qt::UserRole + 1,
+        TownRole,
         PlaceRole,
         CoordinateRole
     };

@@ -13,5 +13,7 @@
         <file>qml/lokki/BirdListDelegate.qml</file>
         <file>qml/s3icons/back.svg</file>
         <file>qml/lokki/LocationListDelegate.qml</file>
+        <file>qml/lokki/StatusListDelegate.qml</file>
+        <file>qml/lokki/SimpleDelegate.qml</file>
     </qresource>
 </RCC>

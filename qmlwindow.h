@@ -8,6 +8,7 @@ class FilterModel;
 class BirdModel;
 class PersonModel;
 class LocationModel;
+class StatusModel;
 
 #ifdef Q_OS_SYMBIAN
 class QMLWindow : public QMainWindow
@@ -32,6 +33,10 @@ public slots:
     void setBirdModel( BirdModel *model );
     void setPersonModel( PersonModel *model );
     void setLocationModel( LocationModel *model );
+    void setStatusModel( StatusModel *model );
+
+private slots:
+    void writeNewObservation( const QString &data );
 
 private:
 #ifdef Q_OS_SYMBIAN
@@ -42,6 +47,7 @@ private:
     FilterModel *mFilteredPersonModel;
     FilterModel *mFilteredBirdModel;
     FilterModel *mFilteredLocationModel;
+    FilterModel *mFilteredStatusModel;
 };
 
 #endif // QMLWINDOW_H

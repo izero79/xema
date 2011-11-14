@@ -1,6 +1,6 @@
 import QtQuick 1.0
 import com.nokia.symbian 1.1
-import Qt.labs.components 1.0
+import Qt.labs.components 1.1
 
 
 Page {
@@ -25,6 +25,11 @@ Page {
         id: systematicSort
         anchors.left: parent.left
         anchors.leftMargin: 0
+        checked: window.useSystematicSort
+        onCheckedChanged: {
+            console.log( "newstate: " + checked )
+            window.useSystematicSort = checked
+        }
 
     }
 
@@ -53,17 +58,67 @@ Page {
             id: button1
             text: "Minimi"
             platformExclusiveGroup: group
+            checked: window.defaultDetailLevel == 1
+            property bool wasPressed: false
+            onPressedChanged: {
+                if( pressed == true )
+                {
+                    wasPressed = true
+                }
+            }
+
+            onCheckedChanged: {
+                if( checked == true && wasPressed == true )
+                {
+                    wasPressed = false
+                    window.defaultDetailLevel = 1
+                    console.log("newlevel 1: " + window.defaultDetailLevel )
+                }
+            }
         }
         RadioButton {
             id: button2
             text: "Laajennettu"
             platformExclusiveGroup: group
+            checked: window.defaultDetailLevel == 2
+            property bool wasPressed: false
+            onPressedChanged: {
+                if( pressed == true )
+                {
+                    wasPressed = true
+                }
+            }
+
+            onCheckedChanged: {
+                if( checked == true && wasPressed == true )
+                {
+                    wasPressed = false
+                    window.defaultDetailLevel = 2
+                    console.log("newlevel 2: " + window.defaultDetailLevel )
+                }
+            }
         }
         RadioButton {
             id: button3
             text: "Kaikki"
             platformExclusiveGroup: group
-            checked: true
+            checked: window.defaultDetailLevel == 3
+            property bool wasPressed: false
+            onPressedChanged: {
+                if( pressed == true )
+                {
+                    wasPressed = true
+                }
+            }
+
+            onCheckedChanged: {
+                if( checked == true && wasPressed == true )
+                {
+                    wasPressed = false
+                    window.defaultDetailLevel = 3
+                    console.log("newlevel 3: " + window.defaultDetailLevel )
+                }
+            }
         }
     }
 }

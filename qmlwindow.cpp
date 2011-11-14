@@ -13,6 +13,8 @@
 #include "birdmodel.h"
 #include "locationmodel.h"
 #include "personmodel.h"
+#include "statusmodel.h"
+#include "modeldatawriter.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #ifdef Q_OS_SYMBIAN
@@ -25,7 +27,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mRootObject( 0 ),
     mFilteredPersonModel( 0 ),
     mFilteredBirdModel( 0 ),
-    mFilteredLocationModel( 0 )
+    mFilteredLocationModel( 0 ),
+    mFilteredStatusModel( 0 )
 {
 #ifdef Q_OS_SYMBIAN
     mView = new QDeclarativeView(this);
@@ -114,11 +117,14 @@ void QMLWindow::init()
     mFilteredBirdModel = new FilterModel(this);
     mFilteredPersonModel = new FilterModel(this);
     mFilteredLocationModel = new FilterModel(this);
+    mFilteredStatusModel = new FilterModel(this);
 
     mRootContext->setContextProperty( "birdModel", mFilteredBirdModel );
     mRootContext->setContextProperty( "personModel", mFilteredPersonModel );
     mRootContext->setContextProperty( "locationModel", mFilteredLocationModel );
+    mRootContext->setContextProperty( "statusModel", mFilteredStatusModel );
 
+    connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
 }
 
 void QMLWindow::setBirdModel( BirdModel *model )
@@ -134,4 +140,14 @@ void QMLWindow::setPersonModel(PersonModel *model)
 void QMLWindow::setLocationModel(LocationModel *model)
 {
     mFilteredLocationModel->setSourceModel( model );
+}
+
+void QMLWindow::setStatusModel(StatusModel *model)
+{
+    mFilteredStatusModel->setSourceModel( model );
+}
+
+void QMLWindow::writeNewObservation( const QString &data )
+{
+    ModelDataWriter::writeNewObservation( data );
 }

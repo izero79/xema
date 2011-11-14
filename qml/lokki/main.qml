@@ -6,15 +6,21 @@ Window {
     id: window
 
     property string listPageType: ""
+    property bool useSystematicSort: false
+    property int defaultDetailLevel: 1
+    property int currentDetailLevel: 1
+
+    signal writeNew( string data )
 
     function showHistoryPage( type )
     {
         MyScript.showHistoryPage( type )
     }
 
-    function showListPage( type )
+    function showListPage( type, selectedItems, itemi )
     {
-        MyScript.showListPage( type )
+        console.log("showlistpage by: " + itemi)
+        MyScript.showListPage( type, selectedItems, itemi )
     }
 
     function showSettingsPage()
@@ -42,6 +48,21 @@ Window {
         MyScript.obsObject.peopleChanged( name )
     }
 
+    function sexChanged( name )
+    {
+        MyScript.fillCurrentBox( name )
+    }
+
+    function dressChanged( name )
+    {
+        MyScript.fillCurrentBox( name )
+    }
+
+    function ageChanged( name )
+    {
+        MyScript.fillCurrentBox( name )
+    }
+
     function showObsPage()
     {
         MyScript.showObsPage()
@@ -66,22 +87,49 @@ Window {
             ToolButton {
                 flat: true
                 iconSource: "/qml/s3icons/back.svg"
-                onClicked: pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
+                onClicked: {
+                    if( pageStack.currentPage == MyScript.obsObject )
+                    {
+                        console.log( "tee obs jutut")
+                        MyScript.readAllData()
+                    }
+                    else if( pageStack.currentPage == MyScript.listObject )
+                    {
+                        console.log( "tee list jutut")
+                        if( listPageType == "regpeople" )
+                        {
+                            MyScript.fillRegPersonBox()
+                        }
+                        else if( listPageType == "people" )
+                        {
+                            MyScript.fillNonRegPersonBox()
+                        }
+                        else if( listPageType == "status" )
+                        {
+                            MyScript.fillStatusBox()
+                        }
+                        else if( listPageType == "sex" )
+                        {
+                            MyScript.fillSexBox()
+                        }
+                    }
+
+
+                    pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
+                }
             }
             ToolButton {
-                property int detailNo: 1
-                text: detailNo
+                text: window.currentDetailLevel
                 visible: pageStack.currentPage == MyScript.obsObject
                 onClicked: {
-                    if( detailNo < 3 )
+                    if( window.currentDetailLevel < 3 )
                     {
-                        detailNo++
+                        window.currentDetailLevel++
                     }
                     else
                     {
-                        detailNo = 1
+                        window.currentDetailLevel = 1
                     }
-                    MyScript.obsObject.detailLevel = detailNo
                 }
             }
         }

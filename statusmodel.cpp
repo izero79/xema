@@ -1,44 +1,43 @@
 #include <QDebug>
 
-#include "personmodel.h"
+#include "statusmodel.h"
 
-PersonModel::PersonModel(QObject *parent) :
+StatusModel::StatusModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     roles[FilterRole] = "filter";
     roles[IndexRole] = "realindex";
     roles[NameRole] = "name";
-    roles[RegisteredRole] = "registered";
-    roles[DefaultRole] = "default";
+    roles[AbbrevRole] = "abbrev";
     roles[SelectedRole] = "selected";
     setRoleNames(roles);
 }
 
-int PersonModel::rowCount(const QModelIndex &parent) const
+int StatusModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED( parent )
     return items.count();
 }
 
-void PersonModel::clear()
+void StatusModel::clear()
 {
     QAbstractItemModel::beginRemoveRows( QModelIndex(), 0, items.count() );
     items.clear();
     QAbstractItemModel::endRemoveRows();
 }
 
-QVariant PersonModel::data(const QModelIndex &index, int role) const
+QVariant StatusModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() > items.count())
     {
         return QVariant();
     }
 
-    Person item = items[index.row()];
+    Status item = items[index.row()];
 
     if( role == FilterRole )
     {
-        return item.name();
+        return QString( item.name() + ", " + item.abbreviation() );
     }
     else if( role == IndexRole )
     {
@@ -48,13 +47,9 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
     {
         return item.name();
     }
-    else if( role == RegisteredRole )
+    else if( role == AbbrevRole )
     {
-        return item.registered();
-    }
-    else if( role == DefaultRole )
-    {
-        return item.defaultName();
+        return item.abbreviation();
     }
     else if( role == SelectedRole )
     {
@@ -63,7 +58,7 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool PersonModel::removeRow ( int row, const QModelIndex & parent)
+bool StatusModel::removeRow ( int row, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
     if ( row < 0 || row >= items.count() )
@@ -76,7 +71,7 @@ bool PersonModel::removeRow ( int row, const QModelIndex & parent)
     return true;
 }
 
-bool PersonModel::removeRows ( int row, int count, const QModelIndex & parent)
+bool StatusModel::removeRows ( int row, int count, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
     if ( row < 0 || row >= items.count() || count + row > items.count() )
@@ -93,7 +88,7 @@ bool PersonModel::removeRows ( int row, int count, const QModelIndex & parent)
 }
 
 
-void PersonModel::addItem(const Person &item)
+void StatusModel::addItem(const Status &item)
 {
     int index = items.size();
     QAbstractItemModel::beginInsertRows( QModelIndex(), index, index);
@@ -101,21 +96,21 @@ void PersonModel::addItem(const Person &item)
     QAbstractItemModel::endInsertRows();
 }
 
-Person PersonModel::getItem( int row )
+Status StatusModel::getItem( int row )
 {
     if( row < 0 || row >= items.count() )
     {
-        return Person();
+        return Status();
     }
     return items.at( row );
 }
 
-QList<Person> PersonModel::content() const
+QList<Status> StatusModel::content() const
 {
     return items;
 }
 
-void PersonModel::setContent( const QList<Person> &newItems )
+void StatusModel::setContent( const QList<Status> &newItems )
 {
     if( newItems.size() > 0 )
     {
@@ -125,13 +120,13 @@ void PersonModel::setContent( const QList<Person> &newItems )
     }
 }
 
-bool PersonModel::setData( const QModelIndex &index, const QVariant &value, int role )
+bool StatusModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
     if( role != SelectedRole )
     {
         return false;
     }
-    Person tmp = items.at( index.row() );
+    Status tmp = items.at( index.row() );
     tmp.setSelected( value.toBool() );
     items.replace( index.row(), tmp );
     QAbstractItemModel::dataChanged( index, index );

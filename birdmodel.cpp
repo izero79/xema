@@ -3,6 +3,7 @@
 BirdModel::BirdModel(QObject *parent) :
     QAbstractListModel(parent)
 {
+    roles[FilterRole] = "filter";
     roles[IdRole] = "itemid";
     roles[FinNameRole] = "finname";
     roles[SweNameRole] = "swename";
@@ -34,7 +35,14 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
 
     Bird item = items[index.row()];
 
-    if( role == IdRole )
+    if( role == FilterRole )
+    {
+        return QString( item.finName() + ", " +
+                        item.sweName() + ", " +
+                        item.latinName() + ", " +
+                        item.abbreviation() + ", " );
+    }
+    else if( role == IdRole )
     {
         return item.id();
     }

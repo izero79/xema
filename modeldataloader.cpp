@@ -8,6 +8,8 @@
 #include "location.h"
 #include "personmodel.h"
 #include "person.h"
+#include "statusmodel.h"
+#include "status.h"
 
 ModelDataLoader::ModelDataLoader(QObject *parent) :
     QObject(parent)
@@ -34,12 +36,56 @@ void ModelDataLoader::loadBirdData( BirdModel *model )
 
 void ModelDataLoader::loadLocationData(LocationModel *model)
 {
-    model->addItem( Location( "Kokkola", "Lintutorni" ) );
-    model->addItem( Location( "Kokkola", "Parveke" ) );
+    QFile tiedosto( ":paikkalista.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    while( striimi.atEnd() == false )
+    {
+        QString locationLine;
+        locationLine = striimi.readLine();
+        Location location( locationLine.section( ';', 0, 0 ), locationLine.section( ';', 1, 1 ), locationLine.section( ';', 2, 2 ), locationLine.section( ';', 3, 3 ) );
+        model->addItem( location );
+    }
 }
 
 void ModelDataLoader::loadPersonData(PersonModel *model)
 {
-    model->addItem( Person( "Toni", QString( "Uusimäki" ), true ) );
-    model->addItem( Person( "Uni", QString( "Toosimäki" ), true ) );
+    QFile tiedosto( ":ihmislista.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    while( striimi.atEnd() == false )
+    {
+        QString personLine;
+        personLine = striimi.readLine();
+        bool registered = false;
+        if( personLine.section( ';', 2, 2 ) == QString( "true" ) )
+        {
+            registered = true;
+        }
+        bool defaultName = false;
+        if( personLine.section( ';', 3, 3 ) == QString( "true" ) )
+        {
+            defaultName = true;
+        }
+        Person person( personLine.section( ';', 0, 0 ), personLine.section( ';', 1, 1 ), registered, defaultName );
+        model->addItem( person );
+    }
+}
+
+void ModelDataLoader::loadStatusData( StatusModel *model )
+{
+    QFile tiedosto( ":statuslist.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    if( striimi.atEnd() == false )
+    {
+        striimi.readLine();
+    }
+    while( striimi.atEnd() == false )
+    {
+        QString birdLine;
+        birdLine = striimi.readLine();
+        Status status( birdLine.section( ';', 0, 0 ), birdLine.section( ';', 1, 1 ) );
+        model->addItem( status );
+    }
 }
