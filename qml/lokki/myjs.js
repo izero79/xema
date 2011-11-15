@@ -171,3 +171,8 @@ function readDelegateDatas()
     }
     return allData
 }
+
+function setDelegateData( row, data )
+{
+    sprite[row].setDelegateData( data )
+}

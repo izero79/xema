@@ -5,6 +5,7 @@ import "myjs.js" as MyScript
 Item {
 
     property int detailLevel: window.currentDetailLevel
+    property int currentId: 3
 
     height: parent.height
     width: parent.width
@@ -40,6 +41,7 @@ Item {
     {
         var allData = "";
         var delimiter = "#";
+        allData += currentId + delimiter
         allData += birdNameTf.text + delimiter
         allData += startDateTf.text + delimiter
         allData += stopDateTf.text + delimiter
@@ -56,16 +58,51 @@ Item {
 
         allData += weatherTa.text
 
-
-
-
-
-
-
         console.log( "allData: " + allData)
         return allData;
     }
 
+    function dataLoaded( data )
+    {
+        console.log( "data loaded now: " + data)
+        var fields;
+        fields = data.split( "#" );
+        console.log("id: " +fields[0])
+        currentId = fields[0]
+        birdNameTf.text = fields[1]
+        startDateTf.text = fields[2]
+        stopDateTf.text = fields[3]
+        startTimeTf.text = fields[4]
+        endTimeTf.text = fields[5]
+        locationTf.text = fields[6]
+        moreInfoTa.text = fields[7]
+        atlasTa.text = fields[8]
+        regPeopleTa.text = fields[9]
+        otherPeopleTa.text = fields[10]
+        hideChkBox.checked = fields[11]
+
+        var rows = fields[12]
+        console.log("rows: " + rows)
+        var currentField = 0;
+        while( rows > obsCount )
+        {
+            MyScript.createObjects();
+        }
+        for(var j = 0; j < rows; j++ )
+        {
+            var rowData = ""
+            for( var k = 13+j*11; k < 24+j*11; k++ )
+            {
+                rowData += fields[k] + "#"
+                currentField = k
+            }
+
+            MyScript.setDelegateData( j, rowData )
+        }
+        currentField++
+        weatherTa.text = fields[currentField]
+
+    }
 
 
 

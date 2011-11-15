@@ -37,6 +37,7 @@ public slots:
 
 private slots:
     void writeNewObservation( const QString &data );
+    void loadObservation( const QString &id );
 
 private:
 #ifdef Q_OS_SYMBIAN

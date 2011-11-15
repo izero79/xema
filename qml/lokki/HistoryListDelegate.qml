@@ -31,8 +31,8 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + name)
-                listPage.clicked( name )
+                console.log("click: " + obsId)
+                historyPage.clicked( obsId )
 
             }
         }

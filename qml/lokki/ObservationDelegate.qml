@@ -28,6 +28,24 @@ Item {
         return allData;
     }
 
+    function setDelegateData( data )
+    {
+        console.log( "set delegate data: " + data)
+        var fields;
+        fields = data.split( "#" );
+        countTf.text = fields[0]
+        startTimeTf.text = fields[1]
+        endTimeTf.text = fields[2]
+        sexTf.text = fields[3]
+        dressTf.text = fields[4]
+        ageTf.text = fields[5]
+        statusTf.text = fields[6]
+        moreInfoTa.text = fields[7]
+        loftTf.text = fields[8]
+        watchChkBox.checked = fields[9]
+        nestChkBox.checked = fields[10]
+    }
+
     anchors.right: parent.right
     anchors.rightMargin: 0
     anchors.left: parent.left

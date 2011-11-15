@@ -11,6 +11,7 @@ Window {
     property int currentDetailLevel: 1
 
     signal writeNew( string data )
+    signal readObs( string id )
 
     function showHistoryPage( type )
     {
@@ -68,6 +69,10 @@ Window {
         MyScript.showObsPage()
     }
 
+    function dataLoaded( data )
+    {
+        MyScript.obsObject.dataLoaded( data )
+    }
 
     StatusBar {
         id: statusBar

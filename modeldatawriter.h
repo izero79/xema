@@ -10,6 +10,7 @@ public:
     explicit ModelDataWriter(QObject *parent = 0);
 
     static void writeNewObservation( const QString &data );
+    static QString loadObservation( qlonglong id );
 
 signals:
 

@@ -3,39 +3,24 @@ import com.nokia.symbian 1.1
 
 
 Page {
-    id: listPage
+    id: historyPage
 
     function clicked( name )
     {
-        if( listPageType == "birds" )
-        {
-            window.birdChanged( name )
-        }
-        else if( listPageType == "places" )
-        {
-            window.placeChanged( name )
-        }
-        else if( listPageType == "regpeople")
-        {
-            window.regpeopleChanged( name )
-        }
-        else if( listPageType == "people")
-        {
-            window.peopleChanged( name )
-        }
         pageStack.pop()
+        window.showObsPage()
+        window.readObs( name )
     }
 
     ListModel {
         id: testModelHistory
         ListElement {
-            name: "1.1.2011, Kokkola, 3 lajia"
+            name: "1.1.2011, Kokkola, 1 laji"
+            obsId: 1
         }
         ListElement {
             name: "24.12.2010, Lohtaja, 1 laji"
-        }
-        ListElement {
-            name: "12.11.2010, Helsinki, 2 laji"
+            obsId: 2
         }
     }
 

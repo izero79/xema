@@ -125,6 +125,7 @@ void QMLWindow::init()
     mRootContext->setContextProperty( "statusModel", mFilteredStatusModel );
 
     connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
+    connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
 }
 
 void QMLWindow::setBirdModel( BirdModel *model )
@@ -150,4 +151,13 @@ void QMLWindow::setStatusModel(StatusModel *model)
 void QMLWindow::writeNewObservation( const QString &data )
 {
     ModelDataWriter::writeNewObservation( data );
+}
+
+void QMLWindow::loadObservation( const QString &id )
+{
+    qlonglong idNum = id.toLongLong();
+    QString data = ModelDataWriter::loadObservation( idNum );
+    QMetaObject::invokeMethod(mRootObject, "dataLoaded",
+             Q_ARG(QVariant, data ));
+
 }
