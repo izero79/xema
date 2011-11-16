@@ -51,7 +51,7 @@ Page {
         }
     }
     ListView {
-        model: testModelHistory
+        model: historyModel
         anchors.top: item1.bottom
         anchors.left: parent.left
         anchors.right: parent.right

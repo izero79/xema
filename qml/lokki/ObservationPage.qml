@@ -4,14 +4,19 @@ import "myjs.js" as MyScript
 
 Item {
 
+    id: obsPage
     property int detailLevel: window.currentDetailLevel
-    property int currentId: 3
-
+    property int currentId: 0
+    property int delegateHeight: detailLevel == 3 ? 300 : detailLevel == 2 ? 150 : 75
     height: parent.height
     width: parent.width
 
+    onDelegateHeightChanged: {
+        MyScript.changeDelegateHeight()
+    }
+
     Component.onCompleted: {
-        window.currentDetailLevel = window.defaultDetailLevel
+        window.currentDetailLevel = defaultDetailLevel
         MyScript.createObjects();
     }
 
@@ -39,6 +44,11 @@ Item {
 
     function readAllData()
     {
+        if( birdNameTf.text == "" || regPeopleTa.text == "" || locationTf.text == "" )
+        {
+            return ""
+        }
+
         var allData = "";
         var delimiter = "#";
         allData += currentId + delimiter
@@ -49,7 +59,7 @@ Item {
         allData += endTimeTf.text + delimiter
         allData += locationTf.text + delimiter
         allData += moreInfoTa.text + delimiter
-        allData += atlasTa.text + delimiter
+        allData += atlasTf.text + delimiter
         allData += regPeopleTa.text + delimiter
         allData += otherPeopleTa.text + delimiter
         allData += hideChkBox.checked + delimiter
@@ -76,7 +86,7 @@ Item {
         endTimeTf.text = fields[5]
         locationTf.text = fields[6]
         moreInfoTa.text = fields[7]
-        atlasTa.text = fields[8]
+        atlasTf.text = fields[8]
         regPeopleTa.text = fields[9]
         otherPeopleTa.text = fields[10]
         hideChkBox.checked = fields[11]
@@ -116,7 +126,7 @@ Item {
             width: parent.width
             color: "white"
             font.pixelSize: 36
-            text: "GPS"
+            text: qsTr( "GPS" )
             horizontalAlignment: Text.AlignHCenter
         }
         content:Item {
@@ -130,19 +140,19 @@ Item {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: "Hakee GPS-koodrinaatit"
+                text: qsTr( "Hakee GPS-koodrinaatit" )
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
 
-        buttons: Item { height: button1.height + 2 * 10;
+        buttons: Item { height: dialogButton1.height + 2 * 10;
             anchors.horizontalCenter: parent.horizontalCenter
             Button {
                 id: dialogButton1
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
-                text: "Ok";
+                text: qsTr( "Ok" )
                 onClicked: {
                     locationTf.text = "63.7998N, 23.0095E"
                     listDialog.close()
@@ -154,9 +164,9 @@ Item {
     TabBarLayout {
         id: tabBarLayout
         anchors { left: parent.left; right: parent.right; top: parent.top }
-        TabButton { tab: tab2content; text: "Päivä" }
-        TabButton { tab: tab1content; text: "Paikka" }
-        TabButton { tab: tab3content; text: "Havainto" }
+        TabButton { tab: tab2content; text: qsTr( "Päivä" ) }
+        TabButton { tab: tab1content; text: qsTr( "Paikka" ) }
+        TabButton { tab: tab3content; text: qsTr( "Havainto" ) }
     }
 
     TabGroup {
@@ -176,24 +186,39 @@ Item {
                 contentWidth: width
                 contentHeight: obsTimeItem.y + obsTimeItem.height
 
-                Item {
-                    id: item1
-                    width: 360
-                    height: 143
+                Text {
+                    id: locationText
+                    color: "#ffffff"
+                    text: qsTr("Havainnointipaikka")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    verticalAlignment: Text.AlignVCenter
                     anchors.top: parent.top
+                    anchors.topMargin: 8
+                    font.pixelSize: 18
+                }
+
+                Item {
+                    id: item1
+                    width: parent.width
+                    height: 50
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: locationText.bottom
                     anchors.topMargin: 8
 
                     TextField {
                         id: locationTf
                         height: 50
-                        text: "havaintopaikka"
+                        placeholderText: qsTr( "Havaintopaikka" )
+                        text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
-                        anchors.right: button1.left
+                        anchors.right: parent.right //button1.left
                         anchors.rightMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
@@ -203,7 +228,7 @@ Item {
                             onClicked: window.showListPage( "places" );
                         }
                     }
-
+/*
                     Button {
                         id: button1
                         text: "..."
@@ -218,12 +243,12 @@ Item {
                             listDialog.open()
                         }
                     }
-
+*/
                     /*
                     TextField {
                         id: textfield2
                         height: 50
-                        text: "linnun paikka"
+                        text: qsTr( "linnun paikka" )
                         anchors.top: locationTf.bottom
                         anchors.topMargin: 8
                         anchors.right: parent.right
@@ -264,11 +289,21 @@ Item {
                         id: startTimeTf
                         width: 160
                         height: 50
-                        text: "alkuaika"
+                        placeholderText: "0:00"
+                        text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        validator: RegExpValidator {
+                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
+                        }
+                        onActiveFocusChanged: {
+                            if( activeFocus == true && text == "" )
+                            {
+                                text = Qt.formatDateTime(new Date(), "hh:mm")
+                            }
+                        }
                     }
 
                     Text {
@@ -291,11 +326,28 @@ Item {
                         id: endTimeTf
                         width: 160
                         height: 50
-                        text: "loppuaika"
+                        placeholderText: "0:00"
+                        text: ""
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.top: parent.top
                         anchors.topMargin: 0
+                        validator: RegExpValidator {
+                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
+                        }
+                        onActiveFocusChanged: {
+                            if( activeFocus == true && text == "" )
+                            {
+                                if( startTimeTf.text != "" )
+                                {
+                                    text = startTimeTf.text
+                                }
+                                else
+                                {
+                                    text = Qt.formatDateTime(new Date(), "hh:mm")
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -311,7 +363,7 @@ Item {
                 flickableDirection: Flickable.VerticalFlick
                 anchors.fill: parent
                 contentWidth: width
-                contentHeight: item3.y + item3.height
+                contentHeight: detailLevel > 1 ? item3.y + item3.height : item4.y + item4.height
 
                 Text {
                     id: text2
@@ -341,24 +393,21 @@ Item {
                         id: startDateTf
                         width: 160
                         height: 50
-                        text: "alkupäivä"
+                        placeholderText: "0.0.0000"
+                        text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                    }
-
-                    TextField {
-                        id: stopDateTf
-                        width: 160
-                        height: 50
-                        text: "loppupäivä"
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        visible: detailLevel > 2
-
+                        validator: RegExpValidator {
+                            regExp: /[0-2]{0,1}[0-9]{1}[\.]{1}[0-2]{0,1}[0-9]{1}[\.]{1}[0-9]{4}/
+                        }
+                        onActiveFocusChanged: {
+                            if( activeFocus == true && text == "" )
+                            {
+                                text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
+                            }
+                        }
                     }
 
                     Text {
@@ -376,7 +425,35 @@ Item {
                         anchors.topMargin: 0
                         font.pixelSize: 18
                         visible: detailLevel > 2
+                    }
 
+                    TextField {
+                        id: stopDateTf
+                        width: 160
+                        height: 50
+                        placeholderText: "0.0.0000"
+                        text: ""
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        visible: detailLevel > 2
+                        validator: RegExpValidator {
+                            regExp: /[0-2]{0,1}[0-9]{1}[\.]{1}[0-2]{0,1}[0-9]{1}[\.]{1}[0-9]{4}/
+                        }
+                        onActiveFocusChanged: {
+                            if( activeFocus == true && text == "" )
+                            {
+                                if( startDateTf.text != "" )
+                                {
+                                    text = startDateTf.text
+                                }
+                                else
+                                {
+                                    text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
+                                }
+                            }
+                        }
                     }
                 }
                 Text {
@@ -406,7 +483,8 @@ Item {
                     TextArea {
                         id: regPeopleTa
                         height: 100
-                        text: "Rekisteröityneet"
+                        placeholderText: qsTr( "Rekisteröityneet" )
+                        text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.left: parent.left
@@ -424,7 +502,8 @@ Item {
                     TextArea {
                         id: otherPeopleTa
                         height: 100
-                        text: "Muut"
+                        placeholderText: qsTr( "Muut" )
+                        text: ""
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.top: regPeopleTa.bottom
@@ -451,7 +530,7 @@ Item {
                     anchors.leftMargin: 0
                     verticalAlignment: Text.AlignVCenter
                     anchors.top: item4.bottom
-                    anchors.topMargin: 8
+                    anchors.topMargin: 16
                     font.pixelSize: 18
                     visible: detailLevel > 1
 
@@ -472,7 +551,8 @@ Item {
                     TextArea {
                         id: weatherTa
                         height: 100
-                        text: "Sää"
+                        placeholderText: qsTr( "Sää" )
+                        text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.right: parent.right
@@ -494,7 +574,7 @@ Item {
                 flickableDirection: Flickable.VerticalFlick
                 anchors.fill: parent
                 contentWidth: width
-                contentHeight: item8.y + item8.height
+                contentHeight: detailLevel > 2 ? item8.y + item8.height : plus.y + plus.height
 
 
                 Text {
@@ -513,7 +593,7 @@ Item {
 
                 Item {
                     id: item5
-                    height: 100
+                    height: 50
                     anchors.top: text7.bottom
                     anchors.topMargin: 8
                     anchors.right: parent.right
@@ -524,7 +604,8 @@ Item {
                     TextField {
                         id: birdNameTf
                         height: 50
-                        text: "Laji"
+                        placeholderText: qsTr( "Laji" )
+                        text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.right: parent.right
@@ -538,67 +619,42 @@ Item {
                         }
 
                     }
-                    CheckBox {
-                        id: hideChkBox
-                        anchors.top: birdNameTf.bottom
-                        anchors.topMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        text: qsTr( "Salaa havainto")
-                        visible: detailLevel > 2
-                    }
                 }
 
                 Item {
-                    id: item6
-                    height: childrenRect.height
+                    id: item7
                     anchors.top: item5.bottom
                     anchors.topMargin: 8
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-
-                    Item {
-                        id: item7
-                        anchors.top: parent.top
-                        anchors.topMargin: 8
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        height: childrenRect.height
-
-                    }
-                    Button {
-                        id: plus
-                        text: "+"
-                        anchors.top: item7.bottom
-                        anchors.topMargin: 8
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        width: 50
-                        onClicked: {
-                            MyScript.createObjects();
-                        }
-                    }
-                    Button {
-                        id: minus
-                        text: "-"
-                        anchors.top: item7.bottom
-                        anchors.topMargin: 8
-                        anchors.left: plus.right
-                        anchors.leftMargin: 0
-                        width: 50
-                        visible: obsCount > 1
-                        onClicked: {
-                            MyScript.removeObject();
-                        }
+                    height: childrenRect.height
+                }
+                Button {
+                    id: plus
+                    text: qsTr( "lisää rivi" )
+                    anchors.top: item7.bottom
+                    anchors.topMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    onClicked: {
+                        MyScript.createObjects();
                     }
                 }
-
+                Button {
+                    id: minus
+                    text: qsTr( "poista rivi" )
+                    anchors.top: item7.bottom
+                    anchors.topMargin: 8
+                    anchors.left: plus.right
+                    anchors.leftMargin: 0
+                    //width: 100
+                    visible: obsCount > 1
+                    onClicked: {
+                        MyScript.removeObject();
+                    }
+                }
 
                 Text {
                     id: text8
@@ -609,7 +665,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     verticalAlignment: Text.AlignVCenter
-                    anchors.top: item6.bottom
+                    anchors.top: plus.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
                     visible: detailLevel > 2
@@ -630,9 +686,10 @@ Item {
                     TextArea {
                         id: moreInfoTa
                         height: 150
-                        text: "Lisätietoja"
+                        placeholderText: qsTr( "Lisätietoja" )
+                        text: ""
                         anchors.top: parent.top
-                        anchors.topMargin: 0
+                        anchors.topMargin: 8
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.left: parent.left
@@ -641,15 +698,28 @@ Item {
 
                     }
 
-                    TextArea {
-                        id: atlasTa
+                    TextField {
+                        id: atlasTf
                         height: 50
-                        text: "Atlas"
+                        placeholderText: qsTr( "Atlasindeksi" )
+                        text: ""
                         anchors.top: moreInfoTa.bottom
                         anchors.topMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        width: 100
+                        width: 150
+                        visible: detailLevel > 2
+                        validator: IntValidator { bottom: 0 }
+                    }
+                    CheckBox {
+                        id: hideChkBox
+                        anchors.top: moreInfoTa.bottom
+                        anchors.topMargin: 0
+                        anchors.left: atlasTf.right
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        text: qsTr( "Salaa havainto")
                         visible: detailLevel > 2
                     }
                 }

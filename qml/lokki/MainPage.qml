@@ -15,7 +15,7 @@ Page {
             id: settingsButton
             x: 13
             y: -73
-            text: "Asetukset"
+            text: qsTr( "Asetukset" )
             width: newButton.width
             height: newButton.height
             anchors.top: historyButton.bottom
@@ -33,7 +33,7 @@ Page {
             y: -145
             width: newButton.width
             height: newButton.height
-            text: "Havainnot"
+            text: qsTr( "Havainnot" )
             anchors.top: newButton.bottom
             anchors.topMargin: 30
             anchors.horizontalCenter: parent.horizontalCenter
@@ -47,7 +47,7 @@ Page {
             x: 13
             width: 196
             height: 42
-            text: "Uusi havanto"
+            text: qsTr( "Uusi havanto" )
             anchors.top: parent.top
             anchors.topMargin: 0
             checked: false

@@ -25,10 +25,11 @@ Page {
         id: systematicSort
         anchors.left: parent.left
         anchors.leftMargin: 0
-        checked: window.useSystematicSort
+        checked: useSystematicSort
         onCheckedChanged: {
             console.log( "newstate: " + checked )
-            window.useSystematicSort = checked
+            useSystematicSort = checked
+            window.saveSystematicSorting( checked )
         }
 
     }
@@ -56,9 +57,9 @@ Page {
         anchors.left: parent.left
         RadioButton {
             id: button1
-            text: "Minimi"
+            text: qsTr( "Minimi" )
             platformExclusiveGroup: group
-            checked: window.defaultDetailLevel == 1
+            checked: defaultDetailLevel == 1
             property bool wasPressed: false
             onPressedChanged: {
                 if( pressed == true )
@@ -71,16 +72,17 @@ Page {
                 if( checked == true && wasPressed == true )
                 {
                     wasPressed = false
-                    window.defaultDetailLevel = 1
-                    console.log("newlevel 1: " + window.defaultDetailLevel )
+                    defaultDetailLevel = 1
+                    console.log("newlevel 1: " + defaultDetailLevel )
+                    window.saveDetailLevel( 1 )
                 }
             }
         }
         RadioButton {
             id: button2
-            text: "Laajennettu"
+            text: qsTr( "Laajennettu" )
             platformExclusiveGroup: group
-            checked: window.defaultDetailLevel == 2
+            checked: defaultDetailLevel == 2
             property bool wasPressed: false
             onPressedChanged: {
                 if( pressed == true )
@@ -93,16 +95,17 @@ Page {
                 if( checked == true && wasPressed == true )
                 {
                     wasPressed = false
-                    window.defaultDetailLevel = 2
-                    console.log("newlevel 2: " + window.defaultDetailLevel )
+                    defaultDetailLevel = 2
+                    console.log("newlevel 2: " + defaultDetailLevel )
+                    window.saveDetailLevel( 2 )
                 }
             }
         }
         RadioButton {
             id: button3
-            text: "Kaikki"
+            text: qsTr( "Kaikki" )
             platformExclusiveGroup: group
-            checked: window.defaultDetailLevel == 3
+            checked: defaultDetailLevel == 3
             property bool wasPressed: false
             onPressedChanged: {
                 if( pressed == true )
@@ -115,8 +118,9 @@ Page {
                 if( checked == true && wasPressed == true )
                 {
                     wasPressed = false
-                    window.defaultDetailLevel = 3
-                    console.log("newlevel 3: " + window.defaultDetailLevel )
+                    defaultDetailLevel = 3
+                    console.log("newlevel 3: " + defaultDetailLevel )
+                    window.saveDetailLevel( 3 )
                 }
             }
         }

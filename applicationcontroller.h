@@ -8,6 +8,8 @@ class BirdModel;
 class PersonModel;
 class LocationModel;
 class StatusModel;
+class HistoryModel;
+class ModelDataLoader;
 
 class ApplicationController : public QObject
 {
@@ -24,6 +26,7 @@ private slots:
 
     void initGUI();
     void initObjects();
+    void reloadHistory();
 
 signals:
 
@@ -35,6 +38,8 @@ private:
     PersonModel *mPersonModel;
     LocationModel *mLocationModel;
     StatusModel *mStatusModel;
+    HistoryModel *mHistoryModel;
+    ModelDataLoader *mModelLoader;
 };
 
 #endif // APPLICATIONCONTROLLER_H

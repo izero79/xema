@@ -50,27 +50,30 @@ Item {
     anchors.rightMargin: 0
     anchors.left: parent.left
     anchors.leftMargin: 0
-    height: 200
+    height: delegateHeight
     width: parent.width
     TextField {
         id: countTf
         height: 50
-        text: "lukum"
+        placeholderText: qsTr( "lukumäärä" )
+        text: ""
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.topMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: 75
+        validator: IntValidator { bottom: 1; }
     }
     TextField {
         id: sexTf
         height: 50
-        text: "sukup"
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: countTf.right
+        placeholderText: qsTr( "sukupuoli" )
+        text: ""
+        anchors.top: countTf.bottom
+        anchors.topMargin: 8
+        anchors.left: parent.left
         anchors.leftMargin: 0
-        width: 75
+        width: 125
         visible: detailLevel > 1
         MouseArea {
             id: sexTfmouse
@@ -81,12 +84,14 @@ Item {
     TextField {
         id: ageTf
         height: 50
-        text: "ikä"
-        anchors.top: parent.top
-        anchors.topMargin: 0
+        placeholderText: qsTr( "ikä" )
+        text: ""
+        y: sexTf.y
         anchors.left: sexTf.right
         anchors.leftMargin: 0
-        width: 75
+        anchors.right: dressTf.left
+        anchors.rightMargin: 0
+        width: 100
         visible: detailLevel > 1
         MouseArea {
             id: ageTfmouse
@@ -97,12 +102,12 @@ Item {
     TextField {
         id: dressTf
         height: 50
-        text: "puku"
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: ageTf.right
-        anchors.leftMargin: 0
-        width: 75
+        placeholderText: qsTr( "puku" )
+        text: ""
+        y: sexTf.y
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        width: 100
         visible: detailLevel > 1
         MouseArea {
             id: dressTfmouse
@@ -113,69 +118,115 @@ Item {
     TextField {
         id: statusTf
         height: 50
-        text: "tila"
-        anchors.top: countTf.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
+        placeholderText: qsTr( "tila" )
+        text: ""
+        anchors.left: countTf.right
         anchors.leftMargin: 0
-        width: 150
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 8
         MouseArea {
             id: tf5mouse
             anchors.fill: parent
             onClicked: window.showListPage( "status", statusTf.text, statusTf );
         }
     }
-    TextField {
-        id: startTimeTf
-        width: 50
+    Item {
+        id: item2
         height: 50
-        text: "klo"
-        anchors.left: statusTf.right
-        anchors.leftMargin: 0
-        y: statusTf.y
-        visible: detailLevel > 2
-    }
-
-    Text {
-        id: text1
-        height: 50
-        color: "#ffffff"
-        text: qsTr("-")
-        anchors.left: startTimeTf.right
-        anchors.leftMargin: 0
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 18
-        y: statusTf.y
-        width: 20
-        visible: detailLevel > 2
-    }
-
-    TextField {
-        id: endTimeTf
-        width: 50
-        height: 50
-        text: "klo"
-        anchors.left: text1.right
-        anchors.leftMargin: 0
-        y: statusTf.y
-        visible: detailLevel > 2
-    }
-    TextField {
-        id: loftTf
-        height: 50
-        text: "parvi"
-        anchors.left: endTimeTf.right
-        anchors.leftMargin: 0
+        anchors.top: sexTf.bottom
+        anchors.topMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        y: statusTf.y
+        anchors.left: parent.left
+        anchors.leftMargin: 0
         visible: detailLevel > 2
+
+        TextField {
+            id: startTimeTf
+            width: 100
+            height: 50
+            placeholderText: qsTr( "0:00" )
+            text: ""
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            visible: detailLevel > 2
+            validator: RegExpValidator {
+                regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
+            }
+            onActiveFocusChanged: {
+                if( activeFocus == true && text == "" )
+                {
+                    text = Qt.formatDateTime(new Date(), "hh:mm")
+                }
+            }
+        }
+
+        Text {
+            id: text1
+            height: 50
+            color: "#ffffff"
+            text: qsTr("-")
+            anchors.left: startTimeTf.right
+            anchors.leftMargin: 0
+            anchors.right: endTimeTf.left
+            anchors.rightMargin: 0
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 18
+            y: startTimeTf.y
+            visible: detailLevel > 2
+        }
+
+        TextField {
+            id: endTimeTf
+            width: 100
+            height: 50
+            placeholderText: qsTr( "0:00" )
+            text: ""
+            anchors.right: loftTf.left
+            anchors.rightMargin: 0
+            y: startTimeTf.y
+            visible: detailLevel > 2
+            validator: RegExpValidator {
+                regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
+            }
+            onActiveFocusChanged: {
+                if( activeFocus == true && text == "" )
+                {
+                    if( startTimeTf.text != "" )
+                    {
+                        text = startTimeTf.text
+                    }
+                    else
+                    {
+                        text = Qt.formatDateTime(new Date(), "hh:mm")
+                    }
+                }
+            }
+        }
+        TextField {
+            id: loftTf
+            height: 50
+            width: 100
+            placeholderText: qsTr( "parvi" )
+            text: ""
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            y: statusTf.y
+            visible: detailLevel > 2
+            validator: IntValidator {
+                bottom: 0
+            }
+        }
     }
     CheckBox {
         id: watchChkBox
-        anchors.top: statusTf.bottom
-        anchors.topMargin: 0
+        anchors.top: item2.bottom
+        anchors.topMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: parent.width / 2
@@ -196,12 +247,13 @@ Item {
     TextArea {
         id: moreInfoTa
         anchors.top: watchChkBox.bottom
-        anchors.topMargin: 0
+        anchors.topMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        text: qsTr( "Lisätietoja")
+        placeholderText: qsTr( "Lisätietoja" )
+        text: ""
         height: 50
         visible: detailLevel > 2
     }

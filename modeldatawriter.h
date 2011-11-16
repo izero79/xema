@@ -9,8 +9,11 @@ class ModelDataWriter : public QObject
 public:
     explicit ModelDataWriter(QObject *parent = 0);
 
-    static void writeNewObservation( const QString &data );
-    static QString loadObservation( qlonglong id );
+    void writeNewObservation( const QString &data );
+    void replaceObservation( qlonglong id, const QString &data );
+    QString loadObservation( qlonglong id );
+private:
+    qlonglong getNewId();
 
 signals:
 

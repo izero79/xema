@@ -45,7 +45,10 @@ SOURCES += main.cpp \
     filtermodel.cpp \
     status.cpp \
     statusmodel.cpp \
-    modeldatawriter.cpp
+    modeldatawriter.cpp \
+    historyitem.cpp \
+    historymodel.cpp \
+    settings.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -88,11 +91,20 @@ HEADERS += \
     statusmodel.h \
     dummydebugprinter.h \
     debugprinter.h \
-    modeldatawriter.h
+    modeldatawriter.h \
+    historyitem.h \
+    historymodel.h \
+    settings.h
 
 RESOURCES += \
     symbianresources.qrc \
     commonresources.qrc
+
+
+
+
+
+
 
 
 

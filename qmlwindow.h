@@ -9,6 +9,9 @@ class BirdModel;
 class PersonModel;
 class LocationModel;
 class StatusModel;
+class HistoryModel;
+class Settings;
+class ModelDataWriter;
 
 #ifdef Q_OS_SYMBIAN
 class QMLWindow : public QMainWindow
@@ -26,6 +29,7 @@ public:
 #endif
 
 signals:
+    void reloadHistory();
 
 public slots:
     void orientationChanged();
@@ -34,10 +38,13 @@ public slots:
     void setPersonModel( PersonModel *model );
     void setLocationModel( LocationModel *model );
     void setStatusModel( StatusModel *model );
+    void setHistoryModel( HistoryModel *model );
 
 private slots:
     void writeNewObservation( const QString &data );
     void loadObservation( const QString &id );
+    void saveDetailLevel( int level );
+    void saveSystematicSorting( bool systematic );
 
 private:
 #ifdef Q_OS_SYMBIAN
@@ -49,6 +56,9 @@ private:
     FilterModel *mFilteredBirdModel;
     FilterModel *mFilteredLocationModel;
     FilterModel *mFilteredStatusModel;
+    FilterModel *mFilteredHistoryModel;
+    Settings *mSettings;
+    ModelDataWriter *mDataWriter;
 };
 
 #endif // QMLWINDOW_H

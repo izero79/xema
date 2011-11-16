@@ -15,6 +15,8 @@
 #include "personmodel.h"
 #include "statusmodel.h"
 #include "modeldatawriter.h"
+#include "historymodel.h"
+#include "settings.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #ifdef Q_OS_SYMBIAN
@@ -28,7 +30,9 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mFilteredPersonModel( 0 ),
     mFilteredBirdModel( 0 ),
     mFilteredLocationModel( 0 ),
-    mFilteredStatusModel( 0 )
+    mFilteredStatusModel( 0 ),
+    mSettings( 0 ),
+    mDataWriter( 0 )
 {
 #ifdef Q_OS_SYMBIAN
     mView = new QDeclarativeView(this);
@@ -118,14 +122,28 @@ void QMLWindow::init()
     mFilteredPersonModel = new FilterModel(this);
     mFilteredLocationModel = new FilterModel(this);
     mFilteredStatusModel = new FilterModel(this);
+    mFilteredHistoryModel = new FilterModel(this);
 
     mRootContext->setContextProperty( "birdModel", mFilteredBirdModel );
     mRootContext->setContextProperty( "personModel", mFilteredPersonModel );
     mRootContext->setContextProperty( "locationModel", mFilteredLocationModel );
     mRootContext->setContextProperty( "statusModel", mFilteredStatusModel );
+    mRootContext->setContextProperty( "historyModel", mFilteredHistoryModel );
 
     connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
+    connect(mRootObject,SIGNAL(reloadHistory()),this,SIGNAL(reloadHistory()));
+    connect(mRootObject,SIGNAL(saveSystematicSorting(bool)),this,SLOT(saveSystematicSorting(bool)));
+    connect(mRootObject,SIGNAL(saveDetailLevel(int)),this,SLOT(saveDetailLevel(int)));
+
+    mSettings = new Settings( this );
+    mDataWriter = new ModelDataWriter( this );
+
+    qDebug() << "INIT";
+    QMetaObject::invokeMethod(mRootObject, "setSystematicSort",
+             Q_ARG(QVariant, mSettings->systematicSorting() ));
+    QMetaObject::invokeMethod(mRootObject, "setDetailLevel",
+             Q_ARG(QVariant, mSettings->detailLevel() ));
 }
 
 void QMLWindow::setBirdModel( BirdModel *model )
@@ -148,16 +166,31 @@ void QMLWindow::setStatusModel(StatusModel *model)
     mFilteredStatusModel->setSourceModel( model );
 }
 
+void QMLWindow::setHistoryModel(HistoryModel *model)
+{
+    mFilteredHistoryModel->setSourceModel( model );
+}
+
 void QMLWindow::writeNewObservation( const QString &data )
 {
-    ModelDataWriter::writeNewObservation( data );
+    mDataWriter->writeNewObservation( data );
 }
 
 void QMLWindow::loadObservation( const QString &id )
 {
     qlonglong idNum = id.toLongLong();
-    QString data = ModelDataWriter::loadObservation( idNum );
+    QString data = mDataWriter->loadObservation( idNum );
     QMetaObject::invokeMethod(mRootObject, "dataLoaded",
              Q_ARG(QVariant, data ));
 
+}
+
+void QMLWindow::saveDetailLevel( int level )
+{
+    mSettings->setDetailLevel( level );
+}
+
+void QMLWindow::saveSystematicSorting( bool systematic )
+{
+    mSettings->setSystematicSorting( systematic );
 }

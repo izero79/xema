@@ -13,8 +13,9 @@ Component {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: name
+            text: date + ", " + place
             color: "white"
+            elide: Text.ElideRight
         }
         Text {
             id: delegateAdd
@@ -31,8 +32,8 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + obsId)
-                historyPage.clicked( obsId )
+                console.log("click: " + itemid)
+                historyPage.clicked( itemid )
 
             }
         }

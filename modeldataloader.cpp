@@ -10,6 +10,8 @@
 #include "person.h"
 #include "statusmodel.h"
 #include "status.h"
+#include "historymodel.h"
+#include "historyitem.h"
 
 ModelDataLoader::ModelDataLoader(QObject *parent) :
     QObject(parent)
@@ -67,8 +69,11 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
         {
             defaultName = true;
         }
-        Person person( personLine.section( ';', 0, 0 ), personLine.section( ';', 1, 1 ), registered, defaultName );
-        model->addItem( person );
+        if( personLine.isEmpty() == false )
+        {
+            Person person( personLine.section( ';', 0, 0 ), personLine.section( ';', 1, 1 ), registered, defaultName );
+            model->addItem( person );
+        }
     }
 }
 
@@ -85,7 +90,32 @@ void ModelDataLoader::loadStatusData( StatusModel *model )
     {
         QString birdLine;
         birdLine = striimi.readLine();
-        Status status( birdLine.section( ';', 0, 0 ), birdLine.section( ';', 1, 1 ) );
-        model->addItem( status );
+        if( birdLine.isEmpty() == false )
+        {
+            Status status( birdLine.section( ';', 0, 0 ), birdLine.section( ';', 1, 1 ) );
+            model->addItem( status );
+        }
+    }
+}
+
+void ModelDataLoader::loadHistoryData( HistoryModel *model )
+{
+#ifdef Q_OS_SYMBIAN
+    QFile tiedosto( "c:/data/lokkitesti.txt");
+#else
+    QFile tiedosto( "/Users/Tero/lokkitesti.txt");
+#endif
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    if( striimi.atEnd() == false )
+    {
+        striimi.readLine();
+    }
+    while( striimi.atEnd() == false )
+    {
+        QString line;
+        line = striimi.readLine();
+        HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
+        model->addItem( item );
     }
 }

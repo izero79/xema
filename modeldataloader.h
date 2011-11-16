@@ -7,6 +7,7 @@ class BirdModel;
 class PersonModel;
 class LocationModel;
 class StatusModel;
+class HistoryModel;
 
 class ModelDataLoader : public QObject
 {
@@ -14,10 +15,11 @@ class ModelDataLoader : public QObject
 public:
     explicit ModelDataLoader(QObject *parent = 0);
 
-    static void loadBirdData( BirdModel *model );
-    static void loadPersonData( PersonModel *model );
-    static void loadLocationData( LocationModel *model );
-    static void loadStatusData( StatusModel *model );
+    void loadBirdData( BirdModel *model );
+    void loadPersonData( PersonModel *model );
+    void loadLocationData( LocationModel *model );
+    void loadStatusData( StatusModel *model );
+    void loadHistoryData( HistoryModel *model );
 signals:
 
 public slots:

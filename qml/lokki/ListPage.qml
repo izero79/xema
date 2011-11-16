@@ -61,10 +61,15 @@ Page {
     function selectStatus( names )
     {
         var selNames = new Array();
-        console.log( "names: " + names )
+        console.log( "select status names: " + names )
 
         selNames = names.split(",")
-        console.log( "name[0]: " + selNames[0] )
+        console.log( "names length: " + selNames.length )
+
+        if( selNames.length == 1 && selNames[0] == "" )
+        {
+            return
+        }
 
         for( var i = 0; i < selNames.length; i++ )
         {
@@ -271,7 +276,7 @@ Page {
         delegate: {
             if( listPageType == "birds" )
             {
-                if( window.useSystematicSort == true )
+                if( useSystematicSort == true )
                 {
                     model.setSorting( 0, true )
                 }

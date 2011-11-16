@@ -12,6 +12,20 @@ Window {
 
     signal writeNew( string data )
     signal readObs( string id )
+    signal reloadHistory()
+    signal saveSystematicSorting( bool systematic )
+    signal saveDetailLevel( int level )
+
+    function setSystematicSort( use )
+    {
+        useSystematicSort = use
+    }
+
+    function setDetailLevel( level )
+    {
+        defaultDetailLevel = level
+        currentDetailLevel = level
+    }
 
     function showHistoryPage( type )
     {
@@ -97,6 +111,7 @@ Window {
                     {
                         console.log( "tee obs jutut")
                         MyScript.readAllData()
+                        window.reloadHistory()
                     }
                     else if( pageStack.currentPage == MyScript.listObject )
                     {
@@ -112,10 +127,6 @@ Window {
                         else if( listPageType == "status" )
                         {
                             MyScript.fillStatusBox()
-                        }
-                        else if( listPageType == "sex" )
-                        {
-                            MyScript.fillSexBox()
                         }
                     }
 

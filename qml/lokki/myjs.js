@@ -11,7 +11,7 @@ var currentStatusBox;
 
 function createObjects() {
     component = Qt.createComponent("ObservationDelegate.qml");
-    sprite[compCount] = component.createObject(item7, {"x": 0, "y": compCount*200});
+    sprite[compCount] = component.createObject(item7, {"x": 0, "y": compCount*delegateHeight});
     compCount++;
     obsCount = compCount
 
@@ -126,19 +126,20 @@ function fillStatusBox()
     {
         if( statusModel.data( i, 2 ) == true )
         {
+            console.log( "matched, i: " + i + ", j: " + j)
             selectedStatuses[j] = statusModel.data( i, 35 )
             j++;
         }
     }
-    console.log( "valutut tilat: " + selectedStatuses)
+    console.log( "valutut tilat: " + selectedStatuses + " ja pituus: " + selectedStatuses.length)
     var names = "";
-    for( var i = 0; i < selectedStatuses.length; i++ )
+    for( var k = 0; k < selectedStatuses.length; k++ )
     {
         if( names != "" )
         {
             names += ","
         }
-        names += selectedStatuses[i]
+        names += selectedStatuses[k]
     }
 
     console.log( "current on: " + currentStatusBox.text )
@@ -155,8 +156,11 @@ function readAllData()
     var allData = "";
     var delimiter = "#";
     allData = obsObject.readAllData()
-    console.log( "really allData: " + allData)
-    window.writeNew( allData )
+    if( allData != "" )
+    {
+        console.log( "really allData: " + allData)
+        window.writeNew( allData )
+    }
 }
 
 function readDelegateDatas()
@@ -175,4 +179,12 @@ function readDelegateDatas()
 function setDelegateData( row, data )
 {
     sprite[row].setDelegateData( data )
+}
+
+function changeDelegateHeight()
+{
+    for( var i = 0; i < sprite.length; i++ )
+    {
+        sprite[i].y = i * delegateHeight
+    }
 }

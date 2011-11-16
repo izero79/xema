@@ -8,13 +8,16 @@
 #include "personmodel.h"
 #include "modeldataloader.h"
 #include "statusmodel.h"
+#include "historymodel.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
     mBirdModel( 0 ),
     mPersonModel( 0 ),
     mLocationModel( 0 ),
-    mStatusModel( 0 )
+    mStatusModel( 0 ),
+    mHistoryModel( 0 ),
+    mModelLoader( 0 )
 {
     initGUI();
     QTimer::singleShot( 0, this, SLOT(initObjects()) );
@@ -38,22 +41,29 @@ void ApplicationController::initObjects()
 {
     mQMLWin->init();
 
+    mModelLoader = new ModelDataLoader( this );
+
     mBirdModel = new BirdModel(this);
-    ModelDataLoader::loadBirdData( mBirdModel );
+    mModelLoader->loadBirdData( mBirdModel );
     mQMLWin->setBirdModel( mBirdModel );
 
     mPersonModel = new PersonModel(this);
-    ModelDataLoader::loadPersonData( mPersonModel );
+    mModelLoader->loadPersonData( mPersonModel );
     mQMLWin->setPersonModel( mPersonModel );
 
     mLocationModel = new LocationModel(this);
-    ModelDataLoader::loadLocationData( mLocationModel );
+    mModelLoader->loadLocationData( mLocationModel );
     mQMLWin->setLocationModel( mLocationModel );
 
     mStatusModel = new StatusModel(this);
-    ModelDataLoader::loadStatusData( mStatusModel );
+    mModelLoader->loadStatusData( mStatusModel );
     mQMLWin->setStatusModel( mStatusModel );
 
+    mHistoryModel = new HistoryModel(this);
+    mModelLoader->loadHistoryData( mHistoryModel );
+    mQMLWin->setHistoryModel( mHistoryModel );
+
+    connect(mQMLWin,SIGNAL(reloadHistory()),this,SLOT(reloadHistory()));
 }
 
 ApplicationController::~ApplicationController()
@@ -65,3 +75,8 @@ ApplicationController::~ApplicationController()
     qDebug() << QDateTime::currentDateTime() << "\n\n";
 }
 
+void ApplicationController::reloadHistory()
+{
+    mHistoryModel->clear();
+    mModelLoader->loadHistoryData( mHistoryModel );
+}
