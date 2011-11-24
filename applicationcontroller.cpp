@@ -39,9 +39,12 @@ void ApplicationController::initGUI()
 
 void ApplicationController::initObjects()
 {
+    qDebug() << "appcont 1";
     mQMLWin->init();
+    qDebug() << "appcont 2";
 
     mModelLoader = new ModelDataLoader( this );
+    qDebug() << "appcont 3";
 
     mBirdModel = new BirdModel(this);
     mModelLoader->loadBirdData( mBirdModel );

@@ -1,10 +1,11 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import com.nokia.symbian 1.1
 import Qt.labs.components 1.1
 
 
 Page {
     id: settingsPage
+    tools: toolBarLayout
 
     Text{
         id: systematicSortText
@@ -14,24 +15,64 @@ Page {
         anchors.right: parent.right
         anchors.leftMargin: 0
         anchors.rightMargin: 0
-        anchors.left: systematicSort.right
+        anchors.left: parent.left
         horizontalAlignment: Text.AlignLeft
         anchors.top: parent.top
-        height: systematicSort.height
         color: "#ffffff"
     }
 
-    Switch {
-        id: systematicSort
+    CheckableGroup { id: orderGroup }
+    Column {
+        id: row1
+        spacing: platformStyle.paddingMedium
+        anchors.top: systematicSortText.bottom
         anchors.left: parent.left
-        anchors.leftMargin: 0
-        checked: useSystematicSort
-        onCheckedChanged: {
-            console.log( "newstate: " + checked )
-            useSystematicSort = checked
-            window.saveSystematicSorting( checked )
-        }
+        RadioButton {
+            id: alphaButton
+            text: qsTr( "Aakkostettu" )
+            platformExclusiveGroup: orderGroup
+            checked: window.useSystematicSort == false
+            property bool wasPressed: false
+            onPressedChanged: {
+                if( pressed == true )
+                {
+                    wasPressed = true
+                }
+            }
 
+            onCheckedChanged: {
+                if( checked == true && wasPressed == true )
+                {
+                    wasPressed = false
+                    window.useSystematicSort = false
+                    console.log("newlevel 1: " + window.useSystematicSort )
+                    window.saveSystematicSorting( !checked )
+                }
+            }
+        }
+        RadioButton {
+            id: systemButton
+            text: qsTr( "Systemaattinen" )
+            platformExclusiveGroup: orderGroup
+            checked: window.useSystematicSort == true
+            property bool wasPressed: false
+            onPressedChanged: {
+                if( pressed == true )
+                {
+                    wasPressed = true
+                }
+            }
+
+            onCheckedChanged: {
+                if( checked == true && wasPressed == true )
+                {
+                    wasPressed = false
+                    window.useSystematicSort = true
+                    console.log("newlevel sort: " + window.useSystematicSort )
+                    window.saveSystematicSorting( checked )
+                }
+            }
+        }
     }
 
     CheckableGroup { id: group }
@@ -41,7 +82,7 @@ Page {
         anchors.leftMargin: 0
         anchors.rightMargin: 0
         anchors.left: parent.left
-        anchors.top: systematicSortText.bottom
+        anchors.top: row1.bottom
         anchors.topMargin: 8
         text: qsTr( "Kenttien oletusmäärä")
         font.pixelSize: 20
@@ -51,7 +92,7 @@ Page {
     }
 
     Column {
-        id: row
+        id: row2
         spacing: platformStyle.paddingMedium
         anchors.top: groupHeader.bottom
         anchors.left: parent.left
@@ -59,7 +100,7 @@ Page {
             id: button1
             text: qsTr( "Minimi" )
             platformExclusiveGroup: group
-            checked: defaultDetailLevel == 1
+            checked: window.defaultDetailLevel == 1
             property bool wasPressed: false
             onPressedChanged: {
                 if( pressed == true )
@@ -72,8 +113,8 @@ Page {
                 if( checked == true && wasPressed == true )
                 {
                     wasPressed = false
-                    defaultDetailLevel = 1
-                    console.log("newlevel 1: " + defaultDetailLevel )
+                    window.defaultDetailLevel = 1
+                    console.log("newlevel 1: " + window.defaultDetailLevel )
                     window.saveDetailLevel( 1 )
                 }
             }
@@ -82,7 +123,7 @@ Page {
             id: button2
             text: qsTr( "Laajennettu" )
             platformExclusiveGroup: group
-            checked: defaultDetailLevel == 2
+            checked: window.defaultDetailLevel == 2
             property bool wasPressed: false
             onPressedChanged: {
                 if( pressed == true )
@@ -95,8 +136,8 @@ Page {
                 if( checked == true && wasPressed == true )
                 {
                     wasPressed = false
-                    defaultDetailLevel = 2
-                    console.log("newlevel 2: " + defaultDetailLevel )
+                    window.defaultDetailLevel = 2
+                    console.log("newlevel 2: " + window.defaultDetailLevel )
                     window.saveDetailLevel( 2 )
                 }
             }
@@ -105,7 +146,7 @@ Page {
             id: button3
             text: qsTr( "Kaikki" )
             platformExclusiveGroup: group
-            checked: defaultDetailLevel == 3
+            checked: window.defaultDetailLevel == 3
             property bool wasPressed: false
             onPressedChanged: {
                 if( pressed == true )
@@ -118,8 +159,8 @@ Page {
                 if( checked == true && wasPressed == true )
                 {
                     wasPressed = false
-                    defaultDetailLevel = 3
-                    console.log("newlevel 3: " + defaultDetailLevel )
+                    window.defaultDetailLevel = 3
+                    console.log("newlevel 3: " + window.defaultDetailLevel )
                     window.saveDetailLevel( 3 )
                 }
             }

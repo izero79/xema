@@ -1,9 +1,10 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 
 Page {
     id: historyPage
+    tools: toolBarLayout
 
     function clicked( name )
     {

@@ -1,8 +1,9 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 Page {
     id: mainPage
+    tools: toolBarLayout
 
     Item {
         id: item1
@@ -47,7 +48,7 @@ Page {
             x: 13
             width: 196
             height: 42
-            text: qsTr( "Uusi havanto" )
+            text: qsTr( "Uusi havainto" )
             anchors.top: parent.top
             anchors.topMargin: 0
             checked: false

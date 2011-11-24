@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.3.1, 2011-11-16T23:32:28. -->
+<!-- Written by Qt Creator 2.3.1, 2011-11-24T14:42:54. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">2</value>
+  <value type="int">1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -724,9 +724,9 @@
       <value type="QString" key="RemoteCompiler.BuildStep.CertKeyPass"></value>
       <value type="int" key="RemoteCompiler.BuildStep.PkgOpt">0</value>
       <value type="int" key="RemoteCompiler.BuildStep.PostOp">1</value>
-      <value type="QString" key="RemoteCompiler.BuildStep.QtVersion">4_7_3</value>
+      <value type="QString" key="RemoteCompiler.BuildStep.QtVersion">4_7_4</value>
       <value type="int" key="RemoteCompiler.BuildStep.SisOpt">7</value>
-      <value type="QString" key="RemoteCompiler.BuildStep.Target">symbian3</value>
+      <value type="QString" key="RemoteCompiler.BuildStep.Target">symbianAnna</value>
      </valuemap>
      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build</value>
@@ -850,7 +850,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>
-  <value type="QString">{00000000-0000-0000-0000-000000000000}</value>
+  <value type="QString">{938ad9cc-8f6e-4f41-b50f-7fdfa78d496d}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>

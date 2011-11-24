@@ -26,15 +26,31 @@ function removeObject() {
     {
         compCount--;
         sprite[compCount].destroy()
+        sprite.pop()
+        obsCount = compCount
+    }
+}
+
+function removeObjects() {
+    while( compCount > 0 )
+    {
+        console.log("removeObjects")
+        compCount--;
+        sprite[compCount].destroy()
         obsCount = compCount
     }
 }
 
 function showListPage( type, selectedItems, itemi )
 {
-    listPageComponent = Qt.createComponent(Qt.resolvedUrl("ListPage.qml"))
-    listObject = listPageComponent.createObject( window )
+    if( !listObject )
+    {
+        console.log( "list doesn't exists, create")
+        listPageComponent = Qt.createComponent(Qt.resolvedUrl("ListPage.qml"))
+        listObject = listPageComponent.createObject( window )
+    }
     listPageType = type
+
     pageStack.push(listObject)
     if( type == "regpeople" || type == "people")
     {
@@ -49,10 +65,18 @@ function showListPage( type, selectedItems, itemi )
     {
         currentStatusBox = itemi
     }
+    listObject.init()
 }
 
 function showObsPage()
 {
+    if( obsObject )
+    {
+        console.log( "obs exists, push")
+        pageStack.push(obsObject)
+        obsObject.init()
+        return
+    }
     obsPageComponent = Qt.createComponent(Qt.resolvedUrl("ObservationPage.qml"))
     obsObject = obsPageComponent.createObject( window )
     pageStack.push(obsObject)
@@ -60,6 +84,11 @@ function showObsPage()
 
 function showHistoryPage( type )
 {
+    if( historyObject )
+    {
+        pageStack.push(historyObject)
+        return
+    }
     historyPageComponent = Qt.createComponent(Qt.resolvedUrl("HistoryPage.qml"))
     historyObject = historyPageComponent.createObject( window )
     pageStack.push(historyObject)

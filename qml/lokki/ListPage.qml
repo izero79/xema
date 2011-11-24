@@ -1,9 +1,16 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 
 Page {
     id: listPage
+    tools: toolBarLayout
+
+    function init()
+    {
+        listView.model.filter( "" )
+        filterTf.text = ""
+    }
 
     function clicked( name )
     {
@@ -217,7 +224,7 @@ Page {
         anchors.topMargin: 8
 
         TextField {
-            id: textfield1
+            id: filterTf
             height: 50
             text: "" //listPageType
             anchors.top: parent.top
@@ -276,7 +283,7 @@ Page {
         delegate: {
             if( listPageType == "birds" )
             {
-                if( useSystematicSort == true )
+                if( window.useSystematicSort == true )
                 {
                     model.setSorting( 0, true )
                 }

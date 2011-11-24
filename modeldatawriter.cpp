@@ -105,9 +105,19 @@ void ModelDataWriter::replaceObservation( qlonglong id, const QString &data )
     tiedosto.close();
     tmptiedosto.close();
 #ifdef Q_OS_SYMBIAN
+    if( QFile::exists( "c:/data/lokkitesti.backup" ) == true )
+    {
+        QFile old( "c:/data/lokkitesti.backup" );
+        old.remove();
+    }
     tiedosto.rename( "c:/data/lokkitesti.backup");
     tmptiedosto.rename( "c:/data/lokkitesti.txt");
 #else
+    if( QFile::exists( "/Users/Tero/lokkitesti.backup" ) == true )
+    {
+        QFile old( "/Users/Tero/lokkitesti.backup" );
+        old.remove();
+    }
     tiedosto.rename( "/Users/Tero/lokkitesti.backup");
     tmptiedosto.rename( "/Users/Tero/lokkitesti.txt");
 #endif

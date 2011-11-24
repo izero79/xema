@@ -100,6 +100,7 @@ void ModelDataLoader::loadStatusData( StatusModel *model )
 
 void ModelDataLoader::loadHistoryData( HistoryModel *model )
 {
+    qDebug() << "loadHistoryData 0";
 #ifdef Q_OS_SYMBIAN
     QFile tiedosto( "c:/data/lokkitesti.txt");
 #else
@@ -107,10 +108,12 @@ void ModelDataLoader::loadHistoryData( HistoryModel *model )
 #endif
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    qDebug() << "loadHistoryData 1";
     if( striimi.atEnd() == false )
     {
         striimi.readLine();
     }
+    qDebug() << "loadHistoryData 2";
     while( striimi.atEnd() == false )
     {
         QString line;
@@ -118,4 +121,5 @@ void ModelDataLoader::loadHistoryData( HistoryModel *model )
         HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
         model->addItem( item );
     }
+    qDebug() << "loadHistoryData done";
 }

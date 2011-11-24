@@ -1,8 +1,8 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "myjs.js" as MyScript
 
-Window {
+PageStackWindow {
     id: window
 
     property string listPageType: ""
@@ -18,13 +18,13 @@ Window {
 
     function setSystematicSort( use )
     {
-        useSystematicSort = use
+        window.useSystematicSort = use
     }
 
     function setDetailLevel( level )
     {
-        defaultDetailLevel = level
-        currentDetailLevel = level
+        window.defaultDetailLevel = level
+        window.currentDetailLevel = level
     }
 
     function showHistoryPage( type )
@@ -88,66 +88,65 @@ Window {
         MyScript.obsObject.dataLoaded( data )
     }
 
-    StatusBar {
-        id: statusBar
-        anchors.top: window.top
-    }
+//    initialPage: Qt.resolvedUrl("MainPage.qml")
 
-    PageStack {
-        id: pageStack
-        anchors { left: parent.left; right: parent.right; top: statusBar.bottom; bottom: toolBar.top }
-    }
-
-    ToolBar {
-        id: toolBar
-        anchors.bottom: window.bottom
-        tools: ToolBarLayout {
-            id: toolBarLayout
-            ToolButton {
-                flat: true
-                iconSource: "/qml/s3icons/back.svg"
-                onClicked: {
-                    if( pageStack.currentPage == MyScript.obsObject )
-                    {
-                        console.log( "tee obs jutut")
-                        MyScript.readAllData()
-                        window.reloadHistory()
-                    }
-                    else if( pageStack.currentPage == MyScript.listObject )
-                    {
-                        console.log( "tee list jutut")
-                        if( listPageType == "regpeople" )
-                        {
-                            MyScript.fillRegPersonBox()
-                        }
-                        else if( listPageType == "people" )
-                        {
-                            MyScript.fillNonRegPersonBox()
-                        }
-                        else if( listPageType == "status" )
-                        {
-                            MyScript.fillStatusBox()
-                        }
-                    }
-
-
-                    pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
+    ToolBarLayout {
+        id: toolBarLayout
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-back"
+            onClicked: {
+                if( pageStack.currentPage == MyScript.obsObject )
+                {
+                    console.log( "tee obs jutut")
+                    MyScript.readAllData()
+                    window.reloadHistory()
                 }
-            }
-            ToolButton {
-                text: window.currentDetailLevel
-                visible: pageStack.currentPage == MyScript.obsObject
-                onClicked: {
-                    if( window.currentDetailLevel < 3 )
+                else if( pageStack.currentPage == MyScript.listObject )
+                {
+                    console.log( "tee list jutut")
+                    if( listPageType == "regpeople" )
                     {
-                        window.currentDetailLevel++
+                        MyScript.fillRegPersonBox()
                     }
-                    else
+                    else if( listPageType == "people" )
                     {
-                        window.currentDetailLevel = 1
+                        MyScript.fillNonRegPersonBox()
+                    }
+                    else if( listPageType == "status" )
+                    {
+                        MyScript.fillStatusBox()
                     }
                 }
+
+
+                pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
             }
+        }
+        ToolButton {
+            flat: true
+            iconSource: "/qml/s3icons/filter.svg"
+            visible: pageStack.currentPage == MyScript.obsObject
+            onClicked: {
+                if( window.currentDetailLevel < 3 )
+                {
+                    window.currentDetailLevel++
+                }
+                else
+                {
+                    window.currentDetailLevel = 1
+                }
+            }
+        }
+        ToolButton {
+            flat: true
+            iconSource: "/qml/s3icons/save.svg"
+            visible: pageStack.currentPage == MyScript.obsObject
+        }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-delete"
+            visible: pageStack.currentPage == MyScript.obsObject
         }
     }
 

@@ -13,7 +13,7 @@ class HistoryModel;
 class Settings;
 class ModelDataWriter;
 
-#ifdef Q_OS_SYMBIAN
+#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
 class QMLWindow : public QMainWindow
 #else
 class QMLWindow : public QDeclarativeView
@@ -24,7 +24,7 @@ public:
     explicit QMLWindow(QWidget *parent = 0);
     ~QMLWindow();
 
-#ifdef Q_OS_SYMBIAN
+#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
     void resizeEvent( QResizeEvent *event );
 #endif
 
@@ -47,7 +47,7 @@ private slots:
     void saveSystematicSorting( bool systematic );
 
 private:
-#ifdef Q_OS_SYMBIAN
+#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
     QDeclarativeView *mView;
 #endif
     QDeclarativeContext *mRootContext;

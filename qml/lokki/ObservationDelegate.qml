@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import com.nokia.symbian 1.1
 
 Item {
@@ -63,6 +63,8 @@ Item {
         anchors.leftMargin: 0
         width: 75
         validator: IntValidator { bottom: 1; }
+        inputMethodHints: Qt.ImhDigitsOnly
+
     }
     TextField {
         id: sexTf
@@ -221,6 +223,7 @@ Item {
             validator: IntValidator {
                 bottom: 0
             }
+            inputMethodHints: Qt.ImhDigitsOnly
         }
     }
     CheckBox {

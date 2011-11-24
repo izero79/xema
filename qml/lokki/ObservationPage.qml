@@ -1,10 +1,11 @@
-import QtQuick 1.0
+import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "myjs.js" as MyScript
 
-Item {
+Page {
 
     id: obsPage
+    tools: toolBarLayout
     property int detailLevel: window.currentDetailLevel
     property int currentId: 0
     property int delegateHeight: detailLevel == 3 ? 300 : detailLevel == 2 ? 150 : 75
@@ -16,11 +17,39 @@ Item {
     }
 
     Component.onCompleted: {
-        window.currentDetailLevel = defaultDetailLevel
+        window.currentDetailLevel = window.defaultDetailLevel
         MyScript.createObjects();
     }
 
+    Component.onDestruction: MyScript.removeObjects();
+
     property int obsCount: 0
+
+    function init()
+    {
+        console.log("obs init")
+        currentId = 0
+        birdNameTf.text = ""
+        startDateTf.text = ""
+        stopDateTf.text = ""
+        startTimeTf.text = ""
+        endTimeTf.text = ""
+        locationTf.text = ""
+        moreInfoTa.text = ""
+        atlasTf.text = ""
+        regPeopleTa.text = ""
+        otherPeopleTa.text = ""
+        hideChkBox.checked = false
+
+        MyScript.removeObjects();
+        MyScript.createObjects();
+
+        weatherTa.text = ""
+        window.currentDetailLevel = window.defaultDetailLevel
+
+        MyScript.changeDelegateHeight()
+
+    }
 
     function birdChanged( name )
     {
@@ -710,6 +739,7 @@ Item {
                         width: 150
                         visible: detailLevel > 2
                         validator: IntValidator { bottom: 0 }
+                        inputMethodHints: Qt.ImhDigitsOnly
                     }
                     CheckBox {
                         id: hideChkBox

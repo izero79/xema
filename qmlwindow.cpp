@@ -19,7 +19,7 @@
 #include "settings.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
-    #ifdef Q_OS_SYMBIAN
+    #if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
     QMainWindow(parent),
     mView(0),
     #else
@@ -34,12 +34,18 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mSettings( 0 ),
     mDataWriter( 0 )
 {
-#ifdef Q_OS_SYMBIAN
+    qDebug() << "qmlwin 0";
+#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
+    qDebug() << "qmlwin 1";
     mView = new QDeclarativeView(this);
+    qDebug() << "qmlwin 2";
     mView->setResizeMode( QDeclarativeView::SizeRootObjectToView );
+    qDebug() << "qmlwin 3";
     this->setCentralWidget( mView );
 #else
+    qDebug() << "qmlwin 1.1";
     setResizeMode( QDeclarativeView::SizeRootObjectToView );
+    qDebug() << "qmlwin 2.1 3.1";
 #endif
 
 #if defined Q_WS_MAEMO_5
@@ -47,36 +53,50 @@ QMLWindow::QMLWindow(QWidget *parent) :
     connect(QApplication::desktop(),SIGNAL(resized(int)),this,SLOT(orientationChanged()));
 #endif
 
-#ifdef Q_OS_SYMBIAN
+#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
+    qDebug() << "qmlwin 4";
     mRootContext = mView->rootContext();
 #else
+    qDebug() << "qmlwin 4.1";
     mRootContext = rootContext();
 #endif
+    qDebug() << "qmlwin 5";
     mRootContext->setContextProperty( "clockTime", "" );
     mRootContext->setContextProperty( "mainWidth", QApplication::desktop()->width() );
     mRootContext->setContextProperty( "mainHeight", QApplication::desktop()->height() );
 
 #ifdef SYMBIAN3
+    qDebug() << "qmlwin 6";
+    setSource(QUrl("qrc:qml/lokki/main.qml"));
+    qDebug() << "qmlwin 7";
+    mRootObject = dynamic_cast<QObject*>(rootObject());
+    qDebug() << "qmlwin 8";
+#elif defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
+    qDebug() << "qmlwin 6.1";
     mView->setSource(QUrl("qrc:qml/lokki/main.qml"));
+    qDebug() << "qmlwin 7.1";
     mRootObject = dynamic_cast<QObject*>(mView->rootObject());
-#elif defined Q_OS_SYMBIAN
-    mView->setSource(QUrl("qrc:qml/lokki/main.qml"));
-    mRootObject = dynamic_cast<QObject*>(mView->rootObject());
+    qDebug() << "qmlwin 8.1";
 #elif defined HARMATTAN
     setSource(QUrl("qrc:qml/lokki/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
+    qDebug() << "qmlwin 6.3";
     setSource(QUrl("qrc:qml/lokki/main.qml"));
+    qDebug() << "qmlwin 7.3";
     mRootObject = dynamic_cast<QObject*>(rootObject());
+    qDebug() << "qmlwin 8.3";
 #endif
 
 #if defined Q_WS_MAEMO_5
     QMetaObject::invokeMethod(mRootObject, "setStyle",
              Q_ARG(QVariant, "maemo" ));
 #else
-    #if defined Q_OS_SYMBIAN
+    #if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
+    qDebug() << "qmlwin 9";
     QMetaObject::invokeMethod(mRootObject, "setStyle",
                  Q_ARG(QVariant, "symbian" ));
+    qDebug() << "qmlwin 10";
     #elif defined Q_WS_SIMULATOR
         QMetaObject::invokeMethod(mRootObject, "setStyle",
                  Q_ARG(QVariant, "maemo" ));
@@ -96,7 +116,7 @@ QMLWindow::~QMLWindow()
     qDebug() << "QMLWindow::~QMLWindow()";
 }
 
-#ifdef Q_OS_SYMBIAN
+#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
 void QMLWindow::resizeEvent( QResizeEvent *event )
 {
     orientationChanged();
@@ -118,6 +138,7 @@ void QMLWindow::orientationChanged()
 
 void QMLWindow::init()
 {
+    qDebug() << "WIN INIT START";
     mFilteredBirdModel = new FilterModel(this);
     mFilteredPersonModel = new FilterModel(this);
     mFilteredLocationModel = new FilterModel(this);
@@ -139,11 +160,12 @@ void QMLWindow::init()
     mSettings = new Settings( this );
     mDataWriter = new ModelDataWriter( this );
 
-    qDebug() << "INIT";
+    qDebug() << "WIN INIT 1";
     QMetaObject::invokeMethod(mRootObject, "setSystematicSort",
              Q_ARG(QVariant, mSettings->systematicSorting() ));
     QMetaObject::invokeMethod(mRootObject, "setDetailLevel",
              Q_ARG(QVariant, mSettings->detailLevel() ));
+    qDebug() << "WIN INIT DONE";
 }
 
 void QMLWindow::setBirdModel( BirdModel *model )

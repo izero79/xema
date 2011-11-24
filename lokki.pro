@@ -3,7 +3,24 @@ folder_01.source = qml/lokki
 folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
 
+CONFIG -=debug
+CONFIG +=release
+CONFIG -=liteVersion
+CONFIG -=forOvi
+CONFIG -=forUnsinged
+CONFIG -=S603x
+CONFIG -=Symbian1
+CONFIG -=performancetest
+CONFIG -=useMediaKeys
 symbian:DEFINES +=DEBUGONLYTOFILE
+
+!S603x{
+    Symbian1{
+    }else{
+    CONFIG +=qt-components
+    DEFINES += SYMBIAN3
+    }
+}
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -19,7 +36,7 @@ symbian:TARGET.UID3 = 0xE3CA679E
 
 # Allow network access on Symbian
 symbian:TARGET.CAPABILITY += NetworkServices
-
+symbian:TARGET.EPOCHEAPSIZE = 0x20000 0x2000000
 # If your application uses the Qt Mobility libraries, uncomment the following
 # lines and add the respective components to the MOBILITY variable.
 # CONFIG += mobility
@@ -64,6 +81,7 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/changelog
 
 symbian {
+
 symbian3 = \
 "; Symbian3" \
 "[0x20022E6D],0,0,0,{\"S60ProductId\"}"
