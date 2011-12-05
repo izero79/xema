@@ -217,3 +217,17 @@ function changeDelegateHeight()
         sprite[i].y = i * delegateHeight
     }
 }
+
+function clearObsDataSelections()
+{
+    personModel.filter( "" )
+    for( var i = 0; i < personModel.rowCount(); i++ )
+    {
+        personModel.setData( i, false, 0 )
+    }
+    statusModel.filter( "" )
+    for( var i = 0; i < statusModel.rowCount(); i++ )
+    {
+        statusModel.setData( i, false, 0 )
+    }
+}

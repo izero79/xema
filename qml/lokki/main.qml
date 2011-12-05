@@ -99,7 +99,8 @@ PageStackWindow {
                 if( pageStack.currentPage == MyScript.obsObject )
                 {
                     console.log( "tee obs jutut")
-                    MyScript.readAllData()
+//                    MyScript.readAllData()
+                    MyScript.clearObsDataSelections()
                     window.reloadHistory()
                 }
                 else if( pageStack.currentPage == MyScript.listObject )
@@ -141,12 +142,22 @@ PageStackWindow {
         ToolButton {
             flat: true
             iconSource: "/qml/s3icons/save.svg"
-            visible: pageStack.currentPage == MyScript.obsObject
+            visible: pageStack.currentPage == MyScript.obsObject && MyScript.obsObject.currentTab == 3
+            onClicked: {
+                console.log( "tee save jutut")
+                MyScript.readAllData()
+                window.reloadHistory()
+                console.log( "tee delete jutut")
+            }
         }
         ToolButton {
             flat: true
             iconSource: "toolbar-delete"
-            visible: pageStack.currentPage == MyScript.obsObject
+            visible: pageStack.currentPage == MyScript.obsObject //&& MyScript.obsObject.currentTab == 3
+            onClicked: {
+                console.log( "tee delete jutut")
+                MyScript.obsObject.clearTab()
+            }
         }
     }
 

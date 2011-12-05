@@ -8,6 +8,7 @@ Page {
     tools: toolBarLayout
     property int detailLevel: window.currentDetailLevel
     property int currentId: 0
+    property int currentTab: 1
     property int delegateHeight: detailLevel == 3 ? 300 : detailLevel == 2 ? 150 : 75
     height: parent.height
     width: parent.width
@@ -29,22 +30,27 @@ Page {
     {
         console.log("obs init")
         currentId = 0
-        birdNameTf.text = ""
+        currentTab = 1
+        tabGroup.currentTab = tab1content
+
         startDateTf.text = ""
         stopDateTf.text = ""
-        startTimeTf.text = ""
-        endTimeTf.text = ""
-        locationTf.text = ""
-        moreInfoTa.text = ""
-        atlasTf.text = ""
         regPeopleTa.text = ""
         otherPeopleTa.text = ""
+        weatherTa.text = ""
+
+        locationTf.text = ""
+        startTimeTf.text = ""
+        endTimeTf.text = ""
+
+        birdNameTf.text = ""
+        moreInfoTa.text = ""
+        atlasTf.text = ""
         hideChkBox.checked = false
 
         MyScript.removeObjects();
         MyScript.createObjects();
 
-        weatherTa.text = ""
         window.currentDetailLevel = window.defaultDetailLevel
 
         MyScript.changeDelegateHeight()
@@ -143,6 +149,37 @@ Page {
 
     }
 
+    function clearTab()
+    {
+        console.log( "clear tab: " + currentTab )
+        if( currentTab <= 3 )
+        {
+            birdNameTf.text = ""
+            moreInfoTa.text = ""
+            atlasTf.text = ""
+            hideChkBox.checked = false
+
+            MyScript.removeObjects();
+            MyScript.createObjects();
+
+            MyScript.changeDelegateHeight()
+        }
+        if( currentTab <= 2 )
+        {
+            locationTf.text = ""
+            startTimeTf.text = ""
+            endTimeTf.text = ""
+        }
+        if( currentTab <= 1 )
+        {
+            startDateTf.text = ""
+            stopDateTf.text = ""
+            regPeopleTa.text = ""
+            otherPeopleTa.text = ""
+            weatherTa.text = ""
+        }
+        MyScript.clearObsDataSelections()
+    }
 
 
     Dialog {
@@ -193,198 +230,33 @@ Page {
     TabBarLayout {
         id: tabBarLayout
         anchors { left: parent.left; right: parent.right; top: parent.top }
-        TabButton { tab: tab2content; text: qsTr( "Päivä" ) }
-        TabButton { tab: tab1content; text: qsTr( "Paikka" ) }
+        TabButton { tab: tab1content; text: qsTr( "Päivä" ) }
+        TabButton { tab: tab2content; text: qsTr( "Paikka" ) }
         TabButton { tab: tab3content; text: qsTr( "Havainto" ) }
     }
 
     TabGroup {
         id: tabGroup
-        currentTab: tab2content
+        currentTab: tab1content
         anchors { left: parent.left; right: parent.right; top: tabBarLayout.bottom; bottom: parent.bottom }
+        onCurrentTabChanged: {
+            if( currentTab == tab1content )
+            {
+                obsPage.currentTab = 1
+            }
+            else if( currentTab == tab2content )
+            {
+                obsPage.currentTab = 2
+            }
+            else if( currentTab == tab3content )
+            {
+                obsPage.currentTab = 3
+            }
+        }
 
         // define the content for tab 1
         Page {
             id: tab1content
-            clip: true
-            Flickable {
-                id: flickable1
-                clip: false
-                flickableDirection: Flickable.VerticalFlick
-                anchors.fill: parent
-                contentWidth: width
-                contentHeight: obsTimeItem.y + obsTimeItem.height
-
-                Text {
-                    id: locationText
-                    color: "#ffffff"
-                    text: qsTr("Havainnointipaikka")
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.top: parent.top
-                    anchors.topMargin: 8
-                    font.pixelSize: 18
-                }
-
-                Item {
-                    id: item1
-                    width: parent.width
-                    height: 50
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.top: locationText.bottom
-                    anchors.topMargin: 8
-
-                    TextField {
-                        id: locationTf
-                        height: 50
-                        placeholderText: qsTr( "Havaintopaikka" )
-                        text: ""
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.right: parent.right //button1.left
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        MouseArea {
-                            id: tf1mouse
-                            anchors.fill: parent
-                            onClicked: window.showListPage( "places" );
-                        }
-                    }
-/*
-                    Button {
-                        id: button1
-                        text: "..."
-                        iconSource: ""
-                        width: 50
-                        height: locationTf.height
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        onClicked: {
-                            listDialog.open()
-                        }
-                    }
-*/
-                    /*
-                    TextField {
-                        id: textfield2
-                        height: 50
-                        text: qsTr( "linnun paikka" )
-                        anchors.top: locationTf.bottom
-                        anchors.topMargin: 8
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                    }*/
-                }
-                Text {
-                    id: obsTimeText
-                    color: "#ffffff"
-                    text: qsTr("Havainnointiaika")
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.top: item1.bottom
-                    anchors.topMargin: 8
-                    font.pixelSize: 18
-                    visible: detailLevel > 1
-
-                }
-
-                Item {
-                    id: obsTimeItem
-                    height: 50
-                    anchors.top: obsTimeText.bottom
-                    anchors.topMargin: 8
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    visible: detailLevel > 1
-
-
-                    TextField {
-                        id: startTimeTf
-                        width: 160
-                        height: 50
-                        placeholderText: "0:00"
-                        text: ""
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        validator: RegExpValidator {
-                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
-                        }
-                        onActiveFocusChanged: {
-                            if( activeFocus == true && text == "" )
-                            {
-                                text = Qt.formatDateTime(new Date(), "hh:mm")
-                            }
-                        }
-                    }
-
-                    Text {
-                        id: timeDashText
-                        height: 50
-                        color: "#ffffff"
-                        text: qsTr("-")
-                        anchors.left: startTimeTf.right
-                        anchors.leftMargin: 0
-                        anchors.right: endTimeTf.left
-                        anchors.rightMargin: 0
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        font.pixelSize: 18
-                    }
-
-                    TextField {
-                        id: endTimeTf
-                        width: 160
-                        height: 50
-                        placeholderText: "0:00"
-                        text: ""
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        validator: RegExpValidator {
-                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
-                        }
-                        onActiveFocusChanged: {
-                            if( activeFocus == true && text == "" )
-                            {
-                                if( startTimeTf.text != "" )
-                                {
-                                    text = startTimeTf.text
-                                }
-                                else
-                                {
-                                    text = Qt.formatDateTime(new Date(), "hh:mm")
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // define the content for tab 2
-        Page {
-            id: tab2content
             clip: true
             Flickable {
                 id: flickable2
@@ -588,6 +460,185 @@ Page {
                         anchors.rightMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                    }
+                }
+            }
+        }
+
+        // define the content for tab 2
+        Page {
+            id: tab2content
+            clip: true
+            Flickable {
+                id: flickable1
+                clip: false
+                flickableDirection: Flickable.VerticalFlick
+                anchors.fill: parent
+                contentWidth: width
+                contentHeight: obsTimeItem.y + obsTimeItem.height
+
+                Text {
+                    id: locationText
+                    color: "#ffffff"
+                    text: qsTr("Havainnointipaikka")
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+                    font.pixelSize: 18
+                }
+
+                Item {
+                    id: item1
+                    width: parent.width
+                    height: 50
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: locationText.bottom
+                    anchors.topMargin: 8
+
+                    TextField {
+                        id: locationTf
+                        height: 50
+                        placeholderText: qsTr( "Havaintopaikka" )
+                        text: ""
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        anchors.right: parent.right //button1.left
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        MouseArea {
+                            id: tf1mouse
+                            anchors.fill: parent
+                            onClicked: window.showListPage( "places" );
+                        }
+                    }
+/*
+                    Button {
+                        id: button1
+                        text: "..."
+                        iconSource: ""
+                        width: 50
+                        height: locationTf.height
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        onClicked: {
+                            listDialog.open()
+                        }
+                    }
+*/
+                    /*
+                    TextField {
+                        id: textfield2
+                        height: 50
+                        text: qsTr( "linnun paikka" )
+                        anchors.top: locationTf.bottom
+                        anchors.topMargin: 8
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                    }*/
+                }
+                Text {
+                    id: obsTimeText
+                    color: "#ffffff"
+                    text: qsTr("Havainnointiaika")
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: item1.bottom
+                    anchors.topMargin: 8
+                    font.pixelSize: 18
+                    visible: detailLevel > 1
+
+                }
+
+                Item {
+                    id: obsTimeItem
+                    height: 50
+                    anchors.top: obsTimeText.bottom
+                    anchors.topMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    visible: detailLevel > 1
+
+
+                    TextField {
+                        id: startTimeTf
+                        width: 160
+                        height: 50
+                        placeholderText: "0:00"
+                        text: ""
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        validator: RegExpValidator {
+                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
+                        }
+                        onActiveFocusChanged: {
+                            if( activeFocus == true && text == "" )
+                            {
+                                text = Qt.formatDateTime(new Date(), "hh:mm")
+                            }
+                        }
+                    }
+
+                    Text {
+                        id: timeDashText
+                        height: 50
+                        color: "#ffffff"
+                        text: qsTr("-")
+                        anchors.left: startTimeTf.right
+                        anchors.leftMargin: 0
+                        anchors.right: endTimeTf.left
+                        anchors.rightMargin: 0
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        font.pixelSize: 18
+                    }
+
+                    TextField {
+                        id: endTimeTf
+                        width: 160
+                        height: 50
+                        placeholderText: "0:00"
+                        text: ""
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        validator: RegExpValidator {
+                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
+                        }
+                        onActiveFocusChanged: {
+                            if( activeFocus == true && text == "" )
+                            {
+                                if( startTimeTf.text != "" )
+                                {
+                                    text = startTimeTf.text
+                                }
+                                else
+                                {
+                                    text = Qt.formatDateTime(new Date(), "hh:mm")
+                                }
+                            }
+                        }
                     }
                 }
             }
