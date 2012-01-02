@@ -21,7 +21,14 @@ Component {
             anchors.fill: parent
             onClicked: {
                 console.log("click: " + finname)
-                listPage.clicked( finname )
+                if( listView.editMode == true )
+                {
+                    console.log("edit")
+                }
+//                else
+                {
+                    listPage.clicked( finname )
+                }
 
             }
         }

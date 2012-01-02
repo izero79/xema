@@ -43,20 +43,39 @@ Page {
             }
         }
 
+
         Button {
             id: newButton
             x: 13
             width: 196
             height: 42
             text: qsTr( "Uusi havainto" )
+            anchors.top: continueButton.bottom
+            anchors.topMargin: 30
+            checked: false
+            checkable: false
+            pressed: false
+            anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {
+                window.showObsPage( false )
+            }
+        }
+
+        Button {
+            id: continueButton
+            x: 13
+            width: 196
+            height: 42
+            text: qsTr( "Jatka" )
             anchors.top: parent.top
             anchors.topMargin: 0
             checked: false
             checkable: false
             pressed: false
             anchors.horizontalCenter: parent.horizontalCenter
+            visible: unsavedData
             onClicked: {
-                window.showObsPage()
+                window.showObsPage( true )
             }
         }
     }

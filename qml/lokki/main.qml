@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "myjs.js" as MyScript
+//import My.testi 1.0
 
 PageStackWindow {
     id: window
@@ -9,6 +10,7 @@ PageStackWindow {
     property bool useSystematicSort: false
     property int defaultDetailLevel: 1
     property int currentDetailLevel: 1
+    property bool unsavedData: false
 
     signal writeNew( string data )
     signal readObs( string id )
@@ -40,7 +42,8 @@ PageStackWindow {
 
     function showSettingsPage()
     {
-        pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
+        //pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
+        MyScript.showSettingsPage()
     }
 
     function birdChanged( name )
@@ -51,6 +54,21 @@ PageStackWindow {
     function placeChanged( name )
     {
         MyScript.obsObject.placeChanged( name )
+    }
+
+    function editPeople( index )
+    {
+        MyScript.settingsObject.editPeople( index )
+    }
+
+    function editBird( index )
+    {
+        MyScript.settingsObject.editBird( index )
+    }
+
+    function editLocation( index )
+    {
+        MyScript.settingsObject.editLocation( index )
     }
 
     function regpeopleChanged( name )
@@ -78,14 +96,47 @@ PageStackWindow {
         MyScript.fillCurrentBox( name )
     }
 
-    function showObsPage()
+    function showObsPage( doNotInit )
     {
-        MyScript.showObsPage()
+        MyScript.showObsPage( doNotInit )
     }
 
     function dataLoaded( data )
     {
         MyScript.obsObject.dataLoaded( data )
+    }
+
+    function backFromList()
+    {
+        console.log( "tee list jutut")
+        if( listPageType == "regpeople" )
+        {
+            MyScript.fillRegPersonBox()
+        }
+        else if( listPageType == "people" )
+        {
+            MyScript.fillNonRegPersonBox()
+        }
+        else if( listPageType == "status" )
+        {
+            MyScript.fillStatusBox()
+        }
+    }
+
+    function addPeople()
+    {
+        console.log("add people")
+        MyScript.addPeople()
+    }
+
+    function addBird()
+    {
+        console.log("add bird")
+    }
+
+    function addLocation()
+    {
+        console.log("add location")
     }
 
 //    initialPage: Qt.resolvedUrl("MainPage.qml")
@@ -99,28 +150,15 @@ PageStackWindow {
                 if( pageStack.currentPage == MyScript.obsObject )
                 {
                     console.log( "tee obs jutut")
-//                    MyScript.readAllData()
+                    console.log( "DATA EDITED: " + MyScript.dataEdited() )
+                    unsavedData = MyScript.unSavedDataExists()
                     MyScript.clearObsDataSelections()
                     window.reloadHistory()
                 }
                 else if( pageStack.currentPage == MyScript.listObject )
                 {
-                    console.log( "tee list jutut")
-                    if( listPageType == "regpeople" )
-                    {
-                        MyScript.fillRegPersonBox()
-                    }
-                    else if( listPageType == "people" )
-                    {
-                        MyScript.fillNonRegPersonBox()
-                    }
-                    else if( listPageType == "status" )
-                    {
-                        MyScript.fillStatusBox()
-                    }
+                    backFromList()
                 }
-
-
                 pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
             }
         }
@@ -145,7 +183,7 @@ PageStackWindow {
             visible: pageStack.currentPage == MyScript.obsObject && MyScript.obsObject.currentTab == 3
             onClicked: {
                 console.log( "tee save jutut")
-                MyScript.readAllData()
+                MyScript.readAndSaveData()
                 window.reloadHistory()
                 console.log( "tee delete jutut")
             }

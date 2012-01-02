@@ -6,6 +6,11 @@ Component {
         id: myTestDelegate
         width: parent.width
         visible: {
+            if( listView.editMode == true )
+            {
+                return true
+            }
+
             if( listView.showRegistered == registered )
             {
                 return true
@@ -37,9 +42,16 @@ Component {
             anchors.fill: parent
             onClicked: {
                 console.log("click: " + name)
-                //listPage.clicked( name )
-                listView.model.setData( realindex, !selected, 0 )
-
+                if( listView.editMode == true )
+                {
+                    console.log("edit")
+                    listPage.clicked( realindex )
+                    return
+                }
+                else
+                {
+                    listView.model.setData( realindex, !selected, 2 )
+                }
             }
         }
     }

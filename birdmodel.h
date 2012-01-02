@@ -19,6 +19,9 @@ public:
         SweNameRole,
         AbbrevRole,
         LatinNameRole,
+        FinGroupRole,
+        SweGroupRole,
+        LatinGroupRole,
         CategoryRole
     };
 

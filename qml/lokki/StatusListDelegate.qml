@@ -29,7 +29,7 @@ Component {
             onClicked: {
                 console.log("click: " + abbrev + " (" + name + ")")
                 //listPage.clicked( abbrev + " (" + name + ")" )
-                listView.model.setData( realindex, !selected, 0 )
+                listView.model.setData( realindex, !selected, 2 )
 
             }
         }

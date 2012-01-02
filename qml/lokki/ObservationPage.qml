@@ -10,6 +10,9 @@ Page {
     property int currentId: 0
     property int currentTab: 1
     property int delegateHeight: detailLevel == 3 ? 300 : detailLevel == 2 ? 150 : 75
+    property variant missingInfo
+    property bool edited: false
+
     height: parent.height
     width: parent.width
 
@@ -79,9 +82,22 @@ Page {
 
     function readAllData()
     {
-        if( birdNameTf.text == "" || regPeopleTa.text == "" || locationTf.text == "" )
+        var missingData = new Array();
+        if( startDateTf.text == "" )
         {
-            return ""
+            missingData[missingData.length] = qsTr( "start date" )
+        }
+        if( birdNameTf.text == "" )
+        {
+            missingData[missingData.length] = qsTr( "species" )
+        }
+        if( regPeopleTa.text == "" )
+        {
+            missingData[missingData.length] = qsTr( "observer" )
+        }
+        if( locationTf.text == "" )
+        {
+            missingData[missingData.length] = qsTr( "location" )
         }
 
         var allData = "";
@@ -99,7 +115,22 @@ Page {
         allData += otherPeopleTa.text + delimiter
         allData += hideChkBox.checked + delimiter
 
-        allData += MyScript.readDelegateDatas()
+        var delegateData = MyScript.readDelegateDatas()
+        if( delegateData == "-1" )
+        {
+            missingData[missingData.length] = qsTr( "count" )
+        }
+        else
+        {
+            allData += delegateData
+        }
+
+        if( missingData.length > 0 )
+        {
+            console.log("missing data: " + missingData )
+            missingInfo = missingData
+            return "-1"
+        }
 
         allData += weatherTa.text
 
@@ -179,6 +210,77 @@ Page {
             weatherTa.text = ""
         }
         MyScript.clearObsDataSelections()
+    }
+
+    function showErrorDialog()
+    {
+        saveErrorDialog.open()
+    }
+
+    function dataChanged()
+    {
+        if( edited == false )
+        {
+            edited = MyScript.delegateDataChanged()
+        }
+        return edited
+    }
+
+    function initDataChanged()
+    {
+        MyScript.initDelegateDataChanged()
+        edited = false
+    }
+
+    Dialog {
+        id: saveErrorDialog
+
+        title: Text {
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr( "Virhe" )
+            horizontalAlignment: Text.AlignHCenter
+        }
+        content:Item {
+            height: saveErrorDialogText.paintedHeight
+            width: parent.width
+            anchors.topMargin: 10
+            Text {
+                id: saveErrorDialogText
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: {
+                    var dialogText = qsTr( "Pakollinen tieto puuttuu:" )
+                    for( var i = 0; i < missingInfo.length; i++ )
+                    {
+                        dialogText += "\n" + missingInfo[i];
+                    }
+                    return dialogText;
+                }
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Item { height: saveErrorDialogButton.height + 2 * 10;
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button {
+                id: saveErrorDialogButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                width: 200
+                text: qsTr( "Ok" )
+                onClicked: {
+                    missingInfo = ""
+                    saveErrorDialog.close()
+                }
+            }
+        }
     }
 
 
@@ -309,6 +411,7 @@ Page {
                                 text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
                             }
                         }
+                        onTextChanged: obsPage.edited = true
                     }
 
                     Text {
@@ -355,6 +458,7 @@ Page {
                                 }
                             }
                         }
+                        onTextChanged: obsPage.edited = true
                     }
                 }
                 Text {
@@ -397,6 +501,7 @@ Page {
                             anchors.fill: parent
                             onClicked: window.showListPage( "regpeople", regPeopleTa.text );
                         }
+                        onTextChanged: obsPage.edited = true
 
                     }
 
@@ -418,6 +523,7 @@ Page {
                             anchors.fill: parent
                             onClicked: window.showListPage( "people", otherPeopleTa.text );
                         }
+                        onTextChanged: obsPage.edited = true
 
                     }
                 }
@@ -460,6 +566,7 @@ Page {
                         anchors.rightMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        onTextChanged: obsPage.edited = true
                     }
                 }
             }
@@ -518,6 +625,7 @@ Page {
                             anchors.fill: parent
                             onClicked: window.showListPage( "places" );
                         }
+                        onTextChanged: obsPage.edited = true
                     }
 /*
                     Button {
@@ -595,6 +703,7 @@ Page {
                                 text = Qt.formatDateTime(new Date(), "hh:mm")
                             }
                         }
+                        onTextChanged: obsPage.edited = true
                     }
 
                     Text {
@@ -639,6 +748,7 @@ Page {
                                 }
                             }
                         }
+                        onTextChanged: obsPage.edited = true
                     }
                 }
             }
@@ -697,6 +807,7 @@ Page {
                             anchors.fill: parent
                             onClicked: window.showListPage( "birds" );
                         }
+                        onTextChanged: obsPage.edited = true
 
                     }
                 }
@@ -775,6 +886,7 @@ Page {
                         anchors.left: parent.left
                         anchors.leftMargin: 0
                         visible: detailLevel > 2
+                        onTextChanged: obsPage.edited = true
 
                     }
 
@@ -791,6 +903,7 @@ Page {
                         visible: detailLevel > 2
                         validator: IntValidator { bottom: 0 }
                         inputMethodHints: Qt.ImhDigitsOnly
+                        onTextChanged: obsPage.edited = true
                     }
                     CheckBox {
                         id: hideChkBox
@@ -802,6 +915,7 @@ Page {
                         anchors.rightMargin: 0
                         text: qsTr( "Salaa havainto")
                         visible: detailLevel > 2
+                        onCheckedChanged: obsPage.edited = true
                     }
                 }
             }

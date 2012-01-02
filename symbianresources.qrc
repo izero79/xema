@@ -19,5 +19,8 @@
         <file>qml/lokki/TestiPage.qml</file>
         <file>qml/s3icons/filter.svg</file>
         <file>qml/s3icons/save.svg</file>
+        <file>qml/lokki/PersonEditPage.qml</file>
+        <file>qml/lokki/BirdEditPage.qml</file>
+        <file>qml/lokki/LocationEditPage.qml</file>
     </qresource>
 </RCC>

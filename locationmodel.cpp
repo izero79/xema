@@ -4,6 +4,7 @@ LocationModel::LocationModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     roles[FilterRole] = "filter";
+    roles[IndexRole] = "realindex";
     roles[TownRole] = "town";
     roles[PlaceRole] = "place";
     roles[CoordinateRole] = "coordinate";
@@ -37,6 +38,10 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
         return QString( item.town() + ", " +
                         item.place() + ", " );
     }
+    else if( role == IndexRole )
+    {
+        return index.row();
+    }
     else if( role == TownRole )
     {
         return item.town();
@@ -48,6 +53,14 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     else if( role == CoordinateRole )
     {
         return item.coordinate();
+    }
+    else if( role == YkjCoordinateRole )
+    {
+        return item.ykjCoordinate();
+    }
+    else if( role == WgsCoordinateRole )
+    {
+        return item.wgsCoordinate();
     }
     return QVariant();
 }
@@ -112,4 +125,30 @@ void LocationModel::setContent( const QList<Location> &newItems )
         items = newItems;
         QAbstractItemModel::endInsertRows();
     }
+}
+
+bool LocationModel::setData( const QModelIndex &index, const QVariant &value, int role )
+{
+    Location tmp = items.at( index.row() );
+    switch( role )
+    {
+    case TownRole:
+        tmp.setTown( value.toString() );
+        break;
+    case PlaceRole:
+        tmp.setPlace( value.toString() );
+        break;
+    case YkjCoordinateRole:
+        tmp.setYKJCoordinate( value.toString() );
+        break;
+    case WgsCoordinateRole:
+        tmp.setWGSCoordinate( value.toString() );
+        break;
+    default:
+        break;
+    }
+
+    items.replace( index.row(), tmp );
+    QAbstractItemModel::dataChanged( index, index );
+    return true;
 }

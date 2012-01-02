@@ -4,6 +4,13 @@
 
 
 #include "modeldatawriter.h"
+#include "birdmodel.h"
+#include "bird.h"
+#include "locationmodel.h"
+#include "location.h"
+#include "personmodel.h"
+#include "person.h"
+#include "lokkiconstants.h"
 
 ModelDataWriter::ModelDataWriter(QObject *parent) :
     QObject(parent)
@@ -30,19 +37,11 @@ void ModelDataWriter::writeNewObservation( const QString &data )
     newData.prepend( newIdNum );
     qDebug() << "NYT PITAIS TALLENTAA" << newData;
     bool headerExists = true;
-#ifdef Q_OS_SYMBIAN
-    if( QFile::exists( "c:/data/lokkitesti.txt" ) == false )
-#else
-    if( QFile::exists( "/Users/Tero/lokkitesti.txt" ) == false )
-#endif
+    if( QFile::exists( filePath + "lokkitesti.txt" ) == false )
     {
         headerExists = false;
     }
-#ifdef Q_OS_SYMBIAN
-    QFile tiedosto( "c:/data/lokkitesti.txt");
-#else
-    QFile tiedosto( "/Users/Tero/lokkitesti.txt");
-#endif
+    QFile tiedosto( filePath + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadWrite|QFile::Append);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -59,23 +58,15 @@ void ModelDataWriter::writeNewObservation( const QString &data )
 void ModelDataWriter::replaceObservation( qlonglong id, const QString &data )
 {
     qDebug() << "KORVATAAN, ID ON" << id;
-
+/*
     bool headerExists = false;
-#ifdef Q_OS_SYMBIAN
-    if( QFile::exists( "c:/data/lokkitesti.txt" ) == false )
-#else
-    if( QFile::exists( "/Users/Tero/lokkitesti.txt" ) == false )
-#endif
+    if( QFile::exists( filePath + "lokkitesti.txt" ) == true )
     {
         headerExists = true;
-    }
-#ifdef Q_OS_SYMBIAN
-    QFile tiedosto( "c:/data/lokkitesti.txt");
-    QFile tmptiedosto( "c:/data/lokkitesti.tmp");
-#else
-    QFile tiedosto( "/Users/Tero/lokkitesti.txt");
-    QFile tmptiedosto( "/Users/Tero/lokkitesti.tmp");
-#endif
+    }*/
+    QFile tiedosto( filePath + "lokkitesti.txt" );
+    QFile tmptiedosto( filePath + "lokkitesti.tmp" );
+
     tiedosto.open(QFile::ReadOnly);
     tmptiedosto.open(QFile::ReadWrite|QFile::Append);
     QTextStream instriimi(&tiedosto);
@@ -104,42 +95,24 @@ void ModelDataWriter::replaceObservation( qlonglong id, const QString &data )
     }
     tiedosto.close();
     tmptiedosto.close();
-#ifdef Q_OS_SYMBIAN
-    if( QFile::exists( "c:/data/lokkitesti.backup" ) == true )
+    if( QFile::exists( filePath + "lokkitesti.backup" ) == true )
     {
-        QFile old( "c:/data/lokkitesti.backup" );
+        QFile old( filePath + "lokkitesti.backup" );
         old.remove();
     }
-    tiedosto.rename( "c:/data/lokkitesti.backup");
-    tmptiedosto.rename( "c:/data/lokkitesti.txt");
-#else
-    if( QFile::exists( "/Users/Tero/lokkitesti.backup" ) == true )
-    {
-        QFile old( "/Users/Tero/lokkitesti.backup" );
-        old.remove();
-    }
-    tiedosto.rename( "/Users/Tero/lokkitesti.backup");
-    tmptiedosto.rename( "/Users/Tero/lokkitesti.txt");
-#endif
+    tiedosto.rename( filePath + "lokkitesti.backup");
+    tmptiedosto.rename( filePath + "lokkitesti.txt");
     tiedosto.remove();
 }
 
 QString ModelDataWriter::loadObservation( qlonglong id )
 {
     qDebug() << "LUETAAN" << id;
-#ifdef Q_OS_SYMBIAN
-    if( QFile::exists( "c:/data/lokkitesti.txt" ) == false )
-#else
-    if( QFile::exists( "/Users/Tero/lokkitesti.txt" ) == false )
-#endif
+    if( QFile::exists( filePath + "lokkitesti.txt" ) == false )
     {
         return QString();
     }
-#ifdef Q_OS_SYMBIAN
-    QFile tiedosto( "c:/data/lokkitesti.txt");
-#else
-    QFile tiedosto( "/Users/Tero/lokkitesti.txt");
-#endif
+    QFile tiedosto( filePath + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     QString obsLine;
@@ -159,22 +132,90 @@ QString ModelDataWriter::loadObservation( qlonglong id )
     return obsLine;
 }
 
+void ModelDataWriter::writePersonData(PersonModel *model)
+{
+    QFile tiedosto( filePath + "lokkitestiperson.txt");
+    tiedosto.open(QFile::ReadWrite);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    for( int i = 0; i < model->rowCount(); i++ )
+    {
+        QString line;
+        line.append( model->data( model->index( i ), PersonModel::FirstNameRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), PersonModel::SurNameRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), PersonModel::RegisteredRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), PersonModel::DefaultRole ).toString());
+        line.append( ";\n" );
+        striimi << line;
+    }
+    tiedosto.close();
+}
+
+void ModelDataWriter::writeLocationData(LocationModel *model)
+{
+    QFile tiedosto( filePath + "lokkitestilocation.txt");
+    tiedosto.open(QFile::ReadWrite);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    for( int i = 0; i < model->rowCount(); i++ )
+    {
+        QString line;
+        line.append( model->data( model->index( i ), LocationModel::TownRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), LocationModel::PlaceRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), LocationModel::WgsCoordinateRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), LocationModel::YkjCoordinateRole ).toString());
+        line.append( ";\n" );
+        striimi << line;
+    }
+    tiedosto.close();
+}
+
+void ModelDataWriter::writeBirdData(BirdModel *model)
+{
+    QFile tiedosto( filePath + "lokkitestibirds.txt");
+    tiedosto.open(QFile::ReadWrite);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    for( int i = 0; i < model->rowCount(); i++ )
+    {
+        QString line;
+        line.append( model->data( model->index( i ), BirdModel::IdRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::FinGroupRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::SweGroupRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::LatinGroupRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::FinNameRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::SweNameRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::LatinNameRole ).toString());
+        line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::AbbrevRole ).toString());
+        line.append( "\n" );
+        line.append( model->data( model->index( i ), BirdModel::CategoryRole ).toString());
+        line.append( "\n" );
+        striimi << line;
+    }
+    tiedosto.close();
+}
+
 qlonglong ModelDataWriter::getNewId()
 {
     qDebug() << "LUETAAN IDT";
-#ifdef Q_OS_SYMBIAN
-    if( QFile::exists( "c:/data/lokkitesti.txt" ) == false )
-#else
-    if( QFile::exists( "/Users/Tero/lokkitesti.txt" ) == false )
-#endif
+    if( QFile::exists( filePath + "lokkitesti.txt" ) == false )
     {
         return 1;
     }
-#ifdef Q_OS_SYMBIAN
-    QFile tiedosto( "c:/data/lokkitesti.txt");
-#else
-    QFile tiedosto( "/Users/Tero/lokkitesti.txt");
-#endif
+    QFile tiedosto( filePath + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     QString obsLine;
@@ -191,3 +232,4 @@ qlonglong ModelDataWriter::getNewId()
     tiedosto.close();
     return maxId;
 }
+

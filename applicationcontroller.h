@@ -10,6 +10,7 @@ class LocationModel;
 class StatusModel;
 class HistoryModel;
 class ModelDataLoader;
+class ModelDataWriter;
 
 class ApplicationController : public QObject
 {
@@ -40,6 +41,7 @@ private:
     StatusModel *mStatusModel;
     HistoryModel *mHistoryModel;
     ModelDataLoader *mModelLoader;
+    ModelDataWriter *mModelWriter;
 };
 
 #endif // APPLICATIONCONTROLLER_H

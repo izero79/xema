@@ -7,6 +7,7 @@
 #include "locationmodel.h"
 #include "personmodel.h"
 #include "modeldataloader.h"
+#include "modeldatawriter.h"
 #include "statusmodel.h"
 #include "historymodel.h"
 
@@ -17,7 +18,8 @@ ApplicationController::ApplicationController(QObject *parent) :
     mLocationModel( 0 ),
     mStatusModel( 0 ),
     mHistoryModel( 0 ),
-    mModelLoader( 0 )
+    mModelLoader( 0 ),
+    mModelWriter( 0 )
 {
     initGUI();
     QTimer::singleShot( 0, this, SLOT(initObjects()) );
@@ -67,10 +69,13 @@ void ApplicationController::initObjects()
     mQMLWin->setHistoryModel( mHistoryModel );
 
     connect(mQMLWin,SIGNAL(reloadHistory()),this,SLOT(reloadHistory()));
+    mModelWriter = new ModelDataWriter( this );
 }
 
 ApplicationController::~ApplicationController()
 {
+    mModelWriter->writePersonData( mPersonModel );
+    mModelWriter->writeLocationData( mLocationModel );
     qDebug() << "ApplicationController::~ApplicationController()";
     mQMLWin->deleteLater();
     mQMLWin = 0;

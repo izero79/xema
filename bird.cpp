@@ -2,20 +2,26 @@
 
 Bird::Bird() :
     mId( 0 ),
+    mFinGroup(),
+    mSweGroup(),
+    mLatinGroup(),
     mFinName(),
     mSweName(),
-    mAbbreviation(),
     mLatinName(),
+    mAbbreviation(),
     mCategory()
 {
 }
 
-Bird::Bird( int id, const QString &finName, const QString &sweName, const QString &abbr, const QString &latin, const QString &category )  :
+Bird::Bird( int id,  const QString &finGroup, const QString &sweGroup, const QString &latinGroup, const QString &finName, const QString &sweName, const QString &latin, const QString &abbr, const QString &category )  :
     mId( id ),
+    mFinGroup( finGroup ),
+    mSweGroup( sweGroup ),
+    mLatinGroup( latinGroup ),
     mFinName( finName ),
     mSweName( sweName ),
-    mAbbreviation( abbr ),
     mLatinName( latin ),
+    mAbbreviation( abbr ),
     mCategory( category )
 {
 
@@ -25,6 +31,22 @@ void Bird::setId( int id )
 {
     mId = id;
 }
+
+void Bird::setFinGroup( const QString &group )
+{
+    mFinGroup = group;
+}
+
+void Bird::setSweGroup( const QString &group )
+{
+    mSweGroup = group;
+}
+
+void Bird::setLatinGroup( const QString &group )
+{
+    mLatinGroup = group;
+}
+
 
 void Bird::setFinName( const QString &name )
 {
@@ -55,6 +77,22 @@ int Bird::id() const
 {
     return mId;
 }
+
+QString Bird::finGroup() const
+{
+    return mFinGroup;
+}
+
+QString Bird::sweGroup() const
+{
+    return mSweGroup;
+}
+
+QString Bird::latinGroup() const
+{
+    return mLatinGroup;
+}
+
 
 QString Bird::finName() const
 {

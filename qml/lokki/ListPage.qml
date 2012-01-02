@@ -4,12 +4,53 @@ import com.nokia.symbian 1.1
 
 Page {
     id: listPage
-    tools: toolBarLayout
+    tools: listToolBarLayout
+
+    ToolBarLayout {
+        id: listToolBarLayout
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-back"
+            onClicked: {
+                window.backFromList()
+                pageStack.pop()
+            }
+        }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-add"
+            visible: listView.model == personModel || listView.model == locationModel || listView.model == birdModel
+            onClicked: {
+                console.log("Add new")
+                addNewClicked()
+
+            }
+        }
+    }
 
     function init()
     {
         listView.model.filter( "" )
         filterTf.text = ""
+    }
+
+    function addNewClicked()
+    {
+        if( listPageType == "birds" || listPageType == "editbirds" )
+        {
+            window.addBird()
+            return
+        }
+        else if( listPageType == "places" ||  listPageType == "editplaces" )
+        {
+            window.addLocation()
+            return
+        }
+        else if( listPageType == "editallpeople" || listPageType == "regpeople" || listPageType == "people")
+        {
+            window.addPeople()
+            return
+        }
     }
 
     function clicked( name )
@@ -18,9 +59,25 @@ Page {
         {
             window.birdChanged( name )
         }
+        else if( listPageType == "editbirds" )
+        {
+            window.editBird( name )
+            return
+        }
         else if( listPageType == "places" )
         {
+            console.log( "hoo")
             window.placeChanged( name )
+        }
+        else if( listPageType == "editplaces" )
+        {
+            window.editLocation( name )
+            return
+        }
+        else if( listPageType == "editallpeople")
+        {
+            window.editPeople( name )
+            return
         }
         else if( listPageType == "regpeople")
         {
@@ -59,7 +116,7 @@ Page {
             {
                 if( personModel.data( j, 35 ) == selNames[i] )
                 {
-                    personModel.setData( j, true, 0 )
+                    personModel.setData( j, true, 2 )
                 }
             }
         }
@@ -84,7 +141,7 @@ Page {
             {
                 if( statusModel.data( j, 35 ) == selNames[i] )
                 {
-                    statusModel.setData( j, true, 0 )
+                    statusModel.setData( j, true, 2 )
                 }
             }
         }
@@ -208,7 +265,7 @@ Page {
         listView.model.filter( "" )
         for( var i = 0; i < listView.model.rowCount(); i++ )
         {
-            listView.model.setData( i, false, 0 )
+            listView.model.setData( i, false, 2 )
         }
     }
 
@@ -242,12 +299,21 @@ Page {
     ListView {
         id: listView
         property bool showRegistered: false
+        property bool editMode: false
         model: {
             if( listPageType == "birds" )
             {
                 return birdModel
             }
+            else if( listPageType == "editbirds" )
+            {
+                return birdModel
+            }
             else if( listPageType == "places" )
+            {
+                return locationModel
+            }
+            else if( listPageType == "editplaces" )
             {
                 return locationModel
             }
@@ -293,8 +359,26 @@ Page {
                 }
                 return birdDelegate
             }
+            else if( listPageType == "editbirds" )
+            {
+                if( window.useSystematicSort == true )
+                {
+                    model.setSorting( 0, true )
+                }
+                else
+                {
+                    model.setSorting( 1, true )
+                }
+                editMode = true
+                return birdDelegate
+            }
             else if( listPageType == "places" )
             {
+                return locationDelegate
+            }
+            else if( listPageType == "editplaces" )
+            {
+                editMode = true
                 return locationDelegate
             }
             else if( listPageType == "status" )
@@ -305,10 +389,14 @@ Page {
             {
                 return simpleDelegate
             }
+            else if( listPageType == "editallpeople" )
+            {
+                editMode = true
+                return myTestDelegate
+            }
             else if( listPageType == "regpeople" )
             {
                 showRegistered = true
-
                 return myTestDelegate
             }
             else

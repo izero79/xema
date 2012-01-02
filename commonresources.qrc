@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>lajilista.csv</file>
         <file>paikkalista.csv</file>
         <file>ihmislista.csv</file>
         <file>statuslist.csv</file>
+        <file>lajilista.csv</file>
+        <file>atlasindex.csv</file>
     </qresource>
 </RCC>

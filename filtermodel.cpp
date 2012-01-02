@@ -87,7 +87,7 @@ void FilterModel::sectionAlphas()
                 }
                 else
                 {
-                    if( title.at( 0 ) == QString( "A" ).at( 0 ) )
+                    if( title.at( 0 ) == 'A' )
                     {
                         qDebug() << "AAAAAAA";
                         if( title.at( 0 ).decomposition().isEmpty() &&
@@ -131,8 +131,8 @@ void FilterModel::filter( const QString &str )
 bool FilterModel::setData( int index, const QVariant &data, int role )
 {
     QModelIndex idx = sourceModel()->index( index, 0 );
-
-    return sourceModel()->setData( idx, data, Qt::EditRole );
+    qDebug() << "setting data for index" << index;
+    return sourceModel()->setData( idx, data, role );
 }
 
 QVariant FilterModel::data( int index, int role )

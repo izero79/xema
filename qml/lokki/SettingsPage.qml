@@ -7,7 +7,34 @@ Page {
     id: settingsPage
     tools: toolBarLayout
 
-    Text{
+    function editPeople( indexi )
+    {
+        var editorCompnent = Qt.createComponent(Qt.resolvedUrl("PersonEditPage.qml"))
+        var editorObject = editorCompnent.createObject( window )
+        pageStack.push(editorObject)
+        console.log("peopleselected: " + indexi)
+        editorObject.selectedIndex( indexi )
+    }
+
+    function editBird( indexi )
+    {
+        var editorCompnent = Qt.createComponent(Qt.resolvedUrl("BirdEditPage.qml"))
+        var editorObject = editorCompnent.createObject( window )
+        pageStack.push(editorObject)
+        console.log("birdselected: " + indexi)
+        editorObject.selectedIndex( indexi )
+    }
+
+    function editLocation( indexi )
+    {
+        var editorCompnent = Qt.createComponent(Qt.resolvedUrl("LocationEditPage.qml"))
+        var editorObject = editorCompnent.createObject( window )
+        pageStack.push(editorObject)
+        console.log("locationselected: " + indexi)
+        editorObject.selectedIndex( indexi )
+    }
+
+    Text {
         id: systematicSortText
         text: qsTr( "Systemaattinen lajiluettelo")
         font.pixelSize: 20
@@ -83,7 +110,7 @@ Page {
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.top: row1.bottom
-        anchors.topMargin: 8
+        anchors.topMargin: 30
         text: qsTr( "Kenttien oletusmäärä")
         font.pixelSize: 20
         verticalAlignment: Text.AlignVCenter
@@ -165,5 +192,43 @@ Page {
                 }
             }
         }
+    }
+    Text {
+        id: editText
+        text: qsTr( "Muokkaa luetteloita")
+        font.pixelSize: 20
+        verticalAlignment: Text.AlignVCenter
+        anchors.right: parent.right
+        anchors.leftMargin: 0
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        horizontalAlignment: Text.AlignLeft
+        anchors.top: row2.bottom
+        anchors.topMargin: 30
+        color: "#ffffff"
+    }
+    Button {
+        id: editPeople
+        anchors.top: editText.bottom
+        anchors.topMargin: 8
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: qsTr( "Havainnoijat" )
+        onClicked: window.showListPage( "editallpeople", "" );
+    }
+    Button {
+        id: editLocation
+        anchors.top: editPeople.bottom
+        anchors.topMargin: 8
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: qsTr( "Paikat" )
+        onClicked: window.showListPage( "editplaces", "" );
+    }
+    Button {
+        id: editBird
+        anchors.top: editLocation.bottom
+        anchors.topMargin: 8
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: qsTr( "Lajit" )
+        onClicked: window.showListPage( "editbirds", "" );
     }
 }

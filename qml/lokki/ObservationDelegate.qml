@@ -4,6 +4,14 @@ import com.nokia.symbian 1.1
 Item {
     id: item1
 
+    property bool edited: false
+    property int rows: 1
+
+    function setRows( count )
+    {
+       rows = count
+    }
+
     function setStatus( joo )
     {
         statusTf.text = joo
@@ -13,6 +21,11 @@ Item {
     {
         var allData = "";
         var delimiter = "#";
+        if( countTf.text == "" )
+        {
+            return "-1"
+        }
+
         allData += countTf.text + delimiter
         allData += startTimeTf.text + delimiter
         allData += endTimeTf.text + delimiter
@@ -64,6 +77,7 @@ Item {
         width: 75
         validator: IntValidator { bottom: 1; }
         inputMethodHints: Qt.ImhDigitsOnly
+        onTextChanged: item1.edited = true
 
     }
     TextField {
@@ -82,6 +96,7 @@ Item {
             anchors.fill: parent
             onClicked: window.showListPage( "sex", sexTf.text, sexTf );
         }
+        onTextChanged: item1.edited = true
     }
     TextField {
         id: ageTf
@@ -100,6 +115,8 @@ Item {
             anchors.fill: parent
             onClicked: window.showListPage( "age", ageTf.text, ageTf );
         }
+        onTextChanged: item1.edited = true
+
     }
     TextField {
         id: dressTf
@@ -116,6 +133,8 @@ Item {
             anchors.fill: parent
             onClicked: window.showListPage( "dress", dressTf.text, dressTf );
         }
+        onTextChanged: item1.edited = true
+
     }
     TextField {
         id: statusTf
@@ -133,6 +152,8 @@ Item {
             anchors.fill: parent
             onClicked: window.showListPage( "status", statusTf.text, statusTf );
         }
+        onTextChanged: item1.edited = true
+
     }
     Item {
         id: item2
@@ -165,6 +186,8 @@ Item {
                     text = Qt.formatDateTime(new Date(), "hh:mm")
                 }
             }
+            onTextChanged: item1.edited = true
+
         }
 
         Text {
@@ -209,6 +232,8 @@ Item {
                     }
                 }
             }
+            onTextChanged: item1.edited = true
+
         }
         TextField {
             id: loftTf
@@ -221,9 +246,12 @@ Item {
             y: statusTf.y
             visible: detailLevel > 2
             validator: IntValidator {
-                bottom: 0
+                bottom: 1
+                top: item1.rows
             }
             inputMethodHints: Qt.ImhDigitsOnly
+            onTextChanged: item1.edited = true
+
         }
     }
     CheckBox {
@@ -235,6 +263,8 @@ Item {
         width: parent.width / 2
         text: qsTr( "Bongaus")
         visible: detailLevel > 2
+        onCheckedChanged: item1.edited = true
+
     }
 
     CheckBox {
@@ -246,6 +276,7 @@ Item {
         text: qsTr( "Pesintä")
         y: watchChkBox.y
         visible: detailLevel > 2
+        onCheckedChanged: item1.edited = true
     }
     TextArea {
         id: moreInfoTa
@@ -259,6 +290,8 @@ Item {
         text: ""
         height: 50
         visible: detailLevel > 2
+        onTextChanged: item1.edited = true
+
     }
 
 }

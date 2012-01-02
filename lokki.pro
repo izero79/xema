@@ -3,8 +3,8 @@ folder_01.source = qml/lokki
 folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
 
-CONFIG -=debug
-CONFIG +=release
+#CONFIG +=debug
+#CONFIG -=release
 CONFIG -=liteVersion
 CONFIG -=forOvi
 CONFIG -=forUnsinged
@@ -12,7 +12,7 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-symbian:DEFINES +=DEBUGONLYTOFILE
+#symbian:DEFINES +=DEBUGONLYTOFILE
 
 !S603x{
     Symbian1{
@@ -78,7 +78,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/copyright \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog
+    qtc_packaging/debian_harmattan/changelog \
+    qmldir
 
 symbian {
 
@@ -112,43 +113,9 @@ HEADERS += \
     modeldatawriter.h \
     historyitem.h \
     historymodel.h \
-    settings.h
+    settings.h \
+    lokkiconstants.h
 
 RESOURCES += \
     symbianresources.qrc \
     commonresources.qrc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

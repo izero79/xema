@@ -14,9 +14,12 @@ public:
     enum Roles
     {
         FilterRole = Qt::UserRole + 1,
-        TownRole,
+        IndexRole,
+        TownRole, // 35
         PlaceRole,
-        CoordinateRole
+        CoordinateRole,
+        YkjCoordinateRole,
+        WgsCoordinateRole // 39
     };
 
 signals:
@@ -29,6 +32,7 @@ public slots:
     Q_INVOKABLE     bool removeRow ( int row, const QModelIndex & parent = QModelIndex() );
     Q_INVOKABLE     bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
     Q_INVOKABLE     Location getItem( int index );
+    Q_INVOKABLE     bool setData( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
 
                     void setContent( const QList<Location> &newItems );
                     QList<Location> content() const;

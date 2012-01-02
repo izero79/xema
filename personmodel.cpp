@@ -10,6 +10,8 @@ PersonModel::PersonModel(QObject *parent) :
     roles[NameRole] = "name";
     roles[RegisteredRole] = "registered";
     roles[DefaultRole] = "default";
+    roles[FirstNameRole] = "firstname";
+    roles[SurNameRole] = "surname";
     roles[SelectedRole] = "selected";
     setRoleNames(roles);
 }
@@ -55,6 +57,14 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
     else if( role == DefaultRole )
     {
         return item.defaultName();
+    }
+    else if( role == FirstNameRole )
+    {
+        return item.firstName();
+    }
+    else if( role == SurNameRole )
+    {
+        return item.surName();
     }
     else if( role == SelectedRole )
     {
@@ -127,13 +137,49 @@ void PersonModel::setContent( const QList<Person> &newItems )
 
 bool PersonModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
-    if( role != SelectedRole )
+    qDebug() << "joo" << index.row() << items.count();
+    int row = index.row();
+    Person tmp;
+    if( index.row() >= items.count() || index.row() < 0 )
     {
-        return false;
+        row = items.count();
+        qDebug() << "trying to create new";
     }
-    Person tmp = items.at( index.row() );
-    tmp.setSelected( value.toBool() );
-    items.replace( index.row(), tmp );
+    else
+    {
+        tmp = items.at( row );
+    }
+    qDebug() << "setData"  << value;
+    switch( role )
+    {
+    case RegisteredRole:
+        tmp.setRegistered( value.toBool() );
+        break;
+    case DefaultRole:
+        tmp.setDefault( value.toBool() );
+        break;
+    case FirstNameRole:
+        tmp.setFirstName( value.toString() );
+        break;
+    case SurNameRole:
+        tmp.setSurName( value.toString() );
+        break;
+    case SelectedRole:
+        tmp.setSelected( value.toBool() );
+        break;
+    default:
+        break;
+    }
+    if( row >= items.count() )
+    {
+        QAbstractItemModel::beginInsertRows( QModelIndex(), items.count(), items.count() );
+        items.append( tmp );
+        QAbstractItemModel::endInsertRows();
+    }
+    else
+    {
+        items.replace( index.row(), tmp );
+    }
     QAbstractItemModel::dataChanged( index, index );
     return true;
 }

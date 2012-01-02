@@ -15,9 +15,11 @@ public:
     {
         FilterRole = Qt::UserRole + 1,
         IndexRole,
-        NameRole,
+        NameRole, // 35
         RegisteredRole,
         DefaultRole,
+        FirstNameRole, // 38
+        SurNameRole,
         SelectedRole = Qt::EditRole
     };
 

@@ -12,6 +12,7 @@
 #include "status.h"
 #include "historymodel.h"
 #include "historyitem.h"
+#include "lokkiconstants.h"
 
 ModelDataLoader::ModelDataLoader(QObject *parent) :
     QObject(parent)
@@ -20,7 +21,11 @@ ModelDataLoader::ModelDataLoader(QObject *parent) :
 
 void ModelDataLoader::loadBirdData( BirdModel *model )
 {
-    QFile tiedosto( ":lajilista.csv");
+    QFile tiedosto( filePath + "lokkitestibirds.txt" );
+    if( tiedosto.exists() == false )
+    {
+        tiedosto.setFileName( ":lajilista.csv");
+    }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if( striimi.atEnd() == false )
@@ -31,14 +36,20 @@ void ModelDataLoader::loadBirdData( BirdModel *model )
     {
         QString birdLine;
         birdLine = striimi.readLine();
-        Bird bird( birdLine.section( ';', 0, 0 ).toInt(), birdLine.section( ';', 1, 1 ), birdLine.section( ';', 2, 2 ), birdLine.section( ';', 3, 3 ), birdLine.section( ';', 4, 4 ), birdLine.section( ';', 5, 5 ) );
+        Bird bird( birdLine.section( ';', 0, 0 ).toInt(), birdLine.section( ';', 1, 1 ), birdLine.section( ';', 2, 2 ),
+                   birdLine.section( ';', 3, 3 ), birdLine.section( ';', 4, 4 ), birdLine.section( ';', 5, 5 ),
+                   birdLine.section( ';', 7, 7 ), birdLine.section( ';', 6, 6 ), birdLine.section( ';', 8, 8 ) );
         model->addItem( bird );
     }
 }
 
 void ModelDataLoader::loadLocationData(LocationModel *model)
 {
-    QFile tiedosto( ":paikkalista.csv");
+    QFile tiedosto( filePath + "lokkitestilocation.txt" );
+    if( tiedosto.exists() == false )
+    {
+        tiedosto.setFileName( ":paikkalista.csv");
+    }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     while( striimi.atEnd() == false )
@@ -52,7 +63,11 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
 
 void ModelDataLoader::loadPersonData(PersonModel *model)
 {
-    QFile tiedosto( ":ihmislista.csv");
+    QFile tiedosto( filePath + "lokkitestiperson.txt" );
+    if( tiedosto.exists() == false )
+    {
+        tiedosto.setFileName( ":ihmislista.csv");
+    }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     while( striimi.atEnd() == false )
@@ -60,12 +75,12 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
         QString personLine;
         personLine = striimi.readLine();
         bool registered = false;
-        if( personLine.section( ';', 2, 2 ) == QString( "true" ) )
+        if( personLine.section( ';', 2, 2 ) == "true" )
         {
             registered = true;
         }
         bool defaultName = false;
-        if( personLine.section( ';', 3, 3 ) == QString( "true" ) )
+        if( personLine.section( ';', 3, 3 ) == "true" )
         {
             defaultName = true;
         }
@@ -101,11 +116,7 @@ void ModelDataLoader::loadStatusData( StatusModel *model )
 void ModelDataLoader::loadHistoryData( HistoryModel *model )
 {
     qDebug() << "loadHistoryData 0";
-#ifdef Q_OS_SYMBIAN
-    QFile tiedosto( "c:/data/lokkitesti.txt");
-#else
-    QFile tiedosto( "/Users/Tero/lokkitesti.txt");
-#endif
+    QFile tiedosto( filePath + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     qDebug() << "loadHistoryData 1";

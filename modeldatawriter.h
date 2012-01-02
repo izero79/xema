@@ -3,6 +3,12 @@
 
 #include <QObject>
 
+class BirdModel;
+class PersonModel;
+class LocationModel;
+class StatusModel;
+class HistoryModel;
+
 class ModelDataWriter : public QObject
 {
     Q_OBJECT
@@ -12,6 +18,10 @@ public:
     void writeNewObservation( const QString &data );
     void replaceObservation( qlonglong id, const QString &data );
     QString loadObservation( qlonglong id );
+    void writePersonData(PersonModel *model);
+    void writeLocationData(LocationModel *model);
+    void writeBirdData(BirdModel *model);
+
 private:
     qlonglong getNewId();
 
