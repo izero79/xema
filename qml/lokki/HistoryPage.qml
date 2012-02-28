@@ -4,13 +4,68 @@ import com.nokia.symbian 1.1
 
 Page {
     id: historyPage
-    tools: toolBarLayout
+    property bool dateListVisible: historyListView.model == historyDateModel ? true : false
+    property bool placeListVisible: historyListView.model == historyPlaceModel ? true : false
+
+    tools: historyToolBarLayout
+
+    ToolBarLayout {
+        id: historyToolBarLayout
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-back"
+            onClicked: {
+                if( dateListVisible == true )
+                {
+                    window.backFromList()
+                    pageStack.pop()
+                }
+                else if( placeListVisible == true )
+                {
+                    historyListView.model = historyDateModel
+                    textfield1.text = ""
+                }
+                else
+                {
+                    historyListView.model = historyPlaceModel
+                    textfield1.text = ""
+                }
+            }
+        }
+    }
+
 
     function clicked( name )
     {
         pageStack.pop()
         window.showObsPage()
         window.readObs( name )
+    }
+
+    function showDate( pvm )
+    {
+        window.loadHistoryWithDate( pvm )
+        //textfield1.text = ""
+        console.log("showDate " + pvm)
+        historyListView.model = historyPlaceModel
+        historyPlaceModel.filter( textfield1.text )
+    }
+
+    function showPlace( place, pvm )
+    {
+        window.loadHistoryWithDateAndPlace( pvm, place )
+        //textfield1.text = ""
+        console.log("showDate " + place + " pvm " +pvm)
+        historyListView.model = historyModel
+
+//        var filterString = place + ", " + pvm
+        historyModel.filter( textfield1.text )
+    }
+
+    function init()
+    {
+        historyListView.model = historyDateModel
+        textfield1.text = ""
     }
 
     ListModel {
@@ -48,11 +103,13 @@ Page {
             anchors.leftMargin: 0
             onTextChanged: {
                 console.log("teksti muuttuu: " + text)
+                historyListView.model.filter( text )
             }
         }
     }
     ListView {
-        model: historyModel
+        id: historyListView
+        model: historyDateModel
         anchors.top: item1.bottom
         anchors.left: parent.left
         anchors.right: parent.right

@@ -21,10 +21,15 @@ public:
     void loadLocationData( LocationModel *model );
     void loadStatusData( StatusModel *model );
     void loadAtlasData( AtlasIndexModel *model );
-    void loadHistoryData( HistoryModel *model );
+    void loadHistoryData( HistoryModel *model, const QString &date = QString(), const QString &place = QString() );
+    void loadHistoryDateData( HistoryModel *model );
+    void loadHistoryPlaceData( HistoryModel *model, const QString &date = QString() );
 signals:
 
 public slots:
+
+private:
+    QString dataFileDir();
 
 };
 

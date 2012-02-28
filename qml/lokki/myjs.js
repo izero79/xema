@@ -90,6 +90,10 @@ function showObsPage( doNotInit )
     obsPageComponent = Qt.createComponent(Qt.resolvedUrl("ObservationPage.qml"))
     obsObject = obsPageComponent.createObject( window )
     pageStack.push(obsObject)
+    if( doNotInit == false )
+    {
+        obsObject.init()
+    }
 }
 
 function showSettingsPage()
@@ -110,10 +114,12 @@ function showHistoryPage( type )
     if( historyObject )
     {
         pageStack.push(historyObject)
+        historyObject.init()
         return
     }
     historyPageComponent = Qt.createComponent(Qt.resolvedUrl("HistoryPage.qml"))
     historyObject = historyPageComponent.createObject( window )
+    historyObject.init()
     pageStack.push(historyObject)
 }
 
@@ -210,6 +216,7 @@ function dataEdited()
 
 function dataSaved()
 {
+    console.log("dataSaved")
     return obsObject.initDataChanged()
 }
 

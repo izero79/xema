@@ -7,6 +7,10 @@ HistoryModel::HistoryModel(QObject *parent) :
     roles[IdRole] = "itemid";
     roles[PlaceRole] = "place";
     roles[DateRole] = "date";
+    roles[SpecieRole] = "specie";
+    roles[DateCountRole] = "dateCount";
+    roles[PlaceCountRole] = "placeCount";
+    roles[SpecieCountRole] = "specieCount";
     setRoleNames(roles);
 }
 
@@ -35,7 +39,8 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
     if( role == FilterRole )
     {
         return QString( item.place() + ", " +
-                        item.date() + ", " );
+                        item.date() + ", " +
+                        item.species() );
     }
     else if( role == IdRole )
     {
@@ -48,6 +53,22 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
     else if( role == DateRole )
     {
         return item.date();
+    }
+    else if( role == SpecieRole )
+    {
+        return item.species();
+    }
+    else if( role == DateCountRole )
+    {
+        return item.dateCount();
+    }
+    else if( role == PlaceCountRole )
+    {
+        return item.placeCount();
+    }
+    else if( role == SpecieCountRole )
+    {
+        return item.specieCount();
     }
     return QVariant();
 }
@@ -97,6 +118,13 @@ HistoryItem HistoryModel::getItem( int row )
         return HistoryItem();
     }
     return items.at( row );
+}
+
+void HistoryModel::replaceItem(int row, const HistoryItem &item)
+{
+    items.replace( row, item );
+    QModelIndex idx = index( row, 0 );
+    QAbstractItemModel::dataChanged( idx, idx );
 }
 
 QList<HistoryItem> HistoryModel::content() const

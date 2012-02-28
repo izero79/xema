@@ -10,12 +10,38 @@ Component {
             id: delegateTitle
             anchors.right: delegateAdd.left
             anchors.top: parent.top
-            anchors.bottom: parent.bottom
+            height: parent.height / 2
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: date + ", " + place
+            text: {
+                if( dateListVisible == true )
+                {
+                    date + " (" + dateCount + ")"
+                }
+                else if( placeListVisible == true )
+                {
+                    place + " (" + placeCount + ")"
+                }
+                else
+                {
+                    specie
+                }
+            }
             color: "white"
             elide: Text.ElideRight
+        }
+        Text {
+            id: delegateSubTitle
+            anchors.right: delegateAdd.left
+            anchors.top: delegateTitle.bottom
+            height: parent.height / 2
+            anchors.left: parent.left
+            verticalAlignment: Text.AlignVCenter
+            text: specie
+            color: "white"
+            elide: Text.ElideRight
+            font.pixelSize: delegateTitle.font.pixelSize - 2
+            visible: placeListVisible == true || dateListVisible == true
         }
         Text {
             id: delegateAdd
@@ -32,8 +58,21 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + itemid)
-                historyPage.clicked( itemid )
+                if( dateListVisible == true )
+                {
+                    console.log("avaa date: " + date)
+                    historyPage.showDate( date )
+                }
+                else if( placeListVisible == true )
+                {
+                    console.log("avaa place: " + place + ", with date: " +date )
+                    historyPage.showPlace( place, date )
+                }
+                else
+                {
+                    console.log("click: " + itemid)
+                    historyPage.clicked( itemid )
+                }
 
             }
         }

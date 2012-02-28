@@ -24,6 +24,8 @@ public:
 
 private:
     qlonglong getNewId();
+    QString dataFileDir();
+    QString exportDir();
 
 signals:
 

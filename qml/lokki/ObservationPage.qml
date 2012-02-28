@@ -57,6 +57,16 @@ Page {
         window.currentDetailLevel = window.defaultDetailLevel
 
         MyScript.changeDelegateHeight()
+        console.log("etsitaan default nimi")
+        for(var i=0;i<personModel.rowCount();i++)
+        {
+            console.log("rivi: " + i)
+            if( personModel.data(i, 37) == true )
+            {
+                console.log("loyty")
+                regPeopleTa.text = personModel.data(i, 35)
+            }
+        }
 
     }
 
@@ -228,6 +238,7 @@ Page {
 
     function initDataChanged()
     {
+        console.log("initDataChanged")
         MyScript.initDelegateDataChanged()
         edited = false
     }

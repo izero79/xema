@@ -32,6 +32,8 @@ public:
 signals:
     void reloadHistory();
     void quit();
+    void loadHistoryWithDate(const QString &date);
+    void loadHistoryWithDateAndPlace(const QString &date, const QString &place);
 
 public slots:
     void orientationChanged();
@@ -41,6 +43,8 @@ public slots:
     void setLocationModel( LocationModel *model );
     void setStatusModel( StatusModel *model );
     void setHistoryModel( HistoryModel *model );
+    void setHistoryDateModel( HistoryModel *model );
+    void setHistoryPlaceModel( HistoryModel *model );
     void setAtlasModel( AtlasIndexModel *model );
 
 private slots:
@@ -60,6 +64,8 @@ private:
     FilterModel *mFilteredLocationModel;
     FilterModel *mFilteredStatusModel;
     FilterModel *mFilteredHistoryModel;
+    FilterModel *mFilteredHistoryDateModel;
+    FilterModel *mFilteredHistoryPlaceModel;
     FilterModel *mFilteredAtlasModel;
     Settings *mSettings;
     ModelDataWriter *mDataWriter;

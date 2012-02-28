@@ -18,6 +18,8 @@ PageStackWindow {
     signal saveSystematicSorting( bool systematic )
     signal saveDetailLevel( int level )
     signal quit()
+    signal loadHistoryWithDate( string date )
+    signal loadHistoryWithDateAndPlace( string date, string place)
 
     function setSystematicSort( use )
     {
@@ -194,7 +196,9 @@ PageStackWindow {
                 MyScript.readAndSaveData()
                 window.reloadHistory()
                 MyScript.obsObject.clearTab()
+                MyScript.dataSaved
                 console.log( "tee delete jutut")
+                unsavedData = false
             }
         }
         ToolButton {
@@ -204,6 +208,7 @@ PageStackWindow {
             onClicked: {
                 console.log( "tee delete jutut")
                 MyScript.obsObject.clearTab()
+                unsavedData = false
             }
         }
     }

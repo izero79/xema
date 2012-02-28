@@ -29,6 +29,9 @@ private slots:
     void initGUI();
     void initObjects();
     void reloadHistory();
+    void loadHistoryWithDate(const QString &date);
+    void loadHistoryWithDateAndPlace(const QString &date, const QString &place);
+
 
 signals:
 
@@ -42,6 +45,8 @@ private:
     LocationModel *mLocationModel;
     StatusModel *mStatusModel;
     HistoryModel *mHistoryModel;
+    HistoryModel *mHistoryDateModel;
+    HistoryModel *mHistoryPlaceModel;
     AtlasIndexModel *mAtlasModel;
     ModelDataLoader *mModelLoader;
     ModelDataWriter *mModelWriter;

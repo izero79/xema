@@ -16,7 +16,11 @@ public:
         FilterRole = Qt::UserRole + 1,
         IdRole,
         PlaceRole,
-        DateRole
+        DateRole,
+        SpecieRole,
+        DateCountRole,
+        PlaceCountRole,
+        SpecieCountRole
     };
 
 signals:
@@ -29,6 +33,7 @@ public slots:
     Q_INVOKABLE     bool removeRow ( int row, const QModelIndex & parent = QModelIndex() );
     Q_INVOKABLE     bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
     Q_INVOKABLE     HistoryItem getItem( int index );
+    Q_INVOKABLE     void replaceItem( int row, const HistoryItem &item );
 
                     void setContent( const QList<HistoryItem> &newItems );
                     QList<HistoryItem> content() const;

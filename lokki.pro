@@ -12,7 +12,7 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-symbian:DEFINES +=DEBUGONLYTOFILE
+#symbian:DEFINES +=DEBUGONLYTOFILE
 
 !S603x{
     Symbian1{
