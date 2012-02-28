@@ -9,6 +9,7 @@ class PersonModel;
 class LocationModel;
 class StatusModel;
 class HistoryModel;
+class AtlasIndexModel;
 class ModelDataLoader;
 class ModelDataWriter;
 
@@ -32,6 +33,7 @@ private slots:
 signals:
 
 public slots:
+    void quit();
 
 private:
     QMLWindow *mQMLWin;
@@ -40,6 +42,7 @@ private:
     LocationModel *mLocationModel;
     StatusModel *mStatusModel;
     HistoryModel *mHistoryModel;
+    AtlasIndexModel *mAtlasModel;
     ModelDataLoader *mModelLoader;
     ModelDataWriter *mModelWriter;
 };

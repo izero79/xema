@@ -12,7 +12,7 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-#symbian:DEFINES +=DEBUGONLYTOFILE
+symbian:DEFINES +=DEBUGONLYTOFILE
 
 !S603x{
     Symbian1{
@@ -65,7 +65,9 @@ SOURCES += main.cpp \
     modeldatawriter.cpp \
     historyitem.cpp \
     historymodel.cpp \
-    settings.cpp
+    settings.cpp \
+    atlasindex.cpp \
+    atlasindexmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -114,8 +116,51 @@ HEADERS += \
     historyitem.h \
     historymodel.h \
     settings.h \
-    lokkiconstants.h
+    lokkiconstants.h \
+    atlasindex.h \
+    atlasindexmodel.h
 
 RESOURCES += \
     symbianresources.qrc \
     commonresources.qrc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

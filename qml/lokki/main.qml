@@ -17,6 +17,7 @@ PageStackWindow {
     signal reloadHistory()
     signal saveSystematicSorting( bool systematic )
     signal saveDetailLevel( int level )
+    signal quit()
 
     function setSystematicSort( use )
     {
@@ -86,6 +87,11 @@ PageStackWindow {
         MyScript.fillCurrentBox( name )
     }
 
+    function atlasChanged( name )
+    {
+        MyScript.fillCurrentBox( name )
+    }
+
     function dressChanged( name )
     {
         MyScript.fillCurrentBox( name )
@@ -132,11 +138,13 @@ PageStackWindow {
     function addBird()
     {
         console.log("add bird")
+        MyScript.addBird()
     }
 
     function addLocation()
     {
         console.log("add location")
+        MyScript.addLocation()
     }
 
 //    initialPage: Qt.resolvedUrl("MainPage.qml")
@@ -159,7 +167,7 @@ PageStackWindow {
                 {
                     backFromList()
                 }
-                pageStack.depth <= 1 ? Qt.quit() : pageStack.pop()
+                pageStack.depth <= 1 ? quit() : pageStack.pop()
             }
         }
         ToolButton {
@@ -185,6 +193,7 @@ PageStackWindow {
                 console.log( "tee save jutut")
                 MyScript.readAndSaveData()
                 window.reloadHistory()
+                MyScript.obsObject.clearTab()
                 console.log( "tee delete jutut")
             }
         }

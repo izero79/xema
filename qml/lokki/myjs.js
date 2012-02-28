@@ -68,7 +68,7 @@ function showListPage( type, selectedItems, itemi )
         currentStatusBox = itemi
         listObject.selectStatus( selectedItems )
     }
-    else if( type == "sex" || type == "age" || type == "dress")
+    else if( type == "sex" || type == "age" || type == "dress" || type == "atlas")
     {
         currentStatusBox = itemi
     }
@@ -333,6 +333,24 @@ function addPeople()
 {
     console.log( "ja nyt lisays ikkuna peoplelle")
     var editorCompnent = Qt.createComponent(Qt.resolvedUrl("PersonEditPage.qml"))
+    var editorObject = editorCompnent.createObject( window )
+    editorObject.addNew()
+    pageStack.push(editorObject)
+}
+
+function addLocation()
+{
+    console.log( "ja nyt lisays ikkuna locationille")
+    var editorCompnent = Qt.createComponent(Qt.resolvedUrl("LocationEditPage.qml"))
+    var editorObject = editorCompnent.createObject( window )
+    editorObject.addNew()
+    pageStack.push(editorObject)
+}
+
+function addBird()
+{
+    console.log( "ja nyt lisays ikkuna lajille")
+    var editorCompnent = Qt.createComponent(Qt.resolvedUrl("BirdEditPage.qml"))
     var editorObject = editorCompnent.createObject( window )
     editorObject.addNew()
     pageStack.push(editorObject)

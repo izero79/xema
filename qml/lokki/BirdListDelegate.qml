@@ -24,8 +24,9 @@ Component {
                 if( listView.editMode == true )
                 {
                     console.log("edit")
+                    listPage.clicked( realindex )
                 }
-//                else
+                else
                 {
                     listPage.clicked( finname )
                 }

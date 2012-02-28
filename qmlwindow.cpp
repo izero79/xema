@@ -16,6 +16,7 @@
 #include "statusmodel.h"
 #include "modeldatawriter.h"
 #include "historymodel.h"
+#include "atlasindexmodel.h"
 #include "settings.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
@@ -31,6 +32,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mFilteredBirdModel( 0 ),
     mFilteredLocationModel( 0 ),
     mFilteredStatusModel( 0 ),
+    mFilteredAtlasModel( 0 ),
     mSettings( 0 ),
     mDataWriter( 0 )
 {
@@ -144,18 +146,21 @@ void QMLWindow::init()
     mFilteredLocationModel = new FilterModel(this);
     mFilteredStatusModel = new FilterModel(this);
     mFilteredHistoryModel = new FilterModel(this);
+    mFilteredAtlasModel = new FilterModel(this);
 
     mRootContext->setContextProperty( "birdModel", mFilteredBirdModel );
     mRootContext->setContextProperty( "personModel", mFilteredPersonModel );
     mRootContext->setContextProperty( "locationModel", mFilteredLocationModel );
     mRootContext->setContextProperty( "statusModel", mFilteredStatusModel );
     mRootContext->setContextProperty( "historyModel", mFilteredHistoryModel );
+    mRootContext->setContextProperty( "atlasModel", mFilteredAtlasModel );
 
     connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
     connect(mRootObject,SIGNAL(reloadHistory()),this,SIGNAL(reloadHistory()));
     connect(mRootObject,SIGNAL(saveSystematicSorting(bool)),this,SLOT(saveSystematicSorting(bool)));
     connect(mRootObject,SIGNAL(saveDetailLevel(int)),this,SLOT(saveDetailLevel(int)));
+    connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
 
     mSettings = new Settings( this );
     mDataWriter = new ModelDataWriter( this );
@@ -191,6 +196,11 @@ void QMLWindow::setStatusModel(StatusModel *model)
 void QMLWindow::setHistoryModel(HistoryModel *model)
 {
     mFilteredHistoryModel->setSourceModel( model );
+}
+
+void QMLWindow::setAtlasModel(AtlasIndexModel *model)
+{
+    mFilteredAtlasModel->setSourceModel( model );
 }
 
 void QMLWindow::writeNewObservation( const QString &data )

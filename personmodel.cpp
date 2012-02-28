@@ -76,12 +76,15 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
 bool PersonModel::removeRow ( int row, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
+    qDebug() << "remove row" << row;
     if ( row < 0 || row >= items.count() )
     {
         return false;
     }
     QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row );
+    qDebug() << "items before remove" << items.count();
     items.removeAt( row );
+    qDebug() << "items after remove" << items.count();
     QAbstractItemModel::endRemoveRows();
     return true;
 }
@@ -89,16 +92,19 @@ bool PersonModel::removeRow ( int row, const QModelIndex & parent)
 bool PersonModel::removeRows ( int row, int count, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() || count + row > items.count() )
+    qDebug() << "remove rows" << row << count;
+    if ( row < 0 || row >= items.count() || (count - 1) + row > items.count() )
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + count );
+    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + ( count - 1 ) );
     for( int i = row; i < row + count; i++ )
     {
+        qDebug() << "removing row" << i;
         items.removeAt( row );
     }
     QAbstractItemModel::endRemoveRows();
+    qDebug() << "remove rows - rowcount now" << items.count();
     return true;
 }
 

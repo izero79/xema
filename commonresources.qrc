@@ -3,7 +3,7 @@
         <file>paikkalista.csv</file>
         <file>ihmislista.csv</file>
         <file>statuslist.csv</file>
-        <file>lajilista.csv</file>
         <file>atlasindex.csv</file>
+        <file>lajilista.csv</file>
     </qresource>
 </RCC>

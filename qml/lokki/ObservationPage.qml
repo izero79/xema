@@ -903,6 +903,11 @@ Page {
                         visible: detailLevel > 2
                         validator: IntValidator { bottom: 0 }
                         inputMethodHints: Qt.ImhDigitsOnly
+                        MouseArea {
+                            id: atlastfmouse
+                            anchors.fill: parent
+                            onClicked: window.showListPage( "atlas", atlasTf.text, atlasTf );
+                        }
                         onTextChanged: obsPage.edited = true
                     }
                     CheckBox {

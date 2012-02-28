@@ -51,11 +51,19 @@ Page {
             window.addPeople()
             return
         }
+        else if( listPageType == "atlas" )
+        {
+            return
+        }
     }
 
     function clicked( name )
     {
-        if( listPageType == "birds" )
+        if( listPageType == "atlas" )
+        {
+            window.atlasChanged( name )
+        }
+        else if( listPageType == "birds" )
         {
             window.birdChanged( name )
         }
@@ -301,7 +309,11 @@ Page {
         property bool showRegistered: false
         property bool editMode: false
         model: {
-            if( listPageType == "birds" )
+            if( listPageType == "atlas" )
+            {
+                return atlasModel
+            }
+            else if( listPageType == "birds" )
             {
                 return birdModel
             }
@@ -385,7 +397,7 @@ Page {
             {
                 return statusDelegate
             }
-            else if( listPageType == "dress" || listPageType == "age" || listPageType == "sex" )
+            else if( listPageType == "dress" || listPageType == "age" || listPageType == "sex" || listPageType == "atlas" )
             {
                 return simpleDelegate
             }

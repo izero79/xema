@@ -135,11 +135,14 @@ QString ModelDataWriter::loadObservation( qlonglong id )
 void ModelDataWriter::writePersonData(PersonModel *model)
 {
     QFile tiedosto( filePath + "lokkitestiperson.txt");
-    tiedosto.open(QFile::ReadWrite);
+    tiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-    for( int i = 0; i < model->rowCount(); i++ )
+    int rows = model->rowCount();
+    qDebug() << "person rows" << rows;
+    for( int i = 0; i < rows; i++ )
     {
+        qDebug() << "writing row" << i;
         QString line;
         line.append( model->data( model->index( i ), PersonModel::FirstNameRole ).toString());
         line.append( ";" );
@@ -149,18 +152,22 @@ void ModelDataWriter::writePersonData(PersonModel *model)
         line.append( ";" );
         line.append( model->data( model->index( i ), PersonModel::DefaultRole ).toString());
         line.append( ";\n" );
+        qDebug() << "line" << line;
         striimi << line;
     }
+    striimi.flush();
+    tiedosto.flush();
     tiedosto.close();
 }
 
 void ModelDataWriter::writeLocationData(LocationModel *model)
 {
     QFile tiedosto( filePath + "lokkitestilocation.txt");
-    tiedosto.open(QFile::ReadWrite);
+    tiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-    for( int i = 0; i < model->rowCount(); i++ )
+    int rows = model->rowCount();
+    for( int i = 0; i < rows; i++ )
     {
         QString line;
         line.append( model->data( model->index( i ), LocationModel::TownRole ).toString());
@@ -179,10 +186,12 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
 void ModelDataWriter::writeBirdData(BirdModel *model)
 {
     QFile tiedosto( filePath + "lokkitestibirds.txt");
-    tiedosto.open(QFile::ReadWrite);
+    tiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-    for( int i = 0; i < model->rowCount(); i++ )
+    int rows = model->rowCount();
+    striimi << QString("\n");
+    for( int i = 0; i < rows; i++ )
     {
         QString line;
         line.append( model->data( model->index( i ), BirdModel::IdRole ).toString());
@@ -197,12 +206,12 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
         line.append( ";" );
         line.append( model->data( model->index( i ), BirdModel::SweNameRole ).toString());
         line.append( ";" );
+        line.append( model->data( model->index( i ), BirdModel::AbbrevRole ).toString());
+        line.append( ";" );
         line.append( model->data( model->index( i ), BirdModel::LatinNameRole ).toString());
         line.append( ";" );
-        line.append( model->data( model->index( i ), BirdModel::AbbrevRole ).toString());
-        line.append( "\n" );
         line.append( model->data( model->index( i ), BirdModel::CategoryRole ).toString());
-        line.append( "\n" );
+        line.append( ";\n" );
         striimi << line;
     }
     tiedosto.close();

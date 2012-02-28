@@ -1,4 +1,5 @@
 #include "locationmodel.h"
+#include <QDebug>
 
 LocationModel::LocationModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -81,11 +82,11 @@ bool LocationModel::removeRow ( int row, const QModelIndex & parent)
 bool LocationModel::removeRows ( int row, int count, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() || count + row > items.count() )
+    if ( row < 0 || row >= items.count() || (count - 1) + row > items.count() )
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + count );
+    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + ( count - 1 ) );
     for( int i = row; i < row + count; i++ )
     {
         items.removeAt( row );
@@ -129,7 +130,19 @@ void LocationModel::setContent( const QList<Location> &newItems )
 
 bool LocationModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
-    Location tmp = items.at( index.row() );
+    qDebug() << "joo" << index.row() << items.count();
+    int row = index.row();
+    Location tmp;
+    if( index.row() >= items.count() || index.row() < 0 )
+    {
+        row = items.count();
+        qDebug() << "trying to create new";
+    }
+    else
+    {
+        tmp = items.at( row );
+    }
+    qDebug() << "setData"  << value;
     switch( role )
     {
     case TownRole:
@@ -148,7 +161,16 @@ bool LocationModel::setData( const QModelIndex &index, const QVariant &value, in
         break;
     }
 
-    items.replace( index.row(), tmp );
+    if( row >= items.count() )
+    {
+        QAbstractItemModel::beginInsertRows( QModelIndex(), items.count(), items.count() );
+        items.append( tmp );
+        QAbstractItemModel::endInsertRows();
+    }
+    else
+    {
+        items.replace( index.row(), tmp );
+    }
     QAbstractItemModel::dataChanged( index, index );
     return true;
 }

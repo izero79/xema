@@ -42,6 +42,15 @@ Page {
                 pageStack.pop()
             }
         }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-delete"
+            onClicked: {
+                console.log( "tee person delete jutut")
+                personModel.removeRow( currentIndex );
+                pageStack.pop()
+            }
+        }
     }
 
     property int currentIndex: -1
@@ -56,6 +65,7 @@ Page {
     {
         currentIndex = index
         console.log( "valittu: " + personModel.data( currentIndex, 35 ))
+        personEdited = false
     }
 
     Text {

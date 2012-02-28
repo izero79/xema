@@ -8,6 +8,7 @@ Page {
     id: locationEditPage
     tools: editToolBar
     property bool locationEdited: false
+    property bool addingNew: false
 
     ToolBarLayout {
         id: editToolBar
@@ -18,11 +19,32 @@ Page {
                 console.log("pep sivu back clicked")
                 if( locationEdited == true )
                 {
-                    locationModel.setData( currentIndex, townTf.text, 35 )
-                    locationModel.setData( currentIndex, locationTf.text, 36 )
-                    locationModel.setData( currentIndex, ykjTf.text, 38 )
-                    locationModel.setData( currentIndex, wgsTf.text, 39 )
+                    if( addingNew == true )
+                    {
+                        console.log("adding new")
+                        var rows = locationModel.rowCount()
+                        locationModel.setData( rows, townTf.text, 35 )
+                        locationModel.setData( rows, locationTf.text, 36 )
+                        locationModel.setData( rows, ykjTf.text, 38 )
+                        locationModel.setData( rows, wgsTf.text, 39 )
+                    }
+                    else
+                    {
+                        locationModel.setData( currentIndex, townTf.text, 35 )
+                        locationModel.setData( currentIndex, locationTf.text, 36 )
+                        locationModel.setData( currentIndex, ykjTf.text, 38 )
+                        locationModel.setData( currentIndex, wgsTf.text, 39 )
+                    }
                 }
+                pageStack.pop()
+            }
+        }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-delete"
+            onClicked: {
+                console.log( "tee location delete jutut")
+                locationModel.removeRow( currentIndex );
                 pageStack.pop()
             }
         }
@@ -30,10 +52,17 @@ Page {
 
     property int currentIndex: -1
 
+    function addNew()
+    {
+        console.log("adding newjoo")
+        addingNew = true
+    }
+
     function selectedIndex( index )
     {
         currentIndex = index
         console.log( "valittu: " + locationModel.data( currentIndex, 35 ))
+        locationEdited = false
     }
 
     Text {

@@ -1,9 +1,11 @@
 #include "birdmodel.h"
+#include <QDebug>
 
 BirdModel::BirdModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     roles[FilterRole] = "filter";
+    roles[IndexRole] = "realindex";
     roles[IdRole] = "itemid";
     roles[FinNameRole] = "finname";
     roles[SweNameRole] = "swename";
@@ -44,6 +46,10 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
                         item.sweName() + ", " +
                         item.latinName() + ", " +
                         item.abbreviation() + ", " );
+    }
+    else if( role == IndexRole )
+    {
+        return index.row();
     }
     else if( role == IdRole )
     {
@@ -100,11 +106,11 @@ bool BirdModel::removeRow ( int row, const QModelIndex & parent)
 bool BirdModel::removeRows ( int row, int count, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() || count + row > items.count() )
+    if ( row < 0 || row >= items.count() || (count - 1) + row > items.count() )
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + count );
+    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + ( count - 1 ) );
     for( int i = row; i < row + count; i++ )
     {
         items.removeAt( row );
@@ -144,4 +150,64 @@ void BirdModel::setContent( const QList<Bird> &newItems )
         items = newItems;
         QAbstractItemModel::endInsertRows();
     }
+}
+
+bool BirdModel::setData( const QModelIndex &index, const QVariant &value, int role )
+{
+    qDebug() << "joo" << index.row() << items.count();
+    int row = index.row();
+    Bird tmp;
+    if( index.row() >= items.count() || index.row() < 0 )
+    {
+        row = items.count();
+        tmp.setId( row + 1 );
+        qDebug() << "trying to create new";
+    }
+    else
+    {
+        tmp = items.at( row );
+    }
+    qDebug() << "setData"  << value;
+    switch( role )
+    {
+    case FinNameRole:
+        tmp.setFinName( value.toString() );
+        break;
+    case SweNameRole:
+        tmp.setSweName( value.toString() );
+        break;
+    case LatinNameRole:
+        tmp.setLatinName( value.toString() );
+        break;
+    case FinGroupRole:
+        tmp.setFinGroup( value.toString() );
+        break;
+    case SweGroupRole:
+        tmp.setSweGroup( value.toString() );
+        break;
+    case LatinGroupRole:
+        tmp.setLatinGroup( value.toString() );
+        break;
+    case CategoryRole:
+        tmp.setCategory( value.toString() );
+        break;
+    case AbbrevRole:
+        tmp.setAbbreviation( value.toString() );
+        break;
+    default:
+        break;
+    }
+
+    if( row >= items.count() )
+    {
+        QAbstractItemModel::beginInsertRows( QModelIndex(), items.count(), items.count() );
+        items.append( tmp );
+        QAbstractItemModel::endInsertRows();
+    }
+    else
+    {
+        items.replace( index.row(), tmp );
+    }
+    QAbstractItemModel::dataChanged( index, index );
+    return true;
 }

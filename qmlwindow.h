@@ -10,6 +10,7 @@ class PersonModel;
 class LocationModel;
 class StatusModel;
 class HistoryModel;
+class AtlasIndexModel;
 class Settings;
 class ModelDataWriter;
 
@@ -30,6 +31,7 @@ public:
 
 signals:
     void reloadHistory();
+    void quit();
 
 public slots:
     void orientationChanged();
@@ -39,6 +41,7 @@ public slots:
     void setLocationModel( LocationModel *model );
     void setStatusModel( StatusModel *model );
     void setHistoryModel( HistoryModel *model );
+    void setAtlasModel( AtlasIndexModel *model );
 
 private slots:
     void writeNewObservation( const QString &data );
@@ -57,6 +60,7 @@ private:
     FilterModel *mFilteredLocationModel;
     FilterModel *mFilteredStatusModel;
     FilterModel *mFilteredHistoryModel;
+    FilterModel *mFilteredAtlasModel;
     Settings *mSettings;
     ModelDataWriter *mDataWriter;
 };

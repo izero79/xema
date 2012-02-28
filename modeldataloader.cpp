@@ -13,6 +13,8 @@
 #include "historymodel.h"
 #include "historyitem.h"
 #include "lokkiconstants.h"
+#include "atlasindex.h"
+#include "atlasindexmodel.h"
 
 ModelDataLoader::ModelDataLoader(QObject *parent) :
     QObject(parent)
@@ -84,12 +86,14 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
         {
             defaultName = true;
         }
-        if( personLine.isEmpty() == false )
+        if( personLine.isEmpty() == false && personLine.contains( ";" ) )
         {
             Person person( personLine.section( ';', 0, 0 ), personLine.section( ';', 1, 1 ), registered, defaultName );
+            qDebug() << "person loaded";
             model->addItem( person );
         }
     }
+    tiedosto.close();
 }
 
 void ModelDataLoader::loadStatusData( StatusModel *model )
@@ -133,4 +137,25 @@ void ModelDataLoader::loadHistoryData( HistoryModel *model )
         model->addItem( item );
     }
     qDebug() << "loadHistoryData done";
+}
+
+void ModelDataLoader::loadAtlasData( AtlasIndexModel *model )
+{
+    QFile tiedosto( ":atlasindex.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    if( striimi.atEnd() == false )
+    {
+        striimi.readLine();
+    }
+    while( striimi.atEnd() == false )
+    {
+        QString line;
+        line = striimi.readLine();
+        if( line.isEmpty() == false )
+        {
+            AtlasIndex index( line.section( ';', 0, 0 ).toInt() );
+            model->addItem( index );
+        }
+    }
 }

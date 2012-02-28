@@ -22,19 +22,19 @@ void FilterModel::setSorting( int type, bool ascending )
     Q_UNUSED( type )
     if( type == 0 )
     {
-        setSortRole(Qt::UserRole + 2);
+        setSortRole(Qt::UserRole + 3);
 
         sort( 0, Qt::AscendingOrder );
-        qDebug() << "SORTattu + 2";
+        qDebug() << "SORTattu + 3";
 
         return;
     }
     else if( type == 1 )
     {
-        setSortRole(Qt::UserRole + 3);
+        setSortRole(Qt::UserRole + 4);
 
         sort( 0, Qt::AscendingOrder );
-        qDebug() << "SORTattu + 3";
+        qDebug() << "SORTattu + 4";
         return;
     }
     qDebug() << "EI TANNE";
@@ -140,4 +140,11 @@ QVariant FilterModel::data( int index, int role )
     QModelIndex idx = sourceModel()->index( index, 0 );
 
     return sourceModel()->data( idx, role );
+}
+
+void FilterModel::removeRow( int index )
+{
+    qDebug() << "removing";
+    sourceModel()->removeRow( index );
+    qDebug() << "removing - done";
 }

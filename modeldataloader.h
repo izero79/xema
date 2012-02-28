@@ -8,6 +8,7 @@ class PersonModel;
 class LocationModel;
 class StatusModel;
 class HistoryModel;
+class AtlasIndexModel;
 
 class ModelDataLoader : public QObject
 {
@@ -19,6 +20,7 @@ public:
     void loadPersonData( PersonModel *model );
     void loadLocationData( LocationModel *model );
     void loadStatusData( StatusModel *model );
+    void loadAtlasData( AtlasIndexModel *model );
     void loadHistoryData( HistoryModel *model );
 signals:
 

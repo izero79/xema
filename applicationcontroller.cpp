@@ -1,6 +1,7 @@
 #include <QTimer>
 #include <QDebug>
 
+#include <QCoreApplication>
 #include "applicationcontroller.h"
 #include "qmlwindow.h"
 #include "birdmodel.h"
@@ -10,6 +11,7 @@
 #include "modeldatawriter.h"
 #include "statusmodel.h"
 #include "historymodel.h"
+#include "atlasindexmodel.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
@@ -18,6 +20,7 @@ ApplicationController::ApplicationController(QObject *parent) :
     mLocationModel( 0 ),
     mStatusModel( 0 ),
     mHistoryModel( 0 ),
+    mAtlasModel( 0 ),
     mModelLoader( 0 ),
     mModelWriter( 0 )
 {
@@ -37,6 +40,7 @@ void ApplicationController::initGUI()
 #if defined(Q_WS_MAEMO_5)
     mQMLWin->setAttribute( Qt::WA_Maemo5StackedWindow );
 #endif
+    connect(mQMLWin,SIGNAL(quit()),this,SLOT(quit()));
 }
 
 void ApplicationController::initObjects()
@@ -68,14 +72,16 @@ void ApplicationController::initObjects()
     mModelLoader->loadHistoryData( mHistoryModel );
     mQMLWin->setHistoryModel( mHistoryModel );
 
+    mAtlasModel = new AtlasIndexModel(this);
+    mModelLoader->loadAtlasData( mAtlasModel );
+    mQMLWin->setAtlasModel( mAtlasModel );
+
     connect(mQMLWin,SIGNAL(reloadHistory()),this,SLOT(reloadHistory()));
     mModelWriter = new ModelDataWriter( this );
 }
 
 ApplicationController::~ApplicationController()
 {
-    mModelWriter->writePersonData( mPersonModel );
-    mModelWriter->writeLocationData( mLocationModel );
     qDebug() << "ApplicationController::~ApplicationController()";
     mQMLWin->deleteLater();
     mQMLWin = 0;
@@ -87,4 +93,12 @@ void ApplicationController::reloadHistory()
 {
     mHistoryModel->clear();
     mModelLoader->loadHistoryData( mHistoryModel );
+}
+
+void ApplicationController::quit()
+{
+    mModelWriter->writePersonData( mPersonModel );
+    mModelWriter->writeLocationData( mLocationModel );
+    mModelWriter->writeBirdData( mBirdModel );
+    qApp->quit();
 }
