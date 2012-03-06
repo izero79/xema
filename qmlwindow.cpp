@@ -164,12 +164,17 @@ void QMLWindow::init()
 
     connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
+    connect(mRootObject,SIGNAL(deleteObs(QString,QString,QString)),this,SLOT(deleteObservation(QString,QString,QString)));
     connect(mRootObject,SIGNAL(reloadHistory()),this,SIGNAL(reloadHistory()));
     connect(mRootObject,SIGNAL(saveSystematicSorting(bool)),this,SLOT(saveSystematicSorting(bool)));
     connect(mRootObject,SIGNAL(saveDetailLevel(int)),this,SLOT(saveDetailLevel(int)));
     connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
     connect(mRootObject,SIGNAL(loadHistoryWithDate(QString)),this,SIGNAL(loadHistoryWithDate(QString)));
     connect(mRootObject,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)),this,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)));
+    connect(mRootObject,SIGNAL(exportData(bool)),this,SLOT(exportData(bool)));
+    connect(mRootObject,SIGNAL(restoreObservers()),this,SIGNAL(restoreObservers()));
+    connect(mRootObject,SIGNAL(restoreLocations()),this,SIGNAL(restoreLocations()));
+    connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
 
 
     mSettings = new Settings( this );
@@ -234,7 +239,14 @@ void QMLWindow::loadObservation( const QString &id )
     QString data = mDataWriter->loadObservation( idNum );
     QMetaObject::invokeMethod(mRootObject, "dataLoaded",
              Q_ARG(QVariant, data ));
+}
 
+void QMLWindow::deleteObservation( const QString &id, const QString &date, const QString &place )
+{
+    qlonglong idNum = id.toLongLong();
+    mDataWriter->deleteObservation( idNum );
+    reloadHistory();
+    loadHistoryWithDateAndPlace( date, place );
 }
 
 void QMLWindow::saveDetailLevel( int level )
@@ -246,3 +258,10 @@ void QMLWindow::saveSystematicSorting( bool systematic )
 {
     mSettings->setSystematicSorting( systematic );
 }
+
+void QMLWindow::exportData(bool onlyNew)
+{
+    mDataWriter->exportHistory(onlyNew);
+}
+
+

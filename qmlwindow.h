@@ -34,6 +34,9 @@ signals:
     void quit();
     void loadHistoryWithDate(const QString &date);
     void loadHistoryWithDateAndPlace(const QString &date, const QString &place);
+    void restoreSpecies();
+    void restoreLocations();
+    void restoreObservers();
 
 public slots:
     void orientationChanged();
@@ -50,8 +53,10 @@ public slots:
 private slots:
     void writeNewObservation( const QString &data );
     void loadObservation( const QString &id );
+    void deleteObservation( const QString &id, const QString &date, const QString &place );
     void saveDetailLevel( int level );
     void saveSystematicSorting( bool systematic );
+    void exportData( bool onlyNew );
 
 private:
 #if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )

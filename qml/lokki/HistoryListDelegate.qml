@@ -24,7 +24,7 @@ Component {
                 }
                 else
                 {
-                    specie
+                    species
                 }
             }
             color: "white"
@@ -37,7 +37,7 @@ Component {
             height: parent.height / 2
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: specie
+            text: species
             color: "white"
             elide: Text.ElideRight
             font.pixelSize: delegateTitle.font.pixelSize - 2
@@ -53,10 +53,34 @@ Component {
             text: "+"
             font.pixelSize: 40
             color: "white"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("CLICKED +")
+                    if( dateListVisible == true )
+                    {
+                        console.log("uusi datella: " + date)
+                        historyPage.newObsWithData( date )
+                    }
+                    else if( placeListVisible == true )
+                    {
+                        console.log("uusi placella ja datella: " + place + ", " +date )
+                        historyPage.newObsWithData( date, place )
+                    }
+                    else
+                    {
+                        console.log("uusi place date ja laji:" + place + ", " + date + ", " + species)
+                        historyPage.newObsWithData( date, place, species )
+                    }
+                }
+            }
         }
 
         MouseArea {
-            anchors.fill: parent
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.right: delegateAdd.left
             onClicked: {
                 if( dateListVisible == true )
                 {
@@ -74,6 +98,12 @@ Component {
                     historyPage.clicked( itemid )
                 }
 
+            }
+            onPressAndHold: {
+                if( historyListView.model === historyModel )
+                {
+                    historyPage.showContextMenu( itemid, place, date )
+                }
             }
         }
     }

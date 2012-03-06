@@ -70,7 +70,7 @@ Page {
 
     Text {
         id: editText
-        text: qsTr( "Muokkaa henkiloa")
+        text: qsTr( "Edit person")
         font.pixelSize: 20
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right

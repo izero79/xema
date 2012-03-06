@@ -67,7 +67,7 @@ Page {
 
     Text {
         id: editText
-        text: qsTr( "Muokkaa paikkaa")
+        text: qsTr( "Edit location")
         font.pixelSize: 20
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right

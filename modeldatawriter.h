@@ -18,9 +18,15 @@ public:
     void writeNewObservation( const QString &data );
     void replaceObservation( qlonglong id, const QString &data );
     QString loadObservation( qlonglong id );
+    void deleteObservation( qlonglong id );
     void writePersonData(PersonModel *model);
     void writeLocationData(LocationModel *model);
     void writeBirdData(BirdModel *model);
+    void exportHistory( bool onlyNew );
+
+    void removeCustomSpecies();
+    void removeCustomLocations();
+    void removeCustomObservers();
 
 private:
     qlonglong getNewId();

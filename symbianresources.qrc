@@ -15,8 +15,6 @@
         <file>qml/lokki/LocationListDelegate.qml</file>
         <file>qml/lokki/StatusListDelegate.qml</file>
         <file>qml/lokki/SimpleDelegate.qml</file>
-        <file>qml/lokki/testi.qml</file>
-        <file>qml/lokki/TestiPage.qml</file>
         <file>qml/s3icons/filter.svg</file>
         <file>qml/s3icons/save.svg</file>
         <file>qml/lokki/PersonEditPage.qml</file>

@@ -32,14 +32,51 @@ Page {
                 }
             }
         }
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-share" //qml/s3icons/save.svg"
+            onClicked: {
+                exportDialog.open()
+            }
+        }
     }
 
+    ContextMenu {
+        id: contextMenu
+        property int selectedItem: -1
+        property string selectedDate: ""
+        property string selectedPlace: ""
+        MenuLayout {
+            MenuItem {
+                text: qsTr( "Remove" )
+                onClicked: {
+                    console.log("REMOVE " + contextMenu.selectedItem )
+                    window.deleteObs( contextMenu.selectedItem, contextMenu.selectedDate, contextMenu.selectedPlace )
+                }
+            }
+        }
+    }
+
+    function showContextMenu( itemid, place, date )
+    {
+        contextMenu.selectedItem = itemid
+        contextMenu.selectedPlace = place
+        contextMenu.selectedDate = date
+        contextMenu.open()
+    }
 
     function clicked( name )
     {
         pageStack.pop()
-        window.showObsPage()
+        window.showObsPage( false )
         window.readObs( name )
+    }
+
+    function newObsWithData( date, place, species )
+    {
+        pageStack.pop()
+        window.showObsPage( false )
+        window.newObsWithData( date, place, species )
     }
 
     function showDate( pvm )
@@ -66,6 +103,64 @@ Page {
     {
         historyListView.model = historyDateModel
         textfield1.text = ""
+    }
+
+    Dialog {
+        id: exportDialog
+
+        title: Text {
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr( "Export" )
+            horizontalAlignment: Text.AlignHCenter
+        }
+        content:Item {
+            height: exportDialogText.paintedHeight
+            width: parent.width
+            anchors.topMargin: 10
+            Text {
+                id: exportDialogText
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: qsTr( "Do you want to export all data, or just new data?")
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Item { height: exportDialogAllButton.height + 2 * 10; width: parent.width
+            Button {
+                id: exportDialogAllButton
+                anchors.top: parent.top
+                anchors.left: parent.left
+                width: parent.width / 2
+                text: qsTr( "All" )
+                onClicked: {
+                    console.log("all")
+                    window.exportData( false )
+                    exportDialog.close()
+                }
+            }
+            Button {
+                id: exportDialogNewButton
+                anchors.top: parent.top
+                anchors.left: exportDialogAllButton.right
+                width: parent.width / 2
+                text: qsTr( "New" )
+                onClicked: {
+                    console.log("new")
+                    window.exportData( true )
+                    exportDialog.close()
+                }
+            }
+        }
+        onClickedOutside: exportDialog.close()
+
     }
 
     ListModel {

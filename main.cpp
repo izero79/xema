@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "applicationcontroller.h"
 #include <QLabel>
+#include <QTranslator>
 
 #include "debugprinter.h"
 #include "dummydebugprinter.h"
@@ -64,19 +65,19 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     qDebug() << "System locale:" << locale;
 /*
-    QString lang = SystemInfoProvider::currentLanguage();
+    QString lang = QString("en");//SystemInfoProvider::currentLanguage();
     if( lang.isEmpty() == false && lang != locale )
     {
         locale = lang;
     }
 
     qDebug() << "System language:" << locale;
-
+*/
     QTranslator translator;
     bool ok = translator.load(QString(":/lokki_" ) + locale);
     qDebug() << "Translator loaded ok:" << ok;
     app.installTranslator(&translator);
-*/
+
     ApplicationController cont;
 //    app.installEventFilter(&cont); // Installing the event filter
 

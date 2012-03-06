@@ -7,20 +7,22 @@ Page {
 
     Item {
         id: item1
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.verticalCenter: parent.verticalCenter
         anchors.centerIn: parent
+        height: 280
 
         width: 200
-        height: 200
+//        anchors.top: parent.top
+//        anchors.bottom: parent.bottom
 
         Button {
             id: settingsButton
-            x: 13
-            y: -73
-            text: qsTr( "Asetukset" )
-            width: newButton.width
+            text: qsTr( "Settings" )
+            width: parent.width
             height: newButton.height
             anchors.top: historyButton.bottom
-            anchors.topMargin: 30
+            anchors.topMargin: 20
             anchors.horizontalCenter: parent.horizontalCenter
             iconSource: ""
             onClicked: {
@@ -30,13 +32,11 @@ Page {
 
         Button {
             id: historyButton
-            x: 13
-            y: -145
-            width: newButton.width
+            width: parent.width
             height: newButton.height
-            text: qsTr( "Havainnot" )
+            text: qsTr( "Observations" )
             anchors.top: newButton.bottom
-            anchors.topMargin: 30
+            anchors.topMargin: 20
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
                 window.showHistoryPage()
@@ -46,12 +46,11 @@ Page {
 
         Button {
             id: newButton
-            x: 13
-            width: 196
-            height: 42
-            text: qsTr( "Uusi havainto" )
+            height: parent.height / 6
+            width: parent.width
+            text: qsTr( "New observation" )
             anchors.top: continueButton.bottom
-            anchors.topMargin: 30
+            anchors.topMargin: 20
             checked: false
             checkable: false
             pressed: false
@@ -63,10 +62,9 @@ Page {
 
         Button {
             id: continueButton
-            x: 13
-            width: 196
-            height: 42
-            text: qsTr( "Jatka" )
+            width: parent.width
+            height: newButton.height
+            text: qsTr( "Continue" )
             anchors.top: parent.top
             anchors.topMargin: 0
             checked: false

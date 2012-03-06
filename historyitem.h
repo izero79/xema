@@ -13,11 +13,11 @@ public:
 
     void setPlace( const QString &name );
     void setDate( const QString &date );
-    void setSpecie( const QString &name );
-    void addSpecie( const QString &name );
+    void setSpecies( const QString &name );
+    void addSpecies( const QString &name );
     void increaseDateCount();
     void increasePlaceCount();
-    void addSpecieCount(const QString &name, int count);
+    void addSpeciesCount(const QString &name, int count);
 
     int id() const;
     QString place() const;

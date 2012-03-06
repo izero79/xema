@@ -38,6 +38,11 @@ signals:
 public slots:
     void quit();
 
+private slots:
+    void restoreSpecies();
+    void restoreLocations();
+    void restoreObservers();
+
 private:
     QMLWindow *mQMLWin;
     BirdModel *mBirdModel;

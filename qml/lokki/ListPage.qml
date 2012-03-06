@@ -369,6 +369,7 @@ Page {
                 {
                     model.setSorting( 1, true )
                 }
+                editMode = false
                 return birdDelegate
             }
             else if( listPageType == "editbirds" )
@@ -386,6 +387,7 @@ Page {
             }
             else if( listPageType == "places" )
             {
+                editMode = false
                 return locationDelegate
             }
             else if( listPageType == "editplaces" )
@@ -395,10 +397,12 @@ Page {
             }
             else if( listPageType == "status" )
             {
+                editMode = false
                 return statusDelegate
             }
             else if( listPageType == "dress" || listPageType == "age" || listPageType == "sex" || listPageType == "atlas" )
             {
+                editMode = false
                 return simpleDelegate
             }
             else if( listPageType == "editallpeople" )
@@ -408,11 +412,13 @@ Page {
             }
             else if( listPageType == "regpeople" )
             {
+                editMode = false
                 showRegistered = true
                 return myTestDelegate
             }
             else
             {
+                editMode = false
                 showRegistered = false
                 return myTestDelegate
             }

@@ -33,13 +33,13 @@ void HistoryItem::setDate( const QString &date )
     mDate = date;
 }
 
-void HistoryItem::setSpecie( const QString &name )
+void HistoryItem::setSpecies( const QString &name )
 {
     mSpecies.clear();
     mSpecies.insert( name, 0);
 }
 
-void HistoryItem::addSpecie( const QString &name )
+void HistoryItem::addSpecies( const QString &name )
 {
     if( mSpecies.contains( name ) )
     {
@@ -62,7 +62,7 @@ void HistoryItem::increasePlaceCount()
     qDebug() << "increasePlaceCount, now" << mPlaceCount;
 }
 
-void HistoryItem::addSpecieCount(const QString &name, int count)
+void HistoryItem::addSpeciesCount(const QString &name, int count)
 {
     if(name.isEmpty() == false)
     {

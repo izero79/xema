@@ -5,5 +5,7 @@
         <file>statuslist.csv</file>
         <file>atlasindex.csv</file>
         <file>lajilista.csv</file>
+        <file>lokki_en.qm</file>
+        <file>lokki_fi.qm</file>
     </qresource>
 </RCC>

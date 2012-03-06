@@ -235,7 +235,7 @@ function readAndSaveData()
         console.log("Pakollinen tieto puuttuu")
         obsObject.showErrorDialog()
         unsavedData = true
-        return
+        return false
     }
 
     if( allData != "" )
@@ -244,6 +244,7 @@ function readAndSaveData()
         window.writeNew( allData )
         dataSaved()
         unsavedData = false
+        return true
     }
 }
 

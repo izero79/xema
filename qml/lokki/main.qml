@@ -14,12 +14,17 @@ PageStackWindow {
 
     signal writeNew( string data )
     signal readObs( string id )
+    signal deleteObs( string id, string date, string place )
     signal reloadHistory()
     signal saveSystematicSorting( bool systematic )
     signal saveDetailLevel( int level )
     signal quit()
     signal loadHistoryWithDate( string date )
     signal loadHistoryWithDateAndPlace( string date, string place)
+    signal exportData( bool onlyNew )
+    signal restoreSpecies()
+    signal restoreLocations()
+    signal restoreObservers()
 
     function setSystematicSort( use )
     {
@@ -149,6 +154,11 @@ PageStackWindow {
         MyScript.addLocation()
     }
 
+    function newObsWithData( date, place, species )
+    {
+
+        MyScript.obsObject.setData( date, place, species )
+    }
 //    initialPage: Qt.resolvedUrl("MainPage.qml")
 
     ToolBarLayout {
@@ -193,12 +203,17 @@ PageStackWindow {
             visible: pageStack.currentPage == MyScript.obsObject && MyScript.obsObject.currentTab == 3
             onClicked: {
                 console.log( "tee save jutut")
-                MyScript.readAndSaveData()
-                window.reloadHistory()
-                MyScript.obsObject.clearTab()
-                MyScript.dataSaved
-                console.log( "tee delete jutut")
-                unsavedData = false
+                var success = false
+                success = MyScript.readAndSaveData()
+                if( success )
+                {
+                    window.reloadHistory()
+                    MyScript.obsObject.clearTab()
+                    MyScript.dataSaved()
+                    console.log( "tee delete jutut")
+                    unsavedData = false
+                }
+
             }
         }
         ToolButton {

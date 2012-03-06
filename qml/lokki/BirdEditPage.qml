@@ -75,7 +75,7 @@ Page {
 
     Text {
         id: editText
-        text: qsTr( "Muokkaa lajia")
+        text: qsTr( "Edit species")
         font.pixelSize: 20
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right
@@ -91,7 +91,7 @@ Page {
         id: name1Tf
         width: 240
         height: 50
-        placeholderText: qsTr( "Lajinimi" )
+        placeholderText: qsTr( "Finnish name" )
         text: birdModel.data( currentIndex, 36 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -106,7 +106,7 @@ Page {
         id: name2Tf
         width: 240
         height: 50
-        placeholderText: qsTr( "namn" )
+        placeholderText: qsTr( "Swedish name" )
         text: birdModel.data( currentIndex, 37 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -119,7 +119,7 @@ Page {
 
     TextField {
         id: name3Tf
-        placeholderText: qsTr( "latin name")
+        placeholderText: qsTr( "Latin name")
         text: birdModel.data( currentIndex, 39 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -132,7 +132,7 @@ Page {
 
     TextField {
         id: group1Tf
-        placeholderText: qsTr( "ryhma" )
+        placeholderText: qsTr( "Group in finnish" )
         text: birdModel.data( currentIndex, 40 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -144,7 +144,7 @@ Page {
     }
     TextField {
         id: group2Tf
-        placeholderText: qsTr( "gruppen" )
+        placeholderText: qsTr( "Group in swedish" )
         text: birdModel.data( currentIndex, 41 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -156,7 +156,7 @@ Page {
     }
     TextField {
         id: group3Tf
-        placeholderText: qsTr( "latin group" )
+        placeholderText: qsTr( "Group in latin" )
         text: birdModel.data( currentIndex, 42 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -168,7 +168,7 @@ Page {
     }
     TextField {
         id: abbrevTf
-        placeholderText: qsTr( "lyhenne" )
+        placeholderText: qsTr( "Abbreviation" )
         text: birdModel.data( currentIndex, 38 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -180,7 +180,7 @@ Page {
     }
     TextField {
         id: categoryTf
-        placeholderText: qsTr( "kategoria" )
+        placeholderText: qsTr( "Category" )
         text: birdModel.data( currentIndex, 43 )
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -192,7 +192,7 @@ Page {
     }
     TextField {
         id: idTf
-        placeholderText: qsTr( "id" )
+        placeholderText: qsTr( "Id number" )
         enabled: false
         text: addingNew ? birdModel.rowCount() + 1 : birdModel.data( currentIndex, 35 )
         anchors.left: parent.left

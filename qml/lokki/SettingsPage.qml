@@ -34,201 +34,253 @@ Page {
         editorObject.selectedIndex( indexi )
     }
 
-    Text {
-        id: systematicSortText
-        text: qsTr( "Systemaattinen lajiluettelo")
-        font.pixelSize: 20
-        verticalAlignment: Text.AlignVCenter
-        anchors.right: parent.right
-        anchors.leftMargin: 0
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        horizontalAlignment: Text.AlignLeft
-        anchors.top: parent.top
-        color: "#ffffff"
-    }
+    Flickable {
+        contentWidth: width
+        contentHeight: restoreBird.y + restoreBird.height + 10
+        flickableDirection: Flickable.VerticalFlick
+        anchors.fill: parent
 
-    CheckableGroup { id: orderGroup }
-    Column {
-        id: row1
-        spacing: platformStyle.paddingMedium
-        anchors.top: systematicSortText.bottom
-        anchors.left: parent.left
-        RadioButton {
-            id: alphaButton
-            text: qsTr( "Aakkostettu" )
-            platformExclusiveGroup: orderGroup
-            checked: window.useSystematicSort == false
-            property bool wasPressed: false
-            onPressedChanged: {
-                if( pressed == true )
-                {
-                    wasPressed = true
+        Text {
+            id: systematicSortText
+            text: qsTr( "Species list sorting")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: parent.top
+            color: "#ffffff"
+        }
+
+        CheckableGroup { id: orderGroup }
+        Column {
+            id: row1
+            spacing: platformStyle.paddingMedium
+            anchors.top: systematicSortText.bottom
+            anchors.left: parent.left
+            RadioButton {
+                id: alphaButton
+                text: qsTr( "Alphabetical" )
+                platformExclusiveGroup: orderGroup
+                checked: window.useSystematicSort == false
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if( pressed == true )
+                    {
+                        wasPressed = true
+                    }
+                }
+
+                onCheckedChanged: {
+                    if( checked == true && wasPressed == true )
+                    {
+                        wasPressed = false
+                        window.useSystematicSort = false
+                        console.log("newlevel 1: " + window.useSystematicSort )
+                        window.saveSystematicSorting( !checked )
+                    }
                 }
             }
+            RadioButton {
+                id: systemButton
+                text: qsTr( "Systematic" )
+                platformExclusiveGroup: orderGroup
+                checked: window.useSystematicSort == true
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if( pressed == true )
+                    {
+                        wasPressed = true
+                    }
+                }
 
-            onCheckedChanged: {
-                if( checked == true && wasPressed == true )
-                {
-                    wasPressed = false
-                    window.useSystematicSort = false
-                    console.log("newlevel 1: " + window.useSystematicSort )
-                    window.saveSystematicSorting( !checked )
+                onCheckedChanged: {
+                    if( checked == true && wasPressed == true )
+                    {
+                        wasPressed = false
+                        window.useSystematicSort = true
+                        console.log("newlevel sort: " + window.useSystematicSort )
+                        window.saveSystematicSorting( checked )
+                    }
                 }
             }
         }
-        RadioButton {
-            id: systemButton
-            text: qsTr( "Systemaattinen" )
-            platformExclusiveGroup: orderGroup
-            checked: window.useSystematicSort == true
-            property bool wasPressed: false
-            onPressedChanged: {
-                if( pressed == true )
-                {
-                    wasPressed = true
+
+        CheckableGroup { id: group }
+        Text {
+            id: groupHeader
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.top: row1.bottom
+            anchors.topMargin: 30
+            text: qsTr( "Default amount of fields")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            color: "#ffffff"
+        }
+
+        Column {
+            id: row2
+            spacing: platformStyle.paddingMedium
+            anchors.top: groupHeader.bottom
+            anchors.left: parent.left
+            RadioButton {
+                id: button1
+                text: qsTr( "Minimum" )
+                platformExclusiveGroup: group
+                checked: window.defaultDetailLevel == 1
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if( pressed == true )
+                    {
+                        wasPressed = true
+                    }
+                }
+
+                onCheckedChanged: {
+                    if( checked == true && wasPressed == true )
+                    {
+                        wasPressed = false
+                        window.defaultDetailLevel = 1
+                        console.log("newlevel 1: " + window.defaultDetailLevel )
+                        window.saveDetailLevel( 1 )
+                    }
                 }
             }
+            RadioButton {
+                id: button2
+                text: qsTr( "Expanded" )
+                platformExclusiveGroup: group
+                checked: window.defaultDetailLevel == 2
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if( pressed == true )
+                    {
+                        wasPressed = true
+                    }
+                }
 
-            onCheckedChanged: {
-                if( checked == true && wasPressed == true )
-                {
-                    wasPressed = false
-                    window.useSystematicSort = true
-                    console.log("newlevel sort: " + window.useSystematicSort )
-                    window.saveSystematicSorting( checked )
+                onCheckedChanged: {
+                    if( checked == true && wasPressed == true )
+                    {
+                        wasPressed = false
+                        window.defaultDetailLevel = 2
+                        console.log("newlevel 2: " + window.defaultDetailLevel )
+                        window.saveDetailLevel( 2 )
+                    }
+                }
+            }
+            RadioButton {
+                id: button3
+                text: qsTr( "All" )
+                platformExclusiveGroup: group
+                checked: window.defaultDetailLevel == 3
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if( pressed == true )
+                    {
+                        wasPressed = true
+                    }
+                }
+
+                onCheckedChanged: {
+                    if( checked == true && wasPressed == true )
+                    {
+                        wasPressed = false
+                        window.defaultDetailLevel = 3
+                        console.log("newlevel 3: " + window.defaultDetailLevel )
+                        window.saveDetailLevel( 3 )
+                    }
                 }
             }
         }
-    }
-
-    CheckableGroup { id: group }
-    Text {
-        id: groupHeader
-        anchors.right: parent.right
-        anchors.leftMargin: 0
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.top: row1.bottom
-        anchors.topMargin: 30
-        text: qsTr( "Kenttien oletusmäärä")
-        font.pixelSize: 20
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignLeft
-        color: "#ffffff"
-    }
-
-    Column {
-        id: row2
-        spacing: platformStyle.paddingMedium
-        anchors.top: groupHeader.bottom
-        anchors.left: parent.left
-        RadioButton {
-            id: button1
-            text: qsTr( "Minimi" )
-            platformExclusiveGroup: group
-            checked: window.defaultDetailLevel == 1
-            property bool wasPressed: false
-            onPressedChanged: {
-                if( pressed == true )
-                {
-                    wasPressed = true
-                }
-            }
-
-            onCheckedChanged: {
-                if( checked == true && wasPressed == true )
-                {
-                    wasPressed = false
-                    window.defaultDetailLevel = 1
-                    console.log("newlevel 1: " + window.defaultDetailLevel )
-                    window.saveDetailLevel( 1 )
-                }
-            }
+        Text {
+            id: editText
+            text: qsTr( "Manage lists")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: row2.bottom
+            anchors.topMargin: 30
+            color: "#ffffff"
         }
-        RadioButton {
-            id: button2
-            text: qsTr( "Laajennettu" )
-            platformExclusiveGroup: group
-            checked: window.defaultDetailLevel == 2
-            property bool wasPressed: false
-            onPressedChanged: {
-                if( pressed == true )
-                {
-                    wasPressed = true
-                }
-            }
-
-            onCheckedChanged: {
-                if( checked == true && wasPressed == true )
-                {
-                    wasPressed = false
-                    window.defaultDetailLevel = 2
-                    console.log("newlevel 2: " + window.defaultDetailLevel )
-                    window.saveDetailLevel( 2 )
-                }
-            }
+        Button {
+            id: editPeople
+            anchors.top: editText.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr( "Observers" )
+            onClicked: window.showListPage( "editallpeople", "" );
         }
-        RadioButton {
-            id: button3
-            text: qsTr( "Kaikki" )
-            platformExclusiveGroup: group
-            checked: window.defaultDetailLevel == 3
-            property bool wasPressed: false
-            onPressedChanged: {
-                if( pressed == true )
-                {
-                    wasPressed = true
-                }
-            }
-
-            onCheckedChanged: {
-                if( checked == true && wasPressed == true )
-                {
-                    wasPressed = false
-                    window.defaultDetailLevel = 3
-                    console.log("newlevel 3: " + window.defaultDetailLevel )
-                    window.saveDetailLevel( 3 )
-                }
-            }
+        Button {
+            id: editLocation
+            anchors.top: editPeople.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr( "Locations" )
+            onClicked: window.showListPage( "editplaces", "" );
         }
-    }
-    Text {
-        id: editText
-        text: qsTr( "Muokkaa luetteloita")
-        font.pixelSize: 20
-        verticalAlignment: Text.AlignVCenter
-        anchors.right: parent.right
-        anchors.leftMargin: 0
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        horizontalAlignment: Text.AlignLeft
-        anchors.top: row2.bottom
-        anchors.topMargin: 30
-        color: "#ffffff"
-    }
-    Button {
-        id: editPeople
-        anchors.top: editText.bottom
-        anchors.topMargin: 8
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr( "Havainnoijat" )
-        onClicked: window.showListPage( "editallpeople", "" );
-    }
-    Button {
-        id: editLocation
-        anchors.top: editPeople.bottom
-        anchors.topMargin: 8
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr( "Paikat" )
-        onClicked: window.showListPage( "editplaces", "" );
-    }
-    Button {
-        id: editBird
-        anchors.top: editLocation.bottom
-        anchors.topMargin: 8
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr( "Lajit" )
-        onClicked: window.showListPage( "editbirds", "" );
+        Button {
+            id: editBird
+            anchors.top: editLocation.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr( "Species" )
+            onClicked: window.showListPage( "editbirds", "" );
+        }
+
+        Text {
+            id: restoreText
+            text: qsTr( "Restore default lists")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: editBird.bottom
+            anchors.topMargin: 30
+            color: "#ffffff"
+        }
+        Button {
+            id: restorePeople
+            anchors.top: restoreText.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr( "Observers" )
+            onClicked: window.restoreObservers()
+        }
+        Button {
+            id: restoreLocation
+            anchors.top: restorePeople.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr( "Locations" )
+            onClicked: window.restoreLocations()
+        }
+        Button {
+            id: restoreBird
+            anchors.top: restoreLocation.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr( "Species" )
+            onClicked: window.restoreSpecies()
+        }
     }
 }

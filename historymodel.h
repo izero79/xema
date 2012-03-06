@@ -17,10 +17,10 @@ public:
         IdRole,
         PlaceRole,
         DateRole,
-        SpecieRole,
+        SpeciesRole,
         DateCountRole,
         PlaceCountRole,
-        SpecieCountRole
+        SpeciesCountRole
     };
 
 signals:

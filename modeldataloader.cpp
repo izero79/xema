@@ -141,8 +141,8 @@ void ModelDataLoader::loadHistoryData( HistoryModel *model, const QString &date,
         if( date.isEmpty() == true && place.isEmpty() == true )
         {
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
-            item.setSpecie( line.section( '#', 1, 1));
-            item.addSpecieCount( line.section( '#', 1, 1), readCount.toInt() );
+            item.setSpecies( line.section( '#', 1, 1));
+            item.addSpeciesCount( line.section( '#', 1, 1), readCount.toInt() );
 
             model->addItem( item );
             continue;
@@ -150,8 +150,8 @@ void ModelDataLoader::loadHistoryData( HistoryModel *model, const QString &date,
         if( date.isEmpty() == false && date == readDate && place.isEmpty() == false && place == readPlace )
         {
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
-            item.setSpecie( line.section( '#', 1, 1));
-            item.addSpecieCount( line.section( '#', 1, 1), readCount.toInt() );
+            item.setSpecies( line.section( '#', 1, 1));
+            item.addSpeciesCount( line.section( '#', 1, 1), readCount.toInt() );
             model->addItem( item );
             continue;
         }
@@ -177,9 +177,9 @@ void ModelDataLoader::loadHistoryDateData( HistoryModel *model )
         QString line;
         line = striimi.readLine();
         QString date = line.section( '#', 2, 2 );
-        QString specie = line.section( '#', 1, 1);
+        QString species = line.section( '#', 1, 1);
         QString readCount = line.section( '#', 13, 13);
-        qDebug() << "LAJI" << specie << "MAARA" << readCount;
+        qDebug() << "LAJI" << species << "MAARA" << readCount;
 
         int modelRowCount = model->rowCount();
         bool sameDateFound = false;
@@ -191,8 +191,8 @@ void ModelDataLoader::loadHistoryDateData( HistoryModel *model )
                 qDebug() << "sama pvm" << date;
                 HistoryItem tmp = model->getItem( i );
                 tmp.increaseDateCount();
-                tmp.addSpecie( specie );
-                tmp.addSpecieCount( specie, readCount.toInt());
+                tmp.addSpecies( species );
+                tmp.addSpeciesCount( species, readCount.toInt());
                 model->replaceItem( i, tmp);
                 sameDateFound = true;
             }
@@ -200,8 +200,8 @@ void ModelDataLoader::loadHistoryDateData( HistoryModel *model )
         if( sameDateFound == false )
         {
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
-            item.setSpecie( line.section( '#', 1, 1));
-            item.addSpecieCount( specie, readCount.toInt());
+            item.setSpecies( line.section( '#', 1, 1));
+            item.addSpeciesCount( species, readCount.toInt());
             model->addItem( item );
         }
     }
@@ -226,7 +226,7 @@ void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &
         line = striimi.readLine();
         QString readDate = line.section( '#', 2, 2 );
         QString place = line.section( '#', 6, 6 );
-        QString specie = line.section( '#', 1, 1);
+        QString species = line.section( '#', 1, 1);
         QString readCount = line.section( '#', 13, 13);
 
         //int modelRowCount = model->rowCount();
@@ -254,8 +254,8 @@ void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &
                 HistoryItem tmp = model->getItem( i );
                 tmp.increasePlaceCount();
                 tmp.increaseDateCount();
-                tmp.addSpecie( specie );
-                tmp.addSpecieCount( specie, readCount.toInt());
+                tmp.addSpecies( species );
+                tmp.addSpeciesCount( species, readCount.toInt());
                 model->replaceItem( i, tmp);
                 samePlaceFound = true;
                 break;
@@ -271,8 +271,8 @@ void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &
             {
                 qDebug() << "adding with date" << readDate << place;
                 HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
-                item.setSpecie( line.section( '#', 1, 1));
-                item.addSpecieCount( specie, readCount.toInt());
+                item.setSpecies( line.section( '#', 1, 1));
+                item.addSpeciesCount( species, readCount.toInt());
                 model->addItem( item );
             }
             continue;
@@ -281,8 +281,8 @@ void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &
         {
             qDebug() << "adding    " << readDate << place;
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
-            item.setSpecie( line.section( '#', 1, 1));
-            item.addSpecieCount( specie, readCount.toInt());
+            item.setSpecies( line.section( '#', 1, 1));
+            item.addSpeciesCount( species, readCount.toInt());
             model->addItem( item );
         }
     }

@@ -176,16 +176,24 @@ bool PersonModel::setData( const QModelIndex &index, const QVariant &value, int 
     default:
         break;
     }
+    qDebug() << "setData 2" << row << items.count();
     if( row >= items.count() )
     {
+        qDebug() << "setData 3";
         QAbstractItemModel::beginInsertRows( QModelIndex(), items.count(), items.count() );
+        qDebug() << "setData 4";
         items.append( tmp );
+        qDebug() << "setData 5" << items.count();
         QAbstractItemModel::endInsertRows();
     }
     else
     {
+        qDebug() << "setData 6";
         items.replace( index.row(), tmp );
+        qDebug() << "setData 7";
     }
+    qDebug() << "setData 8";
     QAbstractItemModel::dataChanged( index, index );
+    qDebug() << "setData 9";
     return true;
 }

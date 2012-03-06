@@ -68,7 +68,7 @@ Item {
     TextField {
         id: countTf
         height: 50
-        placeholderText: qsTr( "lukumäärä" )
+        placeholderText: qsTr( "Count" )
         text: ""
         anchors.top: parent.top
         anchors.topMargin: 8
@@ -83,7 +83,7 @@ Item {
     TextField {
         id: sexTf
         height: 50
-        placeholderText: qsTr( "sukupuoli" )
+        placeholderText: qsTr( "Sex" )
         text: ""
         anchors.top: countTf.bottom
         anchors.topMargin: 8
@@ -101,7 +101,7 @@ Item {
     TextField {
         id: ageTf
         height: 50
-        placeholderText: qsTr( "ikä" )
+        placeholderText: qsTr( "Age" )
         text: ""
         y: sexTf.y
         anchors.left: sexTf.right
@@ -121,7 +121,7 @@ Item {
     TextField {
         id: dressTf
         height: 50
-        placeholderText: qsTr( "puku" )
+        placeholderText: qsTr( "Dress" )
         text: ""
         y: sexTf.y
         anchors.right: parent.right
@@ -139,7 +139,7 @@ Item {
     TextField {
         id: statusTf
         height: 50
-        placeholderText: qsTr( "tila" )
+        placeholderText: qsTr( "Status" )
         text: ""
         anchors.left: countTf.right
         anchors.leftMargin: 0
@@ -239,7 +239,7 @@ Item {
             id: loftTf
             height: 50
             width: 100
-            placeholderText: qsTr( "parvi" )
+            placeholderText: qsTr( "Loft" )
             text: ""
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -261,7 +261,7 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: parent.width / 2
-        text: qsTr( "Bongaus")
+        text: qsTr( "Bird-watch")
         visible: detailLevel > 2
         onCheckedChanged: item1.edited = true
 
@@ -273,7 +273,7 @@ Item {
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        text: qsTr( "Pesintä")
+        text: qsTr( "Nesting")
         y: watchChkBox.y
         visible: detailLevel > 2
         onCheckedChanged: item1.edited = true
@@ -286,7 +286,7 @@ Item {
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        placeholderText: qsTr( "Lisätietoja" )
+        placeholderText: qsTr( "More information" )
         text: ""
         height: 50
         visible: detailLevel > 2

@@ -89,6 +89,9 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(reloadHistory()),this,SLOT(reloadHistory()));
     connect(mQMLWin,SIGNAL(loadHistoryWithDate(QString)),this,SLOT(loadHistoryWithDate(QString)));
     connect(mQMLWin,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)),this,SLOT(loadHistoryWithDateAndPlace(QString,QString)));
+    connect(mQMLWin,SIGNAL(restoreObservers()),this,SLOT(restoreObservers()));
+    connect(mQMLWin,SIGNAL(restoreLocations()),this,SLOT(restoreLocations()));
+    connect(mQMLWin,SIGNAL(restoreSpecies()),this,SLOT(restoreSpecies()));
 
     mModelWriter = new ModelDataWriter( this );
 }
@@ -130,4 +133,28 @@ void ApplicationController::quit()
     mModelWriter->writeLocationData( mLocationModel );
     mModelWriter->writeBirdData( mBirdModel );
     qApp->quit();
+}
+
+void ApplicationController::restoreSpecies()
+{
+    qDebug() << "void ApplicationController::restoreSpecies()";
+    mModelWriter->removeCustomSpecies();
+    mBirdModel->clear();
+    mModelLoader->loadBirdData( mBirdModel );
+}
+
+void ApplicationController::restoreLocations()
+{
+    qDebug() << "void ApplicationController::restoreLocations()";
+    mModelWriter->removeCustomLocations();
+    mLocationModel->clear();
+    mModelLoader->loadLocationData( mLocationModel );
+}
+
+void ApplicationController::restoreObservers()
+{
+    qDebug() << "void ApplicationController::restoreObservers()";
+    mModelWriter->removeCustomObservers();
+    mPersonModel->clear();
+    mModelLoader->loadPersonData( mPersonModel );
 }

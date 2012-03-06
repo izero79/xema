@@ -95,19 +95,19 @@ Page {
         var missingData = new Array();
         if( startDateTf.text == "" )
         {
-            missingData[missingData.length] = qsTr( "start date" )
+            missingData[missingData.length] = qsTr( "Start date" )
         }
         if( birdNameTf.text == "" )
         {
-            missingData[missingData.length] = qsTr( "species" )
+            missingData[missingData.length] = qsTr( "Species" )
         }
         if( regPeopleTa.text == "" )
         {
-            missingData[missingData.length] = qsTr( "observer" )
+            missingData[missingData.length] = qsTr( "Observer" )
         }
         if( locationTf.text == "" )
         {
-            missingData[missingData.length] = qsTr( "location" )
+            missingData[missingData.length] = qsTr( "Location" )
         }
 
         var allData = "";
@@ -128,7 +128,7 @@ Page {
         var delegateData = MyScript.readDelegateDatas()
         if( delegateData == "-1" )
         {
-            missingData[missingData.length] = qsTr( "count" )
+            missingData[missingData.length] = qsTr( "Count" )
         }
         else
         {
@@ -143,6 +143,8 @@ Page {
         }
 
         allData += weatherTa.text
+        allData += delimiter
+        allData += exportedChkBox.checked
 
         console.log( "allData: " + allData)
         return allData;
@@ -188,6 +190,22 @@ Page {
         currentField++
         weatherTa.text = fields[currentField]
 
+    }
+
+    function setData( date, place, species )
+    {
+        startDateTf.text = date
+        locationTf.text = place
+        if( species != "" )
+        {
+            if( species.indexOf( " (") != -1 )
+            {
+                console.log("loyty sulku")
+                species = species.substring(0, (species.indexOf( " (")))
+            }
+        }
+
+        birdNameTf.text = species
     }
 
     function clearTab()
@@ -252,11 +270,11 @@ Page {
             width: parent.width
             color: "white"
             font.pixelSize: 36
-            text: qsTr( "Virhe" )
+            text: qsTr( "Error" )
             horizontalAlignment: Text.AlignHCenter
         }
         content:Item {
-            height: saveErrorDialogText.paintedHeight
+            height: 150 //saveErrorDialogText.paintedHeight
             width: parent.width
             anchors.topMargin: 10
             Text {
@@ -266,7 +284,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 text: {
-                    var dialogText = qsTr( "Pakollinen tieto puuttuu:" )
+                    var dialogText = qsTr( "Mandatory information missing:" )
                     for( var i = 0; i < missingInfo.length; i++ )
                     {
                         dialogText += "\n" + missingInfo[i];
@@ -319,7 +337,7 @@ Page {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: qsTr( "Hakee GPS-koodrinaatit" )
+                text: qsTr( "Fetching GPS-coordinates" )
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
@@ -343,9 +361,9 @@ Page {
     TabBarLayout {
         id: tabBarLayout
         anchors { left: parent.left; right: parent.right; top: parent.top }
-        TabButton { tab: tab1content; text: qsTr( "Päivä" ) }
-        TabButton { tab: tab2content; text: qsTr( "Paikka" ) }
-        TabButton { tab: tab3content; text: qsTr( "Havainto" ) }
+        TabButton { tab: tab1content; text: qsTr( "Day" ) }
+        TabButton { tab: tab2content; text: qsTr( "Place" ) }
+        TabButton { tab: tab3content; text: qsTr( "Observation" ) }
     }
 
     TabGroup {
@@ -382,7 +400,7 @@ Page {
                 Text {
                     id: text2
                     color: "#ffffff"
-                    text: qsTr("Päivämäärä")
+                    text: qsTr("Date")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -475,7 +493,7 @@ Page {
                 Text {
                     id: text6
                     color: "#ffffff"
-                    text: qsTr("Havainnoijat")
+                    text: qsTr("Observers")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -499,7 +517,7 @@ Page {
                     TextArea {
                         id: regPeopleTa
                         height: 100
-                        placeholderText: qsTr( "Rekisteröityneet" )
+                        placeholderText: qsTr( "Registered" )
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -519,7 +537,7 @@ Page {
                     TextArea {
                         id: otherPeopleTa
                         height: 100
-                        placeholderText: qsTr( "Muut" )
+                        placeholderText: qsTr( "Others" )
                         text: ""
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -541,7 +559,7 @@ Page {
                 Text {
                     id: text5
                     color: "#ffffff"
-                    text: qsTr("Säätila")
+                    text: qsTr("Weather")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -569,7 +587,7 @@ Page {
                     TextArea {
                         id: weatherTa
                         height: 100
-                        placeholderText: qsTr( "Sää" )
+                        placeholderText: qsTr( "Weather" )
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -598,7 +616,7 @@ Page {
                 Text {
                     id: locationText
                     color: "#ffffff"
-                    text: qsTr("Havainnointipaikka")
+                    text: qsTr("Location")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -623,11 +641,11 @@ Page {
                     TextField {
                         id: locationTf
                         height: 50
-                        placeholderText: qsTr( "Havaintopaikka" )
+                        placeholderText: qsTr( "Location" )
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
-                        anchors.right: parent.right //button1.left
+                        anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
@@ -670,7 +688,7 @@ Page {
                 Text {
                     id: obsTimeText
                     color: "#ffffff"
-                    text: qsTr("Havainnointiaika")
+                    text: qsTr("Time")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -781,7 +799,7 @@ Page {
                 Text {
                     id: text7
                     color: "#ffffff"
-                    text: qsTr("Havainto")
+                    text: qsTr("Observation")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -805,7 +823,7 @@ Page {
                     TextField {
                         id: birdNameTf
                         height: 50
-                        placeholderText: qsTr( "Laji" )
+                        placeholderText: qsTr( "Species" )
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -835,7 +853,7 @@ Page {
                 }
                 Button {
                     id: plus
-                    text: qsTr( "lisää rivi" )
+                    text: qsTr( "Add row" )
                     anchors.top: item7.bottom
                     anchors.topMargin: 8
                     anchors.left: parent.left
@@ -846,7 +864,7 @@ Page {
                 }
                 Button {
                     id: minus
-                    text: qsTr( "poista rivi" )
+                    text: qsTr( "Remove row" )
                     anchors.top: item7.bottom
                     anchors.topMargin: 8
                     anchors.left: plus.right
@@ -861,7 +879,7 @@ Page {
                 Text {
                     id: text8
                     color: "#ffffff"
-                    text: qsTr("Lisätietoja")
+                    text: qsTr("Additional information")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -888,7 +906,7 @@ Page {
                     TextArea {
                         id: moreInfoTa
                         height: 150
-                        placeholderText: qsTr( "Lisätietoja" )
+                        placeholderText: qsTr( "More information" )
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 8
@@ -904,7 +922,7 @@ Page {
                     TextField {
                         id: atlasTf
                         height: 50
-                        placeholderText: qsTr( "Atlasindeksi" )
+                        placeholderText: qsTr( "Atlas index" )
                         text: ""
                         anchors.top: moreInfoTa.bottom
                         anchors.topMargin: 0
@@ -929,9 +947,20 @@ Page {
                         anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
-                        text: qsTr( "Salaa havainto")
+                        text: qsTr( "Hidden")
                         visible: detailLevel > 2
                         onCheckedChanged: obsPage.edited = true
+                    }
+                    CheckBox {
+                        id: exportedChkBox
+                        anchors.top: hideChkBox.bottom
+                        anchors.topMargin: 0
+                        anchors.left: atlasTf.right
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        text: ""
+                        visible: false
                     }
                 }
             }
