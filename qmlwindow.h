@@ -37,6 +37,8 @@ signals:
     void restoreSpecies();
     void restoreLocations();
     void restoreObservers();
+    void saveLocations();
+    void importData();
 
 public slots:
     void orientationChanged();
@@ -64,8 +66,11 @@ private:
 #endif
     QDeclarativeContext *mRootContext;
     QObject *mRootObject;
+    PersonModel *mPersonModel;
     FilterModel *mFilteredPersonModel;
+    BirdModel *mBirdModel;
     FilterModel *mFilteredBirdModel;
+    LocationModel *mLocationModel;
     FilterModel *mFilteredLocationModel;
     FilterModel *mFilteredStatusModel;
     FilterModel *mFilteredHistoryModel;

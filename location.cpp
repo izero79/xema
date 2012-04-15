@@ -57,6 +57,19 @@ QString Location::wgsCoordinate() const
     return mWGSCoordinate;
 }
 
+QString Location::wgsCoordinateForFilter() const
+{
+    if(mWGSCoordinate.isEmpty() == false)
+    {
+        QString latitude = mWGSCoordinate.section(':',0, 0);
+        QString longitude = mWGSCoordinate.section(':',1, 1);
+        latitude = latitude.left(4);
+        longitude = longitude.left(4);
+        return QString(latitude+":"+longitude);
+    }
+    return mWGSCoordinate;
+}
+
 QString Location::coordinate() const
 {
     if( mYKJCoordinate.isEmpty() == true )

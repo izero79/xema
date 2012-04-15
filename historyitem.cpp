@@ -8,7 +8,8 @@ HistoryItem::HistoryItem() :
     mDate(),
     mSpecies(),
     mDateCount( 1 ),
-    mPlaceCount( 1 )
+    mPlaceCount( 1 ),
+    mTime()
 {
 }
 
@@ -18,7 +19,8 @@ HistoryItem::HistoryItem( qlonglong id, const QString &place, const QString &dat
     mDate( date ),
     mSpecies(),
     mDateCount( 1 ),
-    mPlaceCount( 1 )
+    mPlaceCount( 1 ),
+    mTime()
 {
 
 }
@@ -44,7 +46,6 @@ void HistoryItem::addSpecies( const QString &name )
     if( mSpecies.contains( name ) )
     {
         int oldCount = mSpecies.value(name);
-//        oldCount++;
         mSpecies.insert(name, oldCount);
         return;
     }
@@ -59,7 +60,6 @@ void HistoryItem::increaseDateCount()
 void HistoryItem::increasePlaceCount()
 {
     mPlaceCount++;
-    qDebug() << "increasePlaceCount, now" << mPlaceCount;
 }
 
 void HistoryItem::addSpeciesCount(const QString &name, int count)
@@ -70,6 +70,11 @@ void HistoryItem::addSpeciesCount(const QString &name, int count)
         int newCount = oldCount + count;
         mSpecies.insert(name, newCount);
     }
+}
+
+void HistoryItem::setTime(const QString &time)
+{
+    mTime = time;
 }
 
 int HistoryItem::id() const
@@ -108,7 +113,7 @@ QString HistoryItem::species() const
         }
         species.append( ", ");
     }
-    if( species.endsWith( ", "));
+    if( species.endsWith( ", ") )
     {
         species.remove( species.length() - 2, 2 );
     }
@@ -139,4 +144,17 @@ int HistoryItem::specieCount(const QString &name) const
         }
     }
     return count;
+}
+
+QDate HistoryItem::sortDate() const
+{
+    QDate date = QDate::fromString( mDate, QString("dd.MM.yyyy"));
+
+    return date;
+}
+
+QTime HistoryItem::sortTime() const
+{
+    QTime time = QTime::fromString( mTime, QString("hh:mm"));
+    return time;
 }

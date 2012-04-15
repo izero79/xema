@@ -4,6 +4,7 @@
 #include <QString>
 #include <QStringList>
 #include <QMap>
+#include <QDateTime>
 
 class HistoryItem
 {
@@ -18,6 +19,7 @@ public:
     void increaseDateCount();
     void increasePlaceCount();
     void addSpeciesCount(const QString &name, int count);
+    void setTime( const QString &time );
 
     int id() const;
     QString place() const;
@@ -26,6 +28,8 @@ public:
     int dateCount() const;
     int placeCount() const;
     int specieCount(const QString &name = QString()) const;
+    QDate sortDate() const;
+    QTime sortTime() const;
 
 private:
     qlonglong mId;
@@ -34,6 +38,7 @@ private:
     QMap<QString,int> mSpecies;
     int mDateCount;
     int mPlaceCount;
+    QString mTime;
 };
 
 #endif // HISTORYITEM_H

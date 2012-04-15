@@ -26,12 +26,12 @@ void DebugPrinter(QtMsgType type, const char *msg)
     }
 
 #if defined( Q_OS_SYMBIAN )
-    QFile outFile("c:/data/lokki-debuglog.txt");
+    QFile outFile("c:/data/xema-debuglog.txt");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;
 #elif defined( Q_WS_MAEMO_5 ) || defined( HARMATTAN )
-    QFile outFile("/home/user/MyDocs/lokki-debuglog.txt");
+    QFile outFile("/home/user/MyDocs/xema-debuglog.txt");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;

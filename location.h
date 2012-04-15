@@ -19,6 +19,7 @@ public:
     QString place() const;
     QString ykjCoordinate() const;
     QString wgsCoordinate() const;
+    QString wgsCoordinateForFilter() const;
     QString coordinate() const;
 
 private:

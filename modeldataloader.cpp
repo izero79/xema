@@ -13,7 +13,7 @@
 #include "status.h"
 #include "historymodel.h"
 #include "historyitem.h"
-#include "lokkiconstants.h"
+#include "xemaconstants.h"
 #include "atlasindex.h"
 #include "atlasindexmodel.h"
 
@@ -24,10 +24,10 @@ ModelDataLoader::ModelDataLoader(QObject *parent) :
 
 void ModelDataLoader::loadBirdData( BirdModel *model )
 {
-    QFile tiedosto( dataFileDir() + "lokkitestibirds.txt" );
+    QFile tiedosto( dataFileDir() + "xemabirddata.txt" );
     if( tiedosto.exists() == false )
     {
-        tiedosto.setFileName( ":lajilista.csv");
+        tiedosto.setFileName( ":specieslist.csv");
     }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
@@ -48,10 +48,10 @@ void ModelDataLoader::loadBirdData( BirdModel *model )
 
 void ModelDataLoader::loadLocationData(LocationModel *model)
 {
-    QFile tiedosto( dataFileDir() + "lokkitestilocation.txt" );
+    QFile tiedosto( dataFileDir() + "xemalocationdata.txt" );
     if( tiedosto.exists() == false )
     {
-        tiedosto.setFileName( ":paikkalista.csv");
+        tiedosto.setFileName( ":defaultlocations.csv");
     }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
@@ -66,10 +66,10 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
 
 void ModelDataLoader::loadPersonData(PersonModel *model)
 {
-    QFile tiedosto( dataFileDir() + "lokkitestiperson.txt" );
+    QFile tiedosto( dataFileDir() + "xemapersondata.txt" );
     if( tiedosto.exists() == false )
     {
-        tiedosto.setFileName( ":ihmislista.csv");
+        tiedosto.setFileName( ":defaultpersons.csv");
     }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
@@ -90,7 +90,6 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
         if( personLine.isEmpty() == false && personLine.contains( ";" ) )
         {
             Person person( personLine.section( ';', 0, 0 ), personLine.section( ';', 1, 1 ), registered, defaultName );
-            qDebug() << "person loaded";
             model->addItem( person );
         }
     }
@@ -99,7 +98,7 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
 
 void ModelDataLoader::loadStatusData( StatusModel *model )
 {
-    QFile tiedosto( ":statuslist.csv");
+    QFile tiedosto( ":defaultstatuses.csv");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if( striimi.atEnd() == false )
@@ -120,31 +119,46 @@ void ModelDataLoader::loadStatusData( StatusModel *model )
 
 void ModelDataLoader::loadHistoryData( HistoryModel *model, const QString &date, const QString &place )
 {
-    qDebug() << "loadHistoryData 0";
-    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
+    QFile tiedosto( dataFileDir() + "xemadata.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
-    qDebug() << "loadHistoryData 1";
     if( striimi.atEnd() == false )
     {
         striimi.readLine();
     }
-    qDebug() << "loadHistoryData 2";
     while( striimi.atEnd() == false )
     {
         QString line;
         line = striimi.readLine();
         QString readPlace = line.section( '#', 6, 6 );
         QString readDate = line.section( '#', 2, 2);
-        QString readCount = line.section( '#', 13, 13);
-        qDebug() << "LAJIN mAARA" << readCount;
+        QString readTime = line.section( '#', 4, 4);
+        int rowCount = line.section( '#', 12, 12).toInt();
+//        qDebug() << "Riveja" << rowCount;
+        QString readCount = 0;
+        if( rowCount == 1 )
+        {
+            readCount = line.section( '#', 13, 13);
+        }
+        else
+        {
+            int count = 0;//line.section( '#', 13, 13).toInt();
+            for( int i = 0; i < rowCount;i++)
+            {
+                count += line.section( '#', 13+(i*11),13+(i*11)).toInt();
+            }
+            readCount.setNum( count );
+        }
+
+//        qDebug() << "Kokonais lajin maara" << readCount;
         if( date.isEmpty() == true && place.isEmpty() == true )
         {
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
             item.setSpecies( line.section( '#', 1, 1));
             item.addSpeciesCount( line.section( '#', 1, 1), readCount.toInt() );
+            item.setTime(readTime);
 
-            model->addItem( item );
+            model->addItemAtBeginning( item );
             continue;
         }
         if( date.isEmpty() == false && date == readDate && place.isEmpty() == false && place == readPlace )
@@ -152,43 +166,57 @@ void ModelDataLoader::loadHistoryData( HistoryModel *model, const QString &date,
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
             item.setSpecies( line.section( '#', 1, 1));
             item.addSpeciesCount( line.section( '#', 1, 1), readCount.toInt() );
-            model->addItem( item );
+            item.setTime(readTime);
+            model->addItemAtBeginning( item );
             continue;
         }
         // TODO other combinations
     }
-    qDebug() << "loadHistoryData done";
 }
 
 void ModelDataLoader::loadHistoryDateData( HistoryModel *model )
 {
-    qDebug() << "loadHistoryData 0";
-    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
+    QFile tiedosto( dataFileDir() + "xemadata.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
-    qDebug() << "loadHistoryData 1";
     if( striimi.atEnd() == false )
     {
         striimi.readLine();
     }
-    qDebug() << "loadHistoryData 2";
     while( striimi.atEnd() == false )
     {
         QString line;
         line = striimi.readLine();
         QString date = line.section( '#', 2, 2 );
+        QString readTime = line.section( '#', 4, 4 );
         QString species = line.section( '#', 1, 1);
-        QString readCount = line.section( '#', 13, 13);
-        qDebug() << "LAJI" << species << "MAARA" << readCount;
+        int rowCount = line.section( '#', 12, 12).toInt();
+//        qDebug() << "Riveja" << rowCount;
+        QString readCount = 0;
+        if( rowCount == 1 )
+        {
+            readCount = line.section( '#', 13, 13);
+        }
+        else
+        {
+            int count = 0;//line.section( '#', 13, 13).toInt();
+            for( int i = 0; i < rowCount;i++)
+            {
+                count += line.section( '#', 13+(i*11),13+(i*11)).toInt();
+            }
+            readCount.setNum( count );
+        }
+
+//        qDebug() << "Kokonais lajin maara" << readCount;
 
         int modelRowCount = model->rowCount();
         bool sameDateFound = false;
         for( int i = 0; i < modelRowCount; i++ )
         {
-            qDebug() << "tarkistetaan" << date;
+//            qDebug() << "tarkistetaan" << date;
             if( model->getItem( i ).date() == date )
             {
-                qDebug() << "sama pvm" << date;
+//                qDebug() << "sama pvm" << date;
                 HistoryItem tmp = model->getItem( i );
                 tmp.increaseDateCount();
                 tmp.addSpecies( species );
@@ -202,24 +230,22 @@ void ModelDataLoader::loadHistoryDateData( HistoryModel *model )
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
             item.setSpecies( line.section( '#', 1, 1));
             item.addSpeciesCount( species, readCount.toInt());
-            model->addItem( item );
+            item.setTime(readTime);
+
+            model->addItemAtBeginning( item );
         }
     }
-    qDebug() << "loadHistoryData done";
 }
 
 void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &date )
 {
-    qDebug() << "loadHistoryPlaceData 0 ja date" << date;
-    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
+    QFile tiedosto( dataFileDir() + "xemadata.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
-    qDebug() << "loadHistoryPlaceData 1";
     if( striimi.atEnd() == false )
     {
         striimi.readLine();
     }
-    qDebug() << "loadHistoryPlaceData 2";
     while( striimi.atEnd() == false )
     {
         QString line;
@@ -227,30 +253,47 @@ void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &
         QString readDate = line.section( '#', 2, 2 );
         QString place = line.section( '#', 6, 6 );
         QString species = line.section( '#', 1, 1);
-        QString readCount = line.section( '#', 13, 13);
 
-        //int modelRowCount = model->rowCount();
+        int rowCount = line.section( '#', 12, 12).toInt();
+//        qDebug() << "Riveja" << rowCount;
+        QString readCount = 0;
+        if( rowCount == 1 )
+        {
+            readCount = line.section( '#', 13, 13);
+        }
+        else
+        {
+            int count = 0;//line.section( '#', 13, 13).toInt();
+            for( int i = 0; i < rowCount;i++)
+            {
+                count += line.section( '#', 13+(i*11),13+(i*11)).toInt();
+            }
+            readCount.setNum( count );
+        }
+
+//        qDebug() << "Kokonais lajin maara" << readCount;
+
         bool sameDateFound = false;
         bool samePlaceFound = false;
-        qDebug() << "\nuusi itemi" << readDate << place;
+//        qDebug() << "\nuusi itemi" << readDate << place;
         for( int i = 0; i < model->rowCount(); i++ )
         {
-            qDebug() << "tarkistetaan kohta" << i;
+//            qDebug() << "tarkistetaan kohta" << i;
             sameDateFound = false;
             samePlaceFound = false;
             if( model->getItem( i ).date() == readDate )
             {
-                qDebug() << "sama date" <<  model->getItem( i ).date();
+//                qDebug() << "sama date" <<  model->getItem( i ).date();
                 sameDateFound = true;
             }
             else
             {
-                qDebug() << "eri date  " <<  model->getItem( i ).date() << "vs" << readDate;
+//                qDebug() << "eri date  " <<  model->getItem( i ).date() << "vs" << readDate;
                 continue;
             }
             if( sameDateFound && model->getItem( i ).place() == place)
             {
-                qDebug() << "kohdassa" << i << "sama place ja date" << readDate << place;
+//                qDebug() << "kohdassa" << i << "sama place ja date" << readDate << place;
                 HistoryItem tmp = model->getItem( i );
                 tmp.increasePlaceCount();
                 tmp.increaseDateCount();
@@ -260,38 +303,32 @@ void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &
                 samePlaceFound = true;
                 break;
             }
-            else
-            {
-                qDebug() << "eri place";
-            }
         }
         if( date.isEmpty() == false )
         {
             if( readDate == date && samePlaceFound == false)
             {
-                qDebug() << "adding with date" << readDate << place;
+//                qDebug() << "adding with date" << readDate << place;
                 HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
                 item.setSpecies( line.section( '#', 1, 1));
                 item.addSpeciesCount( species, readCount.toInt());
-                model->addItem( item );
+                model->addItemAtBeginning( item );
             }
             continue;
         }
         else if( samePlaceFound == false )
         {
-            qDebug() << "adding    " << readDate << place;
             HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
             item.setSpecies( line.section( '#', 1, 1));
             item.addSpeciesCount( species, readCount.toInt());
-            model->addItem( item );
+            model->addItemAtBeginning( item );
         }
     }
-    qDebug() << "loadHistoryPlaceData done";
 }
 
 void ModelDataLoader::loadAtlasData( AtlasIndexModel *model )
 {
-    QFile tiedosto( ":atlasindex.csv");
+    QFile tiedosto( ":atlasindexes.csv");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if( striimi.atEnd() == false )
@@ -316,7 +353,9 @@ QString ModelDataLoader::dataFileDir()
 #ifdef Q_OS_SYMBIAN
     appPath = QCoreApplication::applicationDirPath();
 #elif defined HARMATTAN
-    appPath = QString( "/home/user/MyDocs/.lokki/" );
+    appPath = QString( "/home/user/MyDocs/.xema/" );
+#elif defined MAC_OS_X_VERSION_10_6
+    appPath = QString( "/Users/Tero/" );
 #else
     appPath = QString( "C:/" );
 

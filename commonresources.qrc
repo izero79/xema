@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>paikkalista.csv</file>
-        <file>ihmislista.csv</file>
-        <file>statuslist.csv</file>
-        <file>atlasindex.csv</file>
-        <file>lajilista.csv</file>
-        <file>lokki_en.qm</file>
-        <file>lokki_fi.qm</file>
+        <file>defaultlocations.csv</file>
+        <file>defaultpersons.csv</file>
+        <file>defaultstatuses.csv</file>
+        <file>atlasindexes.csv</file>
+        <file>specieslist.csv</file>
+        <file>xema_en.qm</file>
+        <file>xema_fi.qm</file>
     </qresource>
 </RCC>

@@ -42,6 +42,8 @@ private slots:
     void restoreSpecies();
     void restoreLocations();
     void restoreObservers();
+    void saveLocations();
+    void importData();
 
 private:
     QMLWindow *mQMLWin;

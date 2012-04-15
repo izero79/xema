@@ -37,7 +37,7 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     if( role == FilterRole )
     {
         return QString( item.town() + ", " +
-                        item.place() + ", " );
+                        item.place() + ", " + item.wgsCoordinateForFilter() );
     }
     else if( role == IndexRole )
     {
@@ -104,7 +104,7 @@ void LocationModel::addItem(const Location &item)
     QAbstractItemModel::endInsertRows();
 }
 
-Location LocationModel::getItem( int row )
+Location LocationModel::getItem( int row ) const
 {
     if( row < 0 || row >= items.count() )
     {
@@ -130,19 +130,16 @@ void LocationModel::setContent( const QList<Location> &newItems )
 
 bool LocationModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
-    qDebug() << "joo" << index.row() << items.count();
     int row = index.row();
     Location tmp;
     if( index.row() >= items.count() || index.row() < 0 )
     {
         row = items.count();
-        qDebug() << "trying to create new";
     }
     else
     {
         tmp = items.at( row );
     }
-    qDebug() << "setData"  << value;
     switch( role )
     {
     case TownRole:

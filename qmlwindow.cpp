@@ -28,8 +28,11 @@ QMLWindow::QMLWindow(QWidget *parent) :
     #endif
     mRootContext( 0 ),
     mRootObject( 0 ),
+    mPersonModel( 0 ),
     mFilteredPersonModel( 0 ),
+    mBirdModel( 0 ),
     mFilteredBirdModel( 0 ),
+    mLocationModel( 0 ),
     mFilteredLocationModel( 0 ),
     mFilteredStatusModel( 0 ),
     mFilteredHistoryModel( 0 ),
@@ -39,18 +42,12 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mSettings( 0 ),
     mDataWriter( 0 )
 {
-    qDebug() << "qmlwin 0";
 #if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
-    qDebug() << "qmlwin 1";
     mView = new QDeclarativeView(this);
-    qDebug() << "qmlwin 2";
     mView->setResizeMode( QDeclarativeView::SizeRootObjectToView );
-    qDebug() << "qmlwin 3";
     this->setCentralWidget( mView );
 #else
-    qDebug() << "qmlwin 1.1";
     setResizeMode( QDeclarativeView::SizeRootObjectToView );
-    qDebug() << "qmlwin 2.1 3.1";
 #endif
 
 #if defined Q_WS_MAEMO_5
@@ -59,61 +56,27 @@ QMLWindow::QMLWindow(QWidget *parent) :
 #endif
 
 #if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
-    qDebug() << "qmlwin 4";
     mRootContext = mView->rootContext();
 #else
-    qDebug() << "qmlwin 4.1";
     mRootContext = rootContext();
 #endif
-    qDebug() << "qmlwin 5";
     mRootContext->setContextProperty( "clockTime", "" );
     mRootContext->setContextProperty( "mainWidth", QApplication::desktop()->width() );
     mRootContext->setContextProperty( "mainHeight", QApplication::desktop()->height() );
 
 #ifdef SYMBIAN3
-    qDebug() << "qmlwin 6";
-    setSource(QUrl("qrc:qml/lokki/main.qml"));
-    qDebug() << "qmlwin 7";
+    setSource(QUrl("qrc:qml/xema/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
-    qDebug() << "qmlwin 8";
 #elif defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
-    qDebug() << "qmlwin 6.1";
-    mView->setSource(QUrl("qrc:qml/lokki/main.qml"));
-    qDebug() << "qmlwin 7.1";
+    mView->setSource(QUrl("qrc:qml/xema/main.qml"));
     mRootObject = dynamic_cast<QObject*>(mView->rootObject());
-    qDebug() << "qmlwin 8.1";
 #elif defined HARMATTAN
-    setSource(QUrl("qrc:qml/lokki/main.qml"));
+    setSource(QUrl("qrc:qml/xema/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    qDebug() << "qmlwin 6.3";
-    setSource(QUrl("qrc:qml/lokki/main.qml"));
-    qDebug() << "qmlwin 7.3";
+    setSource(QUrl("qrc:qml/xema/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
-    qDebug() << "qmlwin 8.3";
 #endif
-
-#if defined Q_WS_MAEMO_5
-    QMetaObject::invokeMethod(mRootObject, "setStyle",
-             Q_ARG(QVariant, "maemo" ));
-#else
-    #if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
-    qDebug() << "qmlwin 9";
-    QMetaObject::invokeMethod(mRootObject, "setStyle",
-                 Q_ARG(QVariant, "symbian" ));
-    qDebug() << "qmlwin 10";
-    #elif defined Q_WS_SIMULATOR
-        QMetaObject::invokeMethod(mRootObject, "setStyle",
-                 Q_ARG(QVariant, "maemo" ));
-    #elif defined HARMATTAN
-        QMetaObject::invokeMethod(mRootObject, "setStyle",
-                 Q_ARG(QVariant, "meego" ));
-    #else
-        QMetaObject::invokeMethod(mRootObject, "setStyle",
-                 Q_ARG(QVariant, "maemo" ));
-    #endif
-#endif
-
 }
 
 QMLWindow::~QMLWindow()
@@ -131,7 +94,6 @@ void QMLWindow::resizeEvent( QResizeEvent *event )
 void QMLWindow::orientationChanged()
 {
     QRect applicationRect = QApplication::desktop()->screenGeometry();
-    qDebug() << "void QMLWindow::orientationChanged()" << "new apprect" << applicationRect;
     this->setGeometry( applicationRect );
     QString width;
     width.setNum( rect().width() );
@@ -143,7 +105,6 @@ void QMLWindow::orientationChanged()
 
 void QMLWindow::init()
 {
-    qDebug() << "WIN INIT START";
     mFilteredBirdModel = new FilterModel(this);
     mFilteredPersonModel = new FilterModel(this);
     mFilteredLocationModel = new FilterModel(this);
@@ -175,32 +136,39 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(restoreObservers()),this,SIGNAL(restoreObservers()));
     connect(mRootObject,SIGNAL(restoreLocations()),this,SIGNAL(restoreLocations()));
     connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
+    connect(mRootObject,SIGNAL(saveLocations()),this,SIGNAL(saveLocations()));
+    connect(mRootObject,SIGNAL(importData()),this,SIGNAL(importData()));
 
 
     mSettings = new Settings( this );
     mDataWriter = new ModelDataWriter( this );
 
-    qDebug() << "WIN INIT 1";
     QMetaObject::invokeMethod(mRootObject, "setSystematicSort",
              Q_ARG(QVariant, mSettings->systematicSorting() ));
     QMetaObject::invokeMethod(mRootObject, "setDetailLevel",
              Q_ARG(QVariant, mSettings->detailLevel() ));
-    qDebug() << "WIN INIT DONE";
 }
 
 void QMLWindow::setBirdModel( BirdModel *model )
 {
+    mBirdModel = model;
     mFilteredBirdModel->setSourceModel( model );
 }
 
 void QMLWindow::setPersonModel(PersonModel *model)
 {
+    mPersonModel = model;
     mFilteredPersonModel->setSourceModel( model );
 }
 
 void QMLWindow::setLocationModel(LocationModel *model)
 {
+    mLocationModel = model;
     mFilteredLocationModel->setSourceModel( model );
+    mFilteredLocationModel->setSortRole( LocationModel::TownRole );
+    mFilteredLocationModel->setSortCaseSensitivity( Qt::CaseInsensitive );
+    mFilteredLocationModel->sort( 0 );
+    mFilteredLocationModel->setDynamicSortFilter( true );
 }
 
 void QMLWindow::setStatusModel(StatusModel *model)
@@ -211,16 +179,23 @@ void QMLWindow::setStatusModel(StatusModel *model)
 void QMLWindow::setHistoryModel(HistoryModel *model)
 {
     mFilteredHistoryModel->setSourceModel( model );
+    mFilteredHistoryModel->setSortRole( HistoryModel::SortableTimeRole );
+    mFilteredHistoryModel->setDynamicSortFilter(true);
 }
 
 void QMLWindow::setHistoryDateModel(HistoryModel *model)
 {
     mFilteredHistoryDateModel->setSourceModel( model );
+    mFilteredHistoryDateModel->setSortRole( HistoryModel::SortableDateRole );
+    mFilteredHistoryDateModel->sort(0, Qt::DescendingOrder);
+    mFilteredHistoryDateModel->setDynamicSortFilter(true);
 }
 
 void QMLWindow::setHistoryPlaceModel(HistoryModel *model)
 {
     mFilteredHistoryPlaceModel->setSourceModel( model );
+    mFilteredHistoryPlaceModel->setSortRole( HistoryModel::SortableTimeRole );
+    mFilteredHistoryPlaceModel->setDynamicSortFilter(true);
 }
 
 void QMLWindow::setAtlasModel(AtlasIndexModel *model)
@@ -230,7 +205,7 @@ void QMLWindow::setAtlasModel(AtlasIndexModel *model)
 
 void QMLWindow::writeNewObservation( const QString &data )
 {
-    mDataWriter->writeNewObservation( data );
+    mDataWriter->writeNewObservation( data, *mLocationModel, *mPersonModel );
 }
 
 void QMLWindow::loadObservation( const QString &id )
@@ -261,7 +236,5 @@ void QMLWindow::saveSystematicSorting( bool systematic )
 
 void QMLWindow::exportData(bool onlyNew)
 {
-    mDataWriter->exportHistory(onlyNew);
+    mDataWriter->exportHistory(onlyNew,*mLocationModel,*mPersonModel,*mBirdModel);
 }
-
-

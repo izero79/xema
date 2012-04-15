@@ -14,7 +14,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer->setMainQmlFile(QLatin1String("qml/lokki/main.qml"));
+    viewer->setMainQmlFile(QLatin1String("qml/xema/main.qml"));
     viewer->showExpanded();
 
     return app->exec();*/
@@ -40,12 +40,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     // Check if there's a debuglog and remove it
     bool fileExists = false;
     #if defined( Q_OS_SYMBIAN )
-        fileExists = QFile::exists("c:/data/lokki-debuglog.txt");
-        QFile logFile("c:/data/lokki-debuglog.txt");
+        fileExists = QFile::exists("c:/data/xema-debuglog.txt");
+        QFile logFile("c:/data/xema-debuglog.txt");
         logFile.remove();
     #elif defined( Q_WS_MAEMO_5 ) || defined( HARMATTAN )
-        fileExists = QFile::exists("/home/user/MyDocs/lokki-debuglog.txt");
-        QFile logFile("/home/user/MyDocs/lokki-debuglog.txt");
+        fileExists = QFile::exists("/home/user/MyDocs/xema-debuglog.txt");
+        QFile logFile("/home/user/MyDocs/xema-debuglog.txt");
         logFile.remove();
     #endif
     //Lets register our custom handler, before we start
@@ -64,17 +64,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QString locale = QLocale::system().name();
 
     qDebug() << "System locale:" << locale;
-/*
-    QString lang = QString("en");//SystemInfoProvider::currentLanguage();
-    if( lang.isEmpty() == false && lang != locale )
-    {
-        locale = lang;
-    }
 
-    qDebug() << "System language:" << locale;
-*/
     QTranslator translator;
-    bool ok = translator.load(QString(":/lokki_" ) + locale);
+    bool ok = translator.load(QString(":/xema_" ) + locale);
     qDebug() << "Translator loaded ok:" << ok;
     app.installTranslator(&translator);
 

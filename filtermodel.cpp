@@ -18,14 +18,13 @@ int FilterModel::rowCount()
 
 void FilterModel::setSorting( int type, bool ascending )
 {
-    qDebug() << "SORT type" << type;
+//    qDebug() << "SORT type" << type;
     Q_UNUSED( type )
     if( type == 0 )
     {
         setSortRole(Qt::UserRole + 3);
 
         sort( 0, Qt::AscendingOrder );
-        qDebug() << "SORTattu + 3";
 
         return;
     }
@@ -34,10 +33,9 @@ void FilterModel::setSorting( int type, bool ascending )
         setSortRole(Qt::UserRole + 4);
 
         sort( 0, Qt::AscendingOrder );
-        qDebug() << "SORTattu + 4";
         return;
     }
-    qDebug() << "EI TANNE";
+//    qDebug() << "Tanne";
 
     if( ascending )
     {
@@ -65,15 +63,12 @@ void FilterModel::sectionAlphas()
         QModelIndex idx = sourceModel()->index( i, 0 );
 
         QString title;// = sourceModel()->data( idx, MediaPieceModel::TitleRole ).toString().toUpper();
-        qDebug() << "Title:" << title << "at" << i;
         if( title.startsWith( "THE " ) )
         {
-            qDebug() << "Removing THE";
             title = title.right( title.length() - 4 );
         }
         else if( title.startsWith( "A " ) )
         {
-            qDebug() << "Removing A";
             title = title.right( title.length() - 2 );
         }
         else
@@ -82,21 +77,17 @@ void FilterModel::sectionAlphas()
             {
                 if( title.at( 0 ).isLetterOrNumber() == false )
                 {
-                    qDebug() << "Removing letter" << title.at( 0 );
                     title.remove( 0, 1 );
                 }
                 else
                 {
                     if( title.at( 0 ) == 'A' )
                     {
-                        qDebug() << "AAAAAAA";
                         if( title.at( 0 ).decomposition().isEmpty() &&
                                 lastAlpha.decomposition().isEmpty() == false )
                         {
                             title = title.replace( 0, 1, lastAlpha.decomposition() );
                         }
-                        qDebug() << "dec" << title.at( 0 ).decomposition();
-                        qDebug() << "last dec" << lastAlpha.decomposition();
                     }
                 }
             }
@@ -114,10 +105,6 @@ void FilterModel::sectionAlphas()
             alphas.append( QPair<QChar,int>( alpha, i ) );
         }
     }
-    for( int i = 0; i < alphas.size(); i++ )
-    {
-        qDebug() << "Alpha" << alphas.at( i ).first << "at" << alphas.at( i ).second;
-    }
 }
 
 void FilterModel::filter( const QString &str )
@@ -131,7 +118,6 @@ void FilterModel::filter( const QString &str )
 bool FilterModel::setData( int index, const QVariant &data, int role )
 {
     QModelIndex idx = sourceModel()->index( index, 0 );
-    qDebug() << "setting data for index" << index;
     return sourceModel()->setData( idx, data, role );
 }
 
@@ -144,7 +130,5 @@ QVariant FilterModel::data( int index, int role )
 
 void FilterModel::removeRow( int index )
 {
-    qDebug() << "removing";
     sourceModel()->removeRow( index );
-    qDebug() << "removing - done";
 }

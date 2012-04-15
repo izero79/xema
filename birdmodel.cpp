@@ -128,7 +128,7 @@ void BirdModel::addItem(const Bird &item)
     QAbstractItemModel::endInsertRows();
 }
 
-Bird BirdModel::getItem( int row )
+Bird BirdModel::getItem( int row ) const
 {
     if( row < 0 || row >= items.count() )
     {
@@ -154,20 +154,17 @@ void BirdModel::setContent( const QList<Bird> &newItems )
 
 bool BirdModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
-    qDebug() << "joo" << index.row() << items.count();
     int row = index.row();
     Bird tmp;
     if( index.row() >= items.count() || index.row() < 0 )
     {
         row = items.count();
         tmp.setId( row + 1 );
-        qDebug() << "trying to create new";
     }
     else
     {
         tmp = items.at( row );
     }
-    qDebug() << "setData"  << value;
     switch( role )
     {
     case FinNameRole:

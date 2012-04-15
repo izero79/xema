@@ -76,15 +76,12 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
 bool PersonModel::removeRow ( int row, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
-    qDebug() << "remove row" << row;
     if ( row < 0 || row >= items.count() )
     {
         return false;
     }
     QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row );
-    qDebug() << "items before remove" << items.count();
     items.removeAt( row );
-    qDebug() << "items after remove" << items.count();
     QAbstractItemModel::endRemoveRows();
     return true;
 }
@@ -92,7 +89,6 @@ bool PersonModel::removeRow ( int row, const QModelIndex & parent)
 bool PersonModel::removeRows ( int row, int count, const QModelIndex & parent)
 {
     Q_UNUSED( parent )
-    qDebug() << "remove rows" << row << count;
     if ( row < 0 || row >= items.count() || (count - 1) + row > items.count() )
     {
         return false;
@@ -100,11 +96,9 @@ bool PersonModel::removeRows ( int row, int count, const QModelIndex & parent)
     QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + ( count - 1 ) );
     for( int i = row; i < row + count; i++ )
     {
-        qDebug() << "removing row" << i;
         items.removeAt( row );
     }
     QAbstractItemModel::endRemoveRows();
-    qDebug() << "remove rows - rowcount now" << items.count();
     return true;
 }
 
@@ -117,7 +111,7 @@ void PersonModel::addItem(const Person &item)
     QAbstractItemModel::endInsertRows();
 }
 
-Person PersonModel::getItem( int row )
+Person PersonModel::getItem( int row ) const
 {
     if( row < 0 || row >= items.count() )
     {
@@ -143,19 +137,17 @@ void PersonModel::setContent( const QList<Person> &newItems )
 
 bool PersonModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
-    qDebug() << "joo" << index.row() << items.count();
     int row = index.row();
     Person tmp;
     if( index.row() >= items.count() || index.row() < 0 )
     {
         row = items.count();
-        qDebug() << "trying to create new";
     }
     else
     {
         tmp = items.at( row );
     }
-    qDebug() << "setData"  << value;
+
     switch( role )
     {
     case RegisteredRole:
@@ -176,24 +168,16 @@ bool PersonModel::setData( const QModelIndex &index, const QVariant &value, int 
     default:
         break;
     }
-    qDebug() << "setData 2" << row << items.count();
     if( row >= items.count() )
     {
-        qDebug() << "setData 3";
         QAbstractItemModel::beginInsertRows( QModelIndex(), items.count(), items.count() );
-        qDebug() << "setData 4";
         items.append( tmp );
-        qDebug() << "setData 5" << items.count();
         QAbstractItemModel::endInsertRows();
     }
     else
     {
-        qDebug() << "setData 6";
         items.replace( index.row(), tmp );
-        qDebug() << "setData 7";
     }
-    qDebug() << "setData 8";
     QAbstractItemModel::dataChanged( index, index );
-    qDebug() << "setData 9";
     return true;
 }

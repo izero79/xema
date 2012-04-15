@@ -47,12 +47,9 @@ void ApplicationController::initGUI()
 
 void ApplicationController::initObjects()
 {
-    qDebug() << "appcont 1";
     mQMLWin->init();
-    qDebug() << "appcont 2";
 
     mModelLoader = new ModelDataLoader( this );
-    qDebug() << "appcont 3";
 
     mBirdModel = new BirdModel(this);
     mModelLoader->loadBirdData( mBirdModel );
@@ -92,13 +89,14 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(restoreObservers()),this,SLOT(restoreObservers()));
     connect(mQMLWin,SIGNAL(restoreLocations()),this,SLOT(restoreLocations()));
     connect(mQMLWin,SIGNAL(restoreSpecies()),this,SLOT(restoreSpecies()));
+    connect(mQMLWin,SIGNAL(saveLocations()),this,SLOT(saveLocations()));
+    connect(mQMLWin,SIGNAL(importData()),this,SLOT(importData()));
 
     mModelWriter = new ModelDataWriter( this );
 }
 
 ApplicationController::~ApplicationController()
 {
-    qDebug() << "ApplicationController::~ApplicationController()";
     mQMLWin->deleteLater();
     mQMLWin = 0;
     qDebug() << "ApplicationController::~ApplicationController()" << "\n\nApplication Finished";
@@ -137,7 +135,7 @@ void ApplicationController::quit()
 
 void ApplicationController::restoreSpecies()
 {
-    qDebug() << "void ApplicationController::restoreSpecies()";
+//    qDebug() << "void ApplicationController::restoreSpecies()";
     mModelWriter->removeCustomSpecies();
     mBirdModel->clear();
     mModelLoader->loadBirdData( mBirdModel );
@@ -145,7 +143,7 @@ void ApplicationController::restoreSpecies()
 
 void ApplicationController::restoreLocations()
 {
-    qDebug() << "void ApplicationController::restoreLocations()";
+//    qDebug() << "void ApplicationController::restoreLocations()";
     mModelWriter->removeCustomLocations();
     mLocationModel->clear();
     mModelLoader->loadLocationData( mLocationModel );
@@ -153,8 +151,24 @@ void ApplicationController::restoreLocations()
 
 void ApplicationController::restoreObservers()
 {
-    qDebug() << "void ApplicationController::restoreObservers()";
+//    qDebug() << "void ApplicationController::restoreObservers()";
     mModelWriter->removeCustomObservers();
     mPersonModel->clear();
     mModelLoader->loadPersonData( mPersonModel );
 }
+
+void ApplicationController::saveLocations()
+{
+    qDebug() << "void ApplicationController::saveLocations()";
+    mModelWriter->writeLocationData( mLocationModel );
+    mLocationModel->clear();
+    mModelLoader->loadLocationData( mLocationModel );
+
+}
+
+void ApplicationController::importData()
+{
+    mModelWriter->importHistory();
+    reloadHistory();
+}
+

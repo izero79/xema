@@ -42,6 +42,10 @@ QVariant AtlasIndexModel::data(const QModelIndex &index, int role) const
     }
     else if( role == ValueRole )
     {
+        if( item.index() == 0 )
+        {
+            return "";
+        }
         return item.index();
     }
     return QVariant();
@@ -111,19 +115,16 @@ void AtlasIndexModel::setContent( const QList<AtlasIndex> &newItems )
 
 bool AtlasIndexModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
-    qDebug() << "joo" << index.row() << items.count();
     int row = index.row();
     AtlasIndex tmp;
     if( index.row() >= items.count() || index.row() < 0 )
     {
         row = items.count();
-        qDebug() << "trying to create new";
     }
     else
     {
         tmp = items.at( row );
     }
-    qDebug() << "setData"  << value;
     switch( role )
     {
     case ValueRole:

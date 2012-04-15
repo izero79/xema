@@ -11,6 +11,8 @@ HistoryModel::HistoryModel(QObject *parent) :
     roles[DateCountRole] = "dateCount";
     roles[PlaceCountRole] = "placeCount";
     roles[SpeciesCountRole] = "specieCount";
+    roles[SortableDateRole] = "sortdate";
+    roles[SortableTimeRole] = "timedate";
     setRoleNames(roles);
 }
 
@@ -70,6 +72,14 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
     {
         return item.specieCount();
     }
+    else if( role == SortableDateRole )
+    {
+        return item.sortDate();
+    }
+    else if( role == SortableTimeRole )
+    {
+        return item.sortTime();
+    }
     return QVariant();
 }
 
@@ -108,6 +118,13 @@ void HistoryModel::addItem(const HistoryItem &item)
     int index = items.size();
     QAbstractItemModel::beginInsertRows( QModelIndex(), index, index);
     items.append( item );
+    QAbstractItemModel::endInsertRows();
+}
+
+void HistoryModel::addItemAtBeginning(const HistoryItem &item)
+{
+    QAbstractItemModel::beginInsertRows( QModelIndex(), 0, 0);
+    items.insert( 0, item );
     QAbstractItemModel::endInsertRows();
 }
 
