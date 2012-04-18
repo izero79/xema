@@ -16,18 +16,31 @@ symbian:DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location
 
-!S603x{
-    Symbian1{
-    }else{
-    CONFIG +=qt-components
-    DEFINES += SYMBIAN3
-    }
-}
+DEFINES += ONLYFORIMEI=0
+
+VERSION = 0.1.0
+
+DEFINES += MAJORVERSION=0
+DEFINES += MINORVERSION=1
+DEFINES += PATCHVERSION=0
+
+TARGET = xema
+DEPLOYMENT.display_name = "Xema"
+
+customrules.pkg_prerules = \
+        "; Localised Vendor name" \
+        "%{\"Tero Siironen\"}" \
+        " " \
+        "; Unique Vendor name" \
+        ":\"Tero Siironen\""
+
+DEPLOYMENT += customrules
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
 
-symbian:TARGET.UID3 = 0xE3CA679E
+symbian{
+TARGET.UID3 = 0xE3CA679E
 
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will
@@ -35,6 +48,33 @@ symbian:TARGET.UID3 = 0xE3CA679E
 # range value if unprotected UID is defined for the application and
 # 0x2002CCCF value if protected UID is given to the application
 #symbian:DEPLOYMENT.installer_header = 0x2002CCCF
+
+symbian3 = \
+"; Symbian3" \
+"[0x20022E6D],0,0,0,{\"S60ProductId\"}"
+
+qtquickcomponents = \
+"; Qt Quick components" \
+"(0x200346DE),1,1,0,{\"Qt Quick components\"}"
+
+!S603x{
+    Symbian1{
+    default_deployment.pkg_prerules -= pkg_platform_dependencies
+    my_deployment.pkg_prerules += symbian1
+    }else{
+    #remove platform dependencies only
+    default_deployment.pkg_prerules -= pkg_platform_dependencies
+    #remove webkit component dependencies
+    default_deployment.pkg_prerules -= pkg_depends_webkit
+
+    DEFINES += SYMBIAN3
+    my_deployment.pkg_prerules += symbian3 qtquickcomponents
+    }
+}
+DEPLOYMENT += my_deployment
+
+DEPLOYMENT.installer_header = 0x2002CCCF
+}
 
 # Allow network access on Symbian
 symbian:TARGET.CAPABILITY += NetworkServices
@@ -91,20 +131,6 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/changelog \
     qmldir
 
-symbian {
-
-symbian3 = \
-"; Symbian3" \
-"[0x20022E6D],0,0,0,{\"S60ProductId\"}"
-
-qtquickcomponents = \
-"; Qt Quick components" \
-"(0x200346DE),1,1,0,{\"Qt Quick components\"}"
-
-my_deployment.pkg_prerules += symbian3
-my_deployment.pkg_prerules += qtquickcomponents
-}
-
 HEADERS += \
     person.h \
     location.h \
@@ -139,43 +165,3 @@ OTHER_FILES += \
     ykjetrs-bw.h \
     ykjetrsdata-bw.h \
     gausskrueger.h
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

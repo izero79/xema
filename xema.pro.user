@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.4.1, 2012-04-15T23:23:13. -->
+<!-- Written by Qt Creator 2.4.1, 2012-04-16T22:41:44. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">1</value>
+  <value type="int">2</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -694,7 +694,7 @@
       <value type="QString" key="RemoteCompiler.BuildStep.CertKeyFile">/Users/Tero/koodaus/Qt/xema/PrivateKey_And_Certificate/developercertificate.key</value>
       <value type="QString" key="RemoteCompiler.BuildStep.CertKeyPass"></value>
       <value type="int" key="RemoteCompiler.BuildStep.PkgOpt">0</value>
-      <value type="int" key="RemoteCompiler.BuildStep.PostOp">1</value>
+      <value type="int" key="RemoteCompiler.BuildStep.PostOp">2</value>
       <value type="QString" key="RemoteCompiler.BuildStep.QtVersion">4_7_4</value>
       <value type="int" key="RemoteCompiler.BuildStep.SisOpt">7</value>
       <value type="QString" key="RemoteCompiler.BuildStep.Target">symbianAnna</value>

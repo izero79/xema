@@ -24,6 +24,11 @@ ModelDataLoader::ModelDataLoader(QObject *parent) :
 
 void ModelDataLoader::loadBirdData( BirdModel *model )
 {
+    if( QFile::exists( dataFileDir() + "lokkitestibirds.txt" ))
+    {
+        QFile oldFile( dataFileDir() + "lokkitestibirds.txt" );
+        oldFile.rename( dataFileDir() + "xemabirddata.txt" );
+    }
     QFile tiedosto( dataFileDir() + "xemabirddata.txt" );
     if( tiedosto.exists() == false )
     {
@@ -48,6 +53,12 @@ void ModelDataLoader::loadBirdData( BirdModel *model )
 
 void ModelDataLoader::loadLocationData(LocationModel *model)
 {
+    if( QFile::exists( dataFileDir() + "lokkitestilocation.txt" ))
+    {
+        QFile oldFile( dataFileDir() + "lokkitestilocation.txt" );
+        oldFile.rename( dataFileDir() + "xemalocationdata.txt" );
+    }
+
     QFile tiedosto( dataFileDir() + "xemalocationdata.txt" );
     if( tiedosto.exists() == false )
     {
@@ -66,6 +77,12 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
 
 void ModelDataLoader::loadPersonData(PersonModel *model)
 {
+    if( QFile::exists( dataFileDir() + "lokkitestiperson.txt" ))
+    {
+        QFile oldFile( dataFileDir() + "lokkitestiperson.txt" );
+        oldFile.rename( dataFileDir() + "xemapersondata.txt" );
+    }
+
     QFile tiedosto( dataFileDir() + "xemapersondata.txt" );
     if( tiedosto.exists() == false )
     {
@@ -119,7 +136,8 @@ void ModelDataLoader::loadStatusData( StatusModel *model )
 
 void ModelDataLoader::loadHistoryData( HistoryModel *model, const QString &date, const QString &place )
 {
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+//    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if( striimi.atEnd() == false )
@@ -176,7 +194,8 @@ void ModelDataLoader::loadHistoryData( HistoryModel *model, const QString &date,
 
 void ModelDataLoader::loadHistoryDateData( HistoryModel *model )
 {
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    //    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+        QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if( striimi.atEnd() == false )
@@ -239,7 +258,8 @@ void ModelDataLoader::loadHistoryDateData( HistoryModel *model )
 
 void ModelDataLoader::loadHistoryPlaceData( HistoryModel *model, const QString &date )
 {
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    //    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+        QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if( striimi.atEnd() == false )

@@ -236,5 +236,5 @@ void QMLWindow::saveSystematicSorting( bool systematic )
 
 void QMLWindow::exportData(bool onlyNew)
 {
-    mDataWriter->exportHistory(onlyNew,*mLocationModel,*mPersonModel,*mBirdModel);
+    mDataWriter->exportHistory(onlyNew,mLocationModel,mPersonModel,mBirdModel);
 }

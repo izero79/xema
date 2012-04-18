@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QStringList>
 
 #include "modeldatawriter.h"
 #include "birdmodel.h"
@@ -41,11 +42,13 @@ void ModelDataWriter::writeNewObservation( const QString &data, const LocationMo
 //    newData = formatToTiira(newData, locations, persons);
 //    qDebug() << "NYT PITAIS TALLENTAA" << newData;
     bool headerExists = true;
-    if( QFile::exists( dataFileDir() + "xemadata.txt" ) == false )
+    if( QFile::exists( dataFileDir() + "lokkitesti.txt" ) == false )
+//    if( QFile::exists( dataFileDir() + "xemadata.txt" ) == false )
     {
         headerExists = false;
     }
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+//    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadWrite|QFile::Append);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -63,7 +66,8 @@ void ModelDataWriter::writeNewObservation( const QString &data, const LocationMo
 void ModelDataWriter::replaceObservation( qlonglong id, const QString &data )
 {
 //    qDebug() << "KORVATAAN, ID ON" << id;
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
+//    QFile tiedosto( dataFileDir() + "xemadata.txt" );
     QFile tmptiedosto( dataFileDir() + "xemadata.tmp" );
 
     tiedosto.open(QFile::ReadOnly);
@@ -95,18 +99,21 @@ void ModelDataWriter::replaceObservation( qlonglong id, const QString &data )
         old.remove();
     }
     tiedosto.rename( dataFileDir() + "xemadata.backup");
-    tmptiedosto.rename( dataFileDir() + "xemadata.txt");
+    tmptiedosto.rename( dataFileDir() + "lokkitesti.txt");
+//    tmptiedosto.rename( dataFileDir() + "xemadata.txt");
     tiedosto.remove();
 }
 
 QString ModelDataWriter::loadObservation( qlonglong id )
 {
 //    qDebug() << "LUETAAN" << id;
-    if( QFile::exists( dataFileDir() + "xemadata.txt" ) == false )
+    if( QFile::exists( dataFileDir() + "lokkitesti.txt" ) == false )
+//    if( QFile::exists( dataFileDir() + "xemadata.txt" ) == false )
     {
         return QString();
     }
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+//    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     QString obsLine;
@@ -129,7 +136,8 @@ QString ModelDataWriter::loadObservation( qlonglong id )
 void ModelDataWriter::deleteObservation(qlonglong id)
 {
 //    qDebug() << "DELETE ID" << id;
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
+//    QFile tiedosto( dataFileDir() + "xemadata.txt" );
     QFile tmptiedosto( dataFileDir() + "xemadata.tmp" );
 
     tiedosto.open(QFile::ReadOnly);
@@ -157,7 +165,8 @@ void ModelDataWriter::deleteObservation(qlonglong id)
         old.remove();
     }
     tiedosto.rename( dataFileDir() + "xemadata.backup");
-    tmptiedosto.rename( dataFileDir() + "xemadata.txt");
+//    tmptiedosto.rename( dataFileDir() + "xemadata.txt");
+    tmptiedosto.rename( dataFileDir() + "lokkitesti.txt");
     tiedosto.remove();
 }
 
@@ -293,7 +302,7 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
     tiedosto.close();
 }
 
-void ModelDataWriter::exportHistory( bool onlyNew, const LocationModel &locations, const PersonModel &persons, const BirdModel &birds )
+void ModelDataWriter::exportHistory( bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds )
 {
     QDateTime date;
     date = QDateTime::currentDateTime();
@@ -301,7 +310,8 @@ void ModelDataWriter::exportHistory( bool onlyNew, const LocationModel &location
     fileName.append(date.toString("yyyyMMdd-hhmmss"));
     fileName.append(".csv");
 //    qDebug() << "void ModelDataWriter::exportHistory( bool onlyNew )" << onlyNew;
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+//    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
     QFile newtiedosto( dataFileDir() + "xemadata.tmp.txt" );
     QFile tmptiedosto( exportDir() + fileName );
 
@@ -376,17 +386,20 @@ void ModelDataWriter::exportHistory( bool onlyNew, const LocationModel &location
 
     QFile::remove( dataFileDir() + "xemadata.backup" );
     tiedosto.rename( dataFileDir() + "xemadata.backup");
-    newtiedosto.rename( dataFileDir() + "xemadata.txt");
+//    newtiedosto.rename( dataFileDir() + "xemadata.txt");
+    newtiedosto.rename( dataFileDir() + "lokkitesti.txt");
 }
 
 qlonglong ModelDataWriter::getNewId()
 {
 //    qDebug() << "LUETAAN IDT";
-    if( QFile::exists( dataFileDir() + "xemadata.txt" ) == false )
+//    if( QFile::exists( dataFileDir() + "xemadata.txt" ) == false )
+    if( QFile::exists( dataFileDir() + "lokkitesti.txt" ) == false )
     {
         return 1;
     }
-    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+//    QFile tiedosto( dataFileDir() + "xemadata.txt" );
+    QFile tiedosto( dataFileDir() + "lokkitesti.txt" );
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     QString obsLine;
@@ -454,7 +467,7 @@ void ModelDataWriter::removeCustomObservers()
     tiedosto.remove();
 }
 
-QString ModelDataWriter::formatToTiira(const QString &data, const LocationModel &locations, const PersonModel &persons, const BirdModel &birds)
+QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds)
 {
     for( int i = 0; i < data.count("#"); i++)
     {
@@ -473,12 +486,12 @@ QString ModelDataWriter::formatToTiira(const QString &data, const LocationModel 
     QString toka = "#" + town + "#" + place;
     QString eka = id;
 
-    int rowCount = birds.rowCount();
+    int rowCount = birds->rowCount();
     for( int i = 0; i < rowCount; i++ )
     {
-        if(birds.getItem(i).finName() == species)
+        if(birds->getItem(i).finName() == species)
         {
-            species = birds.getItem(i).abbreviation();
+            species = birds->getItem(i).abbreviation();
             break;
         }
     }
@@ -498,15 +511,15 @@ QString ModelDataWriter::formatToTiira(const QString &data, const LocationModel 
     {
         eka += datetime;
     }
-    rowCount = locations.rowCount();
+    rowCount = locations->rowCount();
 
     // add location coordinates if found
     bool locationAdded = false;
     for( int i = 0; i < rowCount; i++ )
     {
-        if( locations.getItem( i ).town() == town && locations.getItem( i ).place() == place )
+        if( locations->getItem( i ).town() == town && locations->getItem( i ).place() == place )
         {
-            QString coordinate = locations.getItem(i).wgsCoordinate();
+            QString coordinate = locations->getItem(i).wgsCoordinate();
             QString x = coordinate.section( ":", 0, 0);
             QString y = coordinate.section( ":", 1, 1 );
             double dx = x.toDouble();
@@ -541,13 +554,13 @@ QString ModelDataWriter::formatToTiira(const QString &data, const LocationModel 
     eka += "#";
 
     // add data saver (default name if found)
-    rowCount = persons.rowCount();
+    rowCount = persons->rowCount();
     QString defaultName;
     for( int i = 0; i < rowCount; i++ )
     {
-        if( persons.getItem( i ).defaultName() == true )
+        if( persons->getItem( i ).defaultName() == true )
         {
-            defaultName = persons.getItem( i ).firstName() + " " + persons.getItem( i ).surName();
+            defaultName = persons->getItem( i ).firstName() + " " + persons->getItem( i ).surName();
             break;
         }
     }
@@ -609,7 +622,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, const LocationModel 
     return eka;
 }
 
-void ModelDataWriter::importHistory()
+void ModelDataWriter::importHistory( LocationModel *locations,  PersonModel *persons,  BirdModel *birds)
 {
     qDebug() << "IMPORT";
     QFile importfile( dataFileDir() + "xemadata_import.txt" );
@@ -624,52 +637,202 @@ void ModelDataWriter::importHistory()
             importstream.reset();
         }
     }
+    QStringList prevLines;
+    QString currentLine;
     while( importstream.atEnd() == false )
     {
-        QString line;
-        line = importstream.readLine();
-        qDebug() << "IMPORT line" << line;
-/*
-        QString readPlace = line.section( '#', 6, 6 );
-        QString readDate = line.section( '#', 2, 2);
-        QString readTime = line.section( '#', 4, 4);
-        int rowCount = line.section( '#', 12, 12).toInt();
-//        qDebug() << "Riveja" << rowCount;
-        QString readCount = 0;
-        if( rowCount == 1 )
+        if( prevLines.length() == 0 )
         {
-            readCount = line.section( '#', 13, 13);
+            prevLines.append( importstream.readLine() );
+            qDebug() << "IMPORT eka line" << prevLines;
+            continue;
+        }
+        currentLine = importstream.readLine();
+        if( prevLines.last().section("#",0,0) == currentLine.section("#",0,0) )
+        {
+            qDebug() << "Sama id"<< currentLine;
+            prevLines.append( currentLine );
+            continue;
         }
         else
         {
-            int count = 0;//line.section( '#', 13, 13).toInt();
-            for( int i = 0; i < rowCount;i++)
-            {
-                count += line.section( '#', 13+(i*11),13+(i*11)).toInt();
-            }
-            readCount.setNum( count );
+            qDebug() << "IMPORT eri id, kasittele edelliset nyt" << currentLine;
+            importLine( prevLines, locations, persons, birds );
         }
-
-//        qDebug() << "Kokonais lajin maara" << readCount;
-        if( date.isEmpty() == true && place.isEmpty() == true )
-        {
-            HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
-            item.setSpecies( line.section( '#', 1, 1));
-            item.addSpeciesCount( line.section( '#', 1, 1), readCount.toInt() );
-            item.setTime(readTime);
-
-            model->addItemAtBeginning( item );
-            continue;
-        }
-        if( date.isEmpty() == false && date == readDate && place.isEmpty() == false && place == readPlace )
-        {
-            HistoryItem item( line.section( '#', 0, 0 ).toLongLong(), line.section( '#', 6, 6 ), line.section( '#', 2, 2 ) );
-            item.setSpecies( line.section( '#', 1, 1));
-            item.addSpeciesCount( line.section( '#', 1, 1), readCount.toInt() );
-            item.setTime(readTime);
-            model->addItemAtBeginning( item );
-            continue;
-        }
-        // TODO other combinations*/
     }
+    prevLines.clear();
+    prevLines.append(currentLine);
+    importLine( prevLines, locations, persons, birds );
+}
+
+void ModelDataWriter::importLine( const QStringList &lines, LocationModel *locations, PersonModel *persons, BirdModel *birds )
+{
+    if( lines.size() < 1 )
+    {
+        return;
+    }
+    qDebug() << "IMPORT lines" << lines;
+    QString rowCount;
+    rowCount.setNum(lines.size());
+    QString readyLine;
+    readyLine += lines.at(0).section("#",0,0);
+    readyLine.append("#");
+    QString speciesAbbrev = lines.at(0).section("#",1,1);
+    for(int i = 0; i < birds->rowCount(); i++)
+    {
+        if( birds->getItem(i).abbreviation() == speciesAbbrev )
+        {
+            readyLine += birds->getItem(i).finName();
+            break;
+        }
+    }
+    readyLine.append("#");
+    readyLine += lines.at(0).section("#",2,5);
+    readyLine.append("#");
+    QString town;
+    town += lines.at(0).section("#",6,6);
+    QString place;
+    place += lines.at(0).section("#",7,7);
+    readyLine += town;
+    readyLine.append(", ");
+    readyLine += place;
+    readyLine.append("#");
+
+    readyLine += lines.at(0).section("#",15,16);
+    readyLine.append("#");
+
+    QString saver = lines.at(0).section("#",17,17);
+    QString observers = lines.at(0).section("#",19,19);
+    observers.remove(saver);
+    qDebug() << "OBS:" <<observers;
+    QStringList observerList = observers.split(",");
+    bool saverRegistered = false;
+    QString registeredPeople;
+    QString otherPeople;
+
+    for(int i = 0; i < persons->rowCount(); i++)
+    {
+        if( persons->getItem(i).name() == saver )
+        {
+            saverRegistered = true;
+            break;
+        }
+    }
+
+    if(saverRegistered)
+    {
+        registeredPeople += saver;
+        registeredPeople.append( "," );
+    }
+    else
+    {
+        otherPeople += saver;
+        otherPeople.append( "," );
+    }
+
+    for(int i = 0;i < observerList.length(); i++)
+    {
+        bool found = false;
+        for(int j = 0; j < persons->rowCount(); j++)
+        {
+            qDebug() << "verrataan" << persons->getItem(j).name() << observerList.at(i).trimmed();
+            if( persons->getItem(j).registered() && persons->getItem(j).name() == observerList.at(i).trimmed())
+            {
+                registeredPeople += observerList.at(i).trimmed();
+                registeredPeople.append(",");
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+        {
+            otherPeople += observerList.at(i).trimmed();
+            otherPeople.append(",");
+        }
+    }
+
+    if( registeredPeople.endsWith(",") )
+    {
+        registeredPeople = registeredPeople.left(registeredPeople.length()-1);
+    }
+    if( otherPeople.endsWith(",") )
+    {
+        otherPeople = otherPeople.left(otherPeople.length()-1);
+    }
+    if( registeredPeople.startsWith(",") )
+    {
+        registeredPeople.remove(0, 1);
+    }
+    if( otherPeople.startsWith(",") )
+    {
+        otherPeople.remove(0, 1);
+    }
+
+    readyLine += registeredPeople;
+    readyLine.append("#");
+    readyLine += otherPeople;
+
+    // hidden
+    readyLine.append("#");
+    if(QString::compare(lines.at(0).section("#",20,20),"X", Qt::CaseInsensitive)==0)
+    {
+        readyLine.append("true#");
+    }
+    else
+    {
+        readyLine.append("false#");
+    }
+    // koontihavainto, kuuluu havaintoon 21,22
+    readyLine += rowCount;
+    readyLine.append("#");
+
+    QString weather = lines.at(0).section("#",34,34);
+    for(int i = 0;i < lines.length();i++)
+    {
+        QString row;
+        row = lines.at(i).section("#",23,33);
+        qDebug() << "alarivi" << row;
+        readyLine += row.section("#",0,2);
+        if( row.section("#",3,3) == "k" )
+        {
+            readyLine.append("#koiras#");
+        }
+        else if( row.section("#",3,3) == "n" )
+        {
+            readyLine.append("#naaras#");
+        }
+        else
+        {
+            readyLine.append("#");
+            readyLine += row.section("#",3,3);
+            readyLine.append("#");
+        }
+        readyLine += row.section("#",4,8);
+        readyLine.append("#");
+        if(QString::compare(row.section("#",9,9),"X", Qt::CaseInsensitive)==0)
+        {
+            readyLine.append("true#");
+        }
+        else
+        {
+            readyLine.append("false#");
+        }
+        if(QString::compare(row.section("#",10,10),"X", Qt::CaseInsensitive)==0)
+        {
+            readyLine.append("true#");
+        }
+        else
+        {
+            readyLine.append("false#");
+        }
+    }
+    readyLine.append(weather);
+    // exported to true
+    readyLine.append("#true#");
+
+    qDebug() << "VALMIS RIVI" << readyLine;
+
+    // tarkista onko id jo käytössä, jos niin luo uusi
+    // kirjoita rivi tiedostoon
+
 }

@@ -38,14 +38,14 @@ Page {
             onClicked: {
                 exportDialog.open()
             }
-        }
+        }/*
         ToolButton {
             flat: true
             iconSource: "toolbar-filter"
             onClicked: {
                 window.importData()
             }
-        }
+        }*/
     }
 
     ContextMenu {

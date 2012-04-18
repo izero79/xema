@@ -23,18 +23,19 @@ public:
     void writePersonData(PersonModel *model);
     void writeLocationData(LocationModel *model);
     void writeBirdData(BirdModel *model);
-    void exportHistory( bool onlyNew, const LocationModel &locations, const PersonModel &persons, const BirdModel &birds );
+    void exportHistory( bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds );
 
     void removeCustomSpecies();
     void removeCustomLocations();
     void removeCustomObservers();
-    void importHistory();
+    void importHistory(LocationModel *locations, PersonModel *persons, BirdModel *birds);
+    void importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, BirdModel *birds);
 
 private:
     qlonglong getNewId();
     QString dataFileDir();
     QString exportDir();
-    QString formatToTiira(const QString &data, const LocationModel &locations, const PersonModel &persons, const BirdModel &birds);
+    QString formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds);
 
 signals:
 

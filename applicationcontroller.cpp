@@ -168,7 +168,7 @@ void ApplicationController::saveLocations()
 
 void ApplicationController::importData()
 {
-    mModelWriter->importHistory();
+    mModelWriter->importHistory( mLocationModel, mPersonModel, mBirdModel );
     reloadHistory();
 }
 
