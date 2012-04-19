@@ -153,12 +153,12 @@ Page {
         CheckBox {
             id: defaultChkBox
             text: qsTr( "Default" )
-            checked: personModel.data( currentIndex, 37 )
+            checked: personModel.data( currentIndex, 37 ) || personModel.rowCount() == 0
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: registeredChkBox.bottom
             anchors.topMargin: 8
-            visible: personModel.rowCount() !== 0
+            enabled: personModel.rowCount() !== 0
             onCheckedChanged: {
                 personEdited = true
             }
