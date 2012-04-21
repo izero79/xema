@@ -28,8 +28,8 @@ Component {
             anchors.fill: parent
             onClicked: {
                 console.log("click: " + abbrev + " (" + name + ")")
-                //listPage.clicked( abbrev + " (" + name + ")" )
-                listView.model.setData( realindex, !selected, 2 )
+                //listPage.clicked(abbrev + " (" + name + ")")
+                listView.model.setData(realindex, !selected, 2)
 
             }
         }

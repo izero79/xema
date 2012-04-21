@@ -21,13 +21,13 @@ Component {
             anchors.fill: parent
             onClicked: {
                 console.log("clicked bird: " + finname)
-                if( listView.editMode == true )
+                if (listView.editMode == true)
                 {
-                    listPage.clicked( realindex )
+                    listPage.clicked(realindex)
                 }
                 else
                 {
-                    listPage.clicked( finname )
+                    listPage.clicked(finname)
                 }
 
             }

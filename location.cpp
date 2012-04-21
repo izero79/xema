@@ -8,31 +8,31 @@ Location::Location() :
 {
 }
 
-Location::Location( const QString &town, const QString &place, const QString &wgsCoordinate, const QString &ykjCoordinate ) :
-    mTown( town ),
-    mPlace( place ),
+Location::Location(const QString &town, const QString &place, const QString &wgsCoordinate, const QString &ykjCoordinate) :
+    mTown(town),
+    mPlace(place),
     mYKJCoordinate(ykjCoordinate),
     mWGSCoordinate(wgsCoordinate)
 {
 
 }
 
-void Location::setTown( const QString &name )
+void Location::setTown(const QString &name)
 {
     mTown = name;
 }
 
-void Location::setPlace( const QString &name )
+void Location::setPlace(const QString &name)
 {
     mPlace = name;
 }
 
-void Location::setYKJCoordinate( const QString &ykj )
+void Location::setYKJCoordinate(const QString &ykj)
 {
     mYKJCoordinate = ykj;
 }
 
-void Location::setWGSCoordinate( const QString &wgs )
+void Location::setWGSCoordinate(const QString &wgs)
 {
     mWGSCoordinate = wgs;
 }
@@ -72,9 +72,9 @@ QString Location::wgsCoordinateForFilter() const
 
 QString Location::coordinate() const
 {
-    if( mYKJCoordinate.isEmpty() == true )
+    if (mYKJCoordinate.isEmpty() == true)
     {
-        if( mWGSCoordinate.isEmpty() == false )
+        if (mWGSCoordinate.isEmpty() == false)
         {
             return mWGSCoordinate;
         }

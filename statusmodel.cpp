@@ -15,13 +15,13 @@ StatusModel::StatusModel(QObject *parent) :
 
 int StatusModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED( parent )
+    Q_UNUSED(parent)
     return items.count();
 }
 
 void StatusModel::clear()
 {
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), 0, items.count() );
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), 0, items.count());
     items.clear();
     QAbstractItemModel::endRemoveRows();
 }
@@ -35,53 +35,53 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const
 
     Status item = items[index.row()];
 
-    if( role == FilterRole )
+    if (role == FilterRole)
     {
-        return QString( item.name() + ", " + item.abbreviation() );
+        return QString(item.name() + ", " + item.abbreviation());
     }
-    else if( role == IndexRole )
+    else if (role == IndexRole)
     {
         return index.row();
     }
-    else if( role == NameRole )
+    else if (role == NameRole)
     {
         return item.name();
     }
-    else if( role == AbbrevRole )
+    else if (role == AbbrevRole)
     {
         return item.abbreviation();
     }
-    else if( role == SelectedRole )
+    else if (role == SelectedRole)
     {
         return item.selected();
     }
     return QVariant();
 }
 
-bool StatusModel::removeRow ( int row, const QModelIndex & parent)
+bool StatusModel::removeRow (int row, const QModelIndex & parent)
 {
-    Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() )
+    Q_UNUSED(parent)
+    if (row < 0 || row >= items.count())
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row );
-    items.removeAt( row );
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), row, row);
+    items.removeAt(row);
     QAbstractItemModel::endRemoveRows();
     return true;
 }
 
-bool StatusModel::removeRows ( int row, int count, const QModelIndex & parent)
+bool StatusModel::removeRows (int row, int count, const QModelIndex & parent)
 {
-    Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() || count + row > items.count() )
+    Q_UNUSED(parent)
+    if (row < 0 || row >= items.count() || count + row > items.count())
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + count );
-    for( int i = row; i < row + count; i++ )
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), row, row + count);
+    for(int i = row; i < row + count; i++)
     {
-        items.removeAt( row );
+        items.removeAt(row);
     }
     QAbstractItemModel::endRemoveRows();
     return true;
@@ -91,18 +91,18 @@ bool StatusModel::removeRows ( int row, int count, const QModelIndex & parent)
 void StatusModel::addItem(const Status &item)
 {
     int index = items.size();
-    QAbstractItemModel::beginInsertRows( QModelIndex(), index, index);
-    items.append( item );
+    QAbstractItemModel::beginInsertRows(QModelIndex(), index, index);
+    items.append(item);
     QAbstractItemModel::endInsertRows();
 }
 
-Status StatusModel::getItem( int row )
+Status StatusModel::getItem(int row)
 {
-    if( row < 0 || row >= items.count() )
+    if (row < 0 || row >= items.count())
     {
         return Status();
     }
-    return items.at( row );
+    return items.at(row);
 }
 
 QList<Status> StatusModel::content() const
@@ -110,25 +110,25 @@ QList<Status> StatusModel::content() const
     return items;
 }
 
-void StatusModel::setContent( const QList<Status> &newItems )
+void StatusModel::setContent(const QList<Status> &newItems)
 {
-    if( newItems.size() > 0 )
+    if (newItems.size() > 0)
     {
-        QAbstractItemModel::beginInsertRows( QModelIndex(), 0, newItems.size() - 1 );
+        QAbstractItemModel::beginInsertRows(QModelIndex(), 0, newItems.size() - 1);
         items = newItems;
         QAbstractItemModel::endInsertRows();
     }
 }
 
-bool StatusModel::setData( const QModelIndex &index, const QVariant &value, int role )
+bool StatusModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if( role != SelectedRole )
+    if (role != SelectedRole)
     {
         return false;
     }
-    Status tmp = items.at( index.row() );
-    tmp.setSelected( value.toBool() );
-    items.replace( index.row(), tmp );
-    QAbstractItemModel::dataChanged( index, index );
+    Status tmp = items.at(index.row());
+    tmp.setSelected(value.toBool());
+    items.replace(index.row(), tmp);
+    QAbstractItemModel::dataChanged(index, index);
     return true;
 }

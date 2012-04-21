@@ -22,14 +22,14 @@ function createObjects() {
         console.log("Error creating object");
     }
 
-    for( var i = 0; i < sprite.length; i++ )
+    for(var i = 0; i < sprite.length; i++)
     {
-        sprite[i].setRows( compCount )
+        sprite[i].setRows(compCount)
     }
 }
 
 function removeObject() {
-    if( compCount > 1 )
+    if (compCount > 1)
     {
         compCount--;
         sprite[compCount].destroy()
@@ -39,7 +39,7 @@ function removeObject() {
 }
 
 function removeObjects() {
-    while( compCount > 0 )
+    while (compCount > 0)
     {
         compCount--;
         sprite[compCount].destroy()
@@ -48,48 +48,48 @@ function removeObjects() {
     }
 }
 
-function showListPage( type, selectedItems, itemi )
+function showListPage(type, selectedItems, itemi)
 {
-    if( !listObject )
+    if (!listObject)
     {
         listPageComponent = Qt.createComponent(Qt.resolvedUrl("ListPage.qml"))
-        listObject = listPageComponent.createObject( window )
+        listObject = listPageComponent.createObject(window)
     }
     listPageType = type
 
     pageStack.push(listObject)
-    if( type == "regpeople" || type == "people")
+    if (type == "regpeople" || type == "people")
     {
-        listObject.selectNames( selectedItems )
+        listObject.selectNames(selectedItems)
     }
-    else if( type == "status")
+    else if (type == "status")
     {
         currentStatusBox = itemi
-        listObject.selectStatus( selectedItems )
+        listObject.selectStatus(selectedItems)
     }
-    else if( type == "sex" || type == "age" || type == "dress" || type == "atlas")
+    else if (type == "sex" || type == "age" || type == "dress" || type == "atlas")
     {
         currentStatusBox = itemi
     }
     listObject.init()
 }
 
-function showObsPage( doNotInit )
+function showObsPage(doNotInit)
 {
-    if( obsObject )
+    if (obsObject)
     {
-        console.log( "obs exists, push")
+        console.log("obs exists, push")
         pageStack.push(obsObject)
-        if( doNotInit == false )
+        if (doNotInit == false)
         {
             obsObject.init()
         }
         return
     }
     obsPageComponent = Qt.createComponent(Qt.resolvedUrl("ObservationPage.qml"))
-    obsObject = obsPageComponent.createObject( window )
+    obsObject = obsPageComponent.createObject(window)
     pageStack.push(obsObject)
-    if( doNotInit == false )
+    if (doNotInit == false)
     {
         obsObject.init()
     }
@@ -97,27 +97,27 @@ function showObsPage( doNotInit )
 
 function showSettingsPage()
 {
-    if( settingsObject )
+    if (settingsObject)
     {
-        console.log( "settings exists, push")
+        console.log("settings exists, push")
         pageStack.push(settingsObject)
         return
     }
     settingsPageComponent = Qt.createComponent(Qt.resolvedUrl("SettingsPage.qml"))
-    settingsObject = settingsPageComponent.createObject( window )
+    settingsObject = settingsPageComponent.createObject(window)
     pageStack.push(settingsObject)
 }
 
-function showHistoryPage( type )
+function showHistoryPage(type)
 {
-    if( historyObject )
+    if (historyObject)
     {
         pageStack.push(historyObject)
         historyObject.init()
         return
     }
     historyPageComponent = Qt.createComponent(Qt.resolvedUrl("HistoryPage.qml"))
-    historyObject = historyPageComponent.createObject( window )
+    historyObject = historyPageComponent.createObject(window)
     historyObject.init()
     pageStack.push(historyObject)
 }
@@ -126,70 +126,70 @@ function fillRegPersonBox()
 {
     var selectedNames = new Array();
     var j = 0;
-    for( var i = 0; i < personModel.rowCount(); i++ )
+    for(var i = 0; i < personModel.rowCount(); i++)
     {
-        if( personModel.data( i, 2 ) == true && personModel.data( i, 36 ) == true )
+        if (personModel.data(i, 2) == true && personModel.data(i, 36) == true)
         {
-            selectedNames[j] = personModel.data( i, 35 )
+            selectedNames[j] = personModel.data(i, 35)
             j++;
         }
     }
 
     var names = "";
-    for( var i = 0; i < selectedNames.length; i++ )
+    for(var i = 0; i < selectedNames.length; i++)
     {
-        if( names != "" )
+        if (names != "")
         {
             names += ","
         }
         names += selectedNames[i]
     }
 
-    obsObject.regpeopleChanged( names )
+    obsObject.regpeopleChanged(names)
 }
 
 function fillNonRegPersonBox()
 {
     var selectedNames = new Array();
     var j = 0;
-    for( var i = 0; i < personModel.rowCount(); i++ )
+    for(var i = 0; i < personModel.rowCount(); i++)
     {
-        if( personModel.data( i, 2 ) == true && personModel.data( i, 36 ) == false )
+        if (personModel.data(i, 2) == true && personModel.data(i, 36) == false)
         {
-            selectedNames[j] = personModel.data( i, 35 )
+            selectedNames[j] = personModel.data(i, 35)
             j++;
         }
     }
 
     var names = "";
-    for( var i = 0; i < selectedNames.length; i++ )
+    for(var i = 0; i < selectedNames.length; i++)
     {
-        if( names != "" )
+        if (names != "")
         {
             names += ","
         }
         names += selectedNames[i]
     }
 
-    obsObject.peopleChanged( names )
+    obsObject.peopleChanged(names)
 }
 
 function fillStatusBox()
 {
     var selectedStatuses = new Array();
     var j = 0;
-    for( var i = 0; i < statusModel.rowCount(); i++ )
+    for(var i = 0; i < statusModel.rowCount(); i++)
     {
-        if( statusModel.data( i, 2 ) == true )
+        if (statusModel.data(i, 2) == true)
         {
-            selectedStatuses[j] = statusModel.data( i, 35 )
+            selectedStatuses[j] = statusModel.data(i, 35)
             j++;
         }
     }
     var names = "";
-    for( var k = 0; k < selectedStatuses.length; k++ )
+    for(var k = 0; k < selectedStatuses.length; k++)
     {
-        if( names != "" )
+        if (names != "")
         {
             names += ","
         }
@@ -199,7 +199,7 @@ function fillStatusBox()
     currentStatusBox.text = names
 }
 
-function fillCurrentBox( name )
+function fillCurrentBox(name)
 {
     currentStatusBox.text = name
 }
@@ -225,7 +225,7 @@ function readAndSaveData()
     var allData = "";
     var delimiter = "#";
     allData = obsObject.readAllData()
-    if( allData == "-1" )
+    if (allData == "-1")
     {
         console.log("Pakollinen tieto puuttuu")
         obsObject.showErrorDialog()
@@ -233,10 +233,10 @@ function readAndSaveData()
         return false
     }
 
-    if( allData != "" )
+    if (allData != "")
     {
-        console.log( "really allData: " + allData)
-        window.writeNew( allData )
+        console.log("really allData: " + allData)
+        window.writeNew(allData)
         dataSaved()
         unsavedData = false
         return true
@@ -245,9 +245,9 @@ function readAndSaveData()
 
 function delegateDataChanged()
 {
-    for( var i = 0; i < sprite.length; i++ )
+    for(var i = 0; i < sprite.length; i++)
     {
-        if( sprite[i].edited == true )
+        if (sprite[i].edited == true)
         {
             return true
         }
@@ -257,7 +257,7 @@ function delegateDataChanged()
 
 function initDelegateDataChanged()
 {
-    for( var i = 0; i < sprite.length; i++ )
+    for(var i = 0; i < sprite.length; i++)
     {
         sprite[i].edited = false
     }
@@ -270,11 +270,11 @@ function readDelegateDatas()
     var delimiter = "#";
 
     allData += sprite.length + delimiter
-    for( var i = 0; i < sprite.length; i++ )
+    for(var i = 0; i < sprite.length; i++)
     {
         var delegateData = "";
         delegateData += sprite[i].delegateData()
-        if( delegateData != "-1" )
+        if (delegateData != "-1")
         {
             delegateData += delimiter
             allData += delegateData
@@ -288,14 +288,14 @@ function readDelegateDatas()
     return allData
 }
 
-function setDelegateData( row, data )
+function setDelegateData(row, data)
 {
-    sprite[row].setDelegateData( data )
+    sprite[row].setDelegateData(data)
 }
 
 function changeDelegateHeight()
 {
-    for( var i = 0; i < sprite.length; i++ )
+    for(var i = 0; i < sprite.length; i++)
     {
         sprite[i].y = i * delegateHeight
     }
@@ -303,31 +303,31 @@ function changeDelegateHeight()
 
 function clearObsDataSelections()
 {
-    personModel.filter( "" )
-    for( var i = 0; i < personModel.rowCount(); i++ )
+    personModel.filter("")
+    for(var i = 0; i < personModel.rowCount(); i++)
     {
-        personModel.setData( i, false, 2 )
+        personModel.setData(i, false, 2)
     }
-    statusModel.filter( "" )
-    for( var i = 0; i < statusModel.rowCount(); i++ )
+    statusModel.filter("")
+    for(var i = 0; i < statusModel.rowCount(); i++)
     {
-        statusModel.setData( i, false, 2 )
+        statusModel.setData(i, false, 2)
     }
 }
 
-function checkAndSetDefaultPerson( index )
+function checkAndSetDefaultPerson(index)
 {
-    for( var i = 0; i < personModel.rowCount(); i++ )
+    for(var i = 0; i < personModel.rowCount(); i++)
     {
-        if( i == index )
+        if (i == index)
         {
             console.log("person match - default")
-            personModel.setData( i, true, 37 )
+            personModel.setData(i, true, 37)
         }
         else
         {
             console.log("person match - nondefault")
-            personModel.setData( i, false, 37 )
+            personModel.setData(i, false, 37)
         }
     }
 }
@@ -335,7 +335,7 @@ function checkAndSetDefaultPerson( index )
 function addPeople()
 {
     var editorCompnent = Qt.createComponent(Qt.resolvedUrl("PersonEditPage.qml"))
-    var editorObject = editorCompnent.createObject( window )
+    var editorObject = editorCompnent.createObject(window)
     editorObject.addNew()
     pageStack.push(editorObject)
 }
@@ -343,7 +343,7 @@ function addPeople()
 function addLocation()
 {
     var editorCompnent = Qt.createComponent(Qt.resolvedUrl("LocationEditPage.qml"))
-    var editorObject = editorCompnent.createObject( window )
+    var editorObject = editorCompnent.createObject(window)
     editorObject.addNew()
     pageStack.push(editorObject)
 }
@@ -351,7 +351,7 @@ function addLocation()
 function addBird()
 {
     var editorCompnent = Qt.createComponent(Qt.resolvedUrl("BirdEditPage.qml"))
-    var editorObject = editorCompnent.createObject( window )
+    var editorObject = editorCompnent.createObject(window)
     editorObject.addNew()
     pageStack.push(editorObject)
 }

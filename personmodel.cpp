@@ -18,13 +18,13 @@ PersonModel::PersonModel(QObject *parent) :
 
 int PersonModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED( parent )
+    Q_UNUSED(parent)
     return items.count();
 }
 
 void PersonModel::clear()
 {
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), 0, items.count() );
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), 0, items.count());
     items.clear();
     QAbstractItemModel::endRemoveRows();
 }
@@ -38,65 +38,65 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
 
     Person item = items[index.row()];
 
-    if( role == FilterRole )
+    if (role == FilterRole)
     {
         return item.name();
     }
-    else if( role == IndexRole )
+    else if (role == IndexRole)
     {
         return index.row();
     }
-    else if( role == NameRole )
+    else if (role == NameRole)
     {
         return item.name();
     }
-    else if( role == RegisteredRole )
+    else if (role == RegisteredRole)
     {
         return item.registered();
     }
-    else if( role == DefaultRole )
+    else if (role == DefaultRole)
     {
         return item.defaultName();
     }
-    else if( role == FirstNameRole )
+    else if (role == FirstNameRole)
     {
         return item.firstName();
     }
-    else if( role == SurNameRole )
+    else if (role == SurNameRole)
     {
         return item.surName();
     }
-    else if( role == SelectedRole )
+    else if (role == SelectedRole)
     {
         return item.selected();
     }
     return QVariant();
 }
 
-bool PersonModel::removeRow ( int row, const QModelIndex & parent)
+bool PersonModel::removeRow (int row, const QModelIndex & parent)
 {
-    Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() )
+    Q_UNUSED(parent)
+    if (row < 0 || row >= items.count())
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row );
-    items.removeAt( row );
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), row, row);
+    items.removeAt(row);
     QAbstractItemModel::endRemoveRows();
     return true;
 }
 
-bool PersonModel::removeRows ( int row, int count, const QModelIndex & parent)
+bool PersonModel::removeRows (int row, int count, const QModelIndex & parent)
 {
-    Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() || (count - 1) + row > items.count() )
+    Q_UNUSED(parent)
+    if (row < 0 || row >= items.count() || (count - 1) + row > items.count())
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + ( count - 1 ) );
-    for( int i = row; i < row + count; i++ )
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), row, row + (count - 1));
+    for(int i = row; i < row + count; i++)
     {
-        items.removeAt( row );
+        items.removeAt(row);
     }
     QAbstractItemModel::endRemoveRows();
     return true;
@@ -106,18 +106,18 @@ bool PersonModel::removeRows ( int row, int count, const QModelIndex & parent)
 void PersonModel::addItem(const Person &item)
 {
     int index = items.size();
-    QAbstractItemModel::beginInsertRows( QModelIndex(), index, index);
-    items.append( item );
+    QAbstractItemModel::beginInsertRows(QModelIndex(), index, index);
+    items.append(item);
     QAbstractItemModel::endInsertRows();
 }
 
-Person PersonModel::getItem( int row ) const
+Person PersonModel::getItem(int row) const
 {
-    if( row < 0 || row >= items.count() )
+    if (row < 0 || row >= items.count())
     {
         return Person();
     }
-    return items.at( row );
+    return items.at(row);
 }
 
 QList<Person> PersonModel::content() const
@@ -125,59 +125,59 @@ QList<Person> PersonModel::content() const
     return items;
 }
 
-void PersonModel::setContent( const QList<Person> &newItems )
+void PersonModel::setContent(const QList<Person> &newItems)
 {
-    if( newItems.size() > 0 )
+    if (newItems.size() > 0)
     {
-        QAbstractItemModel::beginInsertRows( QModelIndex(), 0, newItems.size() - 1 );
+        QAbstractItemModel::beginInsertRows(QModelIndex(), 0, newItems.size() - 1);
         items = newItems;
         QAbstractItemModel::endInsertRows();
     }
 }
 
-bool PersonModel::setData( const QModelIndex &index, const QVariant &value, int role )
+bool PersonModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     int row = index.row();
     Person tmp;
-    if( index.row() >= items.count() || index.row() < 0 )
+    if (index.row() >= items.count() || index.row() < 0)
     {
         row = items.count();
     }
     else
     {
-        tmp = items.at( row );
+        tmp = items.at(row);
     }
 
-    switch( role )
+    switch(role)
     {
     case RegisteredRole:
-        tmp.setRegistered( value.toBool() );
+        tmp.setRegistered(value.toBool());
         break;
     case DefaultRole:
-        tmp.setDefault( value.toBool() );
+        tmp.setDefault(value.toBool());
         break;
     case FirstNameRole:
-        tmp.setFirstName( value.toString() );
+        tmp.setFirstName(value.toString());
         break;
     case SurNameRole:
-        tmp.setSurName( value.toString() );
+        tmp.setSurName(value.toString());
         break;
     case SelectedRole:
-        tmp.setSelected( value.toBool() );
+        tmp.setSelected(value.toBool());
         break;
     default:
         break;
     }
-    if( row >= items.count() )
+    if (row >= items.count())
     {
-        QAbstractItemModel::beginInsertRows( QModelIndex(), items.count(), items.count() );
-        items.append( tmp );
+        QAbstractItemModel::beginInsertRows(QModelIndex(), items.count(), items.count());
+        items.append(tmp);
         QAbstractItemModel::endInsertRows();
     }
     else
     {
-        items.replace( index.row(), tmp );
+        items.replace(index.row(), tmp);
     }
-    QAbstractItemModel::dataChanged( index, index );
+    QAbstractItemModel::dataChanged(index, index);
     return true;
 }

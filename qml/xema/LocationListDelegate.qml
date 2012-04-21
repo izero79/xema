@@ -21,14 +21,14 @@ Component {
             anchors.fill: parent
             onClicked: {
                 console.log("click: " + town)
-                if( listView.editMode == true )
+                if (listView.editMode == true)
                 {
                     console.log("edit")
-                    listPage.clicked( realindex )
+                    listPage.clicked(realindex)
                 }
                 else
                 {
-                    listPage.clicked( town + ", " + place )
+                    listPage.clicked(town + ", " + place)
                 }
             }
             onPressAndHold: {

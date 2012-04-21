@@ -25,20 +25,20 @@ void DebugPrinter(QtMsgType type, const char *msg)
             abort();
     }
 
-#if defined( Q_OS_SYMBIAN )
+#if defined(Q_OS_SYMBIAN)
     QFile outFile("c:/data/xema-debuglog.txt");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;
-#elif defined( Q_WS_MAEMO_5 ) || defined( HARMATTAN )
+#elif defined(Q_WS_MAEMO_5) || defined(HARMATTAN)
     QFile outFile("/home/user/MyDocs/xema-debuglog.txt");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;
 #endif
 #else
-    Q_UNUSED( type )
-    Q_UNUSED( msg )
+    Q_UNUSED(type)
+    Q_UNUSED(msg)
 #endif
 }
 

@@ -11,42 +11,42 @@ PageStackWindow {
     property int currentDetailLevel: 1
     property bool unsavedData: false
 
-    signal writeNew( string data )
-    signal readObs( string id )
-    signal deleteObs( string id, string date, string place )
+    signal writeNew(string data)
+    signal readObs(string id)
+    signal deleteObs(string id, string date, string place)
     signal reloadHistory()
-    signal saveSystematicSorting( bool systematic )
-    signal saveDetailLevel( int level )
+    signal saveSystematicSorting(bool systematic)
+    signal saveDetailLevel(int level)
     signal quit()
-    signal loadHistoryWithDate( string date )
-    signal loadHistoryWithDateAndPlace( string date, string place)
-    signal exportData( bool onlyNew )
+    signal loadHistoryWithDate(string date)
+    signal loadHistoryWithDateAndPlace(string date, string place)
+    signal exportData(bool onlyNew)
     signal restoreSpecies()
     signal restoreLocations()
     signal restoreObservers()
     signal saveLocations()
     signal importData()
 
-    function setSystematicSort( use )
+    function setSystematicSort(use)
     {
         window.useSystematicSort = use
     }
 
-    function setDetailLevel( level )
+    function setDetailLevel(level)
     {
         window.defaultDetailLevel = level
         window.currentDetailLevel = level
     }
 
-    function showHistoryPage( type )
+    function showHistoryPage(type)
     {
-        MyScript.showHistoryPage( type )
+        MyScript.showHistoryPage(type)
     }
 
-    function showListPage( type, selectedItems, itemi )
+    function showListPage(type, selectedItems, itemi)
     {
         console.log("showlistpage by: " + itemi + "selecteditems: " + selectedItems)
-        MyScript.showListPage( type, selectedItems, itemi )
+        MyScript.showListPage(type, selectedItems, itemi)
     }
 
     function showSettingsPage()
@@ -55,82 +55,82 @@ PageStackWindow {
         MyScript.showSettingsPage()
     }
 
-    function birdChanged( name )
+    function birdChanged(name)
     {
-        MyScript.obsObject.birdChanged( name )
+        MyScript.obsObject.birdChanged(name)
     }
 
-    function placeChanged( name )
+    function placeChanged(name)
     {
-        MyScript.obsObject.placeChanged( name )
+        MyScript.obsObject.placeChanged(name)
     }
 
-    function editPeople( index )
+    function editPeople(index)
     {
-        MyScript.settingsObject.editPeople( index )
+        MyScript.settingsObject.editPeople(index)
     }
 
-    function editBird( index )
+    function editBird(index)
     {
-        MyScript.settingsObject.editBird( index )
+        MyScript.settingsObject.editBird(index)
     }
 
-    function editLocation( index )
+    function editLocation(index)
     {
-        MyScript.settingsObject.editLocation( index )
+        MyScript.settingsObject.editLocation(index)
     }
 
-    function regpeopleChanged( name )
+    function regpeopleChanged(name)
     {
-        MyScript.obsObject.regpeopleChanged( name )
+        MyScript.obsObject.regpeopleChanged(name)
     }
 
-    function peopleChanged( name )
+    function peopleChanged(name)
     {
-        MyScript.obsObject.peopleChanged( name )
+        MyScript.obsObject.peopleChanged(name)
     }
 
-    function sexChanged( name )
+    function sexChanged(name)
     {
-        MyScript.fillCurrentBox( name )
+        MyScript.fillCurrentBox(name)
     }
 
-    function atlasChanged( name )
+    function atlasChanged(name)
     {
-        MyScript.fillCurrentBox( name )
+        MyScript.fillCurrentBox(name)
     }
 
-    function dressChanged( name )
+    function dressChanged(name)
     {
-        MyScript.fillCurrentBox( name )
+        MyScript.fillCurrentBox(name)
     }
 
-    function ageChanged( name )
+    function ageChanged(name)
     {
-        MyScript.fillCurrentBox( name )
+        MyScript.fillCurrentBox(name)
     }
 
-    function showObsPage( doNotInit )
+    function showObsPage(doNotInit)
     {
-        MyScript.showObsPage( doNotInit )
+        MyScript.showObsPage(doNotInit)
     }
 
-    function dataLoaded( data )
+    function dataLoaded(data)
     {
-        MyScript.obsObject.dataLoaded( data )
+        MyScript.obsObject.dataLoaded(data)
     }
 
     function backFromList()
     {
-        if( listPageType == "regpeople" )
+        if (listPageType == "regpeople")
         {
             MyScript.fillRegPersonBox()
         }
-        else if( listPageType == "people" )
+        else if (listPageType == "people")
         {
             MyScript.fillNonRegPersonBox()
         }
-        else if( listPageType == "status" )
+        else if (listPageType == "status")
         {
             MyScript.fillStatusBox()
         }
@@ -154,10 +154,10 @@ PageStackWindow {
         MyScript.addLocation()
     }
 
-    function newObsWithData( date, place, species )
+    function newObsWithData(date, place, species)
     {
 
-        MyScript.obsObject.setData( date, place, species )
+        MyScript.obsObject.setData(date, place, species)
     }
 //    initialPage: Qt.resolvedUrl("MainPage.qml")
 
@@ -167,13 +167,13 @@ PageStackWindow {
             flat: true
             iconSource: "toolbar-back"
             onClicked: {
-                if( pageStack.currentPage == MyScript.obsObject )
+                if (pageStack.currentPage == MyScript.obsObject)
                 {
                     unsavedData = MyScript.unSavedDataExists()
                     MyScript.clearObsDataSelections()
                     window.reloadHistory()
                 }
-                else if( pageStack.currentPage == MyScript.listObject )
+                else if (pageStack.currentPage == MyScript.listObject)
                 {
                     backFromList()
                 }
@@ -185,7 +185,7 @@ PageStackWindow {
             iconSource: "/qml/s3icons/filter.svg"
             visible: pageStack.currentPage == MyScript.obsObject
             onClicked: {
-                if( window.currentDetailLevel < 3 )
+                if (window.currentDetailLevel < 3)
                 {
                     window.currentDetailLevel++
                 }
@@ -202,7 +202,7 @@ PageStackWindow {
             onClicked: {
                 var success = false
                 success = MyScript.readAndSaveData()
-                if( success )
+                if (success)
                 {
                     window.reloadHistory()
                     MyScript.obsObject.clearTab()

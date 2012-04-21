@@ -17,37 +17,37 @@ Page {
             iconSource: "toolbar-back"
             onClicked: {
 //                console.log("bird edit page back clicked")
-                if( birdEdited == true )
+                if (birdEdited == true)
                 {
-                    if( addingNew == true )
+                    if (addingNew == true)
                     {
                         console.log("adding new bird")
-                        if( !mandatoryInfoExists() )
+                        if (!mandatoryInfoExists())
                         {
                             pageStack.pop()
                             return
                         }
 
                         var rows = birdModel.rowCount()
-                        birdModel.setData( rows, name1Tf.text, 36 )
-                        birdModel.setData( rows, name2Tf.text, 37 )
-                        birdModel.setData( rows, name3Tf.text, 39 )
-                        birdModel.setData( rows, group1Tf.text, 40 )
-                        birdModel.setData( rows, group2Tf.text, 41 )
-                        birdModel.setData( rows, group3Tf.text, 42 )
-                        birdModel.setData( rows, abbrevTf.text, 38 )
-                        birdModel.setData( rows, categoryTf.text, 43 )
+                        birdModel.setData(rows, name1Tf.text, 36)
+                        birdModel.setData(rows, name2Tf.text, 37)
+                        birdModel.setData(rows, name3Tf.text, 39)
+                        birdModel.setData(rows, group1Tf.text, 40)
+                        birdModel.setData(rows, group2Tf.text, 41)
+                        birdModel.setData(rows, group3Tf.text, 42)
+                        birdModel.setData(rows, abbrevTf.text, 38)
+                        birdModel.setData(rows, categoryTf.text, 43)
                     }
                     else
                     {
-                        birdModel.setData( currentIndex, name1Tf.text, 36 )
-                        birdModel.setData( currentIndex, name2Tf.text, 37 )
-                        birdModel.setData( currentIndex, name3Tf.text, 39 )
-                        birdModel.setData( currentIndex, group1Tf.text, 40 )
-                        birdModel.setData( currentIndex, group2Tf.text, 41 )
-                        birdModel.setData( currentIndex, group3Tf.text, 42 )
-                        birdModel.setData( currentIndex, abbrevTf.text, 38 )
-                        birdModel.setData( currentIndex, categoryTf.text, 43 )
+                        birdModel.setData(currentIndex, name1Tf.text, 36)
+                        birdModel.setData(currentIndex, name2Tf.text, 37)
+                        birdModel.setData(currentIndex, name3Tf.text, 39)
+                        birdModel.setData(currentIndex, group1Tf.text, 40)
+                        birdModel.setData(currentIndex, group2Tf.text, 41)
+                        birdModel.setData(currentIndex, group3Tf.text, 42)
+                        birdModel.setData(currentIndex, abbrevTf.text, 38)
+                        birdModel.setData(currentIndex, categoryTf.text, 43)
                     }
                 }
                 pageStack.pop()
@@ -57,8 +57,8 @@ Page {
             flat: true
             iconSource: "toolbar-delete"
             onClicked: {
-                console.log( "tee bird delete jutut")
-                birdModel.removeRow( currentIndex );
+                console.log("tee bird delete jutut")
+                birdModel.removeRow(currentIndex);
                 pageStack.pop()
             }
         }*/
@@ -69,14 +69,14 @@ Page {
     function mandatoryInfoExists()
     {
         var dataOk = false;
-        if( name1Tf.text.length > 0 &&
+        if (name1Tf.text.length > 0 &&
             name2Tf.text.length > 0 &&
             name3Tf.text.length > 0 &&
             group1Tf.text.length > 0 &&
             group2Tf.text.length > 0 &&
             group3Tf.text.length > 0 &&
             abbrevTf.text.length > 0 &&
-            categoryTf.text.length > 0 )
+            categoryTf.text.length > 0)
         {
             dataOk = true;
         }
@@ -88,7 +88,7 @@ Page {
         addingNew = true
     }
 
-    function selectedIndex( index )
+    function selectedIndex(index)
     {
         currentIndex = index
         birdEdited = false
@@ -144,7 +144,7 @@ Page {
 
         Text {
             id: editText
-            text: qsTr( "Edit species")
+            text: qsTr("Edit species")
             font.pixelSize: 20
             verticalAlignment: Text.AlignVCenter
             anchors.right: parent.right
@@ -160,8 +160,8 @@ Page {
             id: name1Tf
             width: 240
             height: 50
-            placeholderText: qsTr( "Finnish name" )
-            text: birdModel.data( currentIndex, 36 )
+            placeholderText: qsTr("Finnish name")
+            text: birdModel.data(currentIndex, 36)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: editText.bottom
@@ -175,8 +175,8 @@ Page {
             id: name2Tf
             width: 240
             height: 50
-            placeholderText: qsTr( "Swedish name" )
-            text: birdModel.data( currentIndex, 37 )
+            placeholderText: qsTr("Swedish name")
+            text: birdModel.data(currentIndex, 37)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: name1Tf.bottom
@@ -188,8 +188,8 @@ Page {
 
         TextField {
             id: name3Tf
-            placeholderText: qsTr( "Latin name")
-            text: birdModel.data( currentIndex, 39 )
+            placeholderText: qsTr("Latin name")
+            text: birdModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: name2Tf.bottom
@@ -201,8 +201,8 @@ Page {
 
         TextField {
             id: group1Tf
-            placeholderText: qsTr( "Group in finnish" )
-            text: birdModel.data( currentIndex, 40 )
+            placeholderText: qsTr("Group in finnish")
+            text: birdModel.data(currentIndex, 40)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: name3Tf.bottom
@@ -213,8 +213,8 @@ Page {
         }
         TextField {
             id: group2Tf
-            placeholderText: qsTr( "Group in swedish" )
-            text: birdModel.data( currentIndex, 41 )
+            placeholderText: qsTr("Group in swedish")
+            text: birdModel.data(currentIndex, 41)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: group1Tf.bottom
@@ -225,8 +225,8 @@ Page {
         }
         TextField {
             id: group3Tf
-            placeholderText: qsTr( "Group in latin" )
-            text: birdModel.data( currentIndex, 42 )
+            placeholderText: qsTr("Group in latin")
+            text: birdModel.data(currentIndex, 42)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: group2Tf.bottom
@@ -237,8 +237,8 @@ Page {
         }
         TextField {
             id: abbrevTf
-            placeholderText: qsTr( "Abbreviation" )
-            text: birdModel.data( currentIndex, 38 )
+            placeholderText: qsTr("Abbreviation")
+            text: birdModel.data(currentIndex, 38)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: group3Tf.bottom
@@ -249,8 +249,8 @@ Page {
         }
         TextField {
             id: categoryTf
-            placeholderText: qsTr( "Category" )
-            text: birdModel.data( currentIndex, 43 )
+            placeholderText: qsTr("Category")
+            text: birdModel.data(currentIndex, 43)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: abbrevTf.bottom
@@ -261,9 +261,9 @@ Page {
         }
         TextField {
             id: idTf
-            placeholderText: qsTr( "Id number" )
+            placeholderText: qsTr("Id number")
             enabled: false
-            text: addingNew ? birdModel.rowCount() + 1 : birdModel.data( currentIndex, 35 )
+            text: addingNew ? birdModel.rowCount() + 1 : birdModel.data(currentIndex, 35)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: categoryTf.bottom

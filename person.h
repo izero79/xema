@@ -8,13 +8,13 @@ class Person
 public:
     Person();
 
-    Person( const QString &firstName, const QString &surName, bool registered, bool defaultName = false );
+    Person(const QString &firstName, const QString &surName, bool registered, bool defaultName = false);
 
-    void setFirstName( const QString &name );
-    void setSurName( const QString &name );
-    void setRegistered( bool registered );
-    void setDefault( bool defaultName );
-    void setSelected( bool selected );
+    void setFirstName(const QString &name);
+    void setSurName(const QString &name);
+    void setRegistered(bool registered);
+    void setDefault(bool defaultName);
+    void setSelected(bool selected);
 
     QString firstName() const;
     QString surName() const;

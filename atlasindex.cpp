@@ -5,7 +5,7 @@ AtlasIndex::AtlasIndex() :
 {
 }
 
-AtlasIndex::AtlasIndex( int value) :
+AtlasIndex::AtlasIndex(int value) :
     mIndex(value)
 {
 }

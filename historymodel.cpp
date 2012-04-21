@@ -18,13 +18,13 @@ HistoryModel::HistoryModel(QObject *parent) :
 
 int HistoryModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED( parent )
+    Q_UNUSED(parent)
     return items.count();
 }
 
 void HistoryModel::clear()
 {
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), 0, items.count() );
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), 0, items.count());
     items.clear();
     QAbstractItemModel::endRemoveRows();
 }
@@ -38,75 +38,75 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
 
     HistoryItem item = items[index.row()];
 
-    if( role == FilterRole )
+    if (role == FilterRole)
     {
-        return QString( item.place() + ", " +
+        return QString(item.place() + ", " +
                         item.date() + ", " +
-                        item.species() );
+                        item.species());
     }
-    else if( role == IdRole )
+    else if (role == IdRole)
     {
         return item.id();
     }
-    else if( role == PlaceRole )
+    else if (role == PlaceRole)
     {
         return item.place();
     }
-    else if( role == DateRole )
+    else if (role == DateRole)
     {
         return item.date();
     }
-    else if( role == SpeciesRole )
+    else if (role == SpeciesRole)
     {
         return item.species();
     }
-    else if( role == DateCountRole )
+    else if (role == DateCountRole)
     {
         return item.dateCount();
     }
-    else if( role == PlaceCountRole )
+    else if (role == PlaceCountRole)
     {
         return item.placeCount();
     }
-    else if( role == SpeciesCountRole )
+    else if (role == SpeciesCountRole)
     {
         return item.specieCount();
     }
-    else if( role == SortableDateRole )
+    else if (role == SortableDateRole)
     {
         return item.sortDate();
     }
-    else if( role == SortableTimeRole )
+    else if (role == SortableTimeRole)
     {
         return item.sortTime();
     }
     return QVariant();
 }
 
-bool HistoryModel::removeRow ( int row, const QModelIndex & parent)
+bool HistoryModel::removeRow (int row, const QModelIndex & parent)
 {
-    Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() )
+    Q_UNUSED(parent)
+    if (row < 0 || row >= items.count())
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row );
-    items.removeAt( row );
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), row, row);
+    items.removeAt(row);
     QAbstractItemModel::endRemoveRows();
     return true;
 }
 
-bool HistoryModel::removeRows ( int row, int count, const QModelIndex & parent)
+bool HistoryModel::removeRows (int row, int count, const QModelIndex & parent)
 {
-    Q_UNUSED( parent )
-    if ( row < 0 || row >= items.count() || count + row > items.count() )
+    Q_UNUSED(parent)
+    if (row < 0 || row >= items.count() || count + row > items.count())
     {
         return false;
     }
-    QAbstractItemModel::beginRemoveRows( QModelIndex(), row, row + count );
-    for( int i = row; i < row + count; i++ )
+    QAbstractItemModel::beginRemoveRows(QModelIndex(), row, row + count);
+    for(int i = row; i < row + count; i++)
     {
-        items.removeAt( row );
+        items.removeAt(row);
     }
     QAbstractItemModel::endRemoveRows();
     return true;
@@ -116,32 +116,32 @@ bool HistoryModel::removeRows ( int row, int count, const QModelIndex & parent)
 void HistoryModel::addItem(const HistoryItem &item)
 {
     int index = items.size();
-    QAbstractItemModel::beginInsertRows( QModelIndex(), index, index);
-    items.append( item );
+    QAbstractItemModel::beginInsertRows(QModelIndex(), index, index);
+    items.append(item);
     QAbstractItemModel::endInsertRows();
 }
 
 void HistoryModel::addItemAtBeginning(const HistoryItem &item)
 {
-    QAbstractItemModel::beginInsertRows( QModelIndex(), 0, 0);
-    items.insert( 0, item );
+    QAbstractItemModel::beginInsertRows(QModelIndex(), 0, 0);
+    items.insert(0, item);
     QAbstractItemModel::endInsertRows();
 }
 
-HistoryItem HistoryModel::getItem( int row )
+HistoryItem HistoryModel::getItem(int row)
 {
-    if( row < 0 || row >= items.count() )
+    if (row < 0 || row >= items.count())
     {
         return HistoryItem();
     }
-    return items.at( row );
+    return items.at(row);
 }
 
 void HistoryModel::replaceItem(int row, const HistoryItem &item)
 {
-    items.replace( row, item );
-    QModelIndex idx = index( row, 0 );
-    QAbstractItemModel::dataChanged( idx, idx );
+    items.replace(row, item);
+    QModelIndex idx = index(row, 0);
+    QAbstractItemModel::dataChanged(idx, idx);
 }
 
 QList<HistoryItem> HistoryModel::content() const
@@ -149,11 +149,11 @@ QList<HistoryItem> HistoryModel::content() const
     return items;
 }
 
-void HistoryModel::setContent( const QList<HistoryItem> &newItems )
+void HistoryModel::setContent(const QList<HistoryItem> &newItems)
 {
-    if( newItems.size() > 0 )
+    if (newItems.size() > 0)
     {
-        QAbstractItemModel::beginInsertRows( QModelIndex(), 0, newItems.size() - 1 );
+        QAbstractItemModel::beginInsertRows(QModelIndex(), 0, newItems.size() - 1);
         items = newItems;
         QAbstractItemModel::endInsertRows();
     }

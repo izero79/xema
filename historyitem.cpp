@@ -3,53 +3,53 @@
 #include "historyitem.h"
 
 HistoryItem::HistoryItem() :
-    mId( 0 ),
+    mId(0),
     mPlace(),
     mDate(),
     mSpecies(),
-    mDateCount( 1 ),
-    mPlaceCount( 1 ),
+    mDateCount(1),
+    mPlaceCount(1),
     mTime()
 {
 }
 
-HistoryItem::HistoryItem( qlonglong id, const QString &place, const QString &date ) :
-    mId( id ),
-    mPlace( place ),
-    mDate( date ),
+HistoryItem::HistoryItem(qlonglong id, const QString &place, const QString &date) :
+    mId(id),
+    mPlace(place),
+    mDate(date),
     mSpecies(),
-    mDateCount( 1 ),
-    mPlaceCount( 1 ),
+    mDateCount(1),
+    mPlaceCount(1),
     mTime()
 {
 
 }
 
-void HistoryItem::setPlace( const QString &name )
+void HistoryItem::setPlace(const QString &name)
 {
     mPlace = name;
 }
 
-void HistoryItem::setDate( const QString &date )
+void HistoryItem::setDate(const QString &date)
 {
     mDate = date;
 }
 
-void HistoryItem::setSpecies( const QString &name )
+void HistoryItem::setSpecies(const QString &name)
 {
     mSpecies.clear();
-    mSpecies.insert( name, 0);
+    mSpecies.insert(name, 0);
 }
 
-void HistoryItem::addSpecies( const QString &name )
+void HistoryItem::addSpecies(const QString &name)
 {
-    if( mSpecies.contains( name ) )
+    if (mSpecies.contains(name))
     {
         int oldCount = mSpecies.value(name);
         mSpecies.insert(name, oldCount);
         return;
     }
-    mSpecies.insert( name, 0 );
+    mSpecies.insert(name, 0);
 }
 
 void HistoryItem::increaseDateCount()
@@ -101,21 +101,21 @@ QString HistoryItem::species() const
     for(it = omalista.begin(); it != omalista.end(); it++) {
         QString key = it.key();
         int value = it.value();
-        if( it.value() > 1 )
+        if (it.value() > 1)
         {
             QString num;
-            num.setNum( value );
-            species.append( key + " (" + num + ")" );
+            num.setNum(value);
+            species.append(key + " (" + num + ")");
         }
         else
         {
-            species.append( key );
+            species.append(key);
         }
-        species.append( ", ");
+        species.append(", ");
     }
-    if( species.endsWith( ", ") )
+    if (species.endsWith(", "))
     {
-        species.remove( species.length() - 2, 2 );
+        species.remove(species.length() - 2, 2);
     }
     return species;
 }
@@ -148,13 +148,13 @@ int HistoryItem::specieCount(const QString &name) const
 
 QDate HistoryItem::sortDate() const
 {
-    QDate date = QDate::fromString( mDate, QString("dd.MM.yyyy"));
+    QDate date = QDate::fromString(mDate, QString("dd.MM.yyyy"));
 
     return date;
 }
 
 QTime HistoryItem::sortTime() const
 {
-    QTime time = QTime::fromString( mTime, QString("hh:mm"));
+    QTime time = QTime::fromString(mTime, QString("hh:mm"));
     return time;
 }

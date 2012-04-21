@@ -18,11 +18,11 @@ MOBILITY +=location
 
 DEFINES += ONLYFORIMEI=0
 
-VERSION = 0.1.1
+VERSION = 0.1.2
 
 DEFINES += MAJORVERSION=0
 DEFINES += MINORVERSION=1
-DEFINES += PATCHVERSION=1
+DEFINES += PATCHVERSION=2
 
 TARGET = xema
 DEPLOYMENT.display_name = "Xema"
@@ -153,7 +153,8 @@ HEADERS += \
     xemaconstants.h \
     atlasindex.h \
     atlasindexmodel.h \
-    coordinateconverter.h
+    coordinateconverter.h \
+    xemaenums.h
 
 RESOURCES += \
     symbianresources.qrc \

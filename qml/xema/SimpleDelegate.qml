@@ -21,7 +21,7 @@ Component {
             anchors.fill: parent
             onClicked: {
                 console.log("simple delefate click: " + name)
-                listPage.clicked( name )
+                listPage.clicked(name)
             }
             onPressAndHold: {
                 listPage.showContextMenu()

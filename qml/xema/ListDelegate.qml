@@ -6,12 +6,12 @@ Component {
         id: myTestDelegate
         width: parent.width
         visible: {
-            if( listView.editMode == true )
+            if (listView.editMode == true)
             {
                 return true
             }
 
-            if( listView.showRegistered == registered )
+            if (listView.showRegistered == registered)
             {
                 return true
             }
@@ -41,14 +41,14 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if( listView.editMode == true )
+                if (listView.editMode == true)
                 {
-                    listPage.clicked( realindex )
+                    listPage.clicked(realindex)
                     return
                 }
                 else
                 {
-                    listView.model.setData( realindex, !selected, 2 )
+                    listView.model.setData(realindex, !selected, 2)
                 }
             }
             onPressAndHold: {

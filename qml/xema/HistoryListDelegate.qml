@@ -14,11 +14,11 @@ Component {
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
             text: {
-                if( dateListVisible == true )
+                if (dateListVisible == true)
                 {
                     date + " (" + dateCount + ")"
                 }
-                else if( placeListVisible == true )
+                else if (placeListVisible == true)
                 {
                     place + " (" + placeCount + ")"
                 }
@@ -56,20 +56,20 @@ Component {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if( dateListVisible == true )
+                    if (dateListVisible == true)
                     {
                         console.log("uusi datella: " + date)
-                        historyPage.newObsWithData( date )
+                        historyPage.newObsWithData(date)
                     }
-                    else if( placeListVisible == true )
+                    else if (placeListVisible == true)
                     {
-                        console.log("uusi placella ja datella: " + place + ", " +date )
-                        historyPage.newObsWithData( date, place )
+                        console.log("uusi placella ja datella: " + place + ", " +date)
+                        historyPage.newObsWithData(date, place)
                     }
                     else
                     {
                         console.log("uusi place date ja laji:" + place + ", " + date + ", " + species)
-                        historyPage.newObsWithData( date, place, species )
+                        historyPage.newObsWithData(date, place, species)
                     }
                 }
             }
@@ -81,27 +81,27 @@ Component {
             anchors.bottom: parent.bottom
             anchors.right: delegateAdd.left
             onClicked: {
-                if( dateListVisible == true )
+                if (dateListVisible == true)
                 {
                     console.log("avaa date: " + date)
-                    historyPage.showDate( date )
+                    historyPage.showDate(date)
                 }
-                else if( placeListVisible == true )
+                else if (placeListVisible == true)
                 {
-                    console.log("avaa place: " + place + ", with date: " +date )
-                    historyPage.showPlace( place, date )
+                    console.log("avaa place: " + place + ", with date: " +date)
+                    historyPage.showPlace(place, date)
                 }
                 else
                 {
                     console.log("click: " + itemid)
-                    historyPage.clicked( itemid )
+                    historyPage.clicked(itemid)
                 }
 
             }
             onPressAndHold: {
-                if( historyListView.model === historyModel )
+                if (historyListView.model === historyModel)
                 {
-                    historyPage.showContextMenu( itemid, place, date )
+                    historyPage.showContextMenu(itemid, place, date)
                 }
             }
         }

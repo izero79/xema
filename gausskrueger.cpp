@@ -8,7 +8,7 @@
  * Updated: 2003-02-11
  *
  * Functions to convert spherical map coordinates (latitude, longitude) to
- * rectangular Gauss-Krüger projection coordinates (northing, easting) and
+ * rectangular Gauss-Krger projection coordinates (northing, easting) and
  * vice versa.
  *
  * See gausskrueger.h for documentation of the functions.
@@ -104,7 +104,7 @@ void gk_rectangulartospherical(struct gk_args *args, double N, double E,
       t=sinh(q+args->e*atanh(args->e*t));
       t/=sqrt(1.0+t*t);
       }
-   while(--i);
+   while (--i);
 
    *fii=asin(t);
    *lambda+=args->lambda0;

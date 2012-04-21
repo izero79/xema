@@ -16,14 +16,14 @@ class ModelDataLoader : public QObject
 public:
     explicit ModelDataLoader(QObject *parent = 0);
 
-    void loadBirdData( BirdModel *model );
-    void loadPersonData( PersonModel *model );
-    void loadLocationData( LocationModel *model );
-    void loadStatusData( StatusModel *model );
-    void loadAtlasData( AtlasIndexModel *model );
-    void loadHistoryData( HistoryModel *model, const QString &date = QString(), const QString &place = QString() );
-    void loadHistoryDateData( HistoryModel *model );
-    void loadHistoryPlaceData( HistoryModel *model, const QString &date = QString() );
+    void loadBirdData(BirdModel *model);
+    void loadPersonData(PersonModel *model);
+    void loadLocationData(LocationModel *model);
+    void loadStatusData(StatusModel *model);
+    void loadAtlasData(AtlasIndexModel *model);
+    void loadHistoryData(HistoryModel *model, const QString &date = QString(), const QString &place = QString());
+    void loadHistoryDateData(HistoryModel *model);
+    void loadHistoryPlaceData(HistoryModel *model, const QString &date = QString());
 signals:
 
 public slots:

@@ -10,16 +10,16 @@ class HistoryItem
 {
 public:
     HistoryItem();
-    HistoryItem( qlonglong id, const QString &place, const QString &date );
+    HistoryItem(qlonglong id, const QString &place, const QString &date);
 
-    void setPlace( const QString &name );
-    void setDate( const QString &date );
-    void setSpecies( const QString &name );
-    void addSpecies( const QString &name );
+    void setPlace(const QString &name);
+    void setDate(const QString &date);
+    void setSpecies(const QString &name);
+    void addSpecies(const QString &name);
     void increaseDateCount();
     void increasePlaceCount();
     void addSpeciesCount(const QString &name, int count);
-    void setTime( const QString &time );
+    void setTime(const QString &time);
 
     int id() const;
     QString place() const;

@@ -7,12 +7,12 @@ Item {
     property bool edited: false
     property int rows: 1
 
-    function setRows( count )
+    function setRows(count)
     {
        rows = count
     }
 
-    function setStatus( joo )
+    function setStatus(joo)
     {
         statusTf.text = joo
     }
@@ -21,7 +21,7 @@ Item {
     {
         var allData = "";
         var delimiter = "#";
-        if( countTf.text == "" )
+        if (countTf.text == "")
         {
             return "-1"
         }
@@ -37,15 +37,15 @@ Item {
         allData += loftTf.text + delimiter
         allData += watchChkBox.checked + delimiter
         allData += nestChkBox.checked
-        console.log( "delegate allData: " + allData)
+        console.log("delegate allData: " + allData)
         return allData;
     }
 
-    function setDelegateData( data )
+    function setDelegateData(data)
     {
-        console.log( "set delegate data: " + data)
+        console.log("set delegate data: " + data)
         var fields;
-        fields = data.split( "#" );
+        fields = data.split("#");
         countTf.text = fields[0]
         startTimeTf.text = fields[1]
         endTimeTf.text = fields[2]
@@ -69,7 +69,7 @@ Item {
         id: countTf
         property int headerHeight: 0
         height: 50
-        placeholderText: qsTr( "Count" )
+        placeholderText: qsTr("Count")
         text: ""
         anchors.top: parent.top
         anchors.topMargin: 8
@@ -84,7 +84,7 @@ Item {
     TextField {
         id: sexTf
         height: 50
-        placeholderText: qsTr( "Sex" )
+        placeholderText: qsTr("Sex")
         text: ""
         anchors.top: countTf.bottom
         anchors.topMargin: 8
@@ -95,14 +95,14 @@ Item {
         MouseArea {
             id: sexTfmouse
             anchors.fill: parent
-            onClicked: window.showListPage( "sex", sexTf.text, sexTf );
+            onClicked: window.showListPage("sex", sexTf.text, sexTf);
         }
         onTextChanged: item1.edited = true
     }
     TextField {
         id: ageTf
         height: 50
-        placeholderText: qsTr( "Age" )
+        placeholderText: qsTr("Age")
         text: ""
         y: sexTf.y
         anchors.left: sexTf.right
@@ -114,7 +114,7 @@ Item {
         MouseArea {
             id: ageTfmouse
             anchors.fill: parent
-            onClicked: window.showListPage( "age", ageTf.text, ageTf );
+            onClicked: window.showListPage("age", ageTf.text, ageTf);
         }
         onTextChanged: item1.edited = true
 
@@ -122,7 +122,7 @@ Item {
     TextField {
         id: dressTf
         height: 50
-        placeholderText: qsTr( "Dress" )
+        placeholderText: qsTr("Dress")
         text: ""
         y: sexTf.y
         anchors.right: parent.right
@@ -132,7 +132,7 @@ Item {
         MouseArea {
             id: dressTfmouse
             anchors.fill: parent
-            onClicked: window.showListPage( "dress", dressTf.text, dressTf );
+            onClicked: window.showListPage("dress", dressTf.text, dressTf);
         }
         onTextChanged: item1.edited = true
 
@@ -140,7 +140,7 @@ Item {
     TextField {
         id: statusTf
         height: 50
-        placeholderText: qsTr( "Status" )
+        placeholderText: qsTr("Status")
         text: ""
         anchors.left: countTf.right
         anchors.leftMargin: 0
@@ -151,7 +151,7 @@ Item {
         MouseArea {
             id: tf5mouse
             anchors.fill: parent
-            onClicked: window.showListPage( "status", statusTf.text, statusTf );
+            onClicked: window.showListPage("status", statusTf.text, statusTf);
         }
         onTextChanged: item1.edited = true
 
@@ -162,7 +162,7 @@ Item {
 
         width: 100
         height: 50
-        placeholderText: qsTr( "0:00" )
+        placeholderText: qsTr("0:00")
         text: ""
         anchors.top: sexTf.bottom
         anchors.topMargin: 8
@@ -173,7 +173,7 @@ Item {
             regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
         }
         onActiveFocusChanged: {
-            if( activeFocus == true && text == "" )
+            if (activeFocus == true && text == "")
             {
                 text = Qt.formatDateTime(new Date(), "hh:mm")
             }
@@ -205,7 +205,7 @@ Item {
 
         width: 100
         height: 50
-        placeholderText: qsTr( "0:00" )
+        placeholderText: qsTr("0:00")
         text: ""
         anchors.right: loftTf.left
         anchors.rightMargin: 0
@@ -215,9 +215,9 @@ Item {
             regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
         }
         onActiveFocusChanged: {
-            if( activeFocus == true && text == "" )
+            if (activeFocus == true && text == "")
             {
-                if( startTimeTf.text != "" )
+                if (startTimeTf.text != "")
                 {
                     text = startTimeTf.text
                 }
@@ -237,7 +237,7 @@ Item {
 
         height: 50
         width: 100
-        placeholderText: qsTr( "Loft" )
+        placeholderText: qsTr("Loft")
         text: ""
         anchors.right: parent.right
         anchors.rightMargin: 0
@@ -259,7 +259,7 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: parent.width / 2
-        text: qsTr( "Bird-watch")
+        text: qsTr("Bird-watch")
         visible: detailLevel > 2
         onCheckedChanged: item1.edited = true
 
@@ -271,7 +271,7 @@ Item {
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        text: qsTr( "Nesting")
+        text: qsTr("Nesting")
         y: watchChkBox.y
         visible: detailLevel > 2
         onCheckedChanged: item1.edited = true
@@ -288,7 +288,7 @@ Item {
         anchors.rightMargin: 0
         height: 50
 
-        placeholderText: qsTr( "More information" )
+        placeholderText: qsTr("More information")
         text: ""
         visible: detailLevel > 2
         onTextChanged: item1.edited = true

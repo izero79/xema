@@ -3,29 +3,29 @@
 Status::Status() :
     mName(),
     mAbbrev(),
-    mSelected( false )
+    mSelected(false)
 {
 }
 
-Status::Status( const QString &name, const QString &abbrev ) :
-    mName( name ),
-    mAbbrev( abbrev ),
-    mSelected( false )
+Status::Status(const QString &name, const QString &abbrev) :
+    mName(name),
+    mAbbrev(abbrev),
+    mSelected(false)
 {
 
 }
 
-void Status::setName( const QString &name )
+void Status::setName(const QString &name)
 {
     mName = name;
 }
 
-void Status::setAbbrev( const QString &abbr )
+void Status::setAbbrev(const QString &abbr)
 {
     mAbbrev = abbr;
 }
 
-void Status::setSelected( bool selected )
+void Status::setSelected(bool selected)
 {
     mSelected = selected;
 }

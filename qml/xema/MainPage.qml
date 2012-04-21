@@ -20,7 +20,7 @@ Page {
             id: continueButton
             width: parent.width
             height: newButton.height
-            text: qsTr( "Continue" )
+            text: qsTr("Continue")
             anchors.top: parent.top
             anchors.topMargin: 0
             checked: false
@@ -29,7 +29,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             visible: unsavedData
             onClicked: {
-                window.showObsPage( true )
+                window.showObsPage(true)
             }
         }
 
@@ -37,7 +37,7 @@ Page {
             id: newButton
             height: parent.height / 6
             width: parent.width
-            text: qsTr( "New observation" )
+            text: qsTr("New observation")
             anchors.top: continueButton.bottom
             anchors.topMargin: 20
             checked: false
@@ -45,13 +45,13 @@ Page {
             pressed: false
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
-                window.showObsPage( false )
+                window.showObsPage(false)
             }
         }
 
         Button {
             id: settingsButton
-            text: qsTr( "Settings" )
+            text: qsTr("Settings")
             width: parent.width
             height: newButton.height
             anchors.top: historyButton.bottom
@@ -67,7 +67,7 @@ Page {
             id: historyButton
             width: parent.width
             height: newButton.height
-            text: qsTr( "Observations" )
+            text: qsTr("Observations")
             anchors.top: newButton.bottom
             anchors.topMargin: 20
             anchors.horizontalCenter: parent.horizontalCenter

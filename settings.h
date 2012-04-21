@@ -14,9 +14,9 @@ public:
     bool systematicSorting();
     int detailLevel();
 
-    void setFirstStart( bool first );
-    void setSystematicSorting( bool systematic );
-    void setDetailLevel( int level );
+    void setFirstStart(bool first);
+    void setSystematicSorting(bool systematic);
+    void setDetailLevel(int level);
 
     void resetSettings();
 

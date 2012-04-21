@@ -15,12 +15,12 @@ Page {
             flat: true
             iconSource: "toolbar-back"
             onClicked: {
-                if( dateListVisible == true )
+                if (dateListVisible == true)
                 {
                     window.backFromList()
                     pageStack.pop()
                 }
-                else if( placeListVisible == true )
+                else if (placeListVisible == true)
                 {
                     historyListView.model = historyDateModel
                     textfield1.text = ""
@@ -55,16 +55,16 @@ Page {
         property string selectedPlace: ""
         MenuLayout {
             MenuItem {
-                text: qsTr( "Remove" )
+                text: qsTr("Remove")
                 onClicked: {
-                    console.log("REMOVE " + contextMenu.selectedItem )
-                    window.deleteObs( contextMenu.selectedItem, contextMenu.selectedDate, contextMenu.selectedPlace )
+                    console.log("REMOVE " + contextMenu.selectedItem)
+                    window.deleteObs(contextMenu.selectedItem, contextMenu.selectedDate, contextMenu.selectedPlace)
                 }
             }
         }
     }
 
-    function showContextMenu( itemid, place, date )
+    function showContextMenu(itemid, place, date)
     {
         contextMenu.selectedItem = itemid
         contextMenu.selectedPlace = place
@@ -72,38 +72,38 @@ Page {
         contextMenu.open()
     }
 
-    function clicked( name )
+    function clicked(name)
     {
         pageStack.pop()
-        window.showObsPage( false )
-        window.readObs( name )
+        window.showObsPage(false)
+        window.readObs(name)
     }
 
-    function newObsWithData( date, place, species )
+    function newObsWithData(date, place, species)
     {
         pageStack.pop()
-        window.showObsPage( false )
-        window.newObsWithData( date, place, species )
+        window.showObsPage(false)
+        window.newObsWithData(date, place, species)
     }
 
-    function showDate( pvm )
+    function showDate(pvm)
     {
-        window.loadHistoryWithDate( pvm )
+        window.loadHistoryWithDate(pvm)
         //textfield1.text = ""
         console.log("showDate " + pvm)
         historyListView.model = historyPlaceModel
-        historyPlaceModel.filter( textfield1.text )
+        historyPlaceModel.filter(textfield1.text)
     }
 
-    function showPlace( place, pvm )
+    function showPlace(place, pvm)
     {
-        window.loadHistoryWithDateAndPlace( pvm, place )
+        window.loadHistoryWithDateAndPlace(pvm, place)
         //textfield1.text = ""
         console.log("showDate " + place + " pvm " +pvm)
         historyListView.model = historyModel
 
 //        var filterString = place + ", " + pvm
-        historyModel.filter( textfield1.text )
+        historyModel.filter(textfield1.text)
     }
 
     function init()
@@ -121,7 +121,7 @@ Page {
             width: parent.width
             color: "white"
             font.pixelSize: 36
-            text: qsTr( "Export" )
+            text: qsTr("Export")
             horizontalAlignment: Text.AlignHCenter
         }
         content:Item {
@@ -134,7 +134,7 @@ Page {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: qsTr( "Do you want to export all data, or just new data?")
+                text: qsTr("Do you want to export all data, or just new data?")
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 font.pixelSize: 20
             }
@@ -146,10 +146,10 @@ Page {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 width: parent.width / 2
-                text: qsTr( "All" )
+                text: qsTr("All")
                 onClicked: {
                     console.log("all")
-                    window.exportData( false )
+                    window.exportData(false)
                     exportDialog.close()
                 }
             }
@@ -158,10 +158,10 @@ Page {
                 anchors.top: parent.top
                 anchors.left: exportDialogAllButton.right
                 width: parent.width / 2
-                text: qsTr( "New" )
+                text: qsTr("New")
                 onClicked: {
                     console.log("new")
-                    window.exportData( true )
+                    window.exportData(true)
                     exportDialog.close()
                 }
             }
@@ -205,7 +205,7 @@ Page {
             anchors.leftMargin: 0
             onTextChanged: {
                 console.log("teksti muuttuu: " + text)
-                historyListView.model.filter( text )
+                historyListView.model.filter(text)
             }
         }
     }

@@ -8,12 +8,12 @@ class Location
 public:
     Location();
 
-    Location( const QString &town, const QString &place, const QString &wgsCoordinate = QString(), const QString &ykjCoordinate = QString() );
+    Location(const QString &town, const QString &place, const QString &wgsCoordinate = QString(), const QString &ykjCoordinate = QString());
 
-    void setTown( const QString &name );
-    void setPlace( const QString &name );
-    void setYKJCoordinate( const QString &ykj );
-    void setWGSCoordinate( const QString &wgs );
+    void setTown(const QString &name);
+    void setPlace(const QString &name);
+    void setYKJCoordinate(const QString &ykj);
+    void setWGSCoordinate(const QString &wgs);
 
     QString town() const;
     QString place() const;

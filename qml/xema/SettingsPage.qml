@@ -7,28 +7,28 @@ Page {
     id: settingsPage
     tools: toolBarLayout
 
-    function editPeople( indexi )
+    function editPeople(indexi)
     {
         var editorCompnent = Qt.createComponent(Qt.resolvedUrl("PersonEditPage.qml"))
-        var editorObject = editorCompnent.createObject( window )
+        var editorObject = editorCompnent.createObject(window)
         pageStack.push(editorObject)
-        editorObject.selectedIndex( indexi )
+        editorObject.selectedIndex(indexi)
     }
 
-    function editBird( indexi )
+    function editBird(indexi)
     {
         var editorCompnent = Qt.createComponent(Qt.resolvedUrl("BirdEditPage.qml"))
-        var editorObject = editorCompnent.createObject( window )
+        var editorObject = editorCompnent.createObject(window)
         pageStack.push(editorObject)
-        editorObject.selectedIndex( indexi )
+        editorObject.selectedIndex(indexi)
     }
 
-    function editLocation( indexi )
+    function editLocation(indexi)
     {
         var editorCompnent = Qt.createComponent(Qt.resolvedUrl("LocationEditPage.qml"))
-        var editorObject = editorCompnent.createObject( window )
+        var editorObject = editorCompnent.createObject(window)
         pageStack.push(editorObject)
-        editorObject.selectedIndex( indexi )
+        editorObject.selectedIndex(indexi)
     }
 
     Flickable {
@@ -39,7 +39,7 @@ Page {
 
         Text {
             id: systematicSortText
-            text: qsTr( "Species list sorting")
+            text: qsTr("Species list sorting")
             font.pixelSize: 20
             verticalAlignment: Text.AlignVCenter
             anchors.right: parent.right
@@ -59,45 +59,45 @@ Page {
             anchors.left: parent.left
             RadioButton {
                 id: alphaButton
-                text: qsTr( "Alphabetical" )
+                text: qsTr("Alphabetical")
                 platformExclusiveGroup: orderGroup
                 checked: window.useSystematicSort == false
                 property bool wasPressed: false
                 onPressedChanged: {
-                    if( pressed == true )
+                    if (pressed == true)
                     {
                         wasPressed = true
                     }
                 }
 
                 onCheckedChanged: {
-                    if( checked == true && wasPressed == true )
+                    if (checked == true && wasPressed == true)
                     {
                         wasPressed = false
                         window.useSystematicSort = false
-                        window.saveSystematicSorting( !checked )
+                        window.saveSystematicSorting(!checked)
                     }
                 }
             }
             RadioButton {
                 id: systemButton
-                text: qsTr( "Systematic" )
+                text: qsTr("Systematic")
                 platformExclusiveGroup: orderGroup
                 checked: window.useSystematicSort == true
                 property bool wasPressed: false
                 onPressedChanged: {
-                    if( pressed == true )
+                    if (pressed == true)
                     {
                         wasPressed = true
                     }
                 }
 
                 onCheckedChanged: {
-                    if( checked == true && wasPressed == true )
+                    if (checked == true && wasPressed == true)
                     {
                         wasPressed = false
                         window.useSystematicSort = true
-                        window.saveSystematicSorting( checked )
+                        window.saveSystematicSorting(checked)
                     }
                 }
             }
@@ -112,7 +112,7 @@ Page {
             anchors.left: parent.left
             anchors.top: row1.bottom
             anchors.topMargin: 30
-            text: qsTr( "Default amount of fields")
+            text: qsTr("Default amount of fields")
             font.pixelSize: 20
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
@@ -126,74 +126,74 @@ Page {
             anchors.left: parent.left
             RadioButton {
                 id: button1
-                text: qsTr( "Minimum" )
+                text: qsTr("Minimum")
                 platformExclusiveGroup: group
                 checked: window.defaultDetailLevel == 1
                 property bool wasPressed: false
                 onPressedChanged: {
-                    if( pressed == true )
+                    if (pressed == true)
                     {
                         wasPressed = true
                     }
                 }
 
                 onCheckedChanged: {
-                    if( checked == true && wasPressed == true )
+                    if (checked == true && wasPressed == true)
                     {
                         wasPressed = false
                         window.defaultDetailLevel = 1
-                        window.saveDetailLevel( 1 )
+                        window.saveDetailLevel(1)
                     }
                 }
             }
             RadioButton {
                 id: button2
-                text: qsTr( "Expanded" )
+                text: qsTr("Expanded")
                 platformExclusiveGroup: group
                 checked: window.defaultDetailLevel == 2
                 property bool wasPressed: false
                 onPressedChanged: {
-                    if( pressed == true )
+                    if (pressed == true)
                     {
                         wasPressed = true
                     }
                 }
 
                 onCheckedChanged: {
-                    if( checked == true && wasPressed == true )
+                    if (checked == true && wasPressed == true)
                     {
                         wasPressed = false
                         window.defaultDetailLevel = 2
-                        window.saveDetailLevel( 2 )
+                        window.saveDetailLevel(2)
                     }
                 }
             }
             RadioButton {
                 id: button3
-                text: qsTr( "All" )
+                text: qsTr("All")
                 platformExclusiveGroup: group
                 checked: window.defaultDetailLevel == 3
                 property bool wasPressed: false
                 onPressedChanged: {
-                    if( pressed == true )
+                    if (pressed == true)
                     {
                         wasPressed = true
                     }
                 }
 
                 onCheckedChanged: {
-                    if( checked == true && wasPressed == true )
+                    if (checked == true && wasPressed == true)
                     {
                         wasPressed = false
                         window.defaultDetailLevel = 3
-                        window.saveDetailLevel( 3 )
+                        window.saveDetailLevel(3)
                     }
                 }
             }
         }
         Text {
             id: editText
-            text: qsTr( "Manage lists")
+            text: qsTr("Manage lists")
             font.pixelSize: 20
             verticalAlignment: Text.AlignVCenter
             anchors.right: parent.right
@@ -211,8 +211,8 @@ Page {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            text: qsTr( "Observers" )
-            onClicked: window.showListPage( "editallpeople", "" );
+            text: qsTr("Observers")
+            onClicked: window.showListPage("editallpeople", "");
         }
         Button {
             id: editLocation
@@ -220,8 +220,8 @@ Page {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            text: qsTr( "Locations" )
-            onClicked: window.showListPage( "editplaces", "" );
+            text: qsTr("Locations")
+            onClicked: window.showListPage("editplaces", "");
         }
         Button {
             id: editBird
@@ -229,13 +229,13 @@ Page {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            text: qsTr( "Species" )
-            onClicked: window.showListPage( "editbirds", "" );
+            text: qsTr("Species")
+            onClicked: window.showListPage("editbirds", "");
         }
 
         Text {
             id: restoreText
-            text: qsTr( "Restore default lists")
+            text: qsTr("Restore default lists")
             font.pixelSize: 20
             verticalAlignment: Text.AlignVCenter
             anchors.right: parent.right
@@ -253,7 +253,7 @@ Page {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            text: qsTr( "Observers" )
+            text: qsTr("Observers")
             onClicked: window.restoreObservers()
         }
         Button {
@@ -262,7 +262,7 @@ Page {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            text: qsTr( "Locations" )
+            text: qsTr("Locations")
             onClicked: window.restoreLocations()
         }
         Button {
@@ -271,7 +271,7 @@ Page {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            text: qsTr( "Species" )
+            text: qsTr("Species")
             onClicked: window.restoreSpecies()
         }
     }

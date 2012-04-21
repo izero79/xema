@@ -7,9 +7,9 @@ class AtlasIndex
 {
 public:
     AtlasIndex();
-    AtlasIndex( int value );
+    AtlasIndex(int value);
 
-    void setIndex( int value );
+    void setIndex(int value);
 
     int index() const;
 

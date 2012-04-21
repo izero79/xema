@@ -7,11 +7,11 @@ class Status
 {
 public:
     Status();
-    Status( const QString &name, const QString &abbrev );
+    Status(const QString &name, const QString &abbrev);
 
-    void setName( const QString &name );
-    void setAbbrev( const QString &abbr );
-    void setSelected( bool selected );
+    void setName(const QString &name);
+    void setAbbrev(const QString &abbr);
+    void setSelected(bool selected);
 
     QString name() const;
     QString abbreviation() const;

@@ -59,7 +59,7 @@ Page {
         MyScript.changeDelegateHeight()
         for(var i=0;i<personModel.rowCount();i++)
         {
-            if( personModel.data(i, 37) == true )
+            if (personModel.data(i, 37) == true)
             {
                 regPeopleTa.text = personModel.data(i, 35)
             }
@@ -67,22 +67,22 @@ Page {
 
     }
 
-    function birdChanged( name )
+    function birdChanged(name)
     {
         birdNameTf.text = name
     }
 
-    function placeChanged( name )
+    function placeChanged(name)
     {
         locationTf.text = name
     }
 
-    function regpeopleChanged( name )
+    function regpeopleChanged(name)
     {
         regPeopleTa.text = name
     }
 
-    function peopleChanged( name )
+    function peopleChanged(name)
     {
         otherPeopleTa.text = name
     }
@@ -90,21 +90,21 @@ Page {
     function readAllData()
     {
         var missingData = new Array();
-        if( startDateTf.text == "" )
+        if (startDateTf.text == "")
         {
-            missingData[missingData.length] = qsTr( "Start date" )
+            missingData[missingData.length] = qsTr("Start date")
         }
-        if( birdNameTf.text == "" )
+        if (birdNameTf.text == "")
         {
-            missingData[missingData.length] = qsTr( "Species" )
+            missingData[missingData.length] = qsTr("Species")
         }
-        if( regPeopleTa.text == "" )
+        if (regPeopleTa.text == "")
         {
-            missingData[missingData.length] = qsTr( "Observer" )
+            missingData[missingData.length] = qsTr("Observer")
         }
-        if( locationTf.text == "" )
+        if (locationTf.text == "")
         {
-            missingData[missingData.length] = qsTr( "Location" )
+            missingData[missingData.length] = qsTr("Location")
         }
 
         var allData = "";
@@ -124,18 +124,18 @@ Page {
         allData += hideChkBox.checked + delimiter
 
         var delegateData = MyScript.readDelegateDatas()
-        if( delegateData == "-1" )
+        if (delegateData == "-1")
         {
-            missingData[missingData.length] = qsTr( "Count" )
+            missingData[missingData.length] = qsTr("Count")
         }
         else
         {
             allData += delegateData
         }
 
-        if( missingData.length > 0 )
+        if (missingData.length > 0)
         {
-            console.log("missing data: " + missingData )
+            console.log("missing data: " + missingData)
             missingInfo = missingData
             return "-1"
         }
@@ -145,16 +145,16 @@ Page {
         allData += exportedChkBox.checked
         allData += delimiter
 
-        console.log( "allData: " + allData)
+        console.log("allData: " + allData)
 
         return allData;
     }
 
-    function dataLoaded( data )
+    function dataLoaded(data)
     {
-        console.log( "data loaded now: " + data)
+        console.log("data loaded now: " + data)
         var fields;
-        fields = data.split( "#" );
+        fields = data.split("#");
         console.log("id: " +fields[0])
         currentId = fields[0]
         birdNameTf.text = fields[1]
@@ -172,36 +172,36 @@ Page {
         var rows = fields[12]
         console.log("rows: " + rows)
         var currentField = 0;
-        while( rows > obsCount )
+        while (rows > obsCount)
         {
             MyScript.createObjects();
         }
-        for(var j = 0; j < rows; j++ )
+        for(var j = 0; j < rows; j++)
         {
             var rowData = ""
-            for( var k = 13+j*11; k < 24+j*11; k++ )
+            for(var k = 13+j*11; k < 24+j*11; k++)
             {
                 rowData += fields[k] + "#"
                 currentField = k
             }
 
-            MyScript.setDelegateData( j, rowData )
+            MyScript.setDelegateData(j, rowData)
         }
         currentField++
         weatherTa.text = fields[currentField]
 
     }
 
-    function setData( date, place, species )
+    function setData(date, place, species)
     {
         startDateTf.text = date
         locationTf.text = place
-        if( species != "" )
+        if (species != "")
         {
-            if( species.indexOf( " (") != -1 )
+            if (species.indexOf(" (") != -1)
             {
                 console.log("loyty sulku")
-                species = species.substring(0, (species.indexOf( " (")))
+                species = species.substring(0, (species.indexOf(" (")))
             }
         }
 
@@ -210,8 +210,8 @@ Page {
 
     function clearTab()
     {
-        console.log( "clear tab: " + currentTab )
-        if( currentTab <= 3 )
+        console.log("clear tab: " + currentTab)
+        if (currentTab <= 3)
         {
             birdNameTf.text = ""
             moreInfoTa.text = ""
@@ -223,13 +223,13 @@ Page {
 
             MyScript.changeDelegateHeight()
         }
-        if( currentTab <= 2 )
+        if (currentTab <= 2)
         {
             locationTf.text = ""
             startTimeTf.text = ""
             endTimeTf.text = ""
         }
-        if( currentTab <= 1 )
+        if (currentTab <= 1)
         {
             startDateTf.text = ""
             stopDateTf.text = ""
@@ -247,7 +247,7 @@ Page {
 
     function dataChanged()
     {
-        if( edited == false )
+        if (edited == false)
         {
             edited = MyScript.delegateDataChanged()
         }
@@ -271,7 +271,7 @@ Page {
             width: parent.width
             color: "white"
             font.pixelSize: 36
-            text: qsTr( "Error" )
+            text: qsTr("Error")
             horizontalAlignment: Text.AlignHCenter
         }
         content:Item {
@@ -285,9 +285,9 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
                 text: {
-                    var dialogText = qsTr( "Mandatory information missing:" )
+                    var dialogText = qsTr("Mandatory information missing:")
                     if(missingInfo) {
-                        for( var i = 0; i < missingInfo.length; i++ )
+                        for(var i = 0; i < missingInfo.length; i++)
                         {
                             dialogText += "\n" + missingInfo[i];
                         }
@@ -307,7 +307,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
-                text: qsTr( "Ok" )
+                text: qsTr("Ok")
                 onClicked: {
                     missingInfo = ""
                     saveErrorDialog.close()
@@ -327,7 +327,7 @@ Page {
             width: parent.width
             color: "white"
             font.pixelSize: 36
-            text: qsTr( "GPS" )
+            text: qsTr("GPS")
             horizontalAlignment: Text.AlignHCenter
         }
         content:Item {
@@ -341,7 +341,7 @@ Page {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: qsTr( "Fetching GPS-coordinates" )
+                text: qsTr("Fetching GPS-coordinates")
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
@@ -353,7 +353,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
-                text: qsTr( "Ok" )
+                text: qsTr("Ok")
                 onClicked: {
                     locationTf.text = "63.7998N, 23.0095E"
                     listDialog.close()
@@ -365,9 +365,9 @@ Page {
     TabBarLayout {
         id: tabBarLayout
         anchors { left: parent.left; right: parent.right; top: parent.top }
-        TabButton { tab: tab1content; text: qsTr( "Day" ) }
-        TabButton { tab: tab2content; text: qsTr( "Place" ) }
-        TabButton { tab: tab3content; text: qsTr( "Observation" ) }
+        TabButton { tab: tab1content; text: qsTr("Day") }
+        TabButton { tab: tab2content; text: qsTr("Place") }
+        TabButton { tab: tab3content; text: qsTr("Observation") }
     }
 
     TabGroup {
@@ -375,15 +375,15 @@ Page {
         currentTab: tab1content
         anchors { left: parent.left; right: parent.right; top: tabBarLayout.bottom; bottom: parent.bottom }
         onCurrentTabChanged: {
-            if( currentTab == tab1content )
+            if (currentTab == tab1content)
             {
                 obsPage.currentTab = 1
             }
-            else if( currentTab == tab2content )
+            else if (currentTab == tab2content)
             {
                 obsPage.currentTab = 2
             }
-            else if( currentTab == tab3content )
+            else if (currentTab == tab3content)
             {
                 obsPage.currentTab = 3
             }
@@ -482,7 +482,7 @@ Page {
                             regExp: /[0-2]{0,1}[0-9]{1}[\.]{1}[0-2]{0,1}[0-9]{1}[\.]{1}[0-9]{4}/
                         }
                         onActiveFocusChanged: {
-                            if( activeFocus == true && text == "" )
+                            if (activeFocus == true && text == "")
                             {
                                 text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
                             }
@@ -522,9 +522,9 @@ Page {
                             regExp: /[0-2]{0,1}[0-9]{1}[\.]{1}[0-2]{0,1}[0-9]{1}[\.]{1}[0-9]{4}/
                         }
                         onActiveFocusChanged: {
-                            if( activeFocus == true && text == "" )
+                            if (activeFocus == true && text == "")
                             {
-                                if( startDateTf.text != "" )
+                                if (startDateTf.text != "")
                                 {
                                     text = startDateTf.text
                                 }
@@ -564,7 +564,7 @@ Page {
                     TextArea {
                         id: regPeopleTa
                         height: 100
-                        placeholderText: qsTr( "Registered" )
+                        placeholderText: qsTr("Registered")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -575,7 +575,7 @@ Page {
                         MouseArea {
                             id: ta1mouse
                             anchors.fill: parent
-                            onClicked: window.showListPage( "regpeople", regPeopleTa.text );
+                            onClicked: window.showListPage("regpeople", regPeopleTa.text);
                         }
                         onTextChanged: obsPage.edited = true
 
@@ -584,7 +584,7 @@ Page {
                     TextArea {
                         id: otherPeopleTa
                         height: 100
-                        placeholderText: qsTr( "Others" )
+                        placeholderText: qsTr("Others")
                         text: ""
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -597,7 +597,7 @@ Page {
                         MouseArea {
                             id: ta2mouse
                             anchors.fill: parent
-                            onClicked: window.showListPage( "people", otherPeopleTa.text );
+                            onClicked: window.showListPage("people", otherPeopleTa.text);
                         }
                         onTextChanged: obsPage.edited = true
 
@@ -635,7 +635,7 @@ Page {
                         id: weatherTa
                         property int headerHeight: text5.height + 8
                         height: 100
-                        placeholderText: qsTr( "Weather" )
+                        placeholderText: qsTr("Weather")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -730,7 +730,7 @@ Page {
                     TextField {
                         id: locationTf
                         height: 50
-                        placeholderText: qsTr( "Location" )
+                        placeholderText: qsTr("Location")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -741,7 +741,7 @@ Page {
                         MouseArea {
                             id: tf1mouse
                             anchors.fill: parent
-                            onClicked: window.showListPage( "places" );
+                            onClicked: window.showListPage("places");
                         }
                         onTextChanged: obsPage.edited = true
                     }
@@ -789,7 +789,7 @@ Page {
                             regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
                         }
                         onActiveFocusChanged: {
-                            if( activeFocus == true && text == "" )
+                            if (activeFocus == true && text == "")
                             {
                                 text = Qt.formatDateTime(new Date(), "hh:mm")
                             }
@@ -829,9 +829,9 @@ Page {
                             regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
                         }
                         onActiveFocusChanged: {
-                            if( activeFocus == true && text == "" )
+                            if (activeFocus == true && text == "")
                             {
-                                if( startTimeTf.text != "" )
+                                if (startTimeTf.text != "")
                                 {
                                     text = startTimeTf.text
                                 }
@@ -896,7 +896,7 @@ Page {
 
                     var focusChildY = focusChild.parent["y"]
                     console.log("parent: " + focusChild.parent.parent["objectName"])
-                    if( focusChildY == 0 )
+                    if (focusChildY == 0)
                     {
                         console.log("focusChildY 0")
                         focusChildY = focusChild.parent.parent["y"]
@@ -904,12 +904,12 @@ Page {
 
                     var focusChildHeight = focusChild["height"]
                     var focusChildHeaderHeight = focusChild["headerHeight"]
-                    if( focusChildHeaderHeight === undefined )
+                    if (focusChildHeaderHeight === undefined)
                     {
                         focusChildHeaderHeight = 0
                     }
 
-                    if( focusChildY >= 300 )
+                    if (focusChildY >= 300)
                     {
                         focusChildY = focusChildY + 97
                     }
@@ -946,7 +946,7 @@ Page {
                     TextField {
                         id: birdNameTf
                         height: 50
-                        placeholderText: qsTr( "Species" )
+                        placeholderText: qsTr("Species")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -957,7 +957,7 @@ Page {
                         MouseArea {
                             id: tf7mouse
                             anchors.fill: parent
-                            onClicked: window.showListPage( "birds" );
+                            onClicked: window.showListPage("birds");
                         }
                         onTextChanged: obsPage.edited = true
 
@@ -977,7 +977,7 @@ Page {
                 }
                 Button {
                     id: plus
-                    text: qsTr( "Add row" )
+                    text: qsTr("Add row")
                     anchors.top: obsDelegateItem.bottom
                     anchors.topMargin: 8
                     anchors.left: parent.left
@@ -988,7 +988,7 @@ Page {
                 }
                 Button {
                     id: minus
-                    text: qsTr( "Remove row" )
+                    text: qsTr("Remove row")
                     anchors.top: obsDelegateItem.bottom
                     anchors.topMargin: 8
                     anchors.left: plus.right
@@ -1031,7 +1031,7 @@ Page {
                         id: moreInfoTa
                         property int headerHeight: text8.height + 8
                         height: 150
-                        placeholderText: qsTr( "More information" )
+                        placeholderText: qsTr("More information")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 8
@@ -1047,7 +1047,7 @@ Page {
                     TextField {
                         id: atlasTf
                         height: 50
-                        placeholderText: qsTr( "Atlas index" )
+                        placeholderText: qsTr("Atlas index")
                         text: ""
                         anchors.top: moreInfoTa.bottom
                         anchors.topMargin: 0
@@ -1060,7 +1060,7 @@ Page {
                         MouseArea {
                             id: atlastfmouse
                             anchors.fill: parent
-                            onClicked: window.showListPage( "atlas", atlasTf.text, atlasTf );
+                            onClicked: window.showListPage("atlas", atlasTf.text, atlasTf);
                         }
                         onTextChanged: obsPage.edited = true
                     }
@@ -1072,7 +1072,7 @@ Page {
                         anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
-                        text: qsTr( "Hidden")
+                        text: qsTr("Hidden")
                         visible: detailLevel > 2
                         onCheckedChanged: obsPage.edited = true
                     }

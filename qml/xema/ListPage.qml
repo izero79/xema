@@ -19,7 +19,7 @@ Page {
         }
         ToolButton {
             flat: false
-            text: positionSource.active ? qsTr( "Stop GPS") : qsTr( "Start GPS")
+            text: positionSource.active ? qsTr("Stop GPS") : qsTr("Start GPS")
 //            iconSource: "toolbar-search"
             visible: listView.model == locationModel && listView.editMode == false
             onClicked: {
@@ -49,7 +49,7 @@ Page {
 
     function init()
     {
-        listView.model.filter( "" )
+        listView.model.filter("")
         filterTf.text = ""
     }
 
@@ -59,22 +59,22 @@ Page {
         {
             positionSource.stop()
         }
-        if( listPageType == "birds" || listPageType == "editbirds" )
+        if (listPageType == "birds" || listPageType == "editbirds")
         {
             window.addBird()
             return
         }
-        else if( listPageType == "places" ||  listPageType == "editplaces" )
+        else if (listPageType == "places" ||  listPageType == "editplaces")
         {
             window.addLocation()
             return
         }
-        else if( listPageType == "editallpeople" || listPageType == "regpeople" || listPageType == "people")
+        else if (listPageType == "editallpeople" || listPageType == "regpeople" || listPageType == "people")
         {
             window.addPeople()
             return
         }
-        else if( listPageType == "atlas" )
+        else if (listPageType == "atlas")
         {
             return
         }
@@ -85,20 +85,20 @@ Page {
         property int selectedIndex: -1
         MenuLayout {
             MenuItem {
-                text: qsTr( "Remove" )
+                text: qsTr("Remove")
                 onClicked: {
-                    console.log("REMOVE " + contextMenu.selectedIndex )
-                    if( listPageType == "editbirds" )
+                    console.log("REMOVE " + contextMenu.selectedIndex)
+                    if (listPageType == "editbirds")
                     {
                         birdModel.removeRow(contextMenu.selectedIndex)
                     }
 
-                    if( listPageType == "editplaces" )
+                    if (listPageType == "editplaces")
                     {
                         locationModel.removeRow(contextMenu.selectedIndex)
                     }
 
-                    if( listPageType == "editallpeople" )
+                    if (listPageType == "editallpeople")
                     {
                         personModel.removeRow(contextMenu.selectedIndex)
                     }
@@ -107,120 +107,120 @@ Page {
         }
     }
 
-    function showContextMenu( index )
+    function showContextMenu(index)
     {
-        if( listPageType == "editbirds" || listPageType == "editplaces" || listPageType == "editallpeople" )
+        if (listPageType == "editbirds" || listPageType == "editplaces" || listPageType == "editallpeople")
         {
             contextMenu.selectedIndex = index
             contextMenu.open()
         }
     }
 
-    function clicked( name )
+    function clicked(name)
     {
         if(positionSource.active)
         {
             positionSource.stop()
         }
-        if( listPageType == "atlas" )
+        if (listPageType == "atlas")
         {
-            window.atlasChanged( name )
+            window.atlasChanged(name)
         }
-        else if( listPageType == "birds" )
+        else if (listPageType == "birds")
         {
-            window.birdChanged( name )
+            window.birdChanged(name)
         }
-        else if( listPageType == "editbirds" )
+        else if (listPageType == "editbirds")
         {
-            window.editBird( name )
+            window.editBird(name)
             return
         }
-        else if( listPageType == "places" )
+        else if (listPageType == "places")
         {
-            console.log( "hoo")
-            window.placeChanged( name )
+            console.log("hoo")
+            window.placeChanged(name)
         }
-        else if( listPageType == "editplaces" )
+        else if (listPageType == "editplaces")
         {
-            window.editLocation( name )
+            window.editLocation(name)
             return
         }
-        else if( listPageType == "editallpeople")
+        else if (listPageType == "editallpeople")
         {
-            window.editPeople( name )
+            window.editPeople(name)
             return
         }
-        else if( listPageType == "regpeople")
+        else if (listPageType == "regpeople")
         {
-            window.regpeopleChanged( name )
+            window.regpeopleChanged(name)
         }
-        else if( listPageType == "people")
+        else if (listPageType == "people")
         {
-            window.peopleChanged( name )
+            window.peopleChanged(name)
         }
-        else if( listPageType == "sex")
+        else if (listPageType == "sex")
         {
-            window.sexChanged( name )
+            window.sexChanged(name)
         }
-        else if( listPageType == "age")
+        else if (listPageType == "age")
         {
-            window.ageChanged( name )
+            window.ageChanged(name)
         }
-        else if( listPageType == "dress")
+        else if (listPageType == "dress")
         {
-            window.dressChanged( name )
+            window.dressChanged(name)
         }
         pageStack.pop()
     }
 
-    function selectNames( names )
+    function selectNames(names)
     {
         var selNames = new Array();
-        console.log( "names: " + names )
+        console.log("names: " + names)
 
         selNames = names.split(",")
-        console.log( "name[0]: " + selNames[0] )
+        console.log("name[0]: " + selNames[0])
 
-        for( var i = 0; i < selNames.length; i++ )
+        for(var i = 0; i < selNames.length; i++)
         {
-            for( var j = 0; j < personModel.rowCount(); j++ )
+            for(var j = 0; j < personModel.rowCount(); j++)
             {
-                if( personModel.data( j, 35 ) == selNames[i] )
+                if (personModel.data(j, 35) == selNames[i])
                 {
-                    personModel.setData( j, true, 2 )
+                    personModel.setData(j, true, 2)
                 }
             }
         }
     }
 
-    function selectStatus( names )
+    function selectStatus(names)
     {
         var selNames = new Array();
-        console.log( "select status names: " + names )
+        console.log("select status names: " + names)
 
         selNames = names.split(",")
-        console.log( "names length: " + selNames.length )
+        console.log("names length: " + selNames.length)
 
-        if( selNames.length == 1 && selNames[0] == "" )
+        if (selNames.length == 1 && selNames[0] == "")
         {
-            for( var j = 0; j < statusModel.rowCount(); j++ )
+            for(var j = 0; j < statusModel.rowCount(); j++)
             {
-                statusModel.setData( j, false, 2 )
+                statusModel.setData(j, false, 2)
             }
             return
         }
 
-        for( var i = 0; i < selNames.length; i++ )
+        for(var i = 0; i < selNames.length; i++)
         {
-            for( var j = 0; j < statusModel.rowCount(); j++ )
+            for(var j = 0; j < statusModel.rowCount(); j++)
             {
-                if( statusModel.data( j, 35 ) == selNames[i] )
+                if (statusModel.data(j, 35) == selNames[i])
                 {
-                    statusModel.setData( j, true, 2 )
+                    statusModel.setData(j, true, 2)
                 }
                 else
                 {
-                    statusModel.setData( j, false, 2 )
+                    statusModel.setData(j, false, 2)
                 }
             }
         }
@@ -347,10 +347,10 @@ Page {
 
     Component.onCompleted: {
         console.log("ListPage loaded")
-        listView.model.filter( "" )
-        for( var i = 0; i < listView.model.rowCount(); i++ )
+        listView.model.filter("")
+        for(var i = 0; i < listView.model.rowCount(); i++)
         {
-            listView.model.setData( i, false, 2 )
+            listView.model.setData(i, false, 2)
         }
     }
 
@@ -377,7 +377,7 @@ Page {
             anchors.leftMargin: 0
             onTextChanged: {
                 console.log("teksti muuttuu: " + text)
-                listView.model.filter( text )
+                listView.model.filter(text)
             }
             BusyIndicator {
                 anchors.right: parent.right
@@ -402,43 +402,43 @@ Page {
         property bool showRegistered: false
         property bool editMode: false
         model: {
-            if( listPageType == "atlas" )
+            if (listPageType == "atlas")
             {
                 return atlasModel
             }
-            else if( listPageType == "birds" )
+            else if (listPageType == "birds")
             {
                 return birdModel
             }
-            else if( listPageType == "editbirds" )
+            else if (listPageType == "editbirds")
             {
                 return birdModel
             }
-            else if( listPageType == "places" )
+            else if (listPageType == "places")
             {
                 return locationModel
             }
-            else if( listPageType == "editplaces" )
+            else if (listPageType == "editplaces")
             {
                 return locationModel
             }
-            else if( listPageType == "status" )
+            else if (listPageType == "status")
             {
                 return statusModel
             }
-            else if( listPageType == "sex" )
+            else if (listPageType == "sex")
             {
                 return sexModel
             }
-            else if( listPageType == "dress" )
+            else if (listPageType == "dress")
             {
                 return dressModel
             }
-            else if( listPageType == "age" )
+            else if (listPageType == "age")
             {
                 return ageModel
             }
-            else if( listPageType == "regpeople" )
+            else if (listPageType == "regpeople")
             {
                 return personModel
             }
@@ -452,58 +452,58 @@ Page {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         delegate: {
-            if( listPageType == "birds" )
+            if (listPageType == "birds")
             {
-                if( window.useSystematicSort == true )
+                if (window.useSystematicSort == true)
                 {
-                    model.setSorting( 0, true )
+                    model.setSorting(0, true)
                 }
                 else
                 {
-                    model.setSorting( 1, true )
+                    model.setSorting(1, true)
                 }
                 editMode = false
                 return birdDelegate
             }
-            else if( listPageType == "editbirds" )
+            else if (listPageType == "editbirds")
             {
-                if( window.useSystematicSort == true )
+                if (window.useSystematicSort == true)
                 {
-                    model.setSorting( 0, true )
+                    model.setSorting(0, true)
                 }
                 else
                 {
-                    model.setSorting( 1, true )
+                    model.setSorting(1, true)
                 }
                 editMode = true
                 return birdDelegate
             }
-            else if( listPageType == "places" )
+            else if (listPageType == "places")
             {
                 editMode = false
                 return locationDelegate
             }
-            else if( listPageType == "editplaces" )
+            else if (listPageType == "editplaces")
             {
                 editMode = true
                 return locationDelegate
             }
-            else if( listPageType == "status" )
+            else if (listPageType == "status")
             {
                 editMode = false
                 return statusDelegate
             }
-            else if( listPageType == "dress" || listPageType == "age" || listPageType == "sex" || listPageType == "atlas" )
+            else if (listPageType == "dress" || listPageType == "age" || listPageType == "sex" || listPageType == "atlas")
             {
                 editMode = false
                 return simpleDelegate
             }
-            else if( listPageType == "editallpeople" )
+            else if (listPageType == "editallpeople")
             {
                 editMode = true
                 return myTestDelegate
             }
-            else if( listPageType == "regpeople" )
+            else if (listPageType == "regpeople")
             {
                 editMode = false
                 showRegistered = true
@@ -545,8 +545,8 @@ Page {
         property string accuracy: maxVerticalAccurary <= maxHorizontalAccurary ? parseInt(maxHorizontalAccurary) : parseInt(maxVerticalAccurary)
         property real maxHorizontalAccurary: 250
         property real maxVerticalAccurary: 250
-        property bool coordinatesValid: ( positionSource.position.latitudeValid && positionSource.position.longitudeValid &&
-                                        positionSource.position.coordinate.latitude != "NaN" && positionSource.position.coordinate.longitude != "NaN" )
+        property bool coordinatesValid: (positionSource.position.latitudeValid && positionSource.position.longitudeValid &&
+                                        positionSource.position.coordinate.latitude != "NaN" && positionSource.position.coordinate.longitude != "NaN")
         updateInterval: 2500
 
         onActiveChanged: {
@@ -560,15 +560,15 @@ Page {
 
         onPositionChanged: {
             console.log(positionSource.position.coordinate.latitude + ", " + positionSource.position.coordinate.longitude)
-            if( coordinatesValid ) {
-                if( positionSource.position.horizontalAccuracy < maxHorizontalAccurary ||
-                    positionSource.position.verticalAccuracy < maxVerticalAccurary ) {
+            if (coordinatesValid) {
+                if (positionSource.position.horizontalAccuracy < maxHorizontalAccurary ||
+                    positionSource.position.verticalAccuracy < maxVerticalAccurary) {
                     console.log("Position changed and better accuracy")
-                    if( positionSource.position.horizontalAccuracy < maxHorizontalAccurary )
+                    if (positionSource.position.horizontalAccuracy < maxHorizontalAccurary)
                     {
                         maxHorizontalAccurary = positionSource.position.horizontalAccuracy
                     }
-                    if( positionSource.position.verticalAccuracy < maxVerticalAccurary )
+                    if (positionSource.position.verticalAccuracy < maxVerticalAccurary)
                     {
                         maxVerticalAccurary = positionSource.position.verticalAccuracy
                     }
@@ -578,7 +578,7 @@ Page {
                     var latitude = positionSource.position.coordinate.latitude.toFixed(1)
                     var longitude = positionSource.position.coordinate.longitude.toFixed(1)
                     filterTf.text = latitude + ":" + longitude
-                    console.log("accuracy now: " + positionSource.accuracy )
+                    console.log("accuracy now: " + positionSource.accuracy)
                 }
             }
         }

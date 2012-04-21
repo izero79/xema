@@ -17,35 +17,35 @@ Page {
             iconSource: "toolbar-back"
             onClicked: {
                 console.log("pep sivu back clicked")
-                if( personEdited == true )
+                if (personEdited == true)
                 {
-                    if( addingNew == true )
+                    if (addingNew == true)
                     {
                         console.log("adding new")
-                        if( !mandatoryInfoExists() )
+                        if (!mandatoryInfoExists())
                         {
                             pageStack.pop()
                             return
                         }
                         var rows = personModel.rowCount()
-                        personModel.setData( rows, registeredChkBox.checked, 36 )
-                        personModel.setData( rows, firstName.text, 38 )
-                        personModel.setData( rows, lastName.text, 39 )
-                        if( defaultChkBox.checked == true || rows == 0 )
+                        personModel.setData(rows, registeredChkBox.checked, 36)
+                        personModel.setData(rows, firstName.text, 38)
+                        personModel.setData(rows, lastName.text, 39)
+                        if (defaultChkBox.checked == true || rows == 0)
                         {
-                            MyScript.checkAndSetDefaultPerson( rows )
+                            MyScript.checkAndSetDefaultPerson(rows)
                         }
                     }
                     else
                     {
-                        if( defaultChkBox.checked == true )
+                        if (defaultChkBox.checked == true)
                         {
-                            console.log("asetetaan defaultiksi: " + personModel.data( currentIndex, 35 ))
-                            MyScript.checkAndSetDefaultPerson( currentIndex )
+                            console.log("asetetaan defaultiksi: " + personModel.data(currentIndex, 35))
+                            MyScript.checkAndSetDefaultPerson(currentIndex)
                         }
-                        personModel.setData( currentIndex, registeredChkBox.checked, 36 )
-                        personModel.setData( currentIndex, firstName.text, 38 )
-                        personModel.setData( currentIndex, lastName.text, 39 )
+                        personModel.setData(currentIndex, registeredChkBox.checked, 36)
+                        personModel.setData(currentIndex, firstName.text, 38)
+                        personModel.setData(currentIndex, lastName.text, 39)
                     }
                 }
                 pageStack.pop()
@@ -55,8 +55,8 @@ Page {
             flat: true
             iconSource: "toolbar-delete"
             onClicked: {
-                console.log( "tee person delete jutut")
-                personModel.removeRow( currentIndex );
+                console.log("tee person delete jutut")
+                personModel.removeRow(currentIndex);
                 pageStack.pop()
             }
         }*/
@@ -67,7 +67,7 @@ Page {
     function mandatoryInfoExists()
     {
         var dataOk = false;
-        if( firstName.text.length > 0 )
+        if (firstName.text.length > 0)
         {
             dataOk = true;
         }
@@ -80,10 +80,10 @@ Page {
         addingNew = true
     }
 
-    function selectedIndex( index )
+    function selectedIndex(index)
     {
         currentIndex = index
-        console.log( "valittu: " + personModel.data( currentIndex, 35 ))
+        console.log("valittu: " + personModel.data(currentIndex, 35))
         personEdited = false
     }
 
@@ -95,7 +95,7 @@ Page {
 
         Text {
             id: editText
-            text: qsTr( "Edit person")
+            text: qsTr("Edit person")
             font.pixelSize: 20
             verticalAlignment: Text.AlignVCenter
             anchors.right: parent.right
@@ -111,8 +111,8 @@ Page {
             id: firstName
             width: 240
             height: 50
-            placeholderText: qsTr( "First name" )
-            text: personModel.data( currentIndex, 38 )
+            placeholderText: qsTr("First name")
+            text: personModel.data(currentIndex, 38)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: editText.bottom
@@ -126,8 +126,8 @@ Page {
             id: lastName
             width: 240
             height: 50
-            placeholderText: qsTr( "Last name" )
-            text: personModel.data( currentIndex, 39 )
+            placeholderText: qsTr("Last name")
+            text: personModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: firstName.bottom
@@ -139,8 +139,8 @@ Page {
 
         CheckBox {
             id: registeredChkBox
-            text: qsTr( "Registered")
-            checked: personModel.data( currentIndex, 36 )
+            text: qsTr("Registered")
+            checked: personModel.data(currentIndex, 36)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: lastName.bottom
@@ -152,8 +152,8 @@ Page {
 
         CheckBox {
             id: defaultChkBox
-            text: qsTr( "Default" )
-            checked: personModel.data( currentIndex, 37 ) || personModel.rowCount() == 0
+            text: qsTr("Default")
+            checked: personModel.data(currentIndex, 37) || personModel.rowCount() == 0
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: registeredChkBox.bottom

@@ -14,7 +14,7 @@ class AtlasIndexModel;
 class Settings;
 class ModelDataWriter;
 
-#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
+#if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
 #else
 class QMLWindow : public QDeclarativeView
@@ -25,8 +25,8 @@ public:
     explicit QMLWindow(QWidget *parent = 0);
     ~QMLWindow();
 
-#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
-    void resizeEvent( QResizeEvent *event );
+#if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
+    void resizeEvent(QResizeEvent *event);
 #endif
 
 signals:
@@ -43,25 +43,25 @@ signals:
 public slots:
     void orientationChanged();
     void init();
-    void setBirdModel( BirdModel *model );
-    void setPersonModel( PersonModel *model );
-    void setLocationModel( LocationModel *model );
-    void setStatusModel( StatusModel *model );
-    void setHistoryModel( HistoryModel *model );
-    void setHistoryDateModel( HistoryModel *model );
-    void setHistoryPlaceModel( HistoryModel *model );
-    void setAtlasModel( AtlasIndexModel *model );
+    void setBirdModel(BirdModel *model);
+    void setPersonModel(PersonModel *model);
+    void setLocationModel(LocationModel *model);
+    void setStatusModel(StatusModel *model);
+    void setHistoryModel(HistoryModel *model);
+    void setHistoryDateModel(HistoryModel *model);
+    void setHistoryPlaceModel(HistoryModel *model);
+    void setAtlasModel(AtlasIndexModel *model);
 
 private slots:
-    void writeNewObservation( const QString &data );
-    void loadObservation( const QString &id );
-    void deleteObservation( const QString &id, const QString &date, const QString &place );
-    void saveDetailLevel( int level );
-    void saveSystematicSorting( bool systematic );
-    void exportData( bool onlyNew );
+    void writeNewObservation(const QString &data);
+    void loadObservation(const QString &id);
+    void deleteObservation(const QString &id, const QString &date, const QString &place);
+    void saveDetailLevel(int level);
+    void saveSystematicSorting(bool systematic);
+    void exportData(bool onlyNew);
 
 private:
-#if defined( Q_OS_SYMBIAN ) && !defined( SYMBIAN3 )
+#if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     QDeclarativeView *mView;
 #endif
     QDeclarativeContext *mRootContext;

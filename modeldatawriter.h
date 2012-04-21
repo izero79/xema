@@ -16,14 +16,14 @@ class ModelDataWriter : public QObject
 public:
     explicit ModelDataWriter(QObject *parent = 0);
 
-    void writeNewObservation( const QString &data, const LocationModel &locations, const PersonModel &persons );
-    void replaceObservation( qlonglong id, const QString &data );
-    QString loadObservation( qlonglong id );
-    void deleteObservation( qlonglong id );
+    void writeNewObservation(const QString &data, const LocationModel &locations, const PersonModel &persons);
+    void replaceObservation(qlonglong id, const QString &data);
+    QString loadObservation(qlonglong id);
+    void deleteObservation(qlonglong id);
     void writePersonData(PersonModel *model);
     void writeLocationData(LocationModel *model);
     void writeBirdData(BirdModel *model);
-    void exportHistory( bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds );
+    void exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds);
 
     void removeCustomSpecies();
     void removeCustomLocations();
