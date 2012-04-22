@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "myjs.js" as MyScript
+import XemaEnums 1.0
 
 PageStackWindow {
     id: window

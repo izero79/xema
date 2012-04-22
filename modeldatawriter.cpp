@@ -31,17 +31,14 @@ void ModelDataWriter::writeNewObservation(const QString &data, const LocationMod
         return;
     }
     qlonglong newId = getNewId();
-//    qDebug() << "UUSI ID ON" << newId;
 
-//    qDebug() << "ALUNP PITAIS TALLENTAA" << data;
     QString newData = data;
     int pos = newData.indexOf("#");
     newData.remove(0, pos);
     QString newIdNum;
     newIdNum.setNum(newId);
     newData.prepend(newIdNum);
-//    newData = formatToTiira(newData, locations, persons);
-//    qDebug() << "NYT PITAIS TALLENTAA" << newData;
+
     bool headerExists = true;
     if (QFile::exists(dataFileDir() + "lokkitesti.txt") == false)
 //    if (QFile::exists(dataFileDir() + "xemadata.txt") == false)
@@ -340,7 +337,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
         }
         int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
-        int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * OBS_SUBFIELDCOUNT);
+        int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
         QString exported = obsLine.section('#', exportPos, exportPos);
 
 //        qDebug() << Q_FUNC_INFO << "EXPORTED" << exported;
@@ -591,8 +588,8 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     eka += "#";
 
     // include exported or not (24 vs 25)
-    QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*OBS_SUBFIELDCOUNT),
-                                 XemaEnums::OBS_WEATHER+((xemaRows-1)*OBS_SUBFIELDCOUNT));
+    QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
+                                 XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
     loppu.prepend("#");
     loppu.append("#");
 
@@ -609,7 +606,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
             eka += "\n";
             eka += data.section("#", 0, 0);
             eka += "#######################";
-            QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+(i*OBS_SUBFIELDCOUNT), XemaEnums::OBS_NEST+(i*OBS_SUBFIELDCOUNT));
+            QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_NEST+(i*XemaEnums::OBS_SUBFIELDCOUNT));
             rivi.replace("#koiras#", "#k#");
             rivi.replace("#naaras#", "#n#");
             eka += rivi;
@@ -689,22 +686,22 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
         }
     }
     readyLine.append("#");
-    readyLine += lines.at(0).section("#",2,5);
+    readyLine += lines.at(0).section("#", XemaEnums::TIIRA_DATE1, XemaEnums::TIIRA_TIME2);
     readyLine.append("#");
     QString town;
-    town += lines.at(0).section("#",6,6);
+    town += lines.at(0).section("#", XemaEnums::TIIRA_TOWN, XemaEnums::TIIRA_TOWN);
     QString place;
-    place += lines.at(0).section("#",7,7);
+    place += lines.at(0).section("#", XemaEnums::TIIRA_LOCATION, XemaEnums::TIIRA_LOCATION);
     readyLine += town;
     readyLine.append(", ");
     readyLine += place;
     readyLine.append("#");
 
-    readyLine += lines.at(0).section("#",15,16);
+    readyLine += lines.at(0).section("#", XemaEnums::TIIRA_INFO, XemaEnums::TIIRA_ATLAS);
     readyLine.append("#");
 
-    QString saver = lines.at(0).section("#",17,17);
-    QString observers = lines.at(0).section("#",19,19);
+    QString saver = lines.at(0).section("#", XemaEnums::TIIRA_SAVER, XemaEnums::TIIRA_SAVER);
+    QString observers = lines.at(0).section("#", XemaEnums::TIIRA_PERSONS, XemaEnums::TIIRA_PERSONS);
     observers.remove(saver);
     qDebug() << "OBS:" <<observers;
     QStringList observerList = observers.split(",");
@@ -776,7 +773,7 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
 
     // hidden
     readyLine.append("#");
-    if(QString::compare(lines.at(0).section("#",20,20),"X", Qt::CaseInsensitive)==0)
+    if(QString::compare(lines.at(0).section("#", XemaEnums::TIIRA_HIDDEN, XemaEnums::TIIRA_HIDDEN),"X", Qt::CaseInsensitive)==0)
     {
         readyLine.append("true#");
     }
@@ -788,11 +785,11 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
     readyLine += rowCount;
     readyLine.append("#");
 
-    QString weather = lines.at(0).section("#",34,34);
+    QString weather = lines.at(0).section("#",XemaEnums::TIIRA_INDIRECT); // WEATHER ON INDIRECTIN PAIKALLA
     for(int i = 0;i < lines.length();i++)
     {
         QString row;
-        row = lines.at(i).section("#",23,33);
+        row = lines.at(i).section("#", XemaEnums::TIIRA_BIRDCOUNT, XemaEnums::TIIRA_NEST);
         qDebug() << "alarivi" << row;
         readyLine += row.section("#",0,2);
         if (row.section("#",3,3) == "k")

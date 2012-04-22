@@ -128,7 +128,7 @@ function fillRegPersonBox()
     var j = 0;
     for(var i = 0; i < personModel.rowCount(); i++)
     {
-        if (personModel.data(i, 2) == true && personModel.data(i, 36) == true)
+        if (personModel.data(i, 2) == true)//&& personModel.data(i, 36) == true)
         {
             selectedNames[j] = personModel.data(i, 35)
             j++;

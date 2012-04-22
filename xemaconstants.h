@@ -10,7 +10,7 @@ static const QString filePath("c:/data/");
 static const QString filePath("C:/");
 #endif
 */
-static const int OBS_SUBFIELDCOUNT = 11;
+//static const int OBS_SUBFIELDCOUNT = 12;
 
 
 #endif // XEMACONSTANTS_H

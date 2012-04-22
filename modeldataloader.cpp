@@ -238,8 +238,8 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
             int count = 0;
             for(int i = 0; i < rowCount;i++)
             {
-                count += line.section('#', XemaEnums::OBS_BIRDCOUNT+(i*OBS_SUBFIELDCOUNT),
-                                      XemaEnums::OBS_BIRDCOUNT+(i*OBS_SUBFIELDCOUNT)).toInt();
+                count += line.section('#', XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT),
+                                      XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT)).toInt();
             }
             readCount.setNum(count);
         }

@@ -12,6 +12,7 @@ class XemaEnums : public QObject {
     Q_ENUMS(statusFields)
     Q_ENUMS(atlasIndexFields)
     Q_ENUMS(tiiraFields)
+public:
 
 public:
     enum birdFields {
@@ -76,41 +77,43 @@ public:
         TIIRA_DATE1,
         TIIRA_DATE2,
         TIIRA_TIME1,
-        TIIRA_TIME2,
+        TIIRA_TIME2, //5
         TIIRA_TOWN,
         TIIRA_LOCATION,
         TIIRA_XCOORD,
         TIIRA_YCOORD,
-        TIIRA_ACCURACY,
+        TIIRA_ACCURACY, // 10
         TIIRA_BIRD_XCOORD,
         TIIRA_BIRD_YCOORD,
         TIIRA_BIRD_ACCURACY,
         TIIRA_PAIKANNETTU,
-        TIIRA_INFO,
+        TIIRA_INFO, // 15
         TIIRA_ATLAS,
         TIIRA_SAVER,
         TIIRA_SAVETIME,
         TIIRA_PERSONS,
-        TIIRA_HIDDEN,
+        TIIRA_HIDDEN, // 20
         TIIRA_KOONTIHAVAINTO,
         TIIRA_KUULUUHAVAINTOON,
         TIIRA_BIRDCOUNT,
         TIIRA_BIRDTIME1,
-        TIIRA_BIRDTIME2,
+        TIIRA_BIRDTIME2, // 25
         TIIRA_SEX,
         TIIRA_DRESS,
         TIIRA_AGE,
         TIIRA_STATUS,
-        TIIRA_BIRDINFO,
+        TIIRA_BIRDINFO, // 30
         TIIRA_LOFT,
         TIIRA_BONGAUS,
         TIIRA_NEST,
-        TIIRA_INDIRECT
+        TIIRA_INDIRECT // 34
     };
 
     enum atlasIndexFields {
         ATLAS_VALUE
     };
+    static const int OBS_SUBFIELDCOUNT = 12;
+
 
 };
 

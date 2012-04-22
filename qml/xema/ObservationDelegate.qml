@@ -37,6 +37,7 @@ Item {
         allData += loftTf.text + delimiter
         allData += watchChkBox.checked + delimiter
         allData += nestChkBox.checked
+        allData += delimiter// uusi, epäsuora havainto
         console.log("delegate allData: " + allData)
         return allData;
     }

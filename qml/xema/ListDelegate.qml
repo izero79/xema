@@ -10,7 +10,7 @@ Component {
             {
                 return true
             }
-
+/*
             if (listView.showRegistered == registered)
             {
                 return true
@@ -18,7 +18,7 @@ Component {
             else
             {
                 return false
-            }
+            }*/
         }
         height: visible ? 60 : 0
         Rectangle {

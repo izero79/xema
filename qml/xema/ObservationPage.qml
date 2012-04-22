@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "myjs.js" as MyScript
+import XemaEnums 1.0
 
 Page {
 
@@ -39,7 +40,7 @@ Page {
         startDateTf.text = ""
         stopDateTf.text = ""
         regPeopleTa.text = ""
-        otherPeopleTa.text = ""
+//        otherPeopleTa.text = ""
         weatherTa.text = ""
 
         locationTf.text = ""
@@ -84,7 +85,7 @@ Page {
 
     function peopleChanged(name)
     {
-        otherPeopleTa.text = name
+//        otherPeopleTa.text = name
     }
 
     function readAllData()
@@ -111,17 +112,45 @@ Page {
         var delimiter = "#";
 
         allData += currentId + delimiter
-        allData += birdNameTf.text + delimiter
+        var bird_abbrev = findBirdAbbrev(birdNameTf.text)
+        allData += bird_abbrev + delimiter
         allData += startDateTf.text + delimiter
         allData += stopDateTf.text + delimiter
         allData += startTimeTf.text + delimiter
         allData += endTimeTf.text + delimiter
-        allData += locationTf.text + delimiter
+        // uusi, town
+        var location = locationTf.text
+        var town = location.substring(0, location.indexOf(", ") )
+        var place = location.substring(location.indexOf(", ")+2 )
+        allData += town + delimiter
+        allData += place + delimiter
+        // uusi, x-coord
+        allData += delimiter
+        // uusi, y-coord
+        allData += delimiter
+        // uusi, accuracy
+        allData += delimiter
+        // uusi, x-coord bird
+        allData += delimiter
+        // uusi, y-coord bird
+        allData += delimiter
+        // uusi, accuracy bird
+        allData += delimiter
+        // uusi, paikannettu
+        allData += delimiter
         allData += moreInfoTa.text + delimiter
         allData += atlasTf.text + delimiter
+        // uusi, saver
+        allData += delimiter
+        // uusi, save time
+        allData += delimiter
         allData += regPeopleTa.text + delimiter
-        allData += otherPeopleTa.text + delimiter
+//        allData += otherPeopleTa.text + delimiter // tama pois
         allData += hideChkBox.checked + delimiter
+        // uusi, koontihavainto
+        allData += delimiter
+        // uusi, kuuluu havaintoon
+        allData += delimiter
 
         var delegateData = MyScript.readDelegateDatas()
         if (delegateData == "-1")
@@ -150,26 +179,39 @@ Page {
         return allData;
     }
 
+    function findBirdAbbrev(name)
+    {
+        console.log("findBirdAbbrev(name)")
+        for(var i=0;i<birdModel.rowCount();i++) {
+            // TODO localized names
+            if(name === birdModel.data(i, 36)) {
+                return birdModel.data(i, 38)
+            }
+        }
+
+        return name
+    }
+
     function dataLoaded(data)
     {
         console.log("data loaded now: " + data)
         var fields;
         fields = data.split("#");
-        console.log("id: " +fields[0])
-        currentId = fields[0]
-        birdNameTf.text = fields[1]
-        startDateTf.text = fields[2]
-        stopDateTf.text = fields[3]
-        startTimeTf.text = fields[4]
-        endTimeTf.text = fields[5]
-        locationTf.text = fields[6]
-        moreInfoTa.text = fields[7]
-        atlasTf.text = fields[8]
-        regPeopleTa.text = fields[9]
-        otherPeopleTa.text = fields[10]
-        hideChkBox.checked = fields[11]
+        console.log("id: " +fields[XemaEnums.OBS_ID])
+        currentId = fields[XemaEnums.OBS_ID]
+        birdNameTf.text = fields[XemaEnums.OBS_SPECIES]
+        startDateTf.text = fields[XemaEnums.OBS_DATE1]
+        stopDateTf.text = fields[XemaEnums.OBS_DATE2]
+        startTimeTf.text = fields[XemaEnums.OBS_TIME1]
+        endTimeTf.text = fields[XemaEnums.OBS_TIME2]
+        locationTf.text = fields[XemaEnums.OBS_PLACE]
+        moreInfoTa.text = fields[XemaEnums.OBS_INFO]
+        atlasTf.text = fields[XemaEnums.OBS_ATLAS]
+        regPeopleTa.text = fields[XemaEnums.OBS_REGPERSON]
+//        otherPeopleTa.text = fields[XemaEnums.OBS_OTHERPERSON]
+        hideChkBox.checked = fields[XemaEnums.OBS_HIDDEN]
 
-        var rows = fields[12]
+        var rows = fields[XemaEnums.OBS_ROWCOUNT]
         console.log("rows: " + rows)
         var currentField = 0;
         while (rows > obsCount)
@@ -179,7 +221,7 @@ Page {
         for(var j = 0; j < rows; j++)
         {
             var rowData = ""
-            for(var k = 13+j*11; k < 24+j*11; k++)
+            for(var k = XemaEnums.OBS_BIRDCOUNT+j*12; k < XemaEnums.OBS_WEATHER+j*12; k++)
             {
                 rowData += fields[k] + "#"
                 currentField = k
@@ -234,7 +276,7 @@ Page {
             startDateTf.text = ""
             stopDateTf.text = ""
             regPeopleTa.text = ""
-            otherPeopleTa.text = ""
+//            otherPeopleTa.text = ""
             weatherTa.text = ""
         }
         MyScript.clearObsDataSelections()
@@ -580,7 +622,7 @@ Page {
                         onTextChanged: obsPage.edited = true
 
                     }
-
+/*
                     TextArea {
                         id: otherPeopleTa
                         height: 100
@@ -600,8 +642,8 @@ Page {
                             onClicked: window.showListPage("people", otherPeopleTa.text);
                         }
                         onTextChanged: obsPage.edited = true
-
                     }
+*/
                 }
                 Text {
                     id: text5

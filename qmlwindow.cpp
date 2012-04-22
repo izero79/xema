@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QDeclarativeContext>
+#include <QtDeclarative>
 #include <QDesktopWidget>
 #include <QObject>
 #include <QMainWindow>
@@ -18,6 +19,7 @@
 #include "historymodel.h"
 #include "atlasindexmodel.h"
 #include "settings.h"
+#include "xemaenums.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -63,6 +65,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mRootContext->setContextProperty("clockTime", "");
     mRootContext->setContextProperty("mainWidth", QApplication::desktop()->width());
     mRootContext->setContextProperty("mainHeight", QApplication::desktop()->height());
+
+    qmlRegisterType<XemaEnums>("XemaEnums", 1, 0, "XemaEnums");
 
 #ifdef SYMBIAN3
     setSource(QUrl("qrc:qml/xema/main.qml"));
