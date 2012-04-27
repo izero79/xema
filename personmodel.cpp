@@ -181,3 +181,10 @@ bool PersonModel::setData(const QModelIndex &index, const QVariant &value, int r
     QAbstractItemModel::dataChanged(index, index);
     return true;
 }
+
+void PersonModel::replaceItem(int row, const Person &item)
+{
+    items.replace(row, item);
+    QModelIndex idx = index(row, 0);
+    QAbstractItemModel::dataChanged(idx, idx);
+}

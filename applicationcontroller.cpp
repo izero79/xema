@@ -49,7 +49,7 @@ void ApplicationController::initObjects()
 {
     mQMLWin->init();
 
-    mModelLoader = new ModelDataLoader(this);
+    mModelLoader = ModelDataLoader::instance();
 
     mBirdModel = new BirdModel(this);
     mModelLoader->loadBirdData(mBirdModel);
@@ -92,7 +92,7 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(saveLocations()),this,SLOT(saveLocations()));
     connect(mQMLWin,SIGNAL(importData()),this,SLOT(importData()));
 
-    mModelWriter = new ModelDataWriter(this);
+    mModelWriter = ModelDataWriter::instance();
 }
 
 ApplicationController::~ApplicationController()

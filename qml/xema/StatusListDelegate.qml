@@ -20,7 +20,18 @@ Component {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: abbrev + " (" + name + ")"
+            text: {
+                if (currentLanguage == "en") {
+                    return abbrev + " (" + engname + ")"
+                }
+                if (currentLanguage == "sv") {
+                    return abbrev + " (" + swename + ")"
+                }
+                else {
+                    return abbrev + " (" + name + ")"
+                }
+
+            }
             color: "white"
         }
 

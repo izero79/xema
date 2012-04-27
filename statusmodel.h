@@ -14,8 +14,10 @@ public:
     enum Roles {
         FilterRole = Qt::UserRole + 1,
         IndexRole,
-        NameRole,
         AbbrevRole,
+        FinNameRole,
+        SweNameRole,
+        EngNameRole,
         SelectedRole = Qt::EditRole
     };
 

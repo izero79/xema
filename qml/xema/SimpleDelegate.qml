@@ -13,7 +13,18 @@ Component {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: name
+            text: {
+                if (currentLanguage == "en") {
+                    return engname
+                }
+                if (currentLanguage == "sv") {
+                    return swename
+                }
+                else {
+                    return name
+                }
+
+            }
             color: "white"
         }
 

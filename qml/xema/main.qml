@@ -11,6 +11,7 @@ PageStackWindow {
     property int defaultDetailLevel: 1
     property int currentDetailLevel: 1
     property bool unsavedData: false
+    property string currentLanguage: ""
 
     signal writeNew(string data)
     signal readObs(string id)
@@ -27,6 +28,8 @@ PageStackWindow {
     signal restoreObservers()
     signal saveLocations()
     signal importData()
+    signal exportOwnData()
+    signal importOwnData()
 
     function setSystematicSort(use)
     {
@@ -226,5 +229,6 @@ PageStackWindow {
 
     Component.onCompleted: {
         pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+        console.log("versionstring: " +versionString)
     }
 }

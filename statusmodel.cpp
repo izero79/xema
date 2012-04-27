@@ -7,7 +7,9 @@ StatusModel::StatusModel(QObject *parent) :
 {
     roles[FilterRole] = "filter";
     roles[IndexRole] = "realindex";
-    roles[NameRole] = "name";
+    roles[FinNameRole] = "name";
+    roles[SweNameRole] = "swename";
+    roles[EngNameRole] = "engname";
     roles[AbbrevRole] = "abbrev";
     roles[SelectedRole] = "selected";
     setRoleNames(roles);
@@ -43,9 +45,17 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const
     {
         return index.row();
     }
-    else if (role == NameRole)
+    else if (role == FinNameRole)
     {
         return item.name();
+    }
+    else if (role == SweNameRole)
+    {
+        return item.sweName();
+    }
+    else if (role == EngNameRole)
+    {
+        return item.engName();
     }
     else if (role == AbbrevRole)
     {

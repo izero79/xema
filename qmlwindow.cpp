@@ -16,6 +16,7 @@
 #include "personmodel.h"
 #include "statusmodel.h"
 #include "modeldatawriter.h"
+#include "modeldataloader.h"
 #include "historymodel.h"
 #include "atlasindexmodel.h"
 #include "settings.h"
@@ -42,7 +43,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mFilteredHistoryPlaceModel(0),
     mFilteredAtlasModel(0),
     mSettings(0),
-    mDataWriter(0)
+    mDataWriter(0),
+    mDataLoader(0)
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView = new QDeclarativeView(this);
@@ -142,10 +144,16 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
     connect(mRootObject,SIGNAL(saveLocations()),this,SIGNAL(saveLocations()));
     connect(mRootObject,SIGNAL(importData()),this,SIGNAL(importData()));
+    connect(mRootObject,SIGNAL(exportOwnData()),this,SLOT(exportOwnData()));
+    connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
 
+    QString locale = QLocale::system().name();
+    QString lang = "sv";//locale.section("_",0,0);
+    mRootObject->setProperty( "currentLanguage", lang );
 
     mSettings = new Settings(this);
-    mDataWriter = new ModelDataWriter(this);
+    mDataWriter = ModelDataWriter::instance();
+    mDataLoader = ModelDataLoader::instance();
 
     QMetaObject::invokeMethod(mRootObject, "setSystematicSort",
              Q_ARG(QVariant, mSettings->systematicSorting()));
@@ -157,12 +165,15 @@ void QMLWindow::setBirdModel(BirdModel *model)
 {
     mBirdModel = model;
     mFilteredBirdModel->setSourceModel(model);
+    mFilteredBirdModel->setDynamicSortFilter(true);
+
 }
 
 void QMLWindow::setPersonModel(PersonModel *model)
 {
     mPersonModel = model;
     mFilteredPersonModel->setSourceModel(model);
+    mFilteredBirdModel->setDynamicSortFilter(true);
 }
 
 void QMLWindow::setLocationModel(LocationModel *model)
@@ -209,13 +220,13 @@ void QMLWindow::setAtlasModel(AtlasIndexModel *model)
 
 void QMLWindow::writeNewObservation(const QString &data)
 {
-    mDataWriter->writeNewObservation(data, *mLocationModel, *mPersonModel);
+    mDataWriter->writeNewObservation(data);//, *mLocationModel, *mPersonModel);
 }
 
 void QMLWindow::loadObservation(const QString &id)
 {
     qlonglong idNum = id.toLongLong();
-    QString data = mDataWriter->loadObservation(idNum);
+    QString data = mDataLoader->loadObservation(idNum);
     QMetaObject::invokeMethod(mRootObject, "dataLoaded",
              Q_ARG(QVariant, data));
 }
@@ -241,4 +252,14 @@ void QMLWindow::saveSystematicSorting(bool systematic)
 void QMLWindow::exportData(bool onlyNew)
 {
     mDataWriter->exportHistory(onlyNew,mLocationModel,mPersonModel,mBirdModel);
+}
+
+void QMLWindow::exportOwnData()
+{
+    mDataWriter->exportOwnData(mLocationModel,mPersonModel,mBirdModel);
+}
+
+void QMLWindow::importOwnData()
+{
+    mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel);
 }

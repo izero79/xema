@@ -145,6 +145,7 @@ Page {
         // uusi, save time
         allData += delimiter
         allData += regPeopleTa.text + delimiter
+        allData += delimiter // paikka other peoplelle, ei kaytossa nyt
 //        allData += otherPeopleTa.text + delimiter // tama pois
         allData += hideChkBox.checked + delimiter
         // uusi, koontihavainto
@@ -204,7 +205,7 @@ Page {
         stopDateTf.text = fields[XemaEnums.OBS_DATE2]
         startTimeTf.text = fields[XemaEnums.OBS_TIME1]
         endTimeTf.text = fields[XemaEnums.OBS_TIME2]
-        locationTf.text = fields[XemaEnums.OBS_PLACE]
+        locationTf.text = fields[XemaEnums.OBS_TOWN] + ", " + fields[XemaEnums.OBS_LOCATION]
         moreInfoTa.text = fields[XemaEnums.OBS_INFO]
         atlasTf.text = fields[XemaEnums.OBS_ATLAS]
         regPeopleTa.text = fields[XemaEnums.OBS_REGPERSON]

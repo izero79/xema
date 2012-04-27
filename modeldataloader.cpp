@@ -19,13 +19,23 @@
 #include "xemaenums.h"
 #include "xemaconstants.h"
 
+ModelDataLoader* ModelDataLoader::mDataLoader = 0;
+ModelDataLoader* ModelDataLoader::instance() {
+    if (!mDataLoader) {
+        mDataLoader = new ModelDataLoader();
+    }
+    return mDataLoader;
+}
+
 ModelDataLoader::ModelDataLoader(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    mBirdModel(0)
 {
 }
 
 void ModelDataLoader::loadBirdData(BirdModel *model)
 {
+    mBirdModel = model;
     if (QFile::exists(dataFileDir() + "lokkitestibirds.txt"))
     {
         QFile oldFile(dataFileDir() + "lokkitestibirds.txt");
@@ -137,12 +147,14 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
     }
     while (striimi.atEnd() == false)
     {
-        QString birdLine;
-        birdLine = striimi.readLine();
-        if (birdLine.isEmpty() == false)
+        QString readLine;
+        readLine = striimi.readLine();
+        if (readLine.isEmpty() == false)
         {
-            Status status(birdLine.section(';', XemaEnums::STATUS_NAME, XemaEnums::STATUS_NAME),
-                          birdLine.section(';', XemaEnums::STATUS_ABBREV, XemaEnums::STATUS_ABBREV));
+            Status status(readLine.section(';', XemaEnums::STATUS_FINNAME, XemaEnums::STATUS_FINNAME),
+                          readLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV),
+                          readLine.section(';', XemaEnums::STATUS_SWENAME, XemaEnums::STATUS_SWENAME),
+                          readLine.section(';', XemaEnums::STATUS_ENGNAME, XemaEnums::STATUS_ENGNAME));
             model->addItem(status);
         }
     }
@@ -150,8 +162,7 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
 
 void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)
 {
-//    QFile tiedosto(dataFileDir() + "xemadata.txt");
-    QFile tiedosto(dataFileDir() + "lokkitesti.txt");
+    QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if (striimi.atEnd() == false)
@@ -162,7 +173,8 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
     {
         QString line;
         line = striimi.readLine();
-        QString readPlace = line.section('#', XemaEnums::OBS_PLACE, XemaEnums::OBS_PLACE);
+        QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
+        readPlace.replace("#", ", ");
         QString readDate = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
         QString readTime = line.section('#', XemaEnums::OBS_TIME1, XemaEnums::OBS_TIME1);
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
@@ -177,7 +189,7 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
             int count = 0;
             for(int i = 0; i < rowCount;i++)
             {
-                count += line.section('#', XemaEnums::OBS_BIRDCOUNT+(i*11),XemaEnums::OBS_BIRDCOUNT+(i*11)).toInt();
+                count += line.section('#', XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT),XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT)).toInt();
             }
             readCount.setNum(count);
         }
@@ -186,10 +198,11 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
         if (date.isEmpty() == true && place.isEmpty() == true)
         {
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
-                             line.section('#', XemaEnums::OBS_PLACE, XemaEnums::OBS_PLACE),
+                             readPlace,
                              line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
-            item.setSpecies(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
-            item.addSpeciesCount(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES), readCount.toInt());
+            QString bird = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+            item.setSpecies(bird);
+            item.addSpeciesCount(bird, readCount.toInt());
             item.setTime(readTime);
 
             model->addItemAtBeginning(item);
@@ -198,9 +211,10 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
         if (date.isEmpty() == false && date == readDate && place.isEmpty() == false && place == readPlace)
         {
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
-                             line.section('#', XemaEnums::OBS_PLACE, XemaEnums::OBS_PLACE), line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
-            item.setSpecies(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
-            item.addSpeciesCount(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES), readCount.toInt());
+                             readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
+            QString bird = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+            item.setSpecies(bird);
+            item.addSpeciesCount(bird, readCount.toInt());
             item.setTime(readTime);
             model->addItemAtBeginning(item);
             continue;
@@ -211,8 +225,7 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
 
 void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 {
-    //    QFile tiedosto(dataFileDir() + "xemadata.txt");
-        QFile tiedosto(dataFileDir() + "lokkitesti.txt");
+    QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if (striimi.atEnd() == false)
@@ -225,7 +238,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
         line = striimi.readLine();
         QString date = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
         QString readTime = line.section('#', XemaEnums::OBS_TIME1, XemaEnums::OBS_TIME1);
-        QString species = line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES);
+        QString species = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << "Riveja" << rowCount;
         QString readCount = 0;
@@ -264,8 +277,12 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
         }
         if (sameDateFound == false)
         {
-            HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(), line.section('#', XemaEnums::OBS_PLACE, XemaEnums::OBS_PLACE), line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
-            item.setSpecies(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+            QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
+            readPlace.replace("#", ", ");
+
+            HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
+                             readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
+            item.setSpecies(species);
             item.addSpeciesCount(species, readCount.toInt());
             item.setTime(readTime);
 
@@ -276,8 +293,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 
 void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &date)
 {
-    //    QFile tiedosto(dataFileDir() + "xemadata.txt");
-        QFile tiedosto(dataFileDir() + "lokkitesti.txt");
+    QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if (striimi.atEnd() == false)
@@ -289,8 +305,9 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
         QString line;
         line = striimi.readLine();
         QString readDate = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
-        QString place = line.section('#', XemaEnums::OBS_PLACE, XemaEnums::OBS_PLACE);
-        QString species = line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES);
+        QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
+        readPlace.replace("#", ", ");
+        QString species = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
 
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << "Riveja" << rowCount;
@@ -304,7 +321,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
             int count = 0;
             for(int i = 0; i < rowCount;i++)
             {
-                count += line.section('#', XemaEnums::OBS_BIRDCOUNT+(i*11),XemaEnums::OBS_BIRDCOUNT+(i*11)).toInt();
+                count += line.section('#', XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT),XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT)).toInt();
             }
             readCount.setNum(count);
         }
@@ -329,7 +346,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
 //                qDebug() << "eri date  " <<  model->getItem(i).date() << "vs" << readDate;
                 continue;
             }
-            if (sameDateFound && model->getItem(i).place() == place)
+            if (sameDateFound && model->getItem(i).place() == readPlace)
             {
 //                qDebug() << "kohdassa" << i << "sama place ja date" << readDate << place;
                 HistoryItem tmp = model->getItem(i);
@@ -348,9 +365,9 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
             {
 //                qDebug() << "adding with date" << readDate << place;
                 HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
-                                 line.section('#', XemaEnums::OBS_PLACE, XemaEnums::OBS_PLACE),
+                                 readPlace,
                                  line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
-                item.setSpecies(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+                item.setSpecies(species);
                 item.addSpeciesCount(species, readCount.toInt());
                 model->addItemAtBeginning(item);
             }
@@ -359,9 +376,9 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
         else if (samePlaceFound == false)
         {
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
-                             line.section('#', XemaEnums::OBS_PLACE, XemaEnums::OBS_PLACE),
+                             readPlace,
                              line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
-            item.setSpecies(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+            item.setSpecies(species);
             item.addSpeciesCount(species, readCount.toInt());
             model->addItemAtBeginning(item);
         }
@@ -403,4 +420,50 @@ QString ModelDataLoader::dataFileDir()
 
 #endif
     return appPath;
+}
+
+QString ModelDataLoader::readBird(const QString &bird) {
+    if (!mBirdModel) {
+        return bird;
+    }
+    for (int i = 0; i < mBirdModel->rowCount(); i++) {
+        if (QString::compare(bird,mBirdModel->getItem(i).abbreviation(),Qt::CaseInsensitive)==0) {
+            // TODO select correct name based on language
+            return mBirdModel->getItem(i).finName();
+        }
+    }
+    return bird;
+}
+
+QString ModelDataLoader::loadObservation(qlonglong id)
+{
+//    qDebug() << "LUETAAN" << id;
+    if (QFile::exists(dataFileDir() + "xemadata.txt") == false)
+    {
+        return QString();
+    }
+    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    QString obsLine;
+    while (striimi.atEnd() == false)
+    {
+        obsLine = striimi.readLine();
+        if (obsLine.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong() == id)
+        {
+            break;
+        }
+    }
+    tiedosto.close();
+    QString lineId = obsLine.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID);
+    if (lineId == "Id" || lineId.isEmpty() == true)
+    {
+        return QString();
+    }
+    QString newLine = obsLine.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID);
+    newLine.append("#");
+    newLine.append(readBird(obsLine.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES)));
+    newLine.append("#");
+    newLine.append(obsLine.section('#', XemaEnums::OBS_DATE1));
+    return newLine;
 }

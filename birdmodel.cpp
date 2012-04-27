@@ -208,3 +208,10 @@ bool BirdModel::setData(const QModelIndex &index, const QVariant &value, int rol
     QAbstractItemModel::dataChanged(index, index);
     return true;
 }
+
+void BirdModel::replaceItem(int row, const Bird &item)
+{
+    items.replace(row, item);
+    QModelIndex idx = index(row, 0);
+    QAbstractItemModel::dataChanged(idx, idx);
+}

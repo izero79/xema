@@ -34,6 +34,7 @@ public slots:
     Q_INVOKABLE     bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex());
     Q_INVOKABLE     Person getItem(int index) const;
     Q_INVOKABLE     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    Q_INVOKABLE     void replaceItem(int row, const Person &item);
 
                     void setContent(const QList<Person> &newItems);
                     QList<Person> content() const;

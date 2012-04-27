@@ -39,36 +39,51 @@ public:
         PERSON_DEFAULT
     };
     enum statusFields {
-        STATUS_NAME = 0,
-        STATUS_ABBREV
+        STATUS_FINABBREV = 0,
+        STATUS_FINNAME,
+        STATUS_SWENAME,
+        STATUS_ENGNAME
     };
     enum observationFields {
         OBS_ID = 0,
-        OBS_SPECIES = 1,
-        OBS_DATE1 = 2,
-        OBS_DATE2 = 3,
-        OBS_TIME1 = 4,
-        OBS_TIME2 = 5,
-        OBS_PLACE = 6,
-        OBS_INFO = 7,
-        OBS_ATLAS = 8,
-        OBS_REGPERSON = 9,
-        OBS_OTHERPERSON = 10,
-        OBS_HIDDEN = 11,
-        OBS_ROWCOUNT = 12,
-        OBS_BIRDCOUNT = 13,
-        OBS_BIRDTIME1 = 14,
-        OBS_BIRDTIME2 = 15,
-        OBS_SEX = 16,
-        OBS_DRESS = 17,
-        OBS_AGE = 18,
-        OBS_STATUS = 19,
-        OBS_BIRDINFO = 20,
-        OBS_LOFT = 21,
-        OBS_BONGAUS = 22,
-        OBS_NEST = 23,
-        OBS_WEATHER = 24,
-        OBS_EXPORTED = 25
+        OBS_SPECIES,
+        OBS_DATE1,
+        OBS_DATE2,
+        OBS_TIME1,
+        OBS_TIME2, // 5
+        OBS_TOWN,
+        OBS_LOCATION,
+        OBS_XCOORD,
+        OBS_YCOORD,
+        OBS_ACCURACY, // 10
+        OBS_BIRD_XCOORD,
+        OBS_BIRD_YCOORD,
+        OBS_BIRD_ACCURACY,
+        OBS_PAIKANNETTU,
+        OBS_INFO, // 15
+        OBS_ATLAS,
+        OBS_SAVER,
+        OBS_SAVETIME,
+        OBS_REGPERSON,
+        OBS_OTHERPERSON, // 20
+        OBS_HIDDEN,
+        OBS_KOONTIHAVAINTO,
+        OBS_KUULUUHAVAINTOON,
+        OBS_ROWCOUNT,
+        OBS_BIRDCOUNT, // 25
+        OBS_BIRDTIME1,
+        OBS_BIRDTIME2,
+        OBS_SEX,
+        OBS_DRESS,
+        OBS_AGE, // 30
+        OBS_STATUS,
+        OBS_BIRDINFO,
+        OBS_LOFT,
+        OBS_BONGAUS,
+        OBS_NEST, // 35
+        OBS_INDIRECT,
+        OBS_WEATHER,
+        OBS_EXPORTED // 38
     };
 
     enum tiiraFields {
@@ -80,8 +95,8 @@ public:
         TIIRA_TIME2, //5
         TIIRA_TOWN,
         TIIRA_LOCATION,
-        TIIRA_XCOORD,
         TIIRA_YCOORD,
+        TIIRA_XCOORD,
         TIIRA_ACCURACY, // 10
         TIIRA_BIRD_XCOORD,
         TIIRA_BIRD_YCOORD,
@@ -106,7 +121,8 @@ public:
         TIIRA_LOFT,
         TIIRA_BONGAUS,
         TIIRA_NEST,
-        TIIRA_INDIRECT // 34
+        TIIRA_INDIRECT, // 34
+        TIIRA_EXTRA1 // 35 weather
     };
 
     enum atlasIndexFields {

@@ -5,7 +5,7 @@ Component {
     Item {
         id: myTestDelegate
         width: parent.width
-        visible: {
+        visible: true /*{
             if (listView.editMode == true)
             {
                 return true
@@ -18,8 +18,8 @@ Component {
             else
             {
                 return false
-            }*/
-        }
+            }
+        }*/
         height: visible ? 60 : 0
         Rectangle {
             id: background

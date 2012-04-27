@@ -14,7 +14,7 @@ class ModelDataLoader : public QObject
 {
     Q_OBJECT
 public:
-    explicit ModelDataLoader(QObject *parent = 0);
+    static ModelDataLoader* instance();
 
     void loadBirdData(BirdModel *model);
     void loadPersonData(PersonModel *model);
@@ -24,12 +24,19 @@ public:
     void loadHistoryData(HistoryModel *model, const QString &date = QString(), const QString &place = QString());
     void loadHistoryDateData(HistoryModel *model);
     void loadHistoryPlaceData(HistoryModel *model, const QString &date = QString());
+    QString loadObservation(qlonglong id);
 signals:
 
 public slots:
 
 private:
+    explicit ModelDataLoader(QObject *parent = 0);
+
     QString dataFileDir();
+    QString readBird(const QString &bird);
+    BirdModel *mBirdModel;
+    static ModelDataLoader *mDataLoader;
+
 
 };
 

@@ -234,6 +234,39 @@ Page {
         }
 
         Text {
+            id: backupText
+            text: qsTr("Export/Import own lists")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: editBird.bottom
+            anchors.topMargin: 30
+            color: "#ffffff"
+        }
+        Button {
+            id: backupButton
+            anchors.top: backupText.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr("Export")
+            onClicked: window.exportOwnData()
+        }
+        Button {
+            id: restoreButton
+            anchors.top: backupButton.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr("Import")
+            onClicked: window.importOwnData()
+        }
+
+        Text {
             id: restoreText
             text: qsTr("Restore default lists")
             font.pixelSize: 20
@@ -243,7 +276,7 @@ Page {
             anchors.rightMargin: 0
             anchors.left: parent.left
             horizontalAlignment: Text.AlignLeft
-            anchors.top: editBird.bottom
+            anchors.top: restoreButton.bottom
             anchors.topMargin: 30
             color: "#ffffff"
         }

@@ -171,3 +171,10 @@ bool LocationModel::setData(const QModelIndex &index, const QVariant &value, int
     QAbstractItemModel::dataChanged(index, index);
     return true;
 }
+
+void LocationModel::replaceItem(int row, const Location &item)
+{
+    items.replace(row, item);
+    QModelIndex idx = index(row, 0);
+    QAbstractItemModel::dataChanged(idx, idx);
+}

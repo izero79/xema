@@ -13,6 +13,7 @@ class HistoryModel;
 class AtlasIndexModel;
 class Settings;
 class ModelDataWriter;
+class ModelDataLoader;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -59,6 +60,8 @@ private slots:
     void saveDetailLevel(int level);
     void saveSystematicSorting(bool systematic);
     void exportData(bool onlyNew);
+    void exportOwnData();
+    void importOwnData();
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -79,6 +82,7 @@ private:
     FilterModel *mFilteredAtlasModel;
     Settings *mSettings;
     ModelDataWriter *mDataWriter;
+    ModelDataLoader *mDataLoader;
 };
 
 #endif // QMLWINDOW_H
