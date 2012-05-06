@@ -1,21 +1,59 @@
-#include "atlasindex.h"
+#include "atlasIndex.h"
 
-AtlasIndex::AtlasIndex() :
-    mIndex(0)
-{
+AtlasIndex::AtlasIndex() {
 }
 
-AtlasIndex::AtlasIndex(int value) :
-    mIndex(value)
+AtlasIndex::AtlasIndex(const QString &value, const QString &finname, const QString &swename, const QString &engname) :
+    mValue(value),
+    mFinName(finname),
+    mSweName(swename),
+    mEngName(engname)
 {
+
 }
 
-void AtlasIndex::setIndex(int value)
+void AtlasIndex::setFinName(const QString &name)
 {
-    mIndex = value;
+    mFinName = name;
 }
 
-int AtlasIndex::index() const
+void AtlasIndex::setSweName(const QString &name)
 {
-    return mIndex;
+    mSweName = name;
+}
+
+void AtlasIndex::setEngName(const QString &name)
+{
+    mEngName = name;
+}
+
+void AtlasIndex::setValue(const QString &value)
+{
+    mValue = value;
+}
+
+QString AtlasIndex::finName() const
+{
+    return mFinName;
+}
+
+QString AtlasIndex::sweName() const
+{
+    if (mSweName.isEmpty()) {
+        return mFinName;
+    }
+    return mSweName;
+}
+
+QString AtlasIndex::engName() const
+{
+    if (mEngName.isEmpty()) {
+        return mFinName;
+    }
+    return mEngName;
+}
+
+QString AtlasIndex::value() const
+{
+    return mValue;
 }

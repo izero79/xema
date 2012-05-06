@@ -8,5 +8,8 @@
         <file>xema_en.qm</file>
         <file>xema_fi.qm</file>
         <file>xema_sv.qm</file>
+        <file>ages.csv</file>
+        <file>dresses.csv</file>
+        <file>sexes.csv</file>
     </qresource>
 </RCC>

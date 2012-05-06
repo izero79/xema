@@ -6,7 +6,10 @@ AtlasIndexModel::AtlasIndexModel(QObject *parent) :
 {
     roles[FilterRole] = "filter";
     roles[IndexRole] = "realindex";
-    roles[ValueRole] = "name";
+    roles[ValueRole] = "value";
+    roles[FinNameRole] = "finname";
+    roles[EngNameRole] = "engname";
+    roles[SweNameRole] = "swename";
     setRoleNames(roles);
 }
 
@@ -34,19 +37,27 @@ QVariant AtlasIndexModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.index());
+        return item.value();
     }
     else if (role == IndexRole)
     {
         return index.row();
     }
+    else if (role == FinNameRole)
+    {
+        return item.finName();
+    }
+    else if (role == SweNameRole)
+    {
+        return item.sweName();
+    }
+    else if (role == EngNameRole)
+    {
+        return item.engName();
+    }
     else if (role == ValueRole)
     {
-        if (item.index() == 0)
-        {
-            return "";
-        }
-        return item.index();
+        return item.value();
     }
     return QVariant();
 }
@@ -89,7 +100,7 @@ void AtlasIndexModel::addItem(const AtlasIndex &item)
     QAbstractItemModel::endInsertRows();
 }
 
-AtlasIndex AtlasIndexModel::getItem(int row)
+AtlasIndex AtlasIndexModel::getItem(int row) const
 {
     if (row < 0 || row >= items.count())
     {
@@ -128,7 +139,7 @@ bool AtlasIndexModel::setData(const QModelIndex &index, const QVariant &value, i
     switch(role)
     {
     case ValueRole:
-        tmp.setIndex(value.toInt());
+        tmp.setValue(value.toString());
         break;
     default:
         break;

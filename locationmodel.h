@@ -19,7 +19,11 @@ public:
         PlaceRole,
         CoordinateRole,
         YkjCoordinateRole,
-        WgsCoordinateRole // 39
+        WgsCoordinateRole, // 39
+        SweTownRole,
+        SwePlaceRole,
+        EngTownRole,
+        EngPlaceRole // 43
     };
 
 signals:

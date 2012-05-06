@@ -1,10 +1,7 @@
 #include "location.h"
+#include <QDebug>
 
-Location::Location() :
-    mTown(),
-    mPlace(),
-    mYKJCoordinate(),
-    mWGSCoordinate()
+Location::Location()
 {
 }
 
@@ -27,6 +24,26 @@ void Location::setPlace(const QString &name)
     mPlace = name;
 }
 
+void Location::setEngTown(const QString &name)
+{
+    mEngTown = name;
+}
+
+void Location::setEngPlace(const QString &name)
+{
+    mEngPlace = name;
+}
+
+void Location::setSweTown(const QString &name)
+{
+    mSweTown = name;
+}
+
+void Location::setSwePlace(const QString &name)
+{
+    mSwePlace = name;
+}
+
 void Location::setYKJCoordinate(const QString &ykj)
 {
     mYKJCoordinate = ykj;
@@ -44,6 +61,50 @@ QString Location::town() const
 
 QString Location::place() const
 {
+    return mPlace;
+}
+
+QString Location::engTown(bool allowEmpty) const
+{
+    if (mEngTown.isEmpty() == false) {
+        return mEngTown;
+    }
+    else if (allowEmpty) {
+        return mEngTown;
+    }
+    return mTown;
+}
+
+QString Location::engPlace(bool allowEmpty) const
+{
+    if (mEngPlace.isEmpty() == false) {
+        return mEngPlace;
+    }
+    else if (allowEmpty) {
+        return mEngPlace;
+    }
+    return mPlace;
+}
+
+QString Location::sweTown(bool allowEmpty) const
+{
+    if (mSweTown.isEmpty() == false) {
+        return mSweTown;
+    }
+    else if (allowEmpty) {
+        return mSweTown;
+    }
+    return mTown;
+}
+
+QString Location::swePlace(bool allowEmpty) const
+{
+    if (mSwePlace.isEmpty() == false) {
+        return mSwePlace;
+    }
+    else if (allowEmpty) {
+        return mSwePlace;
+    }
     return mPlace;
 }
 

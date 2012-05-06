@@ -18,19 +18,25 @@ public:
     enum birdFields {
         BIRD_ID = 0,
         BIRD_FIN_GROUP,
-        BIRD_SWE_GROUP,
+        BIRD_ENG_GROUP,
         BIRD_LATIN_GROUP,
         BIRD_FIN_NAME,
         BIRD_SWE_NAME,
         BIRD_LATIN_NAME,
         BIRD_ABBREV,
-        BIRD_CATEGORY
+        BIRD_CATEGORY,
+        BIRD_ENG_NAME,
+        BIRD_SWE_GROUP
     };
     enum locationFields {
         LOCATION_TOWN = 0,
         LOCATION_PLACE,
         LOCATION_WGS,
-        LOCATION_YKJ
+        LOCATION_YKJ,
+        LOCATION_SWETOWN,
+        LOCATION_SWEPLACE,
+        LOCATION_ENGTOWN,
+        LOCATION_ENGPLACE
     };
     enum personFields {
         PERSON_FIRSTNAME = 0,
@@ -126,8 +132,32 @@ public:
     };
 
     enum atlasIndexFields {
-        ATLAS_VALUE
+        ATLAS_VALUE = 0,
+        ATLAS_FIN,
+        ATLAS_SWE,
+        ATLAS_ENG
     };
+
+    enum sexFields {
+        SEX_FIN = 0,
+        SEX_SWE,
+        SEX_ENG
+    };
+
+    enum dressFields {
+        DRESS_VALUE = 0,
+        DRESS_FIN,
+        DRESS_SWE,
+        DRESS_ENG
+    };
+
+    enum ageFields {
+        AGE_VALUE = 0,
+        AGE_FIN,
+        AGE_SWE,
+        AGE_ENG
+    };
+
     static const int OBS_SUBFIELDCOUNT = 12;
 
 

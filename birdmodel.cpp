@@ -15,6 +15,8 @@ BirdModel::BirdModel(QObject *parent) :
     roles[SweGroupRole] = "swegroup";
     roles[LatinGroupRole] = "latingroup";
     roles[CategoryRole] = "category";
+    roles[EngNameRole] = "engname";
+    roles[EngGroupRole] = "enggroup";
     setRoleNames(roles);
 }
 
@@ -44,6 +46,7 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     {
         return QString(item.finName() + ", " +
                         item.sweName() + ", " +
+                        item.engName() + ", " +
                         item.latinName() + ", " +
                         item.abbreviation() + ", ");
     }
@@ -63,6 +66,10 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     {
         return item.sweName();
     }
+    else if (role == EngNameRole)
+    {
+        return item.engName();
+    }
     else if (role == AbbrevRole)
     {
         return item.abbreviation();
@@ -78,6 +85,10 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     else if (role == SweGroupRole)
     {
         return item.sweGroup();
+    }
+    else if (role == EngGroupRole)
+    {
+        return item.engGroup();
     }
     else if (role == LatinGroupRole)
     {

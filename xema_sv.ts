@@ -174,58 +174,58 @@
 <context>
     <name>ObservationDelegate</name>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="73"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="111"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="88"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="126"/>
         <source>Sex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="106"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="144"/>
         <source>Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="126"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="164"/>
         <source>Dress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="144"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="182"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="166"/>
-        <location filename="qml/xema/ObservationDelegate.qml" line="209"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="204"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="247"/>
         <source>0:00</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="190"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="228"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="241"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="279"/>
         <source>Loft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="263"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="301"/>
         <source>Bird-watch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="275"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="313"/>
         <source>Nesting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="292"/>
+        <location filename="qml/xema/ObservationDelegate.qml" line="330"/>
         <source>More information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -233,134 +233,134 @@
 <context>
     <name>ObservationPage</name>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="96"/>
+        <location filename="qml/xema/ObservationPage.qml" line="113"/>
         <source>Start date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="100"/>
-        <location filename="qml/xema/ObservationPage.qml" line="992"/>
+        <location filename="qml/xema/ObservationPage.qml" line="117"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1133"/>
         <source>Species</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="104"/>
+        <location filename="qml/xema/ObservationPage.qml" line="121"/>
         <source>Observer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="108"/>
-        <location filename="qml/xema/ObservationPage.qml" line="751"/>
-        <location filename="qml/xema/ObservationPage.qml" line="776"/>
+        <location filename="qml/xema/ObservationPage.qml" line="125"/>
+        <location filename="qml/xema/ObservationPage.qml" line="892"/>
+        <location filename="qml/xema/ObservationPage.qml" line="917"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="159"/>
+        <location filename="qml/xema/ObservationPage.qml" line="177"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="317"/>
+        <location filename="qml/xema/ObservationPage.qml" line="458"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="331"/>
+        <location filename="qml/xema/ObservationPage.qml" line="472"/>
         <source>Mandatory information missing:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="353"/>
-        <location filename="qml/xema/ObservationPage.qml" line="399"/>
+        <location filename="qml/xema/ObservationPage.qml" line="494"/>
+        <location filename="qml/xema/ObservationPage.qml" line="540"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="373"/>
+        <location filename="qml/xema/ObservationPage.qml" line="514"/>
         <source>GPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="387"/>
+        <location filename="qml/xema/ObservationPage.qml" line="528"/>
         <source>Fetching GPS-coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="411"/>
+        <location filename="qml/xema/ObservationPage.qml" line="552"/>
         <source>Day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="412"/>
+        <location filename="qml/xema/ObservationPage.qml" line="553"/>
         <source>Place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="413"/>
-        <location filename="qml/xema/ObservationPage.qml" line="968"/>
+        <location filename="qml/xema/ObservationPage.qml" line="554"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1109"/>
         <source>Observation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="493"/>
+        <location filename="qml/xema/ObservationPage.qml" line="634"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="540"/>
-        <location filename="qml/xema/ObservationPage.qml" line="847"/>
+        <location filename="qml/xema/ObservationPage.qml" line="681"/>
+        <location filename="qml/xema/ObservationPage.qml" line="988"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="586"/>
+        <location filename="qml/xema/ObservationPage.qml" line="727"/>
         <source>Observers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="610"/>
+        <location filename="qml/xema/ObservationPage.qml" line="751"/>
         <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="652"/>
-        <location filename="qml/xema/ObservationPage.qml" line="681"/>
+        <location filename="qml/xema/ObservationPage.qml" line="793"/>
+        <location filename="qml/xema/ObservationPage.qml" line="822"/>
         <source>Weather</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="795"/>
+        <location filename="qml/xema/ObservationPage.qml" line="936"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1023"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1164"/>
         <source>Add row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1034"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1175"/>
         <source>Remove row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1049"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1190"/>
         <source>Additional information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1077"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1218"/>
         <source>More information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1093"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1234"/>
         <source>Atlas index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1118"/>
+        <location filename="qml/xema/ObservationPage.qml" line="1259"/>
         <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>

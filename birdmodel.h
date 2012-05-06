@@ -23,7 +23,9 @@ public:
         FinGroupRole, // 40
         SweGroupRole,
         LatinGroupRole,
-        CategoryRole // 43
+        CategoryRole, // 43
+        EngNameRole,
+        EngGroupRole
     };
 
 signals:

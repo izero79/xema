@@ -18,6 +18,10 @@
 #include "atlasindexmodel.h"
 #include "xemaenums.h"
 #include "xemaconstants.h"
+#include "dressmodel.h"
+#include "agemodel.h"
+#include "sexmodel.h"
+#include <QLocale>
 
 ModelDataLoader* ModelDataLoader::mDataLoader = 0;
 ModelDataLoader* ModelDataLoader::instance() {
@@ -29,7 +33,8 @@ ModelDataLoader* ModelDataLoader::instance() {
 
 ModelDataLoader::ModelDataLoader(QObject *parent) :
     QObject(parent),
-    mBirdModel(0)
+    mBirdModel(0),
+    mLocationModel(0)
 {
 }
 
@@ -65,12 +70,16 @@ void ModelDataLoader::loadBirdData(BirdModel *model)
                    birdLine.section(';', XemaEnums::BIRD_ABBREV, XemaEnums::BIRD_ABBREV),
                    birdLine.section(';', XemaEnums::BIRD_LATIN_NAME, XemaEnums::BIRD_LATIN_NAME),
                    birdLine.section(';', XemaEnums::BIRD_CATEGORY, XemaEnums::BIRD_CATEGORY));
+        // TODO LOC
+        bird.setEngName(birdLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
+        bird.setEngGroup(birdLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
         model->addItem(bird);
     }
 }
 
 void ModelDataLoader::loadLocationData(LocationModel *model)
 {
+    mLocationModel = model;
     if (QFile::exists(dataFileDir() + "lokkitestilocation.txt"))
     {
         QFile oldFile(dataFileDir() + "lokkitestilocation.txt");
@@ -84,6 +93,10 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
     }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
     while (striimi.atEnd() == false)
     {
         QString locationLine;
@@ -92,6 +105,10 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
                           locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                           locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
                           locationLine.section(';', XemaEnums::LOCATION_YKJ, XemaEnums::LOCATION_YKJ));
+        location.setSweTown(locationLine.section(';', XemaEnums::LOCATION_SWETOWN, XemaEnums::LOCATION_SWETOWN));
+        location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
+        location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
+        location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
         model->addItem(location);
     }
 }
@@ -175,6 +192,7 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
         line = striimi.readLine();
         QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
         readPlace.replace("#", ", ");
+        readPlace = readLocation(readPlace);
         QString readDate = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
         QString readTime = line.section('#', XemaEnums::OBS_TIME1, XemaEnums::OBS_TIME1);
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
@@ -279,6 +297,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
         {
             QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
             readPlace.replace("#", ", ");
+            readPlace = readLocation(readPlace);
 
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
                              readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
@@ -307,6 +326,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
         QString readDate = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
         QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
         readPlace.replace("#", ", ");
+        readPlace = readLocation(readPlace);
         QString species = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
 
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
@@ -400,7 +420,10 @@ void ModelDataLoader::loadAtlasData(AtlasIndexModel *model)
         line = striimi.readLine();
         if (line.isEmpty() == false)
         {
-            AtlasIndex index(line.section(';', XemaEnums::ATLAS_VALUE, XemaEnums::ATLAS_VALUE).toInt());
+            AtlasIndex index(line.section(';', XemaEnums::ATLAS_VALUE, XemaEnums::ATLAS_VALUE),
+                             line.section(';', XemaEnums::ATLAS_FIN, XemaEnums::ATLAS_FIN),
+                             line.section(';', XemaEnums::ATLAS_SWE, XemaEnums::ATLAS_SWE),
+                             line.section(';', XemaEnums::ATLAS_ENG, XemaEnums::ATLAS_ENG));
             model->addItem(index);
         }
     }
@@ -429,10 +452,42 @@ QString ModelDataLoader::readBird(const QString &bird) {
     for (int i = 0; i < mBirdModel->rowCount(); i++) {
         if (QString::compare(bird,mBirdModel->getItem(i).abbreviation(),Qt::CaseInsensitive)==0) {
             // TODO select correct name based on language
+            QString locale = QLocale::system().name();
+            QString lang = locale.section("_",0,0);
+            if (lang == "en") {
+                return mBirdModel->getItem(i).engName();
+            }
+            else if (lang == "sv") {
+                return mBirdModel->getItem(i).sweName();
+            }
+
             return mBirdModel->getItem(i).finName();
         }
     }
     return bird;
+}
+
+QString ModelDataLoader::readLocation(const QString &location) {
+    if (!mLocationModel) {
+        return location;
+    }
+    for (int i = 0; i < mLocationModel->rowCount(); i++) {
+        QString modelLocation = mLocationModel->getItem(i).town() + ", " + mLocationModel->getItem(i).place();
+        if (QString::compare(location,modelLocation,Qt::CaseInsensitive)==0) {
+            // TODO select correct name based on language
+            QString locale = QLocale::system().name();
+            QString lang = locale.section("_",0,0);
+            if (lang == "en") {
+                return mLocationModel->getItem(i).engTown() + ", " + mLocationModel->getItem(i).engPlace();
+            }
+            else if (lang == "sv") {
+                return mLocationModel->getItem(i).sweTown() + ", " + mLocationModel->getItem(i).swePlace();
+            }
+
+            return location;
+        }
+    }
+    return location;
 }
 
 QString ModelDataLoader::loadObservation(qlonglong id)
@@ -464,6 +519,91 @@ QString ModelDataLoader::loadObservation(qlonglong id)
     newLine.append("#");
     newLine.append(readBird(obsLine.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES)));
     newLine.append("#");
-    newLine.append(obsLine.section('#', XemaEnums::OBS_DATE1));
+    newLine.append(obsLine.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_TIME2));
+    newLine.append("#");
+    QString location;
+    location.append(obsLine.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_TOWN));
+    location.append(", ");
+    location.append(obsLine.section('#', XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION));
+    location = readLocation( location );
+    qDebug() << location;
+    newLine.append(location.section(", ", 0, 0));
+    newLine.append("#");
+    newLine.append(location.section(", ", 1));
+//    newLine.append(obsLine.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION));
+    newLine.append("#");
+    newLine.append(obsLine.section('#', XemaEnums::OBS_XCOORD));
     return newLine;
+}
+
+
+void ModelDataLoader::loadDressData(DressModel *model)
+{
+    QFile tiedosto(":dresses.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString line;
+        line = striimi.readLine();
+        if (line.isEmpty() == false)
+        {
+            Dress item(line.section(';', XemaEnums::DRESS_VALUE, XemaEnums::DRESS_VALUE),
+                       line.section(';', XemaEnums::DRESS_FIN, XemaEnums::DRESS_FIN),
+                       line.section(';', XemaEnums::DRESS_SWE, XemaEnums::DRESS_SWE),
+                       line.section(';', XemaEnums::DRESS_ENG, XemaEnums::DRESS_ENG));
+            model->addItem(item);
+        }
+    }
+}
+
+void ModelDataLoader::loadAgeData(AgeModel *model)
+{
+    QFile tiedosto(":ages.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString line;
+        line = striimi.readLine();
+        if (line.isEmpty() == false)
+        {
+            Age item(line.section(';', XemaEnums::AGE_VALUE, XemaEnums::AGE_VALUE),
+                       line.section(';', XemaEnums::AGE_FIN, XemaEnums::AGE_FIN),
+                       line.section(';', XemaEnums::AGE_SWE, XemaEnums::AGE_SWE),
+                       line.section(';', XemaEnums::AGE_ENG, XemaEnums::AGE_ENG));
+            model->addItem(item);
+        }
+    }
+}
+
+void ModelDataLoader::loadSexData(SexModel *model)
+{
+    QFile tiedosto(":sexes.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString line;
+        line = striimi.readLine();
+        if (line.isEmpty() == false)
+        {
+            Sex item(line.section(';', XemaEnums::SEX_FIN, XemaEnums::SEX_FIN),
+                       line.section(';', XemaEnums::SEX_SWE, XemaEnums::SEX_SWE),
+                       line.section(';', XemaEnums::SEX_ENG, XemaEnums::SEX_ENG));
+            model->addItem(item);
+        }
+    }
 }

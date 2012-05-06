@@ -16,6 +16,9 @@ public:
         FilterRole = Qt::UserRole + 1,
         IndexRole,
         ValueRole, // 35
+        FinNameRole,
+        SweNameRole,
+        EngNameRole
     };
 
 signals:
@@ -27,7 +30,7 @@ public slots:
     Q_INVOKABLE     void addItem(const AtlasIndex &item);
     Q_INVOKABLE     bool removeRow (int row, const QModelIndex & parent = QModelIndex());
     Q_INVOKABLE     bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex());
-    Q_INVOKABLE     AtlasIndex getItem(int index);
+    Q_INVOKABLE     AtlasIndex getItem(int index) const;
     Q_INVOKABLE     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
                     void setContent(const QList<AtlasIndex> &newItems);

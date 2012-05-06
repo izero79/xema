@@ -7,14 +7,23 @@ class AtlasIndex
 {
 public:
     AtlasIndex();
-    AtlasIndex(int value);
+    AtlasIndex(const QString &value, const QString &finname, const QString &swename, const QString &engname);
 
-    void setIndex(int value);
+    void setValue(const QString &value);
+    void setFinName(const QString &name);
+    void setSweName(const QString &name);
+    void setEngName(const QString &name);
 
-    int index() const;
+    QString value() const;
+    QString finName() const;
+    QString sweName() const;
+    QString engName() const;
 
 private:
-    int mIndex;
+    QString mValue;
+    QString mFinName;
+    QString mSweName;
+    QString mEngName;
 };
 
 #endif // ATLASINDEX_H

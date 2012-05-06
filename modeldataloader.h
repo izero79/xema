@@ -9,6 +9,9 @@ class LocationModel;
 class StatusModel;
 class HistoryModel;
 class AtlasIndexModel;
+class AgeModel;
+class DressModel;
+class SexModel;
 
 class ModelDataLoader : public QObject
 {
@@ -25,6 +28,9 @@ public:
     void loadHistoryDateData(HistoryModel *model);
     void loadHistoryPlaceData(HistoryModel *model, const QString &date = QString());
     QString loadObservation(qlonglong id);
+    void loadSexData(SexModel *model);
+    void loadDressData(DressModel *model);
+    void loadAgeData(AgeModel *model);
 signals:
 
 public slots:
@@ -34,7 +40,9 @@ private:
 
     QString dataFileDir();
     QString readBird(const QString &bird);
+    QString readLocation(const QString &location);
     BirdModel *mBirdModel;
+    LocationModel *mLocationModel;
     static ModelDataLoader *mDataLoader;
 
 

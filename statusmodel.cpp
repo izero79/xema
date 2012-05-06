@@ -7,7 +7,7 @@ StatusModel::StatusModel(QObject *parent) :
 {
     roles[FilterRole] = "filter";
     roles[IndexRole] = "realindex";
-    roles[FinNameRole] = "name";
+    roles[FinNameRole] = "finname";
     roles[SweNameRole] = "swename";
     roles[EngNameRole] = "engname";
     roles[AbbrevRole] = "abbrev";

@@ -21,6 +21,9 @@
 #include "atlasindexmodel.h"
 #include "settings.h"
 #include "xemaenums.h"
+#include "agemodel.h"
+#include "dressmodel.h"
+#include "sexmodel.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -119,6 +122,9 @@ void QMLWindow::init()
     mFilteredHistoryDateModel = new FilterModel(this);
     mFilteredHistoryPlaceModel = new FilterModel(this);
     mFilteredAtlasModel = new FilterModel(this);
+    mFilteredSexModel = new FilterModel(this);
+    mFilteredDressModel = new FilterModel(this);
+    mFilteredAgeModel = new FilterModel(this);
 
     mRootContext->setContextProperty("birdModel", mFilteredBirdModel);
     mRootContext->setContextProperty("personModel", mFilteredPersonModel);
@@ -128,6 +134,9 @@ void QMLWindow::init()
     mRootContext->setContextProperty("historyDateModel", mFilteredHistoryDateModel);
     mRootContext->setContextProperty("historyPlaceModel", mFilteredHistoryPlaceModel);
     mRootContext->setContextProperty("atlasModel", mFilteredAtlasModel);
+    mRootContext->setContextProperty("sexModel", mFilteredSexModel);
+    mRootContext->setContextProperty("dressModel", mFilteredDressModel);
+    mRootContext->setContextProperty("ageModel", mFilteredAgeModel);
 
     connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
@@ -148,7 +157,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
 
     QString locale = QLocale::system().name();
-    QString lang = "sv";//locale.section("_",0,0);
+    QString lang = locale.section("_",0,0);
     mRootObject->setProperty( "currentLanguage", lang );
 
     mSettings = new Settings(this);
@@ -189,6 +198,21 @@ void QMLWindow::setLocationModel(LocationModel *model)
 void QMLWindow::setStatusModel(StatusModel *model)
 {
     mFilteredStatusModel->setSourceModel(model);
+}
+
+void QMLWindow::setAgeModel(AgeModel *model)
+{
+    mFilteredAgeModel->setSourceModel(model);
+}
+
+void QMLWindow::setDressModel(DressModel *model)
+{
+    mFilteredDressModel->setSourceModel(model);
+}
+
+void QMLWindow::setSexModel(SexModel *model)
+{
+    mFilteredSexModel->setSourceModel(model);
 }
 
 void QMLWindow::setHistoryModel(HistoryModel *model)

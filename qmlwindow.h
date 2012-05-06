@@ -14,6 +14,9 @@ class AtlasIndexModel;
 class Settings;
 class ModelDataWriter;
 class ModelDataLoader;
+class AgeModel;
+class SexModel;
+class DressModel;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -52,6 +55,9 @@ public slots:
     void setHistoryDateModel(HistoryModel *model);
     void setHistoryPlaceModel(HistoryModel *model);
     void setAtlasModel(AtlasIndexModel *model);
+    void setSexModel(SexModel *model);
+    void setDressModel(DressModel *model);
+    void setAgeModel(AgeModel *model);
 
 private slots:
     void writeNewObservation(const QString &data);
@@ -80,6 +86,9 @@ private:
     FilterModel *mFilteredHistoryDateModel;
     FilterModel *mFilteredHistoryPlaceModel;
     FilterModel *mFilteredAtlasModel;
+    FilterModel *mFilteredAgeModel;
+    FilterModel *mFilteredDressModel;
+    FilterModel *mFilteredSexModel;
     Settings *mSettings;
     ModelDataWriter *mDataWriter;
     ModelDataLoader *mDataLoader;

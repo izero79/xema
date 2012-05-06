@@ -115,7 +115,13 @@ SOURCES += main.cpp \
     ykjetrsdata.cpp \
     ykjetrs-bw.cpp \
     gausskrueger.cpp \
-    coordinateconverter.cpp
+    coordinateconverter.cpp \
+    age.cpp \
+    dress.cpp \
+    sex.cpp \
+    agemodel.cpp \
+    dressmodel.cpp \
+    sexmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -154,7 +160,13 @@ HEADERS += \
     atlasindex.h \
     atlasindexmodel.h \
     coordinateconverter.h \
-    xemaenums.h
+    xemaenums.h \
+    age.h \
+    dress.h \
+    sex.h \
+    agemodel.h \
+    dressmodel.h \
+    sexmodel.h
 
 RESOURCES += \
     symbianresources.qrc \

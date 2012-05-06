@@ -180,6 +180,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
+    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng\n");
     for(int i = 0; i < rows; i++)
     {
         QString wgs = model->data(model->index(i), LocationModel::WgsCoordinateRole).toString();
@@ -236,6 +237,14 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         line.append(wgs);
         line.append(";");
         line.append(ykj);
+        line.append(";");
+        line.append(model->getItem(i).sweTown(true));
+        line.append(";");
+        line.append(model->getItem(i).swePlace(true));
+        line.append(";");
+        line.append(model->getItem(i).engTown(true));
+        line.append(";");
+        line.append(model->getItem(i).engPlace(true));
         line.append(";\n");
         striimi << line;
     }
@@ -249,7 +258,7 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("\n");
+    striimi << QString("Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;Ryhmät_swe;\n");
     for(int i = 0; i < rows; i++)
     {
         QString line;
@@ -257,19 +266,23 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
         line.append(";");
         line.append(model->data(model->index(i), BirdModel::FinGroupRole).toString());
         line.append(";");
-        line.append(model->data(model->index(i), BirdModel::SweGroupRole).toString());
+        line.append(model->getItem(i).engGroup(true));
         line.append(";");
         line.append(model->data(model->index(i), BirdModel::LatinGroupRole).toString());
         line.append(";");
         line.append(model->data(model->index(i), BirdModel::FinNameRole).toString());
         line.append(";");
-        line.append(model->data(model->index(i), BirdModel::SweNameRole).toString());
+        line.append(model->getItem(i).sweName(true));
         line.append(";");
         line.append(model->data(model->index(i), BirdModel::AbbrevRole).toString());
         line.append(";");
         line.append(model->data(model->index(i), BirdModel::LatinNameRole).toString());
         line.append(";");
         line.append(model->data(model->index(i), BirdModel::CategoryRole).toString());
+        line.append(";");
+        line.append(model->getItem(i).engName(true));
+        line.append(";");
+        line.append(model->getItem(i).sweGroup(true));
         line.append(";\n");
         striimi << line;
     }
@@ -1197,6 +1210,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                               locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                               locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
                               locationLine.section(';', XemaEnums::LOCATION_YKJ, XemaEnums::LOCATION_YKJ));
+            location.setSweTown(locationLine.section(';', XemaEnums::LOCATION_SWETOWN, XemaEnums::LOCATION_SWETOWN));
+            location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
+            location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
+            location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
+
             int rows = locations->rowCount();
             bool matchFound = false;
             for (int i = 0; i < rows; i++) {
@@ -1346,6 +1364,9 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                        importLine.section(';', XemaEnums::BIRD_ABBREV, XemaEnums::BIRD_ABBREV),
                        importLine.section(';', XemaEnums::BIRD_LATIN_NAME, XemaEnums::BIRD_LATIN_NAME),
                        importLine.section(';', XemaEnums::BIRD_CATEGORY, XemaEnums::BIRD_CATEGORY));
+            // TODO LOC
+            bird.setEngName(importLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
+            bird.setEngGroup(importLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
 
             int rows = birds->rowCount();
             bool matchFound = false;

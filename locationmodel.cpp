@@ -9,6 +9,10 @@ LocationModel::LocationModel(QObject *parent) :
     roles[TownRole] = "town";
     roles[PlaceRole] = "place";
     roles[CoordinateRole] = "coordinate";
+    roles[EngTownRole] = "engtown";
+    roles[EngPlaceRole] = "engplace";
+    roles[SweTownRole] = "swetown";
+    roles[SwePlaceRole] = "sweplace";
     setRoleNames(roles);
 }
 
@@ -50,6 +54,22 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     else if (role == PlaceRole)
     {
         return item.place();
+    }
+    else if (role == EngTownRole)
+    {
+        return item.engTown();
+    }
+    else if (role == EngPlaceRole)
+    {
+        return item.engPlace();
+    }
+    else if (role == SweTownRole)
+    {
+        return item.sweTown();
+    }
+    else if (role == SwePlaceRole)
+    {
+        return item.swePlace();
     }
     else if (role == CoordinateRole)
     {

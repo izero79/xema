@@ -12,6 +12,9 @@
 #include "statusmodel.h"
 #include "historymodel.h"
 #include "atlasindexmodel.h"
+#include "agemodel.h"
+#include "dressmodel.h"
+#include "sexmodel.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
@@ -24,7 +27,10 @@ ApplicationController::ApplicationController(QObject *parent) :
     mHistoryPlaceModel(0),
     mAtlasModel(0),
     mModelLoader(0),
-    mModelWriter(0)
+    mModelWriter(0),
+    mAgeModel(0),
+    mDressModel(0),
+    mSexModel(0)
 {
     initGUI();
     QTimer::singleShot(0, this, SLOT(initObjects()));
@@ -66,6 +72,18 @@ void ApplicationController::initObjects()
     mStatusModel = new StatusModel(this);
     mModelLoader->loadStatusData(mStatusModel);
     mQMLWin->setStatusModel(mStatusModel);
+
+    mAgeModel = new AgeModel(this);
+    mModelLoader->loadAgeData(mAgeModel);
+    mQMLWin->setAgeModel(mAgeModel);
+
+    mSexModel = new SexModel(this);
+    mModelLoader->loadSexData(mSexModel);
+    mQMLWin->setSexModel(mSexModel);
+
+    mDressModel = new DressModel(this);
+    mModelLoader->loadDressData(mDressModel);
+    mQMLWin->setDressModel(mDressModel);
 
     mHistoryPlaceModel = new HistoryModel(this);
     mModelLoader->loadHistoryPlaceData(mHistoryPlaceModel);

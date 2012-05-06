@@ -12,6 +12,9 @@ class HistoryModel;
 class AtlasIndexModel;
 class ModelDataLoader;
 class ModelDataWriter;
+class AgeModel;
+class SexModel;
+class DressModel;
 
 class ApplicationController : public QObject
 {
@@ -57,6 +60,9 @@ private:
     AtlasIndexModel *mAtlasModel;
     ModelDataLoader *mModelLoader;
     ModelDataWriter *mModelWriter;
+    AgeModel *mAgeModel;
+    DressModel *mDressModel;
+    SexModel *mSexModel;
 };
 
 #endif // APPLICATIONCONTROLLER_H
