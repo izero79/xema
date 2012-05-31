@@ -32,6 +32,8 @@ Page {
                         birdModel.setData(rows, name1Tf.text, 36)
                         birdModel.setData(rows, name2Tf.text, 37)
                         birdModel.setData(rows, name3Tf.text, 39)
+                        birdModel.setData(rows, name4Tf.text, 44)
+                        birdModel.setData(rows, group4Tf.text, 45)
                         birdModel.setData(rows, group1Tf.text, 40)
                         birdModel.setData(rows, group2Tf.text, 41)
                         birdModel.setData(rows, group3Tf.text, 42)
@@ -48,6 +50,8 @@ Page {
                         birdModel.setData(currentIndex, group3Tf.text, 42)
                         birdModel.setData(currentIndex, abbrevTf.text, 38)
                         birdModel.setData(currentIndex, categoryTf.text, 43)
+                        birdModel.setData(currentIndex, name4Tf.text, 44)
+                        birdModel.setData(currentIndex, group4Tf.text, 45)
                     }
                 }
                 pageStack.pop()
@@ -70,10 +74,8 @@ Page {
     {
         var dataOk = false;
         if (name1Tf.text.length > 0 &&
-            name2Tf.text.length > 0 &&
             name3Tf.text.length > 0 &&
             group1Tf.text.length > 0 &&
-            group2Tf.text.length > 0 &&
             group3Tf.text.length > 0 &&
             abbrevTf.text.length > 0 &&
             categoryTf.text.length > 0)
@@ -176,10 +178,25 @@ Page {
             width: 240
             height: 50
             placeholderText: qsTr("Swedish name")
-            text: birdModel.data(currentIndex, 37)
+            text: birdModel.data(currentIndex, 46)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: name1Tf.bottom
+            anchors.topMargin: 8
+            onTextChanged: {
+                birdEdited = true
+            }
+        }
+
+        TextField {
+            id: name4Tf
+            width: 240
+            height: 50
+            placeholderText: qsTr("English name")
+            text: birdModel.data(currentIndex, 48)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: name2Tf.bottom
             anchors.topMargin: 8
             onTextChanged: {
                 birdEdited = true
@@ -192,7 +209,7 @@ Page {
             text: birdModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name2Tf.bottom
+            anchors.top: name4Tf.bottom
             anchors.topMargin: 8
             onTextChanged: {
                 birdEdited = true
@@ -214,10 +231,22 @@ Page {
         TextField {
             id: group2Tf
             placeholderText: qsTr("Group in swedish")
-            text: birdModel.data(currentIndex, 41)
+            text: birdModel.data(currentIndex, 47)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: group1Tf.bottom
+            anchors.topMargin: 8
+            onTextChanged: {
+                birdEdited = true
+            }
+        }
+        TextField {
+            id: group4Tf
+            placeholderText: qsTr("Group in english")
+            text: birdModel.data(currentIndex, 49)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: group2Tf.bottom
             anchors.topMargin: 8
             onTextChanged: {
                 birdEdited = true
@@ -229,7 +258,7 @@ Page {
             text: birdModel.data(currentIndex, 42)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: group2Tf.bottom
+            anchors.top: group4Tf.bottom
             anchors.topMargin: 8
             onTextChanged: {
                 birdEdited = true

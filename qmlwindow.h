@@ -68,6 +68,7 @@ private slots:
     void exportData(bool onlyNew);
     void exportOwnData();
     void importOwnData();
+    void openBrowser( const QString &url );
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -80,6 +81,7 @@ private:
     BirdModel *mBirdModel;
     FilterModel *mFilteredBirdModel;
     LocationModel *mLocationModel;
+    StatusModel *mStatusModel;
     FilterModel *mFilteredLocationModel;
     FilterModel *mFilteredStatusModel;
     FilterModel *mFilteredHistoryModel;

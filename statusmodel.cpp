@@ -10,6 +10,8 @@ StatusModel::StatusModel(QObject *parent) :
     roles[FinNameRole] = "finname";
     roles[SweNameRole] = "swename";
     roles[EngNameRole] = "engname";
+    roles[SweNameOnlyRole] = "sweonlyname";
+    roles[EngNameOnlyRole] = "engonlyname";
     roles[AbbrevRole] = "abbrev";
     roles[SelectedRole] = "selected";
     setRoleNames(roles);
@@ -56,6 +58,14 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const
     else if (role == EngNameRole)
     {
         return item.engName();
+    }
+    else if (role == SweNameOnlyRole)
+    {
+        return item.sweName(true);
+    }
+    else if (role == EngNameOnlyRole)
+    {
+        return item.engName(true);
     }
     else if (role == AbbrevRole)
     {
@@ -132,13 +142,56 @@ void StatusModel::setContent(const QList<Status> &newItems)
 
 bool StatusModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (role != SelectedRole)
+    int row = index.row();
+    Status tmp;
+    if (index.row() >= items.count() || index.row() < 0)
     {
-        return false;
+        row = items.count();
     }
-    Status tmp = items.at(index.row());
-    tmp.setSelected(value.toBool());
-    items.replace(index.row(), tmp);
+    else
+    {
+        tmp = items.at(row);
+    }
+    switch(role)
+    {
+    case FinNameRole:
+        tmp.setName(value.toString());
+        break;
+    case SweNameRole:
+    case SweNameOnlyRole:
+        tmp.setSweName(value.toString());
+        break;
+    case EngNameRole:
+    case EngNameOnlyRole:
+        tmp.setEngName(value.toString());
+        break;
+    case AbbrevRole:
+        tmp.setAbbrev(value.toString());
+        break;
+    case SelectedRole:
+        tmp.setSelected(value.toBool());
+        break;
+    default:
+        break;
+    }
+
+    if (row >= items.count())
+    {
+        QAbstractItemModel::beginInsertRows(QModelIndex(), items.count(), items.count());
+        items.append(tmp);
+        QAbstractItemModel::endInsertRows();
+    }
+    else
+    {
+        items.replace(index.row(), tmp);
+    }
     QAbstractItemModel::dataChanged(index, index);
     return true;
+}
+
+void StatusModel::replaceItem(int row, const Status &item)
+{
+    items.replace(row, item);
+    QModelIndex idx = index(row, 0);
+    QAbstractItemModel::dataChanged(idx, idx);
 }

@@ -13,7 +13,18 @@ Component {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: finname + ", " + latinname
+            text: {
+                if (currentLanguage == "en") {
+                    return engname + ", " + latinname
+                }
+                else if (currentLanguage == "sv") {
+                    return swename + ", " + latinname
+                }
+                else {
+                    return finname + ", " + latinname
+                }
+            }
+
             color: "white"
         }
 
@@ -27,7 +38,7 @@ Component {
                 }
                 else
                 {
-                    listPage.clicked(finname)
+                    listPage.clicked(realindex)
                 }
 
             }

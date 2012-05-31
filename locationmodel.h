@@ -23,7 +23,11 @@ public:
         SweTownRole,
         SwePlaceRole,
         EngTownRole,
-        EngPlaceRole // 43
+        EngPlaceRole, // 43
+        SweTownOnlyRole,
+        SwePlaceOnlyRole, // 45
+        EngTownOnlyRole,
+        EngPlaceOnlyRole // 47
     };
 
 signals:

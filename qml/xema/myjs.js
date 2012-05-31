@@ -199,9 +199,56 @@ function fillStatusBox()
     currentStatusBox.text = names
 }
 
-function fillCurrentBox(name)
+function fillSexBox(index)
 {
-    currentStatusBox.text = name
+    if (currentLanguage == "en") {
+        currentStatusBox.text = sexModel.data(index, 37)
+    }
+    else if (currentLanguage == "sv") {
+        currentStatusBox.text = sexModel.data(index, 36)
+    }
+    else {
+        currentStatusBox.text = sexModel.data(index, 35)
+    }
+}
+
+function fillDressBox(index)
+{
+    if (currentLanguage == "en") {
+        currentStatusBox.text = dressModel.data(index, 35)
+    }
+    else if (currentLanguage == "sv") {
+        currentStatusBox.text = dressModel.data(index, 35)
+    }
+    else {
+        currentStatusBox.text = dressModel.data(index, 35)
+    }
+}
+
+function fillAgeBox(index)
+{
+    if (currentLanguage == "en") {
+        currentStatusBox.text = ageModel.data(index, 35)
+    }
+    else if (currentLanguage == "sv") {
+        currentStatusBox.text = ageModel.data(index, 35)
+    }
+    else {
+        currentStatusBox.text = ageModel.data(index, 35)
+    }
+}
+
+function fillAtlasBox(index)
+{
+    if (currentLanguage == "en") {
+        currentStatusBox.text = atlasModel.data(index, 35)
+    }
+    else if (currentLanguage == "sv") {
+        currentStatusBox.text = atlasModel.data(index, 35)
+    }
+    else {
+        currentStatusBox.text = atlasModel.data(index, 35)
+    }
 }
 
 function dataEdited()

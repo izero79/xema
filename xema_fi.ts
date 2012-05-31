@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fi_FI">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <source>version </source>
+        <translation>versio </translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
     <name>BirdEditPage</name>
     <message>
         <source>Edit species</source>
@@ -42,6 +53,14 @@
     <message>
         <source>Id number</source>
         <translation type="unfinished">Id numero</translation>
+    </message>
+    <message>
+        <source>English name</source>
+        <translation type="unfinished">Nimi englanniksi</translation>
+    </message>
+    <message>
+        <source>Group in english</source>
+        <translation type="unfinished">Ryhmä englanniksi</translation>
     </message>
 </context>
 <context>
@@ -119,6 +138,22 @@
     <message>
         <source>Accuracy: %1 m</source>
         <translation type="unfinished">Tarkkuus: %1m</translation>
+    </message>
+    <message>
+        <source>Town in swedish</source>
+        <translation type="unfinished">Paikkakunta ruotsiksi</translation>
+    </message>
+    <message>
+        <source>Location in swedish</source>
+        <translation type="unfinished">Paikka ruotsiksi</translation>
+    </message>
+    <message>
+        <source>Town in english</source>
+        <translation type="unfinished">Paikkakunta englanniksi</translation>
+    </message>
+    <message>
+        <source>Location in english</source>
+        <translation type="unfinished">Paikka englanniksi</translation>
     </message>
 </context>
 <context>
@@ -374,6 +409,37 @@
     <message>
         <source>Restore default lists</source>
         <translation type="unfinished">Palauta listat alkuperäisiksi</translation>
+    </message>
+    <message>
+        <source>Statuses</source>
+        <translation type="unfinished">Tilat</translation>
+    </message>
+</context>
+<context>
+    <name>StatusEditPage</name>
+    <message>
+        <source>Edit statuses</source>
+        <translation type="unfinished">Muokkaa tiloja</translation>
+    </message>
+    <message>
+        <source>Finnish name</source>
+        <translation type="unfinished">Suomenkielinen nimi</translation>
+    </message>
+    <message>
+        <source>Swedish name</source>
+        <translation type="unfinished">Ruotsinkielinen nimi</translation>
+    </message>
+    <message>
+        <source>English name</source>
+        <translation type="unfinished">Englanninkielinen nimi</translation>
+    </message>
+    <message>
+        <source>Abbreviation</source>
+        <translation type="unfinished">Lyhenne</translation>
+    </message>
+    <message>
+        <source>Id number</source>
+        <translation type="unfinished">Id numero</translation>
     </message>
 </context>
 </TS>

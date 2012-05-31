@@ -16,8 +16,8 @@ public:
     void setSelected(bool selected);
 
     QString name() const;
-    QString sweName() const;
-    QString engName() const;
+    QString sweName(bool allowEmpty = false) const;
+    QString engName(bool allowEmpty = false) const;
     QString abbreviation() const;
     bool selected() const;
 

@@ -13,6 +13,10 @@ LocationModel::LocationModel(QObject *parent) :
     roles[EngPlaceRole] = "engplace";
     roles[SweTownRole] = "swetown";
     roles[SwePlaceRole] = "sweplace";
+    roles[EngTownOnlyRole] = "engonlytown";
+    roles[EngPlaceOnlyRole] = "engonlyplace";
+    roles[SweTownOnlyRole] = "sweonlytown";
+    roles[SwePlaceOnlyRole] = "sweonlyplace";
     setRoleNames(roles);
 }
 
@@ -70,6 +74,22 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     else if (role == SwePlaceRole)
     {
         return item.swePlace();
+    }
+    else if (role == EngTownOnlyRole)
+    {
+        return item.engTown(true);
+    }
+    else if (role == EngPlaceOnlyRole)
+    {
+        return item.engPlace(true);
+    }
+    else if (role == SweTownOnlyRole)
+    {
+        return item.sweTown(true);
+    }
+    else if (role == SwePlaceOnlyRole)
+    {
+        return item.swePlace(true);
     }
     else if (role == CoordinateRole)
     {
@@ -173,6 +193,22 @@ bool LocationModel::setData(const QModelIndex &index, const QVariant &value, int
         break;
     case WgsCoordinateRole:
         tmp.setWGSCoordinate(value.toString());
+        break;
+    case SweTownRole:
+    case SweTownOnlyRole:
+        tmp.setSweTown(value.toString());
+        break;
+    case SwePlaceRole:
+    case SwePlaceOnlyRole:
+        tmp.setSwePlace(value.toString());
+        break;
+    case EngTownRole:
+    case EngTownOnlyRole:
+        tmp.setEngTown(value.toString());
+        break;
+    case EngPlaceRole:
+    case EngPlaceOnlyRole:
+        tmp.setEngPlace(value.toString());
         break;
     default:
         break;

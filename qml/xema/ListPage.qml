@@ -59,6 +59,11 @@ Page {
         {
             positionSource.stop()
         }
+        if (listPageType == "status" || listPageType == "editstatuses")
+        {
+            window.addStatus()
+            return
+        }
         if (listPageType == "birds" || listPageType == "editbirds")
         {
             window.addBird()
@@ -102,6 +107,11 @@ Page {
                     {
                         personModel.removeRow(contextMenu.selectedIndex)
                     }
+
+                    if (listPageType == "editstatuses")
+                    {
+                        statusModel.removeRow(contextMenu.selectedIndex)
+                    }
                 }
             }
         }
@@ -109,7 +119,8 @@ Page {
 
     function showContextMenu(index)
     {
-        if (listPageType == "editbirds" || listPageType == "editplaces" || listPageType == "editallpeople")
+        if (listPageType == "editbirds" || listPageType == "editplaces" || listPageType == "editallpeople"
+                || listPageType == "editstatuses" )
         {
             contextMenu.selectedIndex = index
             contextMenu.open()
@@ -133,6 +144,11 @@ Page {
         else if (listPageType == "editbirds")
         {
             window.editBird(name)
+            return
+        }
+        else if (listPageType == "editstatuses")
+        {
+            window.editStatus(name)
             return
         }
         else if (listPageType == "places")
@@ -210,80 +226,25 @@ Page {
             return
         }
 
-        for(var i = 0; i < selNames.length; i++)
+        for(var k = 0; k < statusModel.rowCount(); k++)
         {
-            for(var j = 0; j < statusModel.rowCount(); j++)
+            for(var i = 0; i < selNames.length; i++)
             {
-                if (statusModel.data(j, 35) == selNames[i])
+                console.log("tarkistetaan: " + selNames[i] )
+                console.log("mallissa: " + statusModel.data(k, 35) )
+                if (statusModel.data(k, 35) == selNames[i])
                 {
-                    statusModel.setData(j, true, 2)
+                    statusModel.setData(k, true, 2)
+                    break
                 }
                 else
                 {
-                    statusModel.setData(j, false, 2)
+                    statusModel.setData(k, false, 2)
                 }
             }
         }
     }
-
-    ListModel {
-        id: testModelNames
-        ListElement {
-            name: "Toni U"
-        }
-        ListElement {
-            name: "Uni Too"
-        }
-        ListElement {
-            name: "Joku Muu"
-        }
-    }
-
-    ListModel {
-        id: testModelNames2
-        ListElement {
-            name: "Toni U"
-        }
-        ListElement {
-            name: "Uni Too"
-        }
-        ListElement {
-            name: "Joku Muu"
-        }
-    }
-
-    ListModel {
-        id: testModelBirds
-        ListElement {
-            name: "Talitiainen"
-        }
-        ListElement {
-            name: "Tipu"
-        }
-        ListElement {
-            name: "Harakka"
-        }
-        ListElement {
-            name: "Vanha haahka"
-        }
-    }
-
-    ListModel {
-        id: testModelPlaces
-        ListElement {
-            name: "Kokkola, Herman Renlundinkatu"
-        }
-        ListElement {
-            name: "Kokkola, Komia"
-        }
-        ListElement {
-            name: "Kokkola, Calle"
-        }
-        ListElement {
-            name: "Kokkola, Kärrynpyörä"
-        }
-    }
-
+/*
     ListModel {
         id: sexModel
         ListElement {
@@ -352,7 +313,7 @@ Page {
         ListElement { engname: "tp"; swename: "tp"; name: "tp" }
         ListElement { engname: "vp"; swename: "vp"; name: "vp" }
     }
-
+*/
     Component.onCompleted: {
         console.log("ListPage loaded")
         listView.model.filter("")
@@ -434,6 +395,10 @@ Page {
             {
                 return statusModel
             }
+            else if (listPageType == "editstatuses")
+            {
+                return statusModel
+            }
             else if (listPageType == "sex")
             {
                 return sexModel
@@ -495,6 +460,11 @@ Page {
             {
                 editMode = true
                 return locationDelegate
+            }
+            else if (listPageType == "editstatuses")
+            {
+                editMode = true
+                return statusDelegate
             }
             else if (listPageType == "status")
             {

@@ -3,7 +3,85 @@ import com.nokia.symbian 1.1
 
 Page {
     id: mainPage
-    tools: toolBarLayout
+    tools: mainToolBarLayout
+
+    ToolBarLayout {
+        id: mainToolBarLayout
+        ToolButton {
+            flat: true
+            iconSource: "toolbar-back"
+            onClicked: {
+                pageStack.depth <= 1 ? quit() : pageStack.pop()
+            }
+        }
+        ToolButton {
+            flat: true
+            text: "i"
+            visible: true
+            onClicked: {
+                aboutDialog.open()
+            }
+        }
+    }
+
+
+    Loader {
+        id: aboutDialog
+
+        function open()
+        {
+            source = Qt.resolvedUrl( "AboutDialog.qml" )
+            if( item != null )
+            {
+                item.screenX = -x
+                item.screenY = -y
+                item.open()
+            }
+        }
+
+        function close()
+        {
+            if( item != null )
+            {
+                item.close()
+            }
+            source = ""
+        }
+
+        function isVisible()
+        {
+            if( item != null )
+            {
+                return item.isVisible
+            }
+            return false
+        }
+
+        anchors.centerIn: parent
+        width: window.inPortrait ? parent.width : parent.width / 5 * 3
+        height: window.inPortrait ? parent.height / 5 * 2 : parent.height / 5 * 4
+        source: ""
+        z: 100
+        onYChanged: {
+            if( item != null )
+            {
+                item.screenX = -x
+                item.screenY = -y
+            }
+        }
+    }
+    Connections {
+        target: aboutDialog.item
+        onButton1Clicked: {
+            aboutDialog.close()
+        }
+        onCanceled: {
+            aboutDialog.close()
+        }
+        onOpenHomepage: {
+            window.openUrl( "http://www.iki.fi/z7/xema" )
+        }
+    }
 
     Item {
         id: item1

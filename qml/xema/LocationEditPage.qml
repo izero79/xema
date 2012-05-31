@@ -33,6 +33,10 @@ Page {
                         var rows = locationModel.rowCount()
                         locationModel.setData(rows, townTf.text, 35)
                         locationModel.setData(rows, locationTf.text, 36)
+                        locationModel.setData(rows, sweTownTf.text, 44)
+                        locationModel.setData(rows, sweLocationTf.text, 45)
+                        locationModel.setData(rows, engTownTf.text, 46)
+                        locationModel.setData(rows, engLocationTf.text, 47)
                         locationModel.setData(rows, ykjTf.text, 38)
                         locationModel.setData(rows, wgsTf.text, 39)
                     }
@@ -40,6 +44,10 @@ Page {
                     {
                         locationModel.setData(currentIndex, townTf.text, 35)
                         locationModel.setData(currentIndex, locationTf.text, 36)
+                        locationModel.setData(currentIndex, sweTownTf.text, 44)
+                        locationModel.setData(currentIndex, sweLocationTf.text, 45)
+                        locationModel.setData(currentIndex, engTownTf.text, 46)
+                        locationModel.setData(currentIndex, engLocationTf.text, 47)
                         locationModel.setData(currentIndex, ykjTf.text, 38)
                         locationModel.setData(currentIndex, wgsTf.text, 39)
                     }
@@ -182,12 +190,81 @@ Page {
         }
 
         TextField {
+            id: sweTownTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Town in swedish")
+            text: locationModel.data(currentIndex, 44)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: locationTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+        TextField {
+            id: sweLocationTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Location in swedish")
+            text: locationModel.data(currentIndex, 45)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: sweTownTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+        TextField {
+            id: engTownTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Town in english")
+            text: locationModel.data(currentIndex, 46)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: sweLocationTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+        TextField {
+            id: engLocationTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Location in english")
+            text: locationModel.data(currentIndex, 47)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: engTownTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+
+        TextField {
             id: ykjTf
             placeholderText: qsTr("YKJ coordinates")
             text: locationModel.data(currentIndex, 38)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: locationTf.bottom
+            anchors.top: engLocationTf.bottom
             anchors.topMargin: 8
             width: parent.width / 2
             onTextChanged: {

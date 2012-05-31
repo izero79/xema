@@ -39,6 +39,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mBirdModel(0),
     mFilteredBirdModel(0),
     mLocationModel(0),
+    mStatusModel(0),
     mFilteredLocationModel(0),
     mFilteredStatusModel(0),
     mFilteredHistoryModel(0),
@@ -138,6 +139,15 @@ void QMLWindow::init()
     mRootContext->setContextProperty("dressModel", mFilteredDressModel);
     mRootContext->setContextProperty("ageModel", mFilteredAgeModel);
 
+    QString majorVersion;
+    majorVersion.setNum( MAJORVERSION );
+    QString minorVersion;
+    minorVersion.setNum( MINORVERSION );
+    QString patchVersion;
+    patchVersion.setNum( PATCHVERSION );
+    QString version( majorVersion + "." + minorVersion + "." + patchVersion );
+    mRootObject->setProperty( "versionString", version );
+
     connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
     connect(mRootObject,SIGNAL(deleteObs(QString,QString,QString)),this,SLOT(deleteObservation(QString,QString,QString)));
@@ -155,6 +165,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(importData()),this,SIGNAL(importData()));
     connect(mRootObject,SIGNAL(exportOwnData()),this,SLOT(exportOwnData()));
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
+    connect(mRootObject,SIGNAL(openUrl(QString)),this,SLOT(openBrowser(QString)));
 
     QString locale = QLocale::system().name();
     QString lang = locale.section("_",0,0);
@@ -197,6 +208,7 @@ void QMLWindow::setLocationModel(LocationModel *model)
 
 void QMLWindow::setStatusModel(StatusModel *model)
 {
+    mStatusModel = model;
     mFilteredStatusModel->setSourceModel(model);
 }
 
@@ -285,5 +297,12 @@ void QMLWindow::exportOwnData()
 
 void QMLWindow::importOwnData()
 {
-    mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel);
+    mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel,mStatusModel);
 }
+
+void QMLWindow::openBrowser( const QString &url )
+{
+    qDebug() << "void QMLWindow::openBrowser( const QString url )" << url;
+    QDesktopServices::openUrl(QUrl(url));
+}
+

@@ -17,6 +17,10 @@ BirdModel::BirdModel(QObject *parent) :
     roles[CategoryRole] = "category";
     roles[EngNameRole] = "engname";
     roles[EngGroupRole] = "enggroup";
+    roles[SweNameOnlyRole] = "sweonlyname";
+    roles[SweGroupOnlyRole] = "sweonlygroup";
+    roles[EngNameOnlyRole] = "engonlyname";
+    roles[EngGroupOnlyRole] = "engonlygroup";
     setRoleNames(roles);
 }
 
@@ -70,6 +74,14 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     {
         return item.engName();
     }
+    else if (role == SweNameOnlyRole)
+    {
+        return item.sweName(true);
+    }
+    else if (role == EngNameOnlyRole)
+    {
+        return item.engName(true);
+    }
     else if (role == AbbrevRole)
     {
         return item.abbreviation();
@@ -89,6 +101,14 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     else if (role == EngGroupRole)
     {
         return item.engGroup();
+    }
+    else if (role == SweGroupOnlyRole)
+    {
+        return item.sweGroup(true);
+    }
+    else if (role == EngGroupOnlyRole)
+    {
+        return item.engGroup(true);
     }
     else if (role == LatinGroupRole)
     {
@@ -182,16 +202,26 @@ bool BirdModel::setData(const QModelIndex &index, const QVariant &value, int rol
         tmp.setFinName(value.toString());
         break;
     case SweNameRole:
+    case SweNameOnlyRole:
         tmp.setSweName(value.toString());
+        break;
+    case SweGroupRole:
+    case SweGroupOnlyRole:
+        tmp.setSweGroup(value.toString());
+        break;
+    case EngNameRole:
+    case EngNameOnlyRole:
+        tmp.setEngName(value.toString());
+        break;
+    case EngGroupRole:
+    case EngGroupOnlyRole:
+        tmp.setEngGroup(value.toString());
         break;
     case LatinNameRole:
         tmp.setLatinName(value.toString());
         break;
     case FinGroupRole:
         tmp.setFinGroup(value.toString());
-        break;
-    case SweGroupRole:
-        tmp.setSweGroup(value.toString());
         break;
     case LatinGroupRole:
         tmp.setLatinGroup(value.toString());

@@ -24,11 +24,11 @@ Component {
                 if (currentLanguage == "en") {
                     return abbrev + " (" + engname + ")"
                 }
-                if (currentLanguage == "sv") {
+                else if (currentLanguage == "sv") {
                     return abbrev + " (" + swename + ")"
                 }
                 else {
-                    return abbrev + " (" + name + ")"
+                    return abbrev + " (" + finname + ")"
                 }
 
             }
@@ -38,10 +38,20 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + abbrev + " (" + name + ")")
-                //listPage.clicked(abbrev + " (" + name + ")")
-                listView.model.setData(realindex, !selected, 2)
 
+                if (listView.editMode == true)
+                {
+                    listPage.clicked(realindex)
+                }
+                else
+                {
+                    console.log("click: " + abbrev + " (" + finname + ")")
+                    //listPage.clicked(abbrev + " (" + name + ")")
+                    listView.model.setData(realindex, !selected, 2)
+                }
+            }
+            onPressAndHold: {
+                listPage.showContextMenu(realindex)
             }
         }
     }

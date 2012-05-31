@@ -16,6 +16,8 @@
 #include "xemaenums.h"
 #include "xemaconstants.h"
 #include "coordinateconverter.h"
+#include "statusmodel.h"
+#include "status.h"
 
 ModelDataWriter* ModelDataWriter::mDataWriter = 0;
 
@@ -245,6 +247,31 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         line.append(model->getItem(i).engTown(true));
         line.append(";");
         line.append(model->getItem(i).engPlace(true));
+        line.append(";\n");
+        striimi << line;
+    }
+    tiedosto.close();
+}
+
+
+void ModelDataWriter::writeStatusData(StatusModel *model)
+{
+    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    tiedosto.open(QFile::ReadWrite|QFile::Truncate);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    int rows = model->rowCount();
+    striimi << QString("tila;suomeksi;ruotsiksi;englanniksi;\n");
+    for(int i = 0; i < rows; i++)
+    {
+        QString line;
+        line.append(model->getItem(i).abbreviation());
+        line.append(";");
+        line.append(model->getItem(i).name());
+        line.append(";");
+        line.append(model->getItem(i).sweName(true));
+        line.append(";");
+        line.append(model->getItem(i).engName(true));
         line.append(";\n");
         striimi << line;
     }
@@ -495,6 +522,48 @@ void ModelDataWriter::exportOwnData(LocationModel *locations, PersonModel *perso
         if (matchFound == false) {
             outstriimi3 << ownBirdLine;
             outstriimi3 << "\n";
+        }
+    }
+
+    // STATUSES
+
+    QFile ownstatusfile(dataFileDir() + "xemastatusdata.txt");
+    ownstatusfile.open(QFile::ReadOnly);
+    QTextStream statusinstream1(&ownstatusfile);
+    statusinstream1.setCodec("ISO 8859-1");
+
+    QFile origstatusfile(":defaultstatuses.csv");
+    origstatusfile.open(QFile::ReadOnly);
+    QTextStream statusinstream2(&origstatusfile);
+    statusinstream2.setCodec("ISO 8859-1");
+
+    QFile exportfile4(exportDir() + "xema_exported_statuses.txt");
+
+    exportfile4.open(QFile::ReadWrite|QFile::Truncate);
+    QTextStream outstriimi4(&exportfile4);
+    outstriimi4.setCodec("ISO 8859-1");
+
+    while (statusinstream1.atEnd() == false)
+    {
+        QString ownStatusLine;
+        ownStatusLine = statusinstream1.readLine();
+        if (ownStatusLine.isEmpty()) {
+            continue;
+        }
+        bool matchFound = false;
+        statusinstream2.seek(0);
+        while (statusinstream2.atEnd() == false)
+        {
+            QString origBirdLine;
+            origBirdLine = statusinstream2.readLine();
+            if (ownStatusLine == origBirdLine) {
+                matchFound = true;
+                break;
+            }
+        }
+        if (matchFound == false) {
+            outstriimi4 << ownStatusLine;
+            outstriimi4 << "\n";
         }
     }
 }
@@ -1175,7 +1244,7 @@ void ModelDataWriter::checkAndCreateDirs() {
 
 }
 
-int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds) {
+int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses) {
     qDebug() << "IMPORT LOCATIONS";
     QDir dir;
     dir.cd(importDir());
@@ -1395,6 +1464,77 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         QDateTime date;
         date = QDateTime::currentDateTime();
         QString importedLocationFileName("birds-imported-");
+        importedLocationFileName.append(date.toString("yyyyMMdd-hhmmss"));
+        importedLocationFileName.append(".csv");
+        int nameNumber = 0;
+        while (QFile::exists(importedDir()+importedLocationFileName)) {
+            QString no;
+            no.setNum(nameNumber);
+            importedLocationFileName.append("_"+no);
+            nameNumber++;
+        }
+        importfile.rename(importedDir()+importedLocationFileName);
+    }
+
+    // STATUSES
+
+    filters.clear();
+    filters << "*status*.csv" << "*status*.txt";
+    importFiles.clear();
+
+    importFiles = dir.entryList(filters,QDir::Files);
+    qDebug() << "IMPORT STATUSES" << importFiles;
+    for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
+        QFile importfile(importDir() + importFiles.at(fileno));
+        importfile.open(QFile::ReadOnly);
+        QTextStream importstream(&importfile);
+
+        QString delimiter("#");
+
+        if (importstream.atEnd() == false) {
+            QString line = importstream.readLine();
+            if (line.count(delimiter) != 4) {
+                qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
+                delimiter = ";";
+            }
+            if (line.count(delimiter) != 4) {
+                qDebug() << "INVALID STATUS FILE";
+                break;
+            }
+            importstream.seek(0);
+        }
+        while (importstream.atEnd() == false) {
+            QString importLine;
+            importLine = importstream.readLine();
+
+            Status status(importLine.section(';', XemaEnums::STATUS_FINNAME, XemaEnums::STATUS_FINNAME),
+                       importLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV),
+                       importLine.section(';', XemaEnums::STATUS_SWENAME, XemaEnums::STATUS_SWENAME),
+                       importLine.section(';', XemaEnums::STATUS_ENGNAME, XemaEnums::STATUS_ENGNAME));
+
+            int rows = statuses->rowCount();
+            bool matchFound = false;
+            for (int i = 0; i < rows; i++) {
+                if (QString::compare(status.abbreviation(), statuses->getItem(i).abbreviation(), Qt::CaseInsensitive) == 0)
+                {
+                    qDebug() << "status loyty" << status.name() << statuses->getItem(i).name();
+                    if (QString::compare(status.name(), statuses->getItem(i).name(), Qt::CaseInsensitive) != 0 ||
+                            QString::compare(status.sweName(), statuses->getItem(i).sweName(), Qt::CaseInsensitive) != 0 ||
+                            QString::compare(status.engName(), statuses->getItem(i).engName(), Qt::CaseInsensitive) != 0 ) {
+                        qDebug() << "eri versio, korvataan";
+                        statuses->replaceItem(i,status);
+                    }
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (matchFound == false) {
+                statuses->addItem(status);
+            }
+        }
+        QDateTime date;
+        date = QDateTime::currentDateTime();
+        QString importedLocationFileName("statuses-imported-");
         importedLocationFileName.append(date.toString("yyyyMMdd-hhmmss"));
         importedLocationFileName.append(".csv");
         int nameNumber = 0;

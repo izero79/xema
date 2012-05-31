@@ -155,7 +155,12 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
 
 void ModelDataLoader::loadStatusData(StatusModel *model)
 {
-    QFile tiedosto(":defaultstatuses.csv");
+    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    if (tiedosto.exists() == false)
+    {
+        tiedosto.setFileName(":defaultstatuses.csv");
+    }
+
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     if (striimi.atEnd() == false)

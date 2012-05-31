@@ -15,13 +15,37 @@ Component {
             verticalAlignment: Text.AlignVCenter
             text: {
                 if (currentLanguage == "en") {
-                    return engname
+                    if (value == "") {
+                        return engname
+                    }
+                    else if (engname == "") {
+                        return value
+                    }
+                    else {
+                        return value + " (" + engname + ")"
+                    }
                 }
-                if (currentLanguage == "sv") {
-                    return swename
+                else if (currentLanguage == "sv") {
+                    if (value == "") {
+                        return swename
+                    }
+                    else if (swename == "") {
+                        return value
+                    }
+                    else {
+                        return value + " (" + swename + ")"
+                    }
                 }
                 else {
-                    return name
+                    if (value == "") {
+                        return finname
+                    }
+                    else if (finname == "") {
+                        return value
+                    }
+                    else {
+                        return value + " (" + finname + ")"
+                    }
                 }
 
             }
@@ -31,8 +55,8 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("simple delefate click: " + name)
-                listPage.clicked(name)
+                // tstest listPage.clicked(name)
+                listPage.clicked(index)
             }
             onPressAndHold: {
                 listPage.showContextMenu()

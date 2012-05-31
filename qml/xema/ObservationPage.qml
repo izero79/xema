@@ -68,14 +68,31 @@ Page {
 
     }
 
-    function birdChanged(name)
+    function birdChanged(i)
     {
-        birdNameTf.text = name
+        if (currentLanguage == "en") {
+            birdNameTf.text = birdModel.data(i, 44 )
+        }
+        else if (currentLanguage == "sv") {
+            birdNameTf.text = birdModel.data(i, 37 )
+        }
+        else {
+            birdNameTf.text = birdModel.data(i, 36 )
+        }
     }
 
-    function placeChanged(name)
+    function placeChanged(i)
     {
-        locationTf.text = name
+        if (currentLanguage == "en") {
+            locationTf.text = locationModel.data(i, 42 ) + ", " + locationModel.data(i, 43 )
+        }
+        else if (currentLanguage == "sv") {
+            locationTf.text = locationModel.data(i, 40 ) + ", " + locationModel.data(i, 41 )
+        }
+        else {
+            locationTf.text = locationModel.data(i, 35 ) + ", " + locationModel.data(i, 36 )
+        }
+
     }
 
     function regpeopleChanged(name)
@@ -119,7 +136,7 @@ Page {
         allData += startTimeTf.text + delimiter
         allData += endTimeTf.text + delimiter
         // uusi, town
-        var location = locationTf.text
+        var location = findLocation(locationTf.text)
         var town = location.substring(0, location.indexOf(", ") )
         var place = location.substring(location.indexOf(", ")+2 )
         allData += town + delimiter
@@ -139,7 +156,8 @@ Page {
         // uusi, paikannettu
         allData += delimiter
         allData += moreInfoTa.text + delimiter
-        allData += atlasTf.text + delimiter
+        var atlas_abbrev = findAtlas(atlasTf.text)
+        allData += atlas_abbrev + delimiter
         // uusi, saver
         allData += delimiter
         // uusi, save time
@@ -185,9 +203,132 @@ Page {
         console.log("findBirdAbbrev(name)")
         for(var i=0;i<birdModel.rowCount();i++) {
             // TODO localized names
-            if(name === birdModel.data(i, 36)) {
-                return birdModel.data(i, 38)
+            if (currentLanguage == "en") {
+                if(name === birdModel.data(i, 44)) {
+                    return birdModel.data(i, 38)
+                }
             }
+            else if (currentLanguage == "sv") {
+                if(name === birdModel.data(i, 37)) {
+                    return birdModel.data(i, 38)
+                }
+            }
+            else {
+                if(name === birdModel.data(i, 36)) {
+                    return birdModel.data(i, 38)
+                }
+            }
+        }
+
+        return name
+    }
+
+    function findAtlas(name)
+    {
+        console.log("findAtlas(name)")
+        for(var i=0;i<atlasModel.rowCount();i++) {
+            if (currentLanguage == "en") {
+                if(name === atlasModel.data(i, 38)) {
+                    return atlasModel.data(i, 36)
+                }
+            } else if (currentLanguage == "sv") {
+                if(name === atlasModel.data(i, 37)) {
+                    return atlasModel.data(i, 36)
+                }
+            }
+            else {
+                return name
+            }
+        }
+        return name
+    }
+
+    function findDress(name)
+    {
+        console.log("findDress(name)")
+        for(var i=0;i<dressModel.rowCount();i++) {
+            if (currentLanguage == "en") {
+                if(name === dressModel.data(i, 38)) {
+                    return dressModel.data(i, 36)
+                }
+            } else if (currentLanguage == "sv") {
+                if(name === dressModel.data(i, 37)) {
+                    return dressModel.data(i, 36)
+                }
+            }
+            else {
+                return name
+            }
+        }
+        return name
+    }
+
+    function findAge(name)
+    {
+        console.log("findAge(name)")
+        for(var i=0;i<ageModel.rowCount();i++) {
+            if (currentLanguage == "en") {
+                if(name === ageModel.data(i, 38)) {
+                    return ageModel.data(i, 36)
+                }
+            } else if (currentLanguage == "sv") {
+                if(name === ageModel.data(i, 37)) {
+                    return ageModel.data(i, 36)
+                }
+            }
+            else {
+                return name
+            }
+        }
+        return name
+    }
+
+    function findSex(name)
+    {
+        console.log("findSex(name)")
+        for(var i=0;i<sexModel.rowCount();i++) {
+            if (currentLanguage == "en") {
+                if(name === sexModel.data(i, 38)) {
+                    return sexModel.data(i, 36)
+                }
+            } else if (currentLanguage == "sv") {
+                if(name === sexModel.data(i, 37)) {
+                    return sexModel.data(i, 36)
+                }
+            }
+            else {
+                return name
+            }
+        }
+        return name
+    }
+
+    function findLocation(name)
+    {
+        console.log("findLocation(name)" + name)
+        for(var i=0;i<locationModel.rowCount();i++) {
+            // TODO localized names
+            var town = name.split(", ",2);
+            console.log("town[0] " +town[0])
+            console.log("town[1] " +town[1])
+            if (currentLanguage == "en") {
+                if(town[0] === locationModel.data(i, 42)) {
+                    if(town[1] === locationModel.data(i, 43)) {
+                        return locationModel.data(i, 35) + ", " + locationModel.data(i, 36)
+                    }
+                }
+            }
+            else if (currentLanguage == "sv") {
+                if(town[0] === locationModel.data(i, 40)) {
+                    if(town[1] === locationModel.data(i, 41)) {
+                        return locationModel.data(i, 35) + ", " + locationModel.data(i, 36)
+                    }
+                }
+            }
+            else {
+                return name
+            }
+
         }
 
         return name
@@ -517,6 +658,7 @@ Page {
                         height: 50
                         placeholderText: "0.0.0000"
                         text: ""
+                        inputMethodHints: Qt.ImhPreferNumbers
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.left: parent.left
@@ -556,6 +698,7 @@ Page {
                         height: 50
                         placeholderText: "0.0.0000"
                         text: ""
+                        inputMethodHints: Qt.ImhPreferNumbers
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.top: parent.top
@@ -596,7 +739,7 @@ Page {
 
                 Item {
                     id: item4
-                    height: 200
+                    height: 100
                     anchors.top: text6.bottom
                     anchors.topMargin: 8
                     anchors.right: parent.right
@@ -824,6 +967,8 @@ Page {
                         height: 50
                         placeholderText: "0:00"
                         text: ""
+                        inputMethodHints: Qt.ImhPreferNumbers
+
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.left: parent.left
@@ -864,6 +1009,8 @@ Page {
                         height: 50
                         placeholderText: "0:00"
                         text: ""
+                        inputMethodHints: Qt.ImhPreferNumbers
+
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.top: parent.top

@@ -13,7 +13,18 @@ Component {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: town + ", " + place
+            text: {
+                if (currentLanguage == "en") {
+                    return engtown + ", " + engplace
+                }
+                if (currentLanguage == "sv") {
+                    return swetown + ", " + sweplace
+                }
+                else {
+                    return town + ", " + place
+                }
+
+            }
             color: "white"
         }
 
@@ -28,7 +39,8 @@ Component {
                 }
                 else
                 {
-                    listPage.clicked(town + ", " + place)
+                    listPage.clicked(realindex)
+//                    listPage.clicked(town + ", " + place)
                 }
             }
             onPressAndHold: {

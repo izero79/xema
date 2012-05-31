@@ -50,20 +50,26 @@ QString Status::name() const
     return mName;
 }
 
-QString Status::sweName() const
+QString Status::sweName(bool allowEmpty) const
 {
-    if (mSweName.isEmpty()) {
-        return name();
+    if (mSweName.isEmpty() == false) {
+        return mSweName;
     }
-    return mSweName;
+    else if (allowEmpty) {
+        return mSweName;
+    }
+    return mName;
 }
 
-QString Status::engName() const
+QString Status::engName(bool allowEmpty) const
 {
-    if (mEngName.isEmpty()) {
-        return name();
+    if (mEngName.isEmpty() == false) {
+        return mEngName;
     }
-    return mEngName;
+    else if (allowEmpty) {
+        return mEngName;
+    }
+    return mName;
 }
 
 QString Status::abbreviation() const

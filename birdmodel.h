@@ -25,7 +25,11 @@ public:
         LatinGroupRole,
         CategoryRole, // 43
         EngNameRole,
-        EngGroupRole
+        EngGroupRole, // 45
+        SweNameOnlyRole,
+        SweGroupOnlyRole,
+        EngNameOnlyRole,
+        EngGroupOnlyRole // 49
     };
 
 signals:

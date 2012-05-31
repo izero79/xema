@@ -23,6 +23,14 @@ Page {
         editorObject.selectedIndex(indexi)
     }
 
+    function editStatus(indexi)
+    {
+        var editorCompnent = Qt.createComponent(Qt.resolvedUrl("StatusEditPage.qml"))
+        var editorObject = editorCompnent.createObject(window)
+        pageStack.push(editorObject)
+        editorObject.selectedIndex(indexi)
+    }
+
     function editLocation(indexi)
     {
         var editorCompnent = Qt.createComponent(Qt.resolvedUrl("LocationEditPage.qml"))
@@ -232,6 +240,15 @@ Page {
             text: qsTr("Species")
             onClicked: window.showListPage("editbirds", "");
         }
+        Button {
+            id: editStatus
+            anchors.top: editBird.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr("Statuses")
+            onClicked: window.showListPage("editstatuses", "");
+        }
 
         Text {
             id: backupText
@@ -243,7 +260,7 @@ Page {
             anchors.rightMargin: 0
             anchors.left: parent.left
             horizontalAlignment: Text.AlignLeft
-            anchors.top: editBird.bottom
+            anchors.top: editStatus.bottom
             anchors.topMargin: 30
             color: "#ffffff"
         }

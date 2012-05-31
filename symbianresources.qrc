@@ -20,5 +20,8 @@
         <file>qml/xema/PersonEditPage.qml</file>
         <file>qml/xema/BirdEditPage.qml</file>
         <file>qml/xema/LocationEditPage.qml</file>
+        <file>qml/xema/AboutDialog.qml</file>
+        <file>qml/s3icons/xema96.png</file>
+        <file>qml/xema/StatusEditPage.qml</file>
     </qresource>
 </RCC>

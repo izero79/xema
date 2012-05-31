@@ -14,10 +14,12 @@ public:
     enum Roles {
         FilterRole = Qt::UserRole + 1,
         IndexRole,
-        AbbrevRole,
+        AbbrevRole, // 35
         FinNameRole,
         SweNameRole,
         EngNameRole,
+        SweNameOnlyRole,
+        EngNameOnlyRole,
         SelectedRole = Qt::EditRole
     };
 
@@ -32,6 +34,7 @@ public slots:
     Q_INVOKABLE     bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex());
     Q_INVOKABLE     Status getItem(int index);
     Q_INVOKABLE     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    Q_INVOKABLE     void replaceItem(int row, const Status &item);
 
                     void setContent(const QList<Status> &newItems);
                     QList<Status> content() const;

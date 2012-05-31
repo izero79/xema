@@ -148,6 +148,7 @@ void ApplicationController::quit()
     mModelWriter->writePersonData(mPersonModel);
     mModelWriter->writeLocationData(mLocationModel);
     mModelWriter->writeBirdData(mBirdModel);
+    mModelWriter->writeStatusData(mStatusModel);
     qApp->quit();
 }
 

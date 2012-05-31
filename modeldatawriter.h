@@ -22,6 +22,7 @@ public:
     void deleteObservation(qlonglong id);
     void writePersonData(PersonModel *model);
     void writeLocationData(LocationModel *model);
+    void writeStatusData(StatusModel *model);
     void writeBirdData(BirdModel *model);
     void exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds);
     void exportOwnData(LocationModel *locations, PersonModel *persons, BirdModel *birds);
@@ -31,7 +32,7 @@ public:
     void removeCustomObservers();
     void importHistory(LocationModel *locations, PersonModel *persons, BirdModel *birds);
     void importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
-    int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds);
+    int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
 
 private:
     explicit ModelDataWriter(QObject *parent = 0);

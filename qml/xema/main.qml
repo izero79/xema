@@ -12,6 +12,8 @@ PageStackWindow {
     property int currentDetailLevel: 1
     property bool unsavedData: false
     property string currentLanguage: ""
+    property string appName: "Xema"
+    property string versionString: "0.0.0"
 
     signal writeNew(string data)
     signal readObs(string id)
@@ -30,7 +32,7 @@ PageStackWindow {
     signal importData()
     signal exportOwnData()
     signal importOwnData()
-
+    signal openUrl(string url)
     function setSystematicSort(use)
     {
         window.useSystematicSort = use
@@ -79,6 +81,11 @@ PageStackWindow {
         MyScript.settingsObject.editBird(index)
     }
 
+    function editStatus(index)
+    {
+        MyScript.settingsObject.editStatus(index)
+    }
+
     function editLocation(index)
     {
         MyScript.settingsObject.editLocation(index)
@@ -96,22 +103,22 @@ PageStackWindow {
 
     function sexChanged(name)
     {
-        MyScript.fillCurrentBox(name)
+        MyScript.fillSexBox(name)
     }
 
     function atlasChanged(name)
     {
-        MyScript.fillCurrentBox(name)
+        MyScript.fillAtlasBox(name)
     }
 
     function dressChanged(name)
     {
-        MyScript.fillCurrentBox(name)
+        MyScript.fillDressBox(name)
     }
 
     function ageChanged(name)
     {
-        MyScript.fillCurrentBox(name)
+        MyScript.fillAgeBox(name)
     }
 
     function showObsPage(doNotInit)
@@ -229,6 +236,5 @@ PageStackWindow {
 
     Component.onCompleted: {
         pageStack.push(Qt.resolvedUrl("MainPage.qml"))
-        console.log("versionstring: " +versionString)
     }
 }

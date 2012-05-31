@@ -29,7 +29,7 @@ Item {
         allData += countTf.text + delimiter
         allData += startTimeTf.text + delimiter
         allData += endTimeTf.text + delimiter
-        allData += sexTf.text + delimiter
+        allData += findSex(sexTf.text) + delimiter
         allData += dressTf.text + delimiter
         allData += ageTf.text + delimiter
         allData += statusTf.text + delimiter
@@ -50,7 +50,7 @@ Item {
         countTf.text = fields[0]
         startTimeTf.text = fields[1]
         endTimeTf.text = fields[2]
-        sexTf.text = fields[3]
+        fillSex(fields[3])
         dressTf.text = fields[4]
         ageTf.text = fields[5]
         statusTf.text = fields[6]
@@ -58,6 +58,44 @@ Item {
         loftTf.text = fields[8]
         watchChkBox.checked = fields[9]
         nestChkBox.checked = fields[10]
+    }
+
+    function findSex(name) {
+        console.log("findSex(name): " +name)
+        for(var i=0;i<sexModel.rowCount();i++) {
+            console.log("i: " +sexModel.data(i, 37))
+            if (currentLanguage == "en") {
+                if(name === sexModel.data(i, 37)) {
+                    return sexModel.data(i, 35)
+                }
+            } else if (currentLanguage == "sv") {
+                if(name === sexModel.data(i, 36)) {
+                    return sexModel.data(i, 35)
+                }
+            }
+            else {
+                return name
+            }
+        }
+        return name
+    }
+
+    function fillSex(name) {
+        console.log("fillSex(name): " +name)
+        for(var i=0;i<sexModel.rowCount();i++) {
+            if (name === sexModel.data(i, 35)) {
+                if (currentLanguage == "en") {
+                    sexTf.text = sexModel.data(i, 37)
+                } else if (currentLanguage == "sv") {
+                    sexTf.text = sexModel.data(i, 36)
+                }
+                else {
+                    sexTf.text = name
+                }
+            }
+
+        }
+        return name
     }
 
     anchors.right: parent.right
@@ -165,6 +203,8 @@ Item {
         height: 50
         placeholderText: qsTr("0:00")
         text: ""
+        inputMethodHints: Qt.ImhPreferNumbers
+
         anchors.top: sexTf.bottom
         anchors.topMargin: 8
         anchors.left: parent.left
@@ -208,6 +248,8 @@ Item {
         height: 50
         placeholderText: qsTr("0:00")
         text: ""
+        inputMethodHints: Qt.ImhPreferNumbers
+
         anchors.right: loftTf.left
         anchors.rightMargin: 0
         y: startTimeTf.y
