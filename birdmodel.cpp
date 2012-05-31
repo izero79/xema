@@ -21,6 +21,7 @@ BirdModel::BirdModel(QObject *parent) :
     roles[SweGroupOnlyRole] = "sweonlygroup";
     roles[EngNameOnlyRole] = "engonlyname";
     roles[EngGroupOnlyRole] = "engonlygroup";
+    roles[SectionRole] = "section";
     setRoleNames(roles);
 }
 
@@ -117,6 +118,10 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     else if (role == CategoryRole)
     {
         return item.category();
+    }
+    else if (role == SectionRole)
+    {
+        return item.finGroup();
     }
     return QVariant();
 }

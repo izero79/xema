@@ -22,7 +22,8 @@ public:
         PlaceCountRole,
         SpeciesCountRole, // 40
         SortableDateRole,
-        SortableTimeRole
+        SortableTimeRole,
+        SectionRole // 43
     };
 
 signals:
@@ -36,6 +37,7 @@ public slots:
     Q_INVOKABLE     bool removeRow (int row, const QModelIndex & parent = QModelIndex());
     Q_INVOKABLE     bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex());
     Q_INVOKABLE     HistoryItem getItem(int index);
+    Q_INVOKABLE     HistoryItem* get(int index);
     Q_INVOKABLE     void replaceItem(int row, const HistoryItem &item);
 
                     void setContent(const QList<HistoryItem> &newItems);

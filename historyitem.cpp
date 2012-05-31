@@ -158,3 +158,12 @@ QTime HistoryItem::sortTime() const
     QTime time = QTime::fromString(mTime, QString("hh:mm"));
     return time;
 }
+
+QString HistoryItem::sectionString() const
+{
+    QDate date = QDate::fromString(mDate, QString("dd.MM.yyyy"));
+    //QString year
+//    QString text = date.longMonthName(date.month()) + date.year();
+    QString text = date.toString( QString("MMMM yyyy"));
+    return text;
+}

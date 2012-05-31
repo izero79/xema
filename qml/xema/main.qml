@@ -14,11 +14,14 @@ PageStackWindow {
     property string currentLanguage: ""
     property string appName: "Xema"
     property string versionString: "0.0.0"
+    property bool cppProcessing: true
+    property bool needsHistoryReload: false
 
     signal writeNew(string data)
     signal readObs(string id)
     signal deleteObs(string id, string date, string place)
     signal reloadHistory()
+    signal reloadAllHistory()
     signal saveSystematicSorting(bool systematic)
     signal saveDetailLevel(int level)
     signal quit()
@@ -172,6 +175,66 @@ PageStackWindow {
     }
 //    initialPage: Qt.resolvedUrl("MainPage.qml")
 
+    function importError(errorNo)
+    {
+        errorDialog.dialogText = ""
+        console.log("importError: " + errorNo)
+        if (errorNo == 0) {
+            errorDialog.titleText = qsTr("Import complete")
+            if (errorNo == XemaEnums.IMPORT_NOERRORS ) {
+                errorDialog.dialogText = qsTr("No files imported")
+            }
+        }
+        else {
+            errorDialog.titleText = qsTr("Import complete")
+            if (errorNo&XemaEnums.IMPORT_LOCATION_OK) {
+                errorDialog.dialogText += qsTr("Imported locations\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_PERSON_OK) {
+                errorDialog.dialogText += qsTr("Imported persons\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_BIRD_OK) {
+                errorDialog.dialogText += qsTr("Imported birds\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_STATUS_OK) {
+                errorDialog.dialogText += qsTr("Imported status\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_HISTORY_OK) {
+                errorDialog.dialogText += qsTr("Imported history\n")
+            }
+
+            if (errorNo&XemaEnums.IMPORT_LOCATIONERROR) {
+                errorDialog.titleText = qsTr("Import error")
+                errorDialog.dialogText += qsTr("Error with locations file\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_PERSONERROR) {
+                errorDialog.titleText = qsTr("Import error")
+                errorDialog.dialogText += qsTr("Error with persons file\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_BIRDERROR) {
+                errorDialog.titleText = qsTr("Import error")
+                errorDialog.dialogText += qsTr("Error with birds file\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_STATUSERROR) {
+                errorDialog.titleText = qsTr("Import error")
+                errorDialog.dialogText += qsTr("Error with status file\n")
+            }
+            if (errorNo&XemaEnums.IMPORT_HISTORYERROR) {
+                errorDialog.titleText = qsTr("Import error")
+                errorDialog.dialogText += qsTr("Error with history file\n")
+            }
+        }
+        errorDialog.open()
+    }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: cppProcessing
+        width: 64
+        height: width
+        visible: running
+    }
+
     ToolBarLayout {
         id: toolBarLayout
         ToolButton {
@@ -182,7 +245,11 @@ PageStackWindow {
                 {
                     unsavedData = MyScript.unSavedDataExists()
                     MyScript.clearObsDataSelections()
-                    window.reloadHistory()
+                    if (needsHistoryReload) {
+                        window.reloadHistory()
+                        needsHistoryReload = false
+                    }
+
                 }
                 else if (pageStack.currentPage == MyScript.listObject)
                 {
@@ -215,10 +282,10 @@ PageStackWindow {
                 success = MyScript.readAndSaveData()
                 if (success)
                 {
-                    window.reloadHistory()
                     MyScript.obsObject.clearTab()
                     MyScript.dataSaved()
                     unsavedData = false
+                    needsHistoryReload = true
                 }
 
             }
@@ -230,6 +297,52 @@ PageStackWindow {
             onClicked: {
                 MyScript.obsObject.clearTab()
                 unsavedData = false
+            }
+        }
+    }
+
+    Dialog {
+        id: errorDialog
+        property alias titleText: titleTextField.text
+        property alias dialogText: dialogTextField.text
+
+        title: Text {
+            id: titleTextField
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr("Error")
+            horizontalAlignment: Text.AlignHCenter
+        }
+        content:Item {
+            height: 150
+            width: parent.width
+            anchors.topMargin: 10
+            Text {
+                id: dialogTextField
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: ""
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Item { height: errorDialog.height + 2 * 10;
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button {
+                id: errorDialogButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                width: 200
+                text: qsTr("Ok")
+                onClicked: {
+                    errorDialog.close()
+                }
             }
         }
     }

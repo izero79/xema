@@ -8,7 +8,7 @@ Component {
         height: 60
         Text {
             id: delegateTitle
-            anchors.right: delegateAdd.left
+            anchors.right: delegateTitleNumber.left
             anchors.top: parent.top
             height: parent.height / 2
             anchors.left: parent.left
@@ -16,11 +16,11 @@ Component {
             text: {
                 if (dateListVisible == true)
                 {
-                    date + " (" + dateCount + ")"
+                    date
                 }
                 else if (placeListVisible == true)
                 {
-                    place + " (" + placeCount + ")"
+                    place
                 }
                 else
                 {
@@ -29,10 +29,36 @@ Component {
             }
             color: "white"
             elide: Text.ElideRight
+            font.bold: true
+        }
+        Text {
+            id: delegateTitleNumber
+            anchors.right: delegateAdd.left
+            anchors.top: parent.top
+            height: parent.height / 2
+            width: 50
+            verticalAlignment: Text.AlignVCenter
+            text: {
+                if (dateListVisible == true)
+                {
+                    return "(" + dateCount + ")"
+                }
+                else if (placeListVisible == true)
+                {
+                    return "(" + placeCount + ")"
+                }
+                else
+                {
+                    return ""
+                }
+            }
+            color: "white"
+            elide: Text.ElideLeft
+            font.bold: false
         }
         Text {
             id: delegateSubTitle
-            anchors.right: delegateAdd.left
+            anchors.right: delegateSubTitleNumber.left
             anchors.top: delegateTitle.bottom
             height: parent.height / 2
             anchors.left: parent.left
@@ -40,6 +66,19 @@ Component {
             text: species
             color: "white"
             elide: Text.ElideRight
+            font.pixelSize: delegateTitle.font.pixelSize - 2
+            visible: placeListVisible == true || dateListVisible == true
+        }
+        Text {
+            id: delegateSubTitleNumber
+            anchors.right: delegateAdd.left
+            anchors.top: delegateTitle.bottom
+            height: parent.height / 2
+            verticalAlignment: Text.AlignVCenter
+            width: 50
+            text: ""
+            color: "white"
+            elide: Text.ElideLeft
             font.pixelSize: delegateTitle.font.pixelSize - 2
             visible: placeListVisible == true || dateListVisible == true
         }

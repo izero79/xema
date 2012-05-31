@@ -377,6 +377,8 @@ Page {
             }
             else if (listPageType == "birds")
             {
+//                listView.section.property = "section"
+//                listView.section.delegate = sectionDelegate
                 return birdModel
             }
             else if (listPageType == "editbirds")
@@ -516,8 +518,28 @@ Page {
         id: simpleDelegate
 
     }
+/*
+    Component {
+        id: sectionDelegate
+        Item {
+            width: listView.width
+            height: 40
+            Label {
+                id: sectionLabel
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: section
+                font.bold: true
 
-
+            }
+            Rectangle {
+                anchors.top: sectionLabel.bottom
+                height: 1
+                width: parent.width
+            }
+        }
+    }
+*/
     PositionSource {
         id: positionSource
         property string accuracy: maxVerticalAccurary <= maxHorizontalAccurary ? parseInt(maxHorizontalAccurary) : parseInt(maxVerticalAccurary)

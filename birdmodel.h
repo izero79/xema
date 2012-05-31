@@ -29,7 +29,8 @@ public:
         SweNameOnlyRole,
         SweGroupOnlyRole,
         EngNameOnlyRole,
-        EngGroupOnlyRole // 49
+        EngGroupOnlyRole, // 49
+        SectionRole
     };
 
 signals:

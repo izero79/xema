@@ -856,8 +856,9 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     return eka;
 }
 
-void ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *persons,  BirdModel *birds)
+int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *persons,  BirdModel *birds)
 {
+    int importError = XemaEnums::IMPORT_NOERRORS;
     qDebug() << "IMPORT";
     QDir dir;
     dir.cd(importDir());
@@ -865,6 +866,7 @@ void ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *pers
     filters << "*history*.csv" << "*history*.txt";
     QStringList importFiles;
     importFiles = dir.entryList(filters,QDir::Files);
+    qDebug() << "IMPORT" << importFiles;
     for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
         QFile importfile(importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
@@ -881,7 +883,10 @@ void ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *pers
             }
             if (line.count(delimiter) < 34) {
                 qDebug() << "INVALID FILE";
-                return;
+                if (!(importError&XemaEnums::IMPORT_HISTORYERROR)) {
+                    importError += XemaEnums::IMPORT_HISTORYERROR;
+                }
+                continue;
             }
 
             if (line.section(delimiter, XemaEnums::TIIRA_ID, XemaEnums::TIIRA_ID) != "Id" &&
@@ -895,6 +900,7 @@ void ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *pers
         bool previousNotHandled = true;
         while (importstream.atEnd() == false)
         {
+            QCoreApplication::processEvents();
             if (prevLines.length() == 0)
             {
                 prevLines.append(importstream.readLine());
@@ -934,7 +940,12 @@ void ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *pers
             nameNumber++;
         }
         importfile.rename(importedDir()+importedFileName);
+        if (!(importError&XemaEnums::IMPORT_HISTORY_OK)) {
+        importError += XemaEnums::IMPORT_HISTORY_OK;
+        }
     }
+    qDebug() << "returning" << importError;
+    return importError;
 }
 
 void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter)
@@ -1245,13 +1256,14 @@ void ModelDataWriter::checkAndCreateDirs() {
 }
 
 int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses) {
-    qDebug() << "IMPORT LOCATIONS";
+    int importError = XemaEnums::IMPORT_NOERRORS;
     QDir dir;
     dir.cd(importDir());
     QStringList filters;
     filters << "*location*.csv" << "*location*.txt";
     QStringList importFiles;
     importFiles = dir.entryList(filters,QDir::Files);
+    qDebug() << "IMPORT LOCATIONS" << importFiles;
 
     for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
         QFile importfile(importDir() + importFiles.at(fileno));
@@ -1262,13 +1274,16 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
-            if (line.count(delimiter) != 4) {
+            if (line.count(delimiter) != 4 && line.count(delimiter) != 8) {
                 qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
                 delimiter = ";";
             }
-            if (line.count(delimiter) != 4) {
-                qDebug() << "INVALID FILE";
-                break;
+            if (line.count(delimiter) != 4 && line.count(delimiter) != 8) {
+                qDebug() << "INVALID LOCATION FILE";
+                if (!(importError&XemaEnums::IMPORT_LOCATIONERROR)) {
+                    importError += XemaEnums::IMPORT_LOCATIONERROR;
+                }
+                continue;
             }
             importstream.seek(0);
         }
@@ -1320,6 +1335,9 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             nameNumber++;
         }
         importfile.rename(importedDir()+importedLocationFileName);
+        if (!(importError&XemaEnums::IMPORT_LOCATION_OK)) {
+            importError += XemaEnums::IMPORT_LOCATION_OK;
+        }
     }
 
 
@@ -1345,8 +1363,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 delimiter = ";";
             }
             if (line.count(delimiter) != 4) {
-                qDebug() << "INVALID PEOPLE FILE";
-                break;
+                qDebug() << "INVALID PERSON FILE";
+                if (!(importError&XemaEnums::IMPORT_PERSONERROR)) {
+                    importError += XemaEnums::IMPORT_PERSONERROR;
+                }
+                continue;
             }
             importstream.seek(0);
         }
@@ -1379,17 +1400,20 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         }
         QDateTime date;
         date = QDateTime::currentDateTime();
-        QString importedLocationFileName("people-imported-");
-        importedLocationFileName.append(date.toString("yyyyMMdd-hhmmss"));
-        importedLocationFileName.append(".csv");
+        QString importedPersonFileName("people-imported-");
+        importedPersonFileName.append(date.toString("yyyyMMdd-hhmmss"));
+        importedPersonFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedLocationFileName)) {
+        while (QFile::exists(importedDir()+importedPersonFileName)) {
             QString no;
             no.setNum(nameNumber);
-            importedLocationFileName.append("_"+no);
+            importedPersonFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedLocationFileName);
+        importfile.rename(importedDir()+importedPersonFileName);
+        if (!(importError&XemaEnums::IMPORT_PERSON_OK)) {
+            importError += XemaEnums::IMPORT_PERSON_OK;
+        }
     }
 
 
@@ -1410,13 +1434,16 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
-            if (line.count(delimiter) != 9) {
+            if (line.count(delimiter) != 9 && line.count(delimiter) != 11) {
                 qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
                 delimiter = ";";
             }
-            if (line.count(delimiter) != 9) {
+            if (line.count(delimiter) != 9 && line.count(delimiter) != 11) {
                 qDebug() << "INVALID BIRD FILE";
-                break;
+                if (!(importError&XemaEnums::IMPORT_BIRDERROR)) {
+                    importError += XemaEnums::IMPORT_BIRDERROR;
+                }
+                continue;
             }
             importstream.seek(0);
         }
@@ -1463,17 +1490,20 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         }
         QDateTime date;
         date = QDateTime::currentDateTime();
-        QString importedLocationFileName("birds-imported-");
-        importedLocationFileName.append(date.toString("yyyyMMdd-hhmmss"));
-        importedLocationFileName.append(".csv");
+        QString importedBirdFileName("birds-imported-");
+        importedBirdFileName.append(date.toString("yyyyMMdd-hhmmss"));
+        importedBirdFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedLocationFileName)) {
+        while (QFile::exists(importedDir()+importedBirdFileName)) {
             QString no;
             no.setNum(nameNumber);
-            importedLocationFileName.append("_"+no);
+            importedBirdFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedLocationFileName);
+        importfile.rename(importedDir()+importedBirdFileName);
+        if (!(importError&XemaEnums::IMPORT_BIRD_OK)) {
+            importError += XemaEnums::IMPORT_BIRD_OK;
+        }
     }
 
     // STATUSES
@@ -1499,7 +1529,10 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             }
             if (line.count(delimiter) != 4) {
                 qDebug() << "INVALID STATUS FILE";
-                break;
+                if (!(importError&XemaEnums::IMPORT_STATUSERROR)) {
+                    importError += XemaEnums::IMPORT_STATUSERROR;
+                }
+                continue;
             }
             importstream.seek(0);
         }
@@ -1534,16 +1567,20 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         }
         QDateTime date;
         date = QDateTime::currentDateTime();
-        QString importedLocationFileName("statuses-imported-");
-        importedLocationFileName.append(date.toString("yyyyMMdd-hhmmss"));
-        importedLocationFileName.append(".csv");
+        QString importedStatusFileName("statuses-imported-");
+        importedStatusFileName.append(date.toString("yyyyMMdd-hhmmss"));
+        importedStatusFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedLocationFileName)) {
+        while (QFile::exists(importedDir()+importedStatusFileName)) {
             QString no;
             no.setNum(nameNumber);
-            importedLocationFileName.append("_"+no);
+            importedStatusFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedLocationFileName);
+        importfile.rename(importedDir()+importedStatusFileName);
+        if (!(importError&XemaEnums::IMPORT_STATUS_OK)) {
+            importError += XemaEnums::IMPORT_STATUS_OK;
+        }
     }
+    return importError;
 }

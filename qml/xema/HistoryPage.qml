@@ -225,7 +225,36 @@ Page {
         anchors.bottom: parent.bottom
         delegate: myTestDelegate
         clip: true
+        section.criteria: ViewSection.FullString
+        section.property: "section"
+        section.delegate: sectionDelegate
     }
+
+    Component {
+        id: sectionDelegate
+        Item {
+            width: historyListView.width
+            height: 40
+            Label {
+                id: sectionLabel
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: section
+                font.bold: true
+
+            }
+            Rectangle {
+                anchors.top: sectionLabel.bottom
+                height: 1
+                width: parent.width
+            }
+        }
+    }
+/*
+    SectionScroller {
+        listView: historyListView
+    }
+*/
     HistoryListDelegate {
         id: myTestDelegate
 

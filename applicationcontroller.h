@@ -32,6 +32,7 @@ private slots:
     void initGUI();
     void initObjects();
     void reloadHistory();
+    void reloadAllHistory();
     void loadHistoryWithDate(const QString &date);
     void loadHistoryWithDateAndPlace(const QString &date, const QString &place);
 
@@ -46,7 +47,7 @@ private slots:
     void restoreLocations();
     void restoreObservers();
     void saveLocations();
-    void importData();
+    //void importData();
 
 private:
     QMLWindow *mQMLWin;

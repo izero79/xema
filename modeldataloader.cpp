@@ -184,6 +184,7 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
 
 void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)
 {
+    qDebug() << "void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)";
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
@@ -193,6 +194,7 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
     }
     while (striimi.atEnd() == false)
     {
+        QCoreApplication::processEvents();
         QString line;
         line = striimi.readLine();
         QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
@@ -248,6 +250,8 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
 
 void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 {
+    qDebug() << "void ModelDataLoader::loadHistoryDateData(HistoryModel *model)";
+
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
@@ -257,6 +261,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
     }
     while (striimi.atEnd() == false)
     {
+        QCoreApplication::processEvents();
         QString line;
         line = striimi.readLine();
         QString date = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
@@ -317,6 +322,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 
 void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &date)
 {
+    qDebug() << "void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &date)";
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
@@ -326,6 +332,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
     }
     while (striimi.atEnd() == false)
     {
+        QCoreApplication::processEvents();
         QString line;
         line = striimi.readLine();
         QString readDate = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);

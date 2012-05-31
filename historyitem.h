@@ -30,6 +30,7 @@ public:
     int specieCount(const QString &name = QString()) const;
     QDate sortDate() const;
     QTime sortTime() const;
+    QString sectionString() const;
 
 private:
     qlonglong mId;

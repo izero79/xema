@@ -7,6 +7,11 @@ FilterModel::FilterModel(QObject *parent) :
 {
 }
 
+int FilterModel::count()
+{
+    return rowCount();
+}
+
 int FilterModel::rowCount()
 {
     if (sourceModel() == 0)
@@ -131,4 +136,10 @@ QVariant FilterModel::data(int index, int role)
 void FilterModel::removeRow(int index)
 {
     sourceModel()->removeRow(index);
+}
+
+HistoryItem* FilterModel::get(int index)
+{
+    qDebug() << Q_FUNC_INFO;
+    return ((HistoryModel*)sourceModel())->get(index);
 }

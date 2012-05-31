@@ -152,6 +152,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
     connect(mRootObject,SIGNAL(deleteObs(QString,QString,QString)),this,SLOT(deleteObservation(QString,QString,QString)));
     connect(mRootObject,SIGNAL(reloadHistory()),this,SIGNAL(reloadHistory()));
+    connect(mRootObject,SIGNAL(reloadAllHistory()),this,SIGNAL(reloadAllHistory()));
     connect(mRootObject,SIGNAL(saveSystematicSorting(bool)),this,SLOT(saveSystematicSorting(bool)));
     connect(mRootObject,SIGNAL(saveDetailLevel(int)),this,SLOT(saveDetailLevel(int)));
     connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
@@ -162,7 +163,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(restoreLocations()),this,SIGNAL(restoreLocations()));
     connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
     connect(mRootObject,SIGNAL(saveLocations()),this,SIGNAL(saveLocations()));
-    connect(mRootObject,SIGNAL(importData()),this,SIGNAL(importData()));
+    connect(mRootObject,SIGNAL(importData()),this,SLOT(importData()));
     connect(mRootObject,SIGNAL(exportOwnData()),this,SLOT(exportOwnData()));
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
     connect(mRootObject,SIGNAL(openUrl(QString)),this,SLOT(openBrowser(QString)));
@@ -179,6 +180,7 @@ void QMLWindow::init()
              Q_ARG(QVariant, mSettings->systematicSorting()));
     QMetaObject::invokeMethod(mRootObject, "setDetailLevel",
              Q_ARG(QVariant, mSettings->detailLevel()));
+
 }
 
 void QMLWindow::setBirdModel(BirdModel *model)
@@ -271,7 +273,7 @@ void QMLWindow::deleteObservation(const QString &id, const QString &date, const 
 {
     qlonglong idNum = id.toLongLong();
     mDataWriter->deleteObservation(idNum);
-    reloadHistory();
+    reloadAllHistory();
     loadHistoryWithDateAndPlace(date, place);
 }
 
@@ -287,18 +289,39 @@ void QMLWindow::saveSystematicSorting(bool systematic)
 
 void QMLWindow::exportData(bool onlyNew)
 {
+    setProcessing(true);
     mDataWriter->exportHistory(onlyNew,mLocationModel,mPersonModel,mBirdModel);
+    setProcessing(false);
 }
 
 void QMLWindow::exportOwnData()
 {
+    setProcessing(true);
     mDataWriter->exportOwnData(mLocationModel,mPersonModel,mBirdModel);
+    setProcessing(false);
 }
 
 void QMLWindow::importOwnData()
 {
-    mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel,mStatusModel);
+    setProcessing(true);
+    int err = mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel,mStatusModel);
+    setProcessing(false);
+    QMetaObject::invokeMethod(mRootObject, "importError",
+             Q_ARG(QVariant,err));
 }
+
+void QMLWindow::importData()
+{
+    setProcessing(true);
+    int err = mDataWriter->importHistory(mLocationModel, mPersonModel, mBirdModel);
+    if (err&XemaEnums::IMPORT_HISTORY_OK) {
+        reloadAllHistory();
+    }
+    QMetaObject::invokeMethod(mRootObject, "importError",
+             Q_ARG(QVariant,err));
+    setProcessing(false);
+}
+
 
 void QMLWindow::openBrowser( const QString &url )
 {
@@ -306,3 +329,6 @@ void QMLWindow::openBrowser( const QString &url )
     QDesktopServices::openUrl(QUrl(url));
 }
 
+void QMLWindow::setProcessing(bool processing) {
+    mRootObject->setProperty( "cppProcessing", processing );
+}

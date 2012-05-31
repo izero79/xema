@@ -13,6 +13,7 @@ HistoryModel::HistoryModel(QObject *parent) :
     roles[SpeciesCountRole] = "specieCount";
     roles[SortableDateRole] = "sortdate";
     roles[SortableTimeRole] = "timedate";
+    roles[SectionRole] = "section";
     setRoleNames(roles);
 }
 
@@ -80,6 +81,10 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
     {
         return item.sortTime();
     }
+    else if (role == SectionRole)
+    {
+        return item.sectionString();
+    }
     return QVariant();
 }
 
@@ -135,6 +140,15 @@ HistoryItem HistoryModel::getItem(int row)
         return HistoryItem();
     }
     return items.at(row);
+}
+
+HistoryItem* HistoryModel::get(int row)
+{
+    if (row < 0 || row >= items.count())
+    {
+        return new HistoryItem();
+    }
+    return new HistoryItem(items.at(row));
 }
 
 void HistoryModel::replaceItem(int row, const HistoryItem &item)

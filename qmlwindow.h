@@ -35,6 +35,7 @@ public:
 
 signals:
     void reloadHistory();
+    void reloadAllHistory();
     void quit();
     void loadHistoryWithDate(const QString &date);
     void loadHistoryWithDateAndPlace(const QString &date, const QString &place);
@@ -42,7 +43,6 @@ signals:
     void restoreLocations();
     void restoreObservers();
     void saveLocations();
-    void importData();
 
 public slots:
     void orientationChanged();
@@ -58,6 +58,7 @@ public slots:
     void setSexModel(SexModel *model);
     void setDressModel(DressModel *model);
     void setAgeModel(AgeModel *model);
+    void setProcessing(bool processing);
 
 private slots:
     void writeNewObservation(const QString &data);
@@ -69,6 +70,7 @@ private slots:
     void exportOwnData();
     void importOwnData();
     void openBrowser( const QString &url );
+    void importData();
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)

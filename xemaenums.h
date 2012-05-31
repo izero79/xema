@@ -12,6 +12,8 @@ class XemaEnums : public QObject {
     Q_ENUMS(statusFields)
     Q_ENUMS(atlasIndexFields)
     Q_ENUMS(tiiraFields)
+    Q_ENUMS(importErrors)
+    Q_ENUMS(importSuccess)
 public:
 
 public:
@@ -160,6 +162,22 @@ public:
 
     static const int OBS_SUBFIELDCOUNT = 12;
 
+    enum importErrors {
+        IMPORT_NOERRORS = 0,
+        IMPORT_LOCATIONERROR = 1,
+        IMPORT_PERSONERROR = 2,
+        IMPORT_BIRDERROR = 4,
+        IMPORT_STATUSERROR = 8,
+        IMPORT_HISTORYERROR = 16
+    };
+
+    enum importSuccess {
+        IMPORT_LOCATION_OK = 32,
+        IMPORT_PERSON_OK = 64,
+        IMPORT_BIRD_OK = 128,
+        IMPORT_STATUS_OK = 256,
+        IMPORT_HISTORY_OK = 512
+    };
 
 };
 

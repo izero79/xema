@@ -30,7 +30,7 @@ public:
     void removeCustomSpecies();
     void removeCustomLocations();
     void removeCustomObservers();
-    void importHistory(LocationModel *locations, PersonModel *persons, BirdModel *birds);
+    int importHistory(LocationModel *locations, PersonModel *persons, BirdModel *birds);
     void importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
     int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
 
