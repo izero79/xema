@@ -34,7 +34,7 @@ Page {
         }
         ToolButton {
             flat: true
-            iconSource: "toolbar-share" //qml/s3icons/save.svg"
+            iconSource: "toolbar-share" //qml/symbian3_icons/save.svg"
             onClicked: {
                 exportDialog.open()
             }

@@ -75,7 +75,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     qmlRegisterType<XemaEnums>("XemaEnums", 1, 0, "XemaEnums");
 
 #ifdef SYMBIAN3
-    setSource(QUrl("qrc:qml/xema/main.qml"));
+    setSource(QUrl("qrc:qml/symbian3/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #elif defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView->setSource(QUrl("qrc:qml/xema/main.qml"));
@@ -84,7 +84,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/xema/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    setSource(QUrl("qrc:qml/xema/main.qml"));
+    setSource(QUrl("qrc:qml/symbian3/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
 }

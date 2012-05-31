@@ -1,7 +1,13 @@
 # Add more folders to ship with the application, here
-folder_01.source = qml/xema
+folder_01.source = qml/symbian3
 folder_01.target = qml
 DEPLOYMENTFOLDERS = folder_01
+folder_02.source = qml/symbian3_icons
+folder_02.target = qml
+DEPLOYMENTFOLDERS += folder_02
+folder_03.source = qml/common
+folder_03.target = qml
+DEPLOYMENTFOLDERS += folder_03
 
 #CONFIG +=debug
 #CONFIG -=release

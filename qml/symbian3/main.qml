@@ -260,7 +260,7 @@ PageStackWindow {
         }
         ToolButton {
             flat: true
-            iconSource: "/qml/s3icons/filter.svg"
+            iconSource: "/qml/symbian3_icons/filter.svg"
             visible: pageStack.currentPage == MyScript.obsObject
             onClicked: {
                 if (window.currentDetailLevel < 3)
@@ -275,7 +275,7 @@ PageStackWindow {
         }
         ToolButton {
             flat: true
-            iconSource: "/qml/s3icons/save.svg"
+            iconSource: "/qml/symbian3_icons/save.svg"
             visible: pageStack.currentPage == MyScript.obsObject && MyScript.obsObject.currentTab == 3
             onClicked: {
                 var success = false

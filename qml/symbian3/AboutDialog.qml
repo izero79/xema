@@ -17,7 +17,7 @@ FocusScope {
     property int buttonHeight: 50
     property int buttonWidth: 100
     property bool portrait: window.inPortrait
-    property string iconFileName: "/qml/s3icons/xema96.png"
+    property string iconFileName: "/qml/symbian3_icons/xema96.png"
     property int iconSize: 96
     property bool useHighlight: false
     property string hiliteColor: "#0000ff"
