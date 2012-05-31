@@ -35,14 +35,16 @@ public:
 
 signals:
     void reloadHistory();
-    void reloadAllHistory();
     void quit();
     void loadHistoryWithDate(const QString &date);
     void loadHistoryWithDateAndPlace(const QString &date, const QString &place);
+    void clearHistory();
     void restoreSpecies();
+    void restoreStatuses();
     void restoreLocations();
     void restoreObservers();
     void saveLocations();
+    void savePersons();
 
 public slots:
     void orientationChanged();

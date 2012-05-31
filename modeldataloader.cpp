@@ -38,6 +38,10 @@ ModelDataLoader::ModelDataLoader(QObject *parent) :
 {
 }
 
+ModelDataLoader::~ModelDataLoader() {
+    delete mDataLoader;
+}
+
 void ModelDataLoader::loadBirdData(BirdModel *model)
 {
     mBirdModel = model;

@@ -6,7 +6,7 @@ Component {
         id: myTestDelegate
         width: parent.width
         height: 60
-        Text {
+        Label {
             id: delegateTitle
             anchors.right: parent.left
             anchors.top: parent.top

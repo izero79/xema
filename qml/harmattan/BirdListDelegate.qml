@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 
 Component {
     Item {
@@ -15,33 +15,32 @@ Component {
             verticalAlignment: Text.AlignVCenter
             text: {
                 if (currentLanguage == "en") {
-                    return engtown + ", " + engplace
+                    return engname + ", " + latinname
                 }
-                if (currentLanguage == "sv") {
-                    return swetown + ", " + sweplace
+                else if (currentLanguage == "sv") {
+                    return swename + ", " + latinname
                 }
                 else {
-                    return town + ", " + place
+                    return finname + ", " + latinname
                 }
-
             }
+
             color: "white"
         }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + town)
+                console.log("clicked bird: " + finname)
                 if (listView.editMode == true)
                 {
-                    console.log("edit")
                     listPage.clicked(realindex)
                 }
                 else
                 {
                     listPage.clicked(realindex)
-//                    listPage.clicked(town + ", " + place)
                 }
+
             }
             onPressAndHold: {
                 listPage.showContextMenu(realindex)

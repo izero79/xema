@@ -1,14 +1,3 @@
-# Add more folders to ship with the application, here
-folder_01.source = qml/symbian3
-folder_01.target = qml
-DEPLOYMENTFOLDERS = folder_01
-folder_02.source = qml/symbian3_icons
-folder_02.target = qml
-DEPLOYMENTFOLDERS += folder_02
-folder_03.source = qml/common
-folder_03.target = qml
-DEPLOYMENTFOLDERS += folder_03
-
 #CONFIG +=debug
 #CONFIG -=release
 CONFIG -=liteVersion
@@ -18,17 +7,17 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-#symbian:DEFINES +=DEBUGONLYTOFILE
+symbian:DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location
 
 DEFINES += ONLYFORIMEI=0
 
-VERSION = 0.1.4
+VERSION = 0.1.7
 
 DEFINES += MAJORVERSION=0
 DEFINES += MINORVERSION=1
-DEFINES += PATCHVERSION=4
+DEFINES += PATCHVERSION=7
 
 TARGET = xema
 DEPLOYMENT.display_name = "Xema"
@@ -44,6 +33,26 @@ DEPLOYMENT += customrules
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
+
+
+# Add more folders to ship with the application, here
+folder_03.source = qml/common
+folder_03.target = qml
+DEPLOYMENTFOLDERS += folder_03
+
+
+folder_01.source = qml/symbian3
+folder_01.target = qml
+DEPLOYMENTFOLDERS += folder_01
+folder_02.source = qml/symbian3_icons
+folder_02.target = qml
+DEPLOYMENTFOLDERS += folder_02
+folder_04.source = qml/harmattan
+folder_04.target = qml
+DEPLOYMENTFOLDERS += folder_04
+folder_05.source = qml/harmattan_icons
+folder_05.target = qml
+DEPLOYMENTFOLDERS += folder_05
 
 symbian{
 TARGET.UID3 = 0xE3CA679E
@@ -91,8 +100,16 @@ symbian:TARGET.EPOCHEAPSIZE = 0x20000 0x2000000
 # CONFIG += mobility
 # MOBILITY +=
 
+unix:!symbian:!maemo5:!macx {
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
-!symbian:CONFIG += qdeclarative-boostable
+    CONFIG += qdeclarative-boostable
+    QMAKE_CXXFLAGS += -fPIC -fvisibility=hidden -fvisibility-inlines-hidden
+    QMAKE_LFLAGS += -pie -rdynamic
+
+
+    DEFINES += HARMATTAN
+
+}
 
 # Add dependency to Symbian components
 CONFIG += qt-components
@@ -175,8 +192,20 @@ HEADERS += \
     sexmodel.h
 
 RESOURCES += \
-    symbianresources.qrc \
     commonresources.qrc
+
+symbian{
+RESOURCES += \
+    symbianresources.qrc
+}else{
+RESOURCES += \
+    harmattanresources.qrc
+}
+
+macx|win32 {
+    RESOURCES += \
+    symbianresources.qrc \
+}
 
 OTHER_FILES += \
     ykjetrs.h \

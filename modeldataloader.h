@@ -37,6 +37,7 @@ public slots:
 
 private:
     explicit ModelDataLoader(QObject *parent = 0);
+    ~ModelDataLoader();
 
     QString dataFileDir();
     QString readBird(const QString &bird);

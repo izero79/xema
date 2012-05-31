@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 import QtMobility.location 1.1
 
@@ -13,9 +13,8 @@ Page {
 
     ToolBarLayout {
         id: editToolBar
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
+        ToolIcon {
+            iconId: "icon-m-toolbar-back-white"
             onClicked: {
                 console.log("pep sivu back clicked")
                 positionSource.stop()

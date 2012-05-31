@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 
 Page {
     id: mainPage
@@ -7,9 +7,10 @@ Page {
 
     ToolBarLayout {
         id: mainToolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
+        visible: true
+        ToolIcon {
+            //flat: true
+            iconId: "icon-m-toolbar-back-white"
             onClicked: {
                 pageStack.depth <= 1 ? quit() : pageStack.pop()
             }

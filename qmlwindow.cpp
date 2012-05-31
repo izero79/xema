@@ -78,13 +78,13 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/symbian3/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #elif defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
-    mView->setSource(QUrl("qrc:qml/xema/main.qml"));
+    mView->setSource(QUrl("qrc:qml/symbian/main.qml"));
     mRootObject = dynamic_cast<QObject*>(mView->rootObject());
 #elif defined HARMATTAN
-    setSource(QUrl("qrc:qml/xema/main.qml"));
+    setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    setSource(QUrl("qrc:qml/symbian3/main.qml"));
+    setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
 }
@@ -152,7 +152,6 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));
     connect(mRootObject,SIGNAL(deleteObs(QString,QString,QString)),this,SLOT(deleteObservation(QString,QString,QString)));
     connect(mRootObject,SIGNAL(reloadHistory()),this,SIGNAL(reloadHistory()));
-    connect(mRootObject,SIGNAL(reloadAllHistory()),this,SIGNAL(reloadAllHistory()));
     connect(mRootObject,SIGNAL(saveSystematicSorting(bool)),this,SLOT(saveSystematicSorting(bool)));
     connect(mRootObject,SIGNAL(saveDetailLevel(int)),this,SLOT(saveDetailLevel(int)));
     connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
@@ -162,7 +161,10 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(restoreObservers()),this,SIGNAL(restoreObservers()));
     connect(mRootObject,SIGNAL(restoreLocations()),this,SIGNAL(restoreLocations()));
     connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
+    connect(mRootObject,SIGNAL(restoreStatuses()),this,SIGNAL(restoreStatuses()));
+    connect(mRootObject,SIGNAL(clearHistory()),this,SIGNAL(clearHistory()));
     connect(mRootObject,SIGNAL(saveLocations()),this,SIGNAL(saveLocations()));
+    connect(mRootObject,SIGNAL(savePersons()),this,SIGNAL(savePersons()));
     connect(mRootObject,SIGNAL(importData()),this,SLOT(importData()));
     connect(mRootObject,SIGNAL(exportOwnData()),this,SLOT(exportOwnData()));
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
@@ -273,8 +275,11 @@ void QMLWindow::deleteObservation(const QString &id, const QString &date, const 
 {
     qlonglong idNum = id.toLongLong();
     mDataWriter->deleteObservation(idNum);
-    reloadAllHistory();
+    setProcessing(true);
     loadHistoryWithDateAndPlace(date, place);
+    loadHistoryWithDate(date);
+    reloadHistory();
+    setProcessing(false);
 }
 
 void QMLWindow::saveDetailLevel(int level)
@@ -315,7 +320,7 @@ void QMLWindow::importData()
     setProcessing(true);
     int err = mDataWriter->importHistory(mLocationModel, mPersonModel, mBirdModel);
     if (err&XemaEnums::IMPORT_HISTORY_OK) {
-        reloadAllHistory();
+        reloadHistory();
     }
     QMetaObject::invokeMethod(mRootObject, "importError",
              Q_ARG(QVariant,err));

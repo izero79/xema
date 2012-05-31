@@ -1,11 +1,18 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 
 Component {
     Item {
         id: myTestDelegate
         width: parent.width
         height: 60
+        Rectangle {
+            id: background
+            anchors.fill: parent
+            color: "blue"
+            visible: selected == true
+        }
+
         Label {
             id: delegateTitle
             anchors.right: parent.left
@@ -15,13 +22,13 @@ Component {
             verticalAlignment: Text.AlignVCenter
             text: {
                 if (currentLanguage == "en") {
-                    return engtown + ", " + engplace
+                    return abbrev + " (" + engname + ")"
                 }
-                if (currentLanguage == "sv") {
-                    return swetown + ", " + sweplace
+                else if (currentLanguage == "sv") {
+                    return abbrev + " (" + swename + ")"
                 }
                 else {
-                    return town + ", " + place
+                    return abbrev + " (" + finname + ")"
                 }
 
             }
@@ -31,16 +38,16 @@ Component {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + town)
+
                 if (listView.editMode == true)
                 {
-                    console.log("edit")
                     listPage.clicked(realindex)
                 }
                 else
                 {
-                    listPage.clicked(realindex)
-//                    listPage.clicked(town + ", " + place)
+                    console.log("click: " + abbrev + " (" + finname + ")")
+                    //listPage.clicked(abbrev + " (" + name + ")")
+                    listView.model.setData(realindex, !selected, 2)
                 }
             }
             onPressAndHold: {

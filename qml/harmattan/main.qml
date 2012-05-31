@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 import XemaEnums 1.0
 
@@ -176,7 +176,7 @@ PageStackWindow {
 
         MyScript.obsObject.setData(date, place, species)
     }
-//    initialPage: Qt.resolvedUrl("MainPage.qml")
+    initialPage: Qt.resolvedUrl("MainPage.qml")
 
     function importError(errorNo)
     {
@@ -259,9 +259,10 @@ PageStackWindow {
 
     ToolBarLayout {
         id: toolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
+        visible: false
+        ToolIcon {
+            //flat: true
+            iconId: "icon-m-toolbar-back-white" //"toolbar-back"
             onClicked: {
                 if (pageStack.currentPage == MyScript.obsObject)
                 {
@@ -301,9 +302,9 @@ PageStackWindow {
             visible: pageStack.currentPage == MyScript.obsObject && MyScript.obsObject.currentTab == 3
             onClicked: window.save()
         }
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-delete"
+        ToolIcon {
+            //flat: true
+            iconId: "icon-m-toolbar-delete-white"
             visible: pageStack.currentPage == MyScript.obsObject //&& MyScript.obsObject.currentTab == 3
             onClicked: window.clearTab()
         }
@@ -356,6 +357,7 @@ PageStackWindow {
     }
 
     Component.onCompleted: {
-        pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+//        pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+        theme.inverted = true
     }
 }

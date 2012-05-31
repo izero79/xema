@@ -414,6 +414,10 @@
         <source>Statuses</source>
         <translation type="unfinished">Tilat</translation>
     </message>
+    <message>
+        <source>Observations</source>
+        <translation type="unfinished">Havainnot</translation>
+    </message>
 </context>
 <context>
     <name>StatusEditPage</name>
@@ -440,6 +444,79 @@
     <message>
         <source>Id number</source>
         <translation type="unfinished">Id numero</translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <source>Import complete</source>
+        <translation>Tuonti valmis</translation>
+    </message>
+    <message>
+        <source>No files imported</source>
+        <translation>Tiedostoja ei tuotu</translation>
+    </message>
+    <message>
+        <source>Imported locations
+</source>
+        <translation>Tuotiin paikat</translation>
+    </message>
+    <message>
+        <source>Imported persons
+</source>
+        <translation>Tuotiin havainnoijat</translation>
+    </message>
+    <message>
+        <source>Imported birds
+</source>
+        <translation>Tuotiin lajit</translation>
+    </message>
+    <message>
+        <source>Imported status
+</source>
+        <translation>Tuontiin tilat</translation>
+    </message>
+    <message>
+        <source>Imported history
+</source>
+        <translation>Tuotiin havainnot</translation>
+    </message>
+    <message>
+        <source>Import error</source>
+        <translation>Tuontivirhe</translation>
+    </message>
+    <message>
+        <source>Error with locations file
+</source>
+        <translation>Virheellinen paikkatiedosto</translation>
+    </message>
+    <message>
+        <source>Error with persons file
+</source>
+        <translation>Virheellinen havainnoijatiedosto</translation>
+    </message>
+    <message>
+        <source>Error with birds file
+</source>
+        <translation>Virheellinen lajitiedosto</translation>
+    </message>
+    <message>
+        <source>Error with status file
+</source>
+        <translation>Virheellinen tilatiedosto</translation>
+    </message>
+    <message>
+        <source>Error with history file
+</source>
+        <translation>Virheellinen havaintotiedosto</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Virhe</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
     </message>
 </context>
 </TS>

@@ -1,12 +1,12 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 import XemaEnums 1.0
 
 Page {
 
     id: obsPage
-    tools: toolBarLayout
+    tools: tabBarLayout
     property int detailLevel: window.currentDetailLevel
     property int currentId: 0
     property int currentTab: 1
@@ -422,6 +422,7 @@ Page {
             weatherTa.text = ""
         }
         MyScript.clearObsDataSelections()
+        unsavedData = false
     }
 
     function showErrorDialog()
@@ -546,18 +547,41 @@ Page {
         }
     }
 
-    TabBarLayout {
+    ToolBarLayout {
         id: tabBarLayout
-        anchors { left: parent.left; right: parent.right; top: parent.top }
-        TabButton { tab: tab1content; text: qsTr("Day") }
-        TabButton { tab: tab2content; text: qsTr("Place") }
-        TabButton { tab: tab3content; text: qsTr("Observation") }
+        anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+        ToolIcon {
+            //flat: true
+            iconId: "icon-m-toolbar-back-white" //"toolbar-back"
+            onClicked: {
+                if (pageStack.currentPage == MyScript.obsObject)
+                {
+                    unsavedData = MyScript.unSavedDataExists()
+                    MyScript.clearObsDataSelections()
+                    if (needsHistoryReload) {
+                        window.reloadHistory()
+                        needsHistoryReload = false
+                    }
+
+                }
+                else if (pageStack.currentPage == MyScript.listObject)
+                {
+                    backFromList()
+                }
+                pageStack.depth <= 1 ? quit() : pageStack.pop()
+            }
+        }
+        ButtonRow {
+            TabButton { tab: tab1content; text: qsTr("Day") }
+            TabButton { tab: tab2content; text: qsTr("Place") }
+            TabButton { tab: tab3content; text: qsTr("Observation") }
+        }
     }
 
     TabGroup {
         id: tabGroup
         currentTab: tab1content
-        anchors { left: parent.left; right: parent.right; top: tabBarLayout.bottom; bottom: parent.bottom }
+        anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
         onCurrentTabChanged: {
             if (currentTab == tab1content)
             {
@@ -572,13 +596,65 @@ Page {
                 obsPage.currentTab = 3
             }
         }
-
-
+	
         // define the content for tab 1
         Page {
             id: tab1content
             clip: true
 
+            Rectangle {
+                id: tab1Tools
+                z: flickable2.z + 1
+                color: "black"
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                width: parent.width
+                height: 60
+                ToolIcon {
+                    //flat: true
+                    anchors.left: parent.left
+                    iconSource: "/qml/symbian3_icons/filter.svg"
+                    onClicked: {
+                        if (window.currentDetailLevel < 3)
+                        {
+                            window.currentDetailLevel++
+                        }
+                        else
+                        {
+                            window.currentDetailLevel = 1
+                        }
+                    }
+                }
+                ToolIcon {
+                    //flat: true
+                    visible: false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    iconSource: "/qml/symbian3_icons/save.svg"
+                    onClicked: {
+                        window.save()/*
+                        var success = false
+                        success = MyScript.readAndSaveData()
+                        if (success)
+                        {
+                            MyScript.obsObject.clearTab()
+                            MyScript.dataSaved()
+                            unsavedData = false
+                            needsHistoryReload = true
+                        }
+*/
+                    }
+                }
+                ToolIcon {
+                    //flat: true
+                    iconId: "icon-m-toolbar-delete-white"
+                    anchors.right: parent.right
+                    onClicked: {
+                        window.clearTab()/*
+                        MyScript.obsObject.clearTab()
+                        unsavedData = false*/
+                    }
+                }
+            }
             Flickable {
                 id: flickable2
                 clip: false
@@ -594,7 +670,7 @@ Page {
                 }
 
                 Component.onCompleted: {
-                  inputContext.visibleChanged.connect(adjuster2.restart)
+//                  inputContext.visibleChanged.connect(adjuster2.restart)
                 }
 
                 function adjust() {
@@ -813,10 +889,62 @@ Page {
             }
         }
 
-        // define the content for tab 2
         Page {
             id: tab2content
             clip: true
+            Rectangle {
+                id: tab2Tools
+                z: flickable2.z + 1
+                color: "black"
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                width: parent.width
+                height: 60
+                ToolIcon {
+                    //flat: true
+                    anchors.left: parent.left
+                    iconSource: "/qml/symbian3_icons/filter.svg"
+                    onClicked: {
+                        if (window.currentDetailLevel < 3)
+                        {
+                            window.currentDetailLevel++
+                        }
+                        else
+                        {
+                            window.currentDetailLevel = 1
+                        }
+                    }
+                }
+                ToolIcon {
+                    //flat: true
+                    visible: false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    iconSource: "/qml/symbian3_icons/save.svg"
+                    onClicked: {
+                        window.save()/*
+                        var success = false
+                        success = MyScript.readAndSaveData()
+                        if (success)
+                        {
+                            MyScript.obsObject.clearTab()
+                            MyScript.dataSaved()
+                            unsavedData = false
+                            needsHistoryReload = true
+                        }*/
+
+                    }
+                }
+                ToolIcon {
+                    //flat: true
+                    iconId: "icon-m-toolbar-delete-white"
+                    anchors.right: parent.right
+                    onClicked: {
+                        window.clearTab()/*
+                        MyScript.obsObject.clearTab()
+                        unsavedData = false*/
+                    }
+                }
+            }
             Flickable {
                 id: flickable1
                 clip: false
@@ -832,7 +960,7 @@ Page {
                 }
 
                 Component.onCompleted: {
-                  inputContext.visibleChanged.connect(adjuster1.restart)
+//                  inputContext.visibleChanged.connect(adjuster1.restart)
                 }
 
                 function adjust() {
@@ -1014,11 +1142,62 @@ Page {
                 }
             }
         }
-
-        // define content for tab 3
         Page {
             id: tab3content
             clip: true
+            Rectangle {
+                id: tab3Tools
+                z: flickable2.z + 1
+                color: "black"
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                width: parent.width
+                height: 60
+                ToolIcon {
+                    //flat: true
+                    anchors.left: parent.left
+                    iconSource: "/qml/symbian3_icons/filter.svg"
+                    onClicked: {
+                        if (window.currentDetailLevel < 3)
+                        {
+                            window.currentDetailLevel++
+                        }
+                        else
+                        {
+                            window.currentDetailLevel = 1
+                        }
+                    }
+                }
+                ToolIcon {
+                    //flat: true
+                    visible: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    iconSource: "/qml/symbian3_icons/save.svg"
+                    onClicked: {
+                        window.save()/*
+                        var success = false
+                        success = MyScript.readAndSaveData()
+                        if (success)
+                        {
+                            MyScript.obsObject.clearTab()
+                            MyScript.dataSaved()
+                            unsavedData = false
+                            needsHistoryReload = true
+                        }*/
+
+                    }
+                }
+                ToolIcon {
+                    //flat: true
+                    iconId: "icon-m-toolbar-delete-white"
+                    anchors.right: parent.right
+                    onClicked: {
+                        window.clearTab()/*
+                        MyScript.obsObject.clearTab()
+                        unsavedData = false*/
+                    }
+                }
+            }
             Flickable {
                 id: flickable3
                 clip: false
@@ -1034,7 +1213,7 @@ Page {
                 }
 
                 Component.onCompleted: {
-                  inputContext.visibleChanged.connect(adjuster3.restart)
+//                  inputContext.visibleChanged.connect(adjuster3.restart)
                 }
 
                 function adjust() {

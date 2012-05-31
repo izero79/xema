@@ -29,13 +29,16 @@ public:
 
     void removeCustomSpecies();
     void removeCustomLocations();
+    void removeCustomStatuses();
     void removeCustomObservers();
+    void removeHistory();
     int importHistory(LocationModel *locations, PersonModel *persons, BirdModel *birds);
     void importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
     int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
 
 private:
     explicit ModelDataWriter(QObject *parent = 0);
+    ~ModelDataWriter();
     qlonglong getNewId();
     QString dataFileDir();
     QString exportDir();

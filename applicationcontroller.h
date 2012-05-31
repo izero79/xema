@@ -32,7 +32,6 @@ private slots:
     void initGUI();
     void initObjects();
     void reloadHistory();
-    void reloadAllHistory();
     void loadHistoryWithDate(const QString &date);
     void loadHistoryWithDateAndPlace(const QString &date, const QString &place);
 
@@ -46,7 +45,10 @@ private slots:
     void restoreSpecies();
     void restoreLocations();
     void restoreObservers();
+    void restoreStatuses();
     void saveLocations();
+    void savePersons();
+    void clearHistory();
     //void importData();
 
 private:

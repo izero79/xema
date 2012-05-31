@@ -1,11 +1,32 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 
 Component {
     Item {
         id: myTestDelegate
         width: parent.width
-        height: 60
+        visible: true /*{
+            if (listView.editMode == true)
+            {
+                return true
+            }
+/*
+            if (listView.showRegistered == registered)
+            {
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }*/
+        height: visible ? 60 : 0
+        Rectangle {
+            id: background
+            anchors.fill: parent
+            color: "blue"
+            visible: selected == true
+        }
         Label {
             id: delegateTitle
             anchors.right: parent.left
@@ -13,34 +34,21 @@ Component {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             verticalAlignment: Text.AlignVCenter
-            text: {
-                if (currentLanguage == "en") {
-                    return engtown + ", " + engplace
-                }
-                if (currentLanguage == "sv") {
-                    return swetown + ", " + sweplace
-                }
-                else {
-                    return town + ", " + place
-                }
-
-            }
+            text: name ? name : ""
             color: "white"
         }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("click: " + town)
                 if (listView.editMode == true)
                 {
-                    console.log("edit")
                     listPage.clicked(realindex)
+                    return
                 }
                 else
                 {
-                    listPage.clicked(realindex)
-//                    listPage.clicked(town + ", " + place)
+                    listView.model.setData(realindex, !selected, 2)
                 }
             }
             onPressAndHold: {

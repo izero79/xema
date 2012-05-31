@@ -35,6 +35,11 @@ ModelDataWriter::ModelDataWriter(QObject *parent) :
     checkAndCreateDirs();
 }
 
+ModelDataWriter::~ModelDataWriter() {
+    delete mDataWriter;
+}
+
+
 void ModelDataWriter::writeNewObservation(const QString &data/*, const LocationModel &locations, const PersonModel &persons*/)
 {
     if (data.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID) != "0")
@@ -693,9 +698,21 @@ void ModelDataWriter::removeCustomLocations()
     tiedosto.remove();
 }
 
+void ModelDataWriter::removeCustomStatuses()
+{
+    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    tiedosto.remove();
+}
+
 void ModelDataWriter::removeCustomObservers()
 {
     QFile tiedosto(dataFileDir() + "xemapersondata.txt");
+    tiedosto.remove();
+}
+
+void ModelDataWriter::removeHistory()
+{
+    QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.remove();
 }
 

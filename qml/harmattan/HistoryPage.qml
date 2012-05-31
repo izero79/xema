@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 
 
 Page {
@@ -11,9 +11,8 @@ Page {
 
     ToolBarLayout {
         id: historyToolBarLayout
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
+        ToolIcon {
+            iconId: "icon-m-toolbar-back-white"
             onClicked: {
                 if (dateListVisible == true)
                 {
@@ -32,9 +31,9 @@ Page {
                 }
             }
         }
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-share" //qml/symbian3_icons/save.svg"
+        ToolIcon {
+            //flat: true
+            iconId: "icon-m-toolbar-share-white" //qml/symbian3_icons/save.svg"
             visible: historyListView.model == historyDateModel
             onClicked: {
                 exportDialog.open()
@@ -175,7 +174,7 @@ Page {
                 }
             }
         }
-        onClickedOutside: exportDialog.close()
+//        onClickedOutside: exportDialog.close()
 
     }
 

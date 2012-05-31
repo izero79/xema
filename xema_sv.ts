@@ -4,12 +4,14 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="qml/xema/AboutDialog.qml" line="12"/>
+        <location filename="qml/harmattan/AboutDialog.qml" line="12"/>
+        <location filename="qml/symbian3/AboutDialog.qml" line="12"/>
         <source>version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/AboutDialog.qml" line="13"/>
+        <location filename="qml/harmattan/AboutDialog.qml" line="13"/>
+        <location filename="qml/symbian3/AboutDialog.qml" line="13"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17,62 +19,74 @@
 <context>
     <name>BirdEditPage</name>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="149"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="149"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="149"/>
         <source>Edit species</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="165"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="165"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="165"/>
         <source>Finnish name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="180"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="180"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="180"/>
         <source>Swedish name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="195"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="195"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="195"/>
         <source>English name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="208"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="208"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="208"/>
         <source>Latin name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="221"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="221"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="221"/>
         <source>Group in finnish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="233"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="233"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="233"/>
         <source>Group in swedish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="245"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="245"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="245"/>
         <source>Group in english</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="257"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="257"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="257"/>
         <source>Group in latin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="269"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="269"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="269"/>
         <source>Abbreviation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="281"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="281"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="281"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/BirdEditPage.qml" line="293"/>
+        <location filename="qml/harmattan/BirdEditPage.qml" line="293"/>
+        <location filename="qml/symbian3/BirdEditPage.qml" line="293"/>
         <source>Id number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -80,32 +94,38 @@
 <context>
     <name>HistoryPage</name>
     <message>
-        <location filename="qml/xema/HistoryPage.qml" line="45"/>
+        <location filename="qml/harmattan/HistoryPage.qml" line="46"/>
+        <location filename="qml/symbian3/HistoryPage.qml" line="46"/>
         <source>import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/HistoryPage.qml" line="59"/>
+        <location filename="qml/harmattan/HistoryPage.qml" line="62"/>
+        <location filename="qml/symbian3/HistoryPage.qml" line="62"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/HistoryPage.qml" line="125"/>
+        <location filename="qml/harmattan/HistoryPage.qml" line="133"/>
+        <location filename="qml/symbian3/HistoryPage.qml" line="133"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/HistoryPage.qml" line="138"/>
+        <location filename="qml/harmattan/HistoryPage.qml" line="146"/>
+        <location filename="qml/symbian3/HistoryPage.qml" line="146"/>
         <source>Do you want to export all data, or just new data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/HistoryPage.qml" line="150"/>
+        <location filename="qml/harmattan/HistoryPage.qml" line="158"/>
+        <location filename="qml/symbian3/HistoryPage.qml" line="158"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/HistoryPage.qml" line="162"/>
+        <location filename="qml/harmattan/HistoryPage.qml" line="170"/>
+        <location filename="qml/symbian3/HistoryPage.qml" line="170"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
@@ -113,17 +133,20 @@
 <context>
     <name>ListPage</name>
     <message>
-        <location filename="qml/xema/ListPage.qml" line="22"/>
+        <location filename="qml/harmattan/ListPage.qml" line="22"/>
+        <location filename="qml/symbian3/ListPage.qml" line="22"/>
         <source>Stop GPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ListPage.qml" line="22"/>
+        <location filename="qml/harmattan/ListPage.qml" line="22"/>
+        <location filename="qml/symbian3/ListPage.qml" line="22"/>
         <source>Start GPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ListPage.qml" line="93"/>
+        <location filename="qml/harmattan/ListPage.qml" line="93"/>
+        <location filename="qml/symbian3/ListPage.qml" line="93"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -131,62 +154,74 @@
 <context>
     <name>LocationEditPage</name>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="146"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="146"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="146"/>
         <source>Edit location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="162"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="162"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="162"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="179"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="179"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="179"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="196"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="196"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="196"/>
         <source>Town in swedish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="213"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="213"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="213"/>
         <source>Location in swedish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="230"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="230"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="230"/>
         <source>Town in english</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="247"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="247"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="247"/>
         <source>Location in english</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="263"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="263"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="263"/>
         <source>YKJ coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="277"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="277"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="277"/>
         <source>WGS coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="296"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="296"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="296"/>
         <source>Start GPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="316"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="316"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="316"/>
         <source>Stop GPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/LocationEditPage.qml" line="327"/>
+        <location filename="qml/harmattan/LocationEditPage.qml" line="327"/>
+        <location filename="qml/symbian3/LocationEditPage.qml" line="327"/>
         <source>Accuracy: %1 m</source>
         <translation type="unfinished"></translation>
     </message>
@@ -194,22 +229,26 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="qml/xema/MainPage.qml" line="101"/>
+        <location filename="qml/harmattan/MainPage.qml" line="102"/>
+        <location filename="qml/symbian3/MainPage.qml" line="101"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/MainPage.qml" line="118"/>
+        <location filename="qml/harmattan/MainPage.qml" line="118"/>
+        <location filename="qml/symbian3/MainPage.qml" line="117"/>
         <source>New observation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/MainPage.qml" line="132"/>
+        <location filename="qml/harmattan/MainPage.qml" line="131"/>
+        <location filename="qml/symbian3/MainPage.qml" line="130"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/MainPage.qml" line="148"/>
+        <location filename="qml/harmattan/MainPage.qml" line="147"/>
+        <location filename="qml/symbian3/MainPage.qml" line="146"/>
         <source>Observations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -217,58 +256,70 @@
 <context>
     <name>ObservationDelegate</name>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="111"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="111"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="111"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="126"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="126"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="126"/>
         <source>Sex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="144"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="144"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="144"/>
         <source>Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="164"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="164"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="164"/>
         <source>Dress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="182"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="182"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="182"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="204"/>
-        <location filename="qml/xema/ObservationDelegate.qml" line="249"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="204"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="249"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="204"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="249"/>
         <source>0:00</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="230"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="230"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="230"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="283"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="283"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="283"/>
         <source>Loft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="305"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="305"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="305"/>
         <source>Bird-watch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="317"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="317"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="317"/>
         <source>Nesting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationDelegate.qml" line="334"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="334"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="334"/>
         <source>More information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -276,134 +327,160 @@
 <context>
     <name>ObservationPage</name>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="113"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="113"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="113"/>
         <source>Start date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="117"/>
-        <location filename="qml/xema/ObservationPage.qml" line="1139"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="117"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1189"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="117"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1139"/>
         <source>Species</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="121"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="121"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="121"/>
         <source>Observer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="125"/>
-        <location filename="qml/xema/ObservationPage.qml" line="894"/>
-        <location filename="qml/xema/ObservationPage.qml" line="919"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="125"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="944"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="969"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="125"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="894"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="919"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="177"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="177"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="177"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="458"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="458"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="458"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="472"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="472"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="472"/>
         <source>Mandatory information missing:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="494"/>
-        <location filename="qml/xema/ObservationPage.qml" line="540"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="494"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="540"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="494"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="540"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="514"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="514"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="514"/>
         <source>GPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="528"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="528"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="528"/>
         <source>Fetching GPS-coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="552"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="618"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="552"/>
         <source>Day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="553"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="619"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="553"/>
         <source>Place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="554"/>
-        <location filename="qml/xema/ObservationPage.qml" line="1115"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="620"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1165"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="554"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1115"/>
         <source>Observation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="634"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="634"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="682"/>
-        <location filename="qml/xema/ObservationPage.qml" line="992"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1042"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="682"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="992"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="729"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="729"/>
         <source>Observers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="753"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="753"/>
         <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="795"/>
-        <location filename="qml/xema/ObservationPage.qml" line="824"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="795"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="824"/>
         <source>Weather</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="938"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="988"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="938"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1170"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1220"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1170"/>
         <source>Add row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1181"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1231"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1181"/>
         <source>Remove row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1196"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1246"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1196"/>
         <source>Additional information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1224"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1274"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1224"/>
         <source>More information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1240"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1290"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1240"/>
         <source>Atlas index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/ObservationPage.qml" line="1265"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1315"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1265"/>
         <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>
@@ -411,27 +488,32 @@
 <context>
     <name>PersonEditPage</name>
     <message>
-        <location filename="qml/xema/PersonEditPage.qml" line="98"/>
+        <location filename="qml/harmattan/PersonEditPage.qml" line="99"/>
+        <location filename="qml/symbian3/PersonEditPage.qml" line="99"/>
         <source>Edit person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/PersonEditPage.qml" line="114"/>
+        <location filename="qml/harmattan/PersonEditPage.qml" line="115"/>
+        <location filename="qml/symbian3/PersonEditPage.qml" line="115"/>
         <source>First name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/PersonEditPage.qml" line="129"/>
+        <location filename="qml/harmattan/PersonEditPage.qml" line="130"/>
+        <location filename="qml/symbian3/PersonEditPage.qml" line="130"/>
         <source>Last name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/PersonEditPage.qml" line="142"/>
+        <location filename="qml/harmattan/PersonEditPage.qml" line="143"/>
+        <location filename="qml/symbian3/PersonEditPage.qml" line="143"/>
         <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/PersonEditPage.qml" line="155"/>
+        <location filename="qml/harmattan/PersonEditPage.qml" line="156"/>
+        <location filename="qml/symbian3/PersonEditPage.qml" line="156"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -439,119 +521,263 @@
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="50"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="50"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="50"/>
         <source>Species list sorting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="70"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="70"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="70"/>
         <source>Alphabetical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="92"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="92"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="92"/>
         <source>Systematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="123"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="123"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="123"/>
         <source>Default amount of fields</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="137"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="137"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="137"/>
         <source>Minimum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="159"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="159"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="159"/>
         <source>Expanded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="181"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="181"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="181"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="204"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="204"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="204"/>
         <source>Manage lists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="222"/>
-        <location filename="qml/xema/SettingsPage.qml" line="306"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="222"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="306"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="222"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="306"/>
         <source>Observers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="231"/>
-        <location filename="qml/xema/SettingsPage.qml" line="315"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="231"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="315"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="231"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="315"/>
         <source>Locations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="240"/>
-        <location filename="qml/xema/SettingsPage.qml" line="324"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="240"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="324"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="240"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="324"/>
         <source>Species</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="249"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="249"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="249"/>
         <source>Statuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="255"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="255"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="255"/>
         <source>Export/Import own lists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="273"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="273"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="273"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="282"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="282"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="282"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/SettingsPage.qml" line="288"/>
+        <location filename="qml/harmattan/SettingsPage.qml" line="288"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="288"/>
         <source>Restore default lists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/SettingsPage.qml" line="333"/>
+        <location filename="qml/symbian3/SettingsPage.qml" line="333"/>
+        <source>Observations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StatusEditPage</name>
     <message>
-        <location filename="qml/xema/StatusEditPage.qml" line="125"/>
+        <location filename="qml/harmattan/StatusEditPage.qml" line="125"/>
+        <location filename="qml/symbian3/StatusEditPage.qml" line="125"/>
         <source>Edit statuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/StatusEditPage.qml" line="141"/>
+        <location filename="qml/harmattan/StatusEditPage.qml" line="141"/>
+        <location filename="qml/symbian3/StatusEditPage.qml" line="141"/>
         <source>Finnish name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/StatusEditPage.qml" line="156"/>
+        <location filename="qml/harmattan/StatusEditPage.qml" line="156"/>
+        <location filename="qml/symbian3/StatusEditPage.qml" line="156"/>
         <source>Swedish name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/StatusEditPage.qml" line="169"/>
+        <location filename="qml/harmattan/StatusEditPage.qml" line="169"/>
+        <location filename="qml/symbian3/StatusEditPage.qml" line="169"/>
         <source>English name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/StatusEditPage.qml" line="182"/>
+        <location filename="qml/harmattan/StatusEditPage.qml" line="182"/>
+        <location filename="qml/symbian3/StatusEditPage.qml" line="182"/>
         <source>Abbreviation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/xema/StatusEditPage.qml" line="195"/>
+        <location filename="qml/harmattan/StatusEditPage.qml" line="195"/>
+        <location filename="qml/symbian3/StatusEditPage.qml" line="195"/>
         <source>Id number</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="185"/>
+        <location filename="qml/harmattan/main.qml" line="191"/>
+        <location filename="qml/symbian3/main.qml" line="185"/>
+        <location filename="qml/symbian3/main.qml" line="191"/>
+        <source>Import complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="187"/>
+        <location filename="qml/symbian3/main.qml" line="187"/>
+        <source>No files imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="193"/>
+        <location filename="qml/symbian3/main.qml" line="193"/>
+        <source>Imported locations
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="196"/>
+        <location filename="qml/symbian3/main.qml" line="196"/>
+        <source>Imported persons
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="199"/>
+        <location filename="qml/symbian3/main.qml" line="199"/>
+        <source>Imported birds
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="202"/>
+        <location filename="qml/symbian3/main.qml" line="202"/>
+        <source>Imported status
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="205"/>
+        <location filename="qml/symbian3/main.qml" line="205"/>
+        <source>Imported history
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="209"/>
+        <location filename="qml/harmattan/main.qml" line="213"/>
+        <location filename="qml/harmattan/main.qml" line="217"/>
+        <location filename="qml/harmattan/main.qml" line="221"/>
+        <location filename="qml/harmattan/main.qml" line="225"/>
+        <location filename="qml/symbian3/main.qml" line="209"/>
+        <location filename="qml/symbian3/main.qml" line="213"/>
+        <location filename="qml/symbian3/main.qml" line="217"/>
+        <location filename="qml/symbian3/main.qml" line="221"/>
+        <location filename="qml/symbian3/main.qml" line="225"/>
+        <source>Import error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="210"/>
+        <location filename="qml/symbian3/main.qml" line="210"/>
+        <source>Error with locations file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="214"/>
+        <location filename="qml/symbian3/main.qml" line="214"/>
+        <source>Error with persons file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="218"/>
+        <location filename="qml/symbian3/main.qml" line="218"/>
+        <source>Error with birds file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="222"/>
+        <location filename="qml/symbian3/main.qml" line="222"/>
+        <source>Error with status file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="226"/>
+        <location filename="qml/symbian3/main.qml" line="226"/>
+        <source>Error with history file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="319"/>
+        <location filename="qml/symbian3/main.qml" line="318"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="345"/>
+        <location filename="qml/symbian3/main.qml" line="344"/>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

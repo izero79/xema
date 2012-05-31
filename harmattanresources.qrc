@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/harmattan/AboutDialog.qml</file>
+        <file>qml/harmattan/BirdEditPage.qml</file>
+        <file>qml/harmattan/BirdListDelegate.qml</file>
+        <file>qml/harmattan/HistoryListDelegate.qml</file>
+        <file>qml/harmattan/HistoryPage.qml</file>
+        <file>qml/harmattan/ListDelegate.qml</file>
+        <file>qml/harmattan/ListPage.qml</file>
+        <file>qml/harmattan/LocationEditPage.qml</file>
+        <file>qml/harmattan/LocationListDelegate.qml</file>
+        <file>qml/harmattan/main.qml</file>
+        <file>qml/harmattan/MainPage.qml</file>
+        <file>qml/harmattan/myjs.js</file>
+        <file>qml/harmattan/ObservationDelegate.qml</file>
+        <file>qml/harmattan/ObservationPage.qml</file>
+        <file>qml/harmattan/PersonEditPage.qml</file>
+        <file>qml/harmattan/SettingsPage.qml</file>
+        <file>qml/harmattan/SimpleDelegate.qml</file>
+        <file>qml/harmattan/StatusEditPage.qml</file>
+        <file>qml/harmattan/StatusListDelegate.qml</file>
+        <file>qml/harmattan_icons/back.svg</file>
+        <file>qml/harmattan_icons/filter.svg</file>
+        <file>qml/harmattan_icons/save.svg</file>
+        <file>qml/harmattan_icons/xema96.png</file>
+    </qresource>
+</RCC>

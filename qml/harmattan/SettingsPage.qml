@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+import com.nokia.meego 1.1
 import Qt.labs.components 1.1
 
 
@@ -121,7 +121,7 @@ Page {
         }
 
         CheckableGroup { id: orderGroup }
-        Column {
+        ButtonColumn {
             id: row1
             spacing: platformStyle.paddingMedium
             anchors.top: systematicSortText.bottom
@@ -129,7 +129,7 @@ Page {
             RadioButton {
                 id: alphaButton
                 text: qsTr("Alphabetical")
-                platformExclusiveGroup: orderGroup
+//                platformExclusiveGroup: orderGroup
                 checked: window.useSystematicSort == false
                 property bool wasPressed: false
                 onPressedChanged: {
@@ -151,7 +151,7 @@ Page {
             RadioButton {
                 id: systemButton
                 text: qsTr("Systematic")
-                platformExclusiveGroup: orderGroup
+//                platformExclusiveGroup: orderGroup
                 checked: window.useSystematicSort == true
                 property bool wasPressed: false
                 onPressedChanged: {
@@ -188,7 +188,7 @@ Page {
             color: "#ffffff"
         }
 
-        Column {
+        ButtonColumn {
             id: row2
             spacing: platformStyle.paddingMedium
             anchors.top: groupHeader.bottom
@@ -196,7 +196,7 @@ Page {
             RadioButton {
                 id: button1
                 text: qsTr("Minimum")
-                platformExclusiveGroup: group
+//                platformExclusiveGroup: group
                 checked: window.defaultDetailLevel == 1
                 property bool wasPressed: false
                 onPressedChanged: {
@@ -218,7 +218,7 @@ Page {
             RadioButton {
                 id: button2
                 text: qsTr("Expanded")
-                platformExclusiveGroup: group
+//                platformExclusiveGroup: group
                 checked: window.defaultDetailLevel == 2
                 property bool wasPressed: false
                 onPressedChanged: {
@@ -240,7 +240,7 @@ Page {
             RadioButton {
                 id: button3
                 text: qsTr("All")
-                platformExclusiveGroup: group
+//                platformExclusiveGroup: group
                 checked: window.defaultDetailLevel == 3
                 property bool wasPressed: false
                 onPressedChanged: {

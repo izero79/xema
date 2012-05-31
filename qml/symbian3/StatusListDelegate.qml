@@ -13,7 +13,7 @@ Component {
             visible: selected == true
         }
 
-        Text {
+        Label {
             id: delegateTitle
             anchors.right: parent.left
             anchors.top: parent.top

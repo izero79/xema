@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.symbian 1.1
+ import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 
 
@@ -12,9 +12,8 @@ Page {
 
     ToolBarLayout {
         id: editToolBar
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-back"
+        ToolIcon {
+            iconId: "icon-m-toolbar-back-white"
             onClicked: {
                 console.log("pep sivu back clicked")
                 if (personEdited == true)
@@ -51,16 +50,7 @@ Page {
                 }
                 pageStack.pop()
             }
-        }/*
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-delete"
-            onClicked: {
-                console.log("tee person delete jutut")
-                personModel.removeRow(currentIndex);
-                pageStack.pop()
-            }
-        }*/
+        }
     }
 
     property int currentIndex: -1
