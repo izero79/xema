@@ -54,16 +54,7 @@ Page {
                 }
                 pageStack.pop()
             }
-        }/*
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-delete"
-            onClicked: {
-                console.log("tee location delete jutut")
-                locationModel.removeRow(currentIndex);
-                pageStack.pop()
-            }
-        }*/
+        }
     }
 
     property int currentIndex: -1

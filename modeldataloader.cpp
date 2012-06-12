@@ -542,7 +542,7 @@ QString ModelDataLoader::loadObservation(qlonglong id)
     location.append(", ");
     location.append(obsLine.section('#', XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION));
     location = readLocation( location );
-    qDebug() << location;
+//    qDebug() << location;
     newLine.append(location.section(", ", 0, 0));
     newLine.append("#");
     newLine.append(location.section(", ", 1));

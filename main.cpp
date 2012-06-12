@@ -9,15 +9,7 @@
 #include "dummydebugprinter.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
-{/*
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
-
-    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer->setMainQmlFile(QLatin1String("qml/xema/main.qml"));
-    viewer->showExpanded();
-
-    return app->exec();*/
+{
     QApplication app(argc, argv);
 
 #if defined (Q_WS_MAEMO_5) || defined(Q_OS_SYMBIAN)
@@ -68,6 +60,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QTranslator translator;
     bool ok = translator.load(QString(":/xema_") + locale);
     qDebug() << "Translator loaded ok:" << ok;
+    if( !ok ) {
+        ok = translator.load(QString(":/xema_en_US"));
+    }
     app.installTranslator(&translator);
 
     ApplicationController cont;

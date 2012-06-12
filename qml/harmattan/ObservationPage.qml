@@ -501,52 +501,6 @@ Page {
         }
     }
 
-
-    Dialog {
-        id: listDialog
-
-        title: Label {
-            id: titleField
-            height: 30
-            anchors.centerIn: parent
-            width: parent.width
-            color: "white"
-            font.pixelSize: 36
-            text: qsTr("GPS")
-            horizontalAlignment: Text.AlignHCenter
-        }
-        content:Item {
-            id: name
-            height: 100
-            width: parent.width
-            anchors.topMargin: 10
-            Label {
-                id: dialogText
-                width: parent.width
-                anchors.centerIn: parent
-                horizontalAlignment: Text.AlignHCenter
-                color: "white"
-                text: qsTr("Fetching GPS-coordinates")
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            }
-        }
-
-        buttons: Item { height: dialogButton1.height + 2 * 20;
-            anchors.horizontalCenter: parent.horizontalCenter
-            Button {
-                id: dialogButton1
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                width: 200
-                text: qsTr("Ok")
-                onClicked: {
-                    locationTf.text = "63.7998N, 23.0095E"
-                    listDialog.close()
-                }
-            }
-        }
-    }
-
     ToolBarLayout {
         id: tabBarLayout
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }

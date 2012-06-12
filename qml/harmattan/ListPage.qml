@@ -243,76 +243,7 @@ Page {
             }
         }
     }
-/*
-    ListModel {
-        id: sexModel
-        ListElement {
-            name: ""
-            engname: ""
-            swename: ""
-            selected: false
-        }
-        ListElement {
-            name: "koiras"
-            engname: "male"
-            swename: "hane"
-            selected: false
-        }
-        ListElement {
-            name: "naaras"
-            engname: "female"
-            swename: "hona"
-            selected: false
-        }
-        ListElement {
-            name: "pariutuneet"
-            engname: "couple"
-            swename: "i par"
-            selected: false
-        }
-    }
 
-    ListModel {
-        id: ageModel
-        ListElement {    engname: ""; swename: ""; name: "" }
-        ListElement {    engname: "fl"; swename: "fl"; name: "fl" }
-        ListElement {    engname: "pm"; swename: "pm"; name: "pm" }
-        ListElement {    engname: "pp"; swename: "pp"; name: "pp" }
-        ListElement {    engname: "+1kv"; swename: "+1kv"; name: "+1kv" }
-        ListElement {    engname: "1kv"; swename: "1kv"; name: "1kv" }
-        ListElement {    engname: "+2kv"; swename: "+2kv"; name: "+2kv" }
-        ListElement {    engname: "2kv"; swename: "2kv"; name: "2kv" }
-        ListElement {    engname: "+3kv"; swename: "+3kv"; name: "+3kv" }
-        ListElement {    engname: "3kv"; swename: "3kv"; name: "3kv" }
-        ListElement {    engname: "+4kv"; swename: "+4kv"; name: "+4kv" }
-        ListElement {    engname: "4kv"; swename: "4kv"; name: "4kv" }
-        ListElement {    engname: "+5kv"; swename: "+5kv"; name: "+5kv" }
-        ListElement {    engname: "5kv"; swename: "5kv"; name: "5kv" }
-        ListElement {    engname: "+6kv"; swename: "+6kv"; name: "+6kv" }
-        ListElement {    engname: "6kv"; swename: "6kv"; name: "6kv" }
-        ListElement {    engname: "+7kv"; swename: "+7kv"; name: "+7kv" }
-        ListElement {    engname: "7kv"; swename: "7kv"; name: "7kv" }
-        ListElement {    engname: "+8kv"; swename: "+8kv"; name: "+8kv" }
-        ListElement {    engname: "8kv"; swename: "8kv"; name: "8kv" }
-    }
-
-    ListModel {
-        id: dressModel
-        ListElement { engname: ""; swename: ""; name: "" }
-        ListElement { engname: "ad"; swename: "ad"; name: "ad" }
-        ListElement { engname: "eijp"; swename: "eijp"; name: "eijp" }
-        ListElement { engname: "imm"; swename: "imm"; name: "imm" }
-        ListElement { engname: "jp"; swename: "jp"; name: "jp" }
-        ListElement { engname: "juv"; swename: "juv"; name: "juv" }
-        ListElement { engname: "n-puk"; swename: "n-puk"; name: "n-puk" }
-        ListElement { engname: "pep"; swename: "pep"; name: "pep" }
-        ListElement { engname: "pull"; swename: "pull"; name: "pull" }
-        ListElement { engname: "ss"; swename: "ss"; name: "ss" }
-        ListElement { engname: "subad"; swename: "subad"; name: "subad" }
-        ListElement { engname: "tp"; swename: "tp"; name: "tp" }
-        ListElement { engname: "vp"; swename: "vp"; name: "vp" }
-    }
-*/
     Component.onCompleted: {
         console.log("ListPage loaded")
         listView.model.filter("")

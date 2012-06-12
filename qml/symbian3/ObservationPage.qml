@@ -457,6 +457,7 @@ Page {
             font.pixelSize: 36
             text: qsTr("Error")
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         content:Item {
             height: 150 //saveErrorDialogText.paintedHeight
@@ -484,63 +485,18 @@ Page {
             }
         }
 
-        buttons: Item { height: saveErrorDialogButton.height + 2 * 20;
+        buttons: Item { height: saveErrorDialogButton.height + 2 * 20; width: parent.width - 20
             anchors.horizontalCenter: parent.horizontalCenter
             Button {
                 id: saveErrorDialogButton
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 text: qsTr("Ok")
                 onClicked: {
                     missingInfo = ""
                     saveErrorDialog.close()
-                }
-            }
-        }
-    }
-
-
-    Dialog {
-        id: listDialog
-
-        title: Label {
-            id: titleField
-            height: 30
-            anchors.centerIn: parent
-            width: parent.width
-            color: "white"
-            font.pixelSize: 36
-            text: qsTr("GPS")
-            horizontalAlignment: Text.AlignHCenter
-        }
-        content:Item {
-            id: name
-            height: 100
-            width: parent.width
-            anchors.topMargin: 10
-            Label {
-                id: dialogText
-                width: parent.width
-                anchors.centerIn: parent
-                horizontalAlignment: Text.AlignHCenter
-                color: "white"
-                text: qsTr("Fetching GPS-coordinates")
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            }
-        }
-
-        buttons: Item { height: dialogButton1.height + 2 * 20;
-            anchors.horizontalCenter: parent.horizontalCenter
-            Button {
-                id: dialogButton1
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                width: 200
-                text: qsTr("Ok")
-                onClicked: {
-                    locationTf.text = "63.7998N, 23.0095E"
-                    listDialog.close()
                 }
             }
         }
@@ -584,6 +540,7 @@ Page {
                 clip: false
                 flickableDirection: Flickable.VerticalFlick
                 anchors.fill: parent
+                anchors.margins: 5
                 contentWidth: width
                 contentHeight: detailLevel > 1 ? item3.y + item3.height : item4.y + item4.height
 
@@ -821,6 +778,7 @@ Page {
                 id: flickable1
                 clip: false
                 flickableDirection: Flickable.VerticalFlick
+                anchors.margins: 5
                 anchors.fill: parent
                 contentWidth: width
                 contentHeight: obsTimeItem.y + obsTimeItem.height
@@ -1024,6 +982,7 @@ Page {
                 clip: false
                 flickableDirection: Flickable.VerticalFlick
                 anchors.fill: parent
+                anchors.margins: 5
                 contentWidth: width
                 contentHeight: detailLevel > 2 ? item8.y + item8.height : plus.y + plus.height
 

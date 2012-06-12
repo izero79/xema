@@ -12,6 +12,7 @@ Component {
             anchors.top: parent.top
             height: parent.height / 2
             anchors.left: parent.left
+            anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
             text: {
                 if (dateListVisible == true)
@@ -62,6 +63,7 @@ Component {
             anchors.top: delegateTitle.bottom
             height: parent.height / 2
             anchors.left: parent.left
+            anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
             text: species
             color: "white"

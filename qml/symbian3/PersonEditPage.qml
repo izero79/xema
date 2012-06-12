@@ -51,16 +51,7 @@ Page {
                 }
                 pageStack.pop()
             }
-        }/*
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-delete"
-            onClicked: {
-                console.log("tee person delete jutut")
-                personModel.removeRow(currentIndex);
-                pageStack.pop()
-            }
-        }*/
+        }
     }
 
     property int currentIndex: -1
@@ -93,6 +84,7 @@ Page {
         contentHeight: defaultChkBox.y + defaultChkBox.height + 10
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
+        anchors.leftMargin: 5
 
         Label {
             id: editText

@@ -55,16 +55,7 @@ Page {
                 }
                 pageStack.pop()
             }
-        }/*
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-delete"
-            onClicked: {
-                console.log("tee location delete jutut")
-                locationModel.removeRow(currentIndex);
-                pageStack.pop()
-            }
-        }*/
+        }
     }
 
     property int currentIndex: -1
@@ -98,6 +89,7 @@ Page {
         contentHeight: gpsButton.y + gpsButton.height + 10
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
+        anchors.leftMargin: 5
 
         Timer {
           id: adjuster1

@@ -38,7 +38,7 @@ Page {
         ToolButton {
             flat: true
             iconSource: "toolbar-add"
-            visible: listView.model == personModel || listView.model == locationModel || listView.model == birdModel
+            visible: listView.model == personModel || listView.model == locationModel || listView.model == birdModel || listView.model == statusModel
             onClicked: {
                 console.log("Add new")
                 addNewClicked()

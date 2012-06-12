@@ -84,7 +84,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    setSource(QUrl("qrc:qml/harmattan/main.qml"));
+    setSource(QUrl("qrc:qml/symbian3/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
 }
@@ -302,7 +302,7 @@ void QMLWindow::exportData(bool onlyNew)
 void QMLWindow::exportOwnData()
 {
     setProcessing(true);
-    mDataWriter->exportOwnData(mLocationModel,mPersonModel,mBirdModel);
+    mDataWriter->exportOwnData();
     setProcessing(false);
 }
 
@@ -318,7 +318,7 @@ void QMLWindow::importOwnData()
 void QMLWindow::importData()
 {
     setProcessing(true);
-    int err = mDataWriter->importHistory(mLocationModel, mPersonModel, mBirdModel);
+    int err = mDataWriter->importHistory(mLocationModel, mPersonModel);
     if (err&XemaEnums::IMPORT_HISTORY_OK) {
         reloadHistory();
     }

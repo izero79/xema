@@ -34,7 +34,8 @@ Page {
         }
         ToolButton {
             flat: true
-            iconSource: "toolbar-share" //qml/symbian3_icons/save.svg"
+//            iconSource: "toolbar-share" //qml/symbian3_icons/save.svg"
+            text: qsTr("Export")
             visible: historyListView.model == historyDateModel
             onClicked: {
                 exportDialog.open()
@@ -43,7 +44,7 @@ Page {
         ToolButton {
             flat: true
 //            iconSource: "toolbar-filter"
-            text: qsTr("import")
+            text: qsTr("Import")
             visible: historyListView.model == historyDateModel
             onClicked: {
                 window.importData()
@@ -132,11 +133,12 @@ Page {
             font.pixelSize: 36
             text: qsTr("Export")
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         content:Item {
-            height: exportDialogText.paintedHeight
+            height: 100
             width: parent.width
-            anchors.topMargin: 10
+            anchors.margins: 10
             Label {
                 id: exportDialogText
                 width: parent.width
@@ -149,11 +151,12 @@ Page {
             }
         }
 
-        buttons: Item { height: exportDialogAllButton.height + 2 * 20; width: parent.width
+        buttons: Item { height: exportDialogAllButton.height + 2 * 20; width: parent.width - 20
             Button {
                 id: exportDialogAllButton
-                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 anchors.left: parent.left
+                anchors.margins: 5
                 width: parent.width / 2
                 text: qsTr("All")
                 onClicked: {
@@ -164,8 +167,9 @@ Page {
             }
             Button {
                 id: exportDialogNewButton
-                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 anchors.left: exportDialogAllButton.right
+                anchors.margins: 5
                 width: parent.width / 2
                 text: qsTr("New")
                 onClicked: {

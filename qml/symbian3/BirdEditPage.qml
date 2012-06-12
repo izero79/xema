@@ -56,16 +56,7 @@ Page {
                 }
                 pageStack.pop()
             }
-        }/*
-        ToolButton {
-            flat: true
-            iconSource: "toolbar-delete"
-            onClicked: {
-                console.log("tee bird delete jutut")
-                birdModel.removeRow(currentIndex);
-                pageStack.pop()
-            }
-        }*/
+        }
     }
 
     property int currentIndex: -1
@@ -102,6 +93,7 @@ Page {
         contentHeight: idTf.y + idTf.height + 10
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
+        anchors.leftMargin: 5
 
         Timer {
           id: adjuster1

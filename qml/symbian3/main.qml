@@ -171,6 +171,12 @@ PageStackWindow {
         MyScript.addLocation()
     }
 
+    function addStatus()
+    {
+        console.log("add status")
+        MyScript.addStatus()
+    }
+
     function newObsWithData(date, place, species)
     {
 
@@ -323,11 +329,12 @@ PageStackWindow {
             font.pixelSize: 36
             text: qsTr("Error")
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         content:Item {
             height: 150
             width: parent.width
-            anchors.topMargin: 10
+            anchors.margins: 10
             Label {
                 id: dialogTextField
                 width: parent.width
@@ -340,12 +347,13 @@ PageStackWindow {
             }
         }
 
-        buttons: Item { height: errorDialog.height + 2 * 20;
+        buttons: Item { height: errorDialogButton.height + 2 * 20; width: parent.width - 20
             anchors.horizontalCenter: parent.horizontalCenter
             Button {
                 id: errorDialogButton
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 text: qsTr("Ok")
                 onClicked: {
@@ -353,6 +361,7 @@ PageStackWindow {
                 }
             }
         }
+        onClickedOutside: errorDialog.close()
     }
 
     Component.onCompleted: {

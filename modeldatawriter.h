@@ -17,7 +17,7 @@ public:
     static ModelDataWriter* instance();
 
 
-    void writeNewObservation(const QString &data/*, const LocationModel &locations, const PersonModel &persons*/);
+    void writeNewObservation(const QString &data);
     void replaceObservation(qlonglong id, const QString &data);
     void deleteObservation(qlonglong id);
     void writePersonData(PersonModel *model);
@@ -25,15 +25,15 @@ public:
     void writeStatusData(StatusModel *model);
     void writeBirdData(BirdModel *model);
     void exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds);
-    void exportOwnData(LocationModel *locations, PersonModel *persons, BirdModel *birds);
+    void exportOwnData();
 
     void removeCustomSpecies();
     void removeCustomLocations();
     void removeCustomStatuses();
     void removeCustomObservers();
     void removeHistory();
-    int importHistory(LocationModel *locations, PersonModel *persons, BirdModel *birds);
-    void importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
+    int importHistory(LocationModel *locations, PersonModel *persons);
+    void importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter);
     int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
 
 private:
