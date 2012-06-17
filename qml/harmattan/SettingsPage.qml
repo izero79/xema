@@ -55,6 +55,7 @@ Page {
             font.pixelSize: 36
             text: ""
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         content:Item {
             height: 150
@@ -72,32 +73,33 @@ Page {
             }
         }
 
-        buttons: Item { height: errorDialog.height + 2 * 20;
-            anchors.horizontalCenter: parent.horizontalCenter
-            ButtonRow {
-                width: 300//areYouSureDialog.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                Button {
-                    id: dialogYes
-                    width: parent / 2
-                    text: qsTr("Yes")
-                    onClicked: {
-                        areYouSureDialog.oksignal()
-                        areYouSureDialog.close()
-                    }
+        buttons: Item { height: dialogYes.height + 2 * 20; width: parent.width - 20
+            Button {
+                id: dialogYes
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("Yes")
+                onClicked: {
+                    areYouSureDialog.oksignal()
+                    areYouSureDialog.close()
                 }
-                Button {
-                    id: dialogNo
-                    width: parent / 2
-                    text: qsTr("No")
-                    onClicked: {
-                        areYouSureDialog.cancelsignal()
-                        areYouSureDialog.close()
-                    }
+            }
+            Button {
+                id: dialogNo
+                anchors.bottom: parent.bottom
+                anchors.left: dialogYes.right
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("No")
+                onClicked: {
+                    areYouSureDialog.cancelsignal()
+                    areYouSureDialog.close()
                 }
             }
         }
+//        onClickedOutside: {areYouSureDialog.cancelsignal(); areYouSureDialog.close()}
     }
 
     Flickable {
@@ -105,6 +107,7 @@ Page {
         contentHeight: restoreHistory.y + restoreHistory.height + 10
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
+        anchors.margins: 5
 
         Label {
             id: systematicSortText

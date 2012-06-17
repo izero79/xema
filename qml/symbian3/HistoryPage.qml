@@ -122,6 +122,31 @@ Page {
         textfield1.text = ""
     }
 
+    function findBirdFromAbbrev(name)
+    {
+        console.log("findBirdFromAbbrev: " + name)
+        for(var i=0;i<birdModel.rowCount();i++) {
+            // TODO localized names
+            if (currentLanguage == "en") {
+                if(name === birdModel.data(i, 38)) {
+                    return birdModel.data(i, 44)
+                }
+            }
+            else if (currentLanguage == "sv") {
+                if(name === birdModel.data(i, 38)) {
+                    return birdModel.data(i, 46)
+                }
+            }
+            else {
+                if(name === birdModel.data(i, 38)) {
+                    return birdModel.data(i, 36)
+                }
+            }
+        }
+
+        return name
+    }
+
     Dialog {
         id: exportDialog
 

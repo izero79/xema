@@ -8,7 +8,7 @@ Component {
         height: visible ? 60 : 0
         Label {
             id: delegateTitle
-            anchors.right: parent.left
+            anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left

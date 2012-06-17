@@ -23,6 +23,10 @@
 #include "sexmodel.h"
 #include <QLocale>
 
+#ifdef PERFTEST
+#include <QTime>
+#endif
+
 ModelDataLoader* ModelDataLoader::mDataLoader = 0;
 ModelDataLoader* ModelDataLoader::instance() {
     if (!mDataLoader) {
@@ -44,6 +48,11 @@ ModelDataLoader::~ModelDataLoader() {
 
 void ModelDataLoader::loadBirdData(BirdModel *model)
 {
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadBirdData";
+    QTime t;
+    t.start();
+#endif
     mBirdModel = model;
     if (QFile::exists(dataFileDir() + "lokkitestibirds.txt"))
     {
@@ -57,6 +66,7 @@ void ModelDataLoader::loadBirdData(BirdModel *model)
     }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -79,10 +89,19 @@ void ModelDataLoader::loadBirdData(BirdModel *model)
         bird.setEngGroup(birdLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
         model->addItem(bird);
     }
+#ifdef PERFTEST
+    qDebug("loadBirdData Time elapsed: %d ms", t.elapsed());
+    qDebug() << model->rowCount() << "items added to model";
+#endif
 }
 
 void ModelDataLoader::loadLocationData(LocationModel *model)
 {
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadLocationData";
+    QTime t;
+    t.start();
+#endif
     mLocationModel = model;
     if (QFile::exists(dataFileDir() + "lokkitestilocation.txt"))
     {
@@ -96,7 +115,9 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
         tiedosto.setFileName(":defaultlocations.csv");
     }
     tiedosto.open(QFile::ReadOnly);
+
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -115,10 +136,19 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
         location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
         model->addItem(location);
     }
+#ifdef PERFTEST
+    qDebug("loadLocationData Time elapsed: %d ms", t.elapsed());
+    qDebug() << model->rowCount() << "items added to model";
+#endif
 }
 
 void ModelDataLoader::loadPersonData(PersonModel *model)
 {
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadPersonData";
+    QTime t;
+    t.start();
+#endif
     if (QFile::exists(dataFileDir() + "lokkitestiperson.txt"))
     {
         QFile oldFile(dataFileDir() + "lokkitestiperson.txt");
@@ -132,6 +162,7 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
     }
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     while (striimi.atEnd() == false)
     {
         QString personLine;
@@ -155,10 +186,19 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
         }
     }
     tiedosto.close();
+#ifdef PERFTEST
+    qDebug("loadPersonData Time elapsed: %d ms", t.elapsed());
+    qDebug() << model->rowCount() << "items added to model";
+#endif
 }
 
 void ModelDataLoader::loadStatusData(StatusModel *model)
 {
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadStatusData";
+    QTime t;
+    t.start();
+#endif
     QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
     if (tiedosto.exists() == false)
     {
@@ -167,6 +207,7 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
 
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -184,27 +225,49 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
             model->addItem(status);
         }
     }
+#ifdef PERFTEST
+    qDebug("loadStatusData Time elapsed: %d ms", t.elapsed());
+    qDebug() << model->rowCount() << "items added to model";
+#endif
 }
 
 void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)
 {
-    qDebug() << "void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)";
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadHistoryData";
+    QTime t;
+    t.start();
+#endif
+    qDebug() << "void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)" << date << place;
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
     }
     while (striimi.atEnd() == false)
     {
-        QCoreApplication::processEvents();
+        static int loopCount = 0;
+        loopCount++;
+        if( !( loopCount % 100 ) )
+        {
+            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+        }
         QString line;
         line = striimi.readLine();
         QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
         readPlace.replace("#", ", ");
         readPlace = readLocation(readPlace);
+        if( readPlace != place ) {
+            continue;
+        }
         QString readDate = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
+        if( readDate != date ) {
+            continue;
+        }
+
         QString readTime = line.section('#', XemaEnums::OBS_TIME1, XemaEnums::OBS_TIME1);
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << "Riveja" << rowCount;
@@ -250,27 +313,49 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
         }
         // TODO other combinations
     }
+#ifdef PERFTEST
+    qDebug("loadHistoryData Time elapsed: %d ms", t.elapsed());
+    qDebug() << model->rowCount() << "items added to model";
+#endif
 }
 
 void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 {
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadHistoryDateData";
+    QTime t;
+    t.start();
+#endif
     qDebug() << "void ModelDataLoader::loadHistoryDateData(HistoryModel *model)";
 
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
     }
     while (striimi.atEnd() == false)
     {
-        QCoreApplication::processEvents();
+        static int loopCount = 0;
+        loopCount++;
+        if( !( loopCount % 50 ) )
+        {
+            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+        }
         QString line;
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData Ennen lukemista elapsed: %d ms", t.elapsed());
+#endif
         line = striimi.readLine();
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData lukemisen jalkeen elapsed: %d ms", t.elapsed());
+#endif
         QString date = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
         QString readTime = line.section('#', XemaEnums::OBS_TIME1, XemaEnums::OBS_TIME1);
         QString species = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+//        QString species = (line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << "Riveja" << rowCount;
         QString readCount = 0;
@@ -293,53 +378,113 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 
         int modelRowCount = model->rowCount();
         bool sameDateFound = false;
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData ennen looppia elapsed: %d ms", t.elapsed());
+#endif
         for(int i = 0; i < modelRowCount; i++)
         {
 //            qDebug() << "tarkistetaan" << date;
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData loopissa 1 elapsed: %d ms", t.elapsed());
+#endif
             if (model->getItem(i).date() == date)
             {
 //                qDebug() << "sama pvm" << date;
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData loopissa 2 elapsed: %d ms", t.elapsed());
+#endif
                 HistoryItem tmp = model->getItem(i);
                 tmp.increaseDateCount();
                 tmp.addSpecies(species);
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData loopissa 3 elapsed: %d ms", t.elapsed());
+#endif
                 tmp.addSpeciesCount(species, readCount.toInt());
                 model->replaceItem(i, tmp);
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData loopissa 4 elapsed: %d ms", t.elapsed());
+#endif
                 sameDateFound = true;
+                break;
             }
         }
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData Loopin jalkeen elapsed: %d ms", t.elapsed());
+#endif
         if (sameDateFound == false)
         {
-            QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
-            readPlace.replace("#", ", ");
-            readPlace = readLocation(readPlace);
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData ifissa 1 elapsed: %d ms", t.elapsed());
+#endif
+            QString readPlace;
+    //            QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
+//            readPlace.replace("#", ", ");
+//            readPlace = readLocation(readPlace);
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData ifissa 2 elapsed: %d ms", t.elapsed());
+#endif
 
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
                              readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData ifissa 3 elapsed: %d ms", t.elapsed());
+#endif
+
             item.setSpecies(species);
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData ifissa 4 elapsed: %d ms", t.elapsed());
+#endif
             item.addSpeciesCount(species, readCount.toInt());
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData ifissa 5 elapsed: %d ms", t.elapsed());
+#endif
             item.setTime(readTime);
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData ifissa 6 elapsed: %d ms", t.elapsed());
+#endif
 
             model->addItemAtBeginning(item);
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData modeliin lisatty elapsed: %d ms", t.elapsed());
+#endif
         }
     }
+#ifdef PERFTEST
+    qDebug("loadHistoryDateData Time elapsed: %d ms", t.elapsed());
+    qDebug() << model->rowCount() << "items added to model";
+#endif
 }
 
 void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &date)
 {
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadHistoryPlaceData";
+    QTime t;
+    t.start();
+#endif
     qDebug() << "void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &date)";
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
     }
     while (striimi.atEnd() == false)
     {
-        QCoreApplication::processEvents();
+        static int loopCount = 0;
+        loopCount++;
+        if( !( loopCount % 100 ) )
+        {
+            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+        }
         QString line;
         line = striimi.readLine();
         QString readDate = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
+        if( readDate != date ) {
+            continue;
+        }
         QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
         readPlace.replace("#", ", ");
         readPlace = readLocation(readPlace);
@@ -408,7 +553,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
                 model->addItemAtBeginning(item);
             }
             continue;
-        }
+        }/*
         else if (samePlaceFound == false)
         {
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
@@ -417,8 +562,12 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
             item.setSpecies(species);
             item.addSpeciesCount(species, readCount.toInt());
             model->addItemAtBeginning(item);
-        }
+        }*/
     }
+#ifdef PERFTEST
+    qDebug("loadHistoryPlaceData Time elapsed: %d ms", t.elapsed());
+    qDebug() << model->rowCount() << "items added to model";
+#endif
 }
 
 void ModelDataLoader::loadAtlasData(AtlasIndexModel *model)
@@ -426,6 +575,7 @@ void ModelDataLoader::loadAtlasData(AtlasIndexModel *model)
     QFile tiedosto(":atlasindexes.csv");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -465,21 +615,38 @@ QString ModelDataLoader::readBird(const QString &bird) {
     if (!mBirdModel) {
         return bird;
     }
+#ifdef PERFTEST
+    qDebug() << "Perftest, readBird";
+    QTime t;
+    t.start();
+#endif
     for (int i = 0; i < mBirdModel->rowCount(); i++) {
         if (QString::compare(bird,mBirdModel->getItem(i).abbreviation(),Qt::CaseInsensitive)==0) {
             // TODO select correct name based on language
             QString locale = QLocale::system().name();
             QString lang = locale.section("_",0,0);
             if (lang == "en") {
+#ifdef PERFTEST
+    qDebug("readBird Time elapsed: %d ms", t.elapsed());
+#endif
                 return mBirdModel->getItem(i).engName();
             }
             else if (lang == "sv") {
+#ifdef PERFTEST
+    qDebug("readBird Time elapsed: %d ms", t.elapsed());
+#endif
                 return mBirdModel->getItem(i).sweName();
             }
 
+#ifdef PERFTEST
+    qDebug("readBird Time elapsed: %d ms", t.elapsed());
+#endif
             return mBirdModel->getItem(i).finName();
         }
     }
+#ifdef PERFTEST
+    qDebug("readBird Time elapsed: %d ms", t.elapsed());
+#endif
     return bird;
 }
 
@@ -487,6 +654,11 @@ QString ModelDataLoader::readLocation(const QString &location) {
     if (!mLocationModel) {
         return location;
     }
+#ifdef PERFTEST
+    qDebug() << "Perftest, readLocation";
+    QTime t;
+    t.start();
+#endif
     for (int i = 0; i < mLocationModel->rowCount(); i++) {
         QString modelLocation = mLocationModel->getItem(i).town() + ", " + mLocationModel->getItem(i).place();
         if (QString::compare(location,modelLocation,Qt::CaseInsensitive)==0) {
@@ -494,28 +666,49 @@ QString ModelDataLoader::readLocation(const QString &location) {
             QString locale = QLocale::system().name();
             QString lang = locale.section("_",0,0);
             if (lang == "en") {
+#ifdef PERFTEST
+    qDebug("readLocation Time elapsed: %d ms", t.elapsed());
+#endif
                 return mLocationModel->getItem(i).engTown() + ", " + mLocationModel->getItem(i).engPlace();
             }
             else if (lang == "sv") {
+#ifdef PERFTEST
+    qDebug("readLocation Time elapsed: %d ms", t.elapsed());
+#endif
                 return mLocationModel->getItem(i).sweTown() + ", " + mLocationModel->getItem(i).swePlace();
             }
 
+#ifdef PERFTEST
+    qDebug("readLocation Time elapsed: %d ms", t.elapsed());
+#endif
             return location;
         }
     }
+#ifdef PERFTEST
+    qDebug("readLocation Time elapsed: %d ms", t.elapsed());
+#endif
     return location;
 }
 
 QString ModelDataLoader::loadObservation(qlonglong id)
 {
+#ifdef PERFTEST
+    qDebug() << "Perftest, loadObservation";
+    QTime t;
+    t.start();
+#endif
 //    qDebug() << "LUETAAN" << id;
     if (QFile::exists(dataFileDir() + "xemadata.txt") == false)
     {
+#ifdef PERFTEST
+    qDebug("loadObservation Time elapsed: %d ms", t.elapsed());
+#endif
         return QString();
     }
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     QString obsLine;
     while (striimi.atEnd() == false)
     {
@@ -529,6 +722,9 @@ QString ModelDataLoader::loadObservation(qlonglong id)
     QString lineId = obsLine.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID);
     if (lineId == "Id" || lineId.isEmpty() == true)
     {
+#ifdef PERFTEST
+    qDebug("loadObservation Time elapsed: %d ms", t.elapsed());
+#endif
         return QString();
     }
     QString newLine = obsLine.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID);
@@ -549,6 +745,9 @@ QString ModelDataLoader::loadObservation(qlonglong id)
 //    newLine.append(obsLine.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION));
     newLine.append("#");
     newLine.append(obsLine.section('#', XemaEnums::OBS_XCOORD));
+#ifdef PERFTEST
+    qDebug("loadObservation Time elapsed: %d ms", t.elapsed());
+#endif
     return newLine;
 }
 
@@ -558,6 +757,7 @@ void ModelDataLoader::loadDressData(DressModel *model)
     QFile tiedosto(":dresses.csv");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -582,6 +782,7 @@ void ModelDataLoader::loadAgeData(AgeModel *model)
     QFile tiedosto(":ages.csv");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     if (striimi.atEnd() == false)
     {
         striimi.readLine();

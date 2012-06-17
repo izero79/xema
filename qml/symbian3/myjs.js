@@ -79,6 +79,19 @@ function showObsPage(doNotInit)
     if (obsObject)
     {
         console.log("obs exists, push")
+        if(settingsPageComponent) {
+            settingsObject.destroy()
+            settingsPageComponent.destroy()
+            settingsObject = null
+            settingsPageComponent = null
+        }
+        if(historyPageComponent) {
+            historyObject.destroy()
+            historyPageComponent.destroy()
+            historyObject = null
+            historyPageComponent = null
+        }
+
         pageStack.push(obsObject)
         if (doNotInit == false)
         {
@@ -86,8 +99,22 @@ function showObsPage(doNotInit)
         }
         return
     }
+    console.log("create obs")
     obsPageComponent = Qt.createComponent(Qt.resolvedUrl("ObservationPage.qml"))
     obsObject = obsPageComponent.createObject(window)
+    if(settingsPageComponent) {
+        settingsObject.destroy()
+        settingsPageComponent.destroy()
+        settingsObject = null
+        settingsPageComponent = null
+    }
+    if(historyPageComponent) {
+        historyObject.destroy()
+        historyPageComponent.destroy()
+        historyObject = null
+        historyPageComponent = null
+    }
+
     pageStack.push(obsObject)
     if (doNotInit == false)
     {
@@ -100,11 +127,36 @@ function showSettingsPage()
     if (settingsObject)
     {
         console.log("settings exists, push")
+        if(obsPageComponent) {
+            obsObject.destroy()
+            obsPageComponent.destroy()
+            obsObject = null
+            obsPageComponent = null
+        }
+        if(historyPageComponent) {
+            historyObject.destroy()
+            historyPageComponent.destroy()
+            historyObject = null
+            historyPageComponent = null
+        }
         pageStack.push(settingsObject)
         return
     }
     settingsPageComponent = Qt.createComponent(Qt.resolvedUrl("SettingsPage.qml"))
     settingsObject = settingsPageComponent.createObject(window)
+    if(obsPageComponent) {
+        obsObject.destroy()
+        obsPageComponent.destroy()
+        obsObject = null
+        obsPageComponent = null
+    }
+    if(historyPageComponent) {
+        historyObject.destroy()
+        historyPageComponent.destroy()
+        historyObject = null
+        historyPageComponent = null
+    }
+
     pageStack.push(settingsObject)
 }
 
@@ -112,13 +164,39 @@ function showHistoryPage(type)
 {
     if (historyObject)
     {
+        if(obsPageComponent) {
+            obsObject.destroy()
+            obsPageComponent.destroy()
+            obsObject = null
+            obsPageComponent = null
+        }
+        if(settingsPageComponent) {
+            settingsObject.destroy()
+            settingsPageComponent.destroy()
+            settingsObject = null
+            settingsPageComponent = null
+        }
         pageStack.push(historyObject)
         historyObject.init()
         return
     }
+    console.log("create history")
+
     historyPageComponent = Qt.createComponent(Qt.resolvedUrl("HistoryPage.qml"))
     historyObject = historyPageComponent.createObject(window)
     historyObject.init()
+    if(obsPageComponent) {
+        obsObject.destroy()
+        obsPageComponent.destroy()
+        obsObject = null
+        obsPageComponent = null
+    }
+    if(settingsPageComponent) {
+        settingsObject.destroy()
+        settingsPageComponent.destroy()
+        settingsObject = null
+        settingsPageComponent = null
+    }
     pageStack.push(historyObject)
 }
 

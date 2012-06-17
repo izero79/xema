@@ -26,7 +26,7 @@ public:
     void loadAtlasData(AtlasIndexModel *model);
     void loadHistoryData(HistoryModel *model, const QString &date = QString(), const QString &place = QString());
     void loadHistoryDateData(HistoryModel *model);
-    void loadHistoryPlaceData(HistoryModel *model, const QString &date = QString());
+    void loadHistoryPlaceData(HistoryModel *model, const QString &date);
     QString loadObservation(qlonglong id);
     void loadSexData(SexModel *model);
     void loadDressData(DressModel *model);

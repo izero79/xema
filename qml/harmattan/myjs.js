@@ -402,3 +402,11 @@ function addBird()
     editorObject.addNew()
     pageStack.push(editorObject)
 }
+
+function addStatus()
+{
+    var editorCompnent = Qt.createComponent(Qt.resolvedUrl("StatusEditPage.qml"))
+    var editorObject = editorCompnent.createObject(window)
+    editorObject.addNew()
+    pageStack.push(editorObject)
+}

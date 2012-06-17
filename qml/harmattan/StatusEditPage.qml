@@ -77,6 +77,7 @@ Page {
         contentHeight: idTf.y + idTf.height + 10
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
+        anchors.leftMargin: 5
 
         Timer {
           id: adjuster1

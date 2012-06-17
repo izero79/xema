@@ -583,6 +583,7 @@ qlonglong ModelDataWriter::getNewId()
     QFile tiedosto(dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
     QString obsLine;
     qlonglong maxId = 0;
     while (striimi.atEnd() == false)
@@ -919,6 +920,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
         QFile importfile(importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
+        importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
 
@@ -948,7 +950,12 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
         bool previousNotHandled = true;
         while (importstream.atEnd() == false)
         {
-            QCoreApplication::processEvents();
+            static int loopCount = 0;
+            loopCount++;
+            if( !( loopCount % 100 ) )
+            {
+                QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+            }
             if (prevLines.length() == 0)
             {
                 prevLines.append(importstream.readLine());
@@ -1284,6 +1291,11 @@ void ModelDataWriter::checkAndCreateDirs() {
 
 #elif defined HARMATTAN
     basePath = QString("/home/user/MyDocs/");
+    if (QFile::exists(basePath+".xema/") == false) {
+        QDir dir;
+        dir.mkpath(basePath+".xema/");
+    }
+
 #elif defined MAC_OS_X_VERSION_10_6
     basePath = QString("/Users/Tero/");
 #else
@@ -1317,6 +1329,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         QFile importfile(importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
+        importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
 
@@ -1401,6 +1414,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         QFile importfile(importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
+        importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
 
@@ -1477,6 +1491,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         QFile importfile(importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
+        importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
 
@@ -1566,6 +1581,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         QFile importfile(importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
+        importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
 

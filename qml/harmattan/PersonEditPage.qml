@@ -83,6 +83,7 @@ Page {
         contentHeight: defaultChkBox.y + defaultChkBox.height + 10
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
+        anchors.leftMargin: 5
 
         Label {
             id: editText

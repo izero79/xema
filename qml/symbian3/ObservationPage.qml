@@ -112,10 +112,6 @@ Page {
         {
             missingData[missingData.length] = qsTr("Start date")
         }
-        if (birdNameTf.text == "")
-        {
-            missingData[missingData.length] = qsTr("Species")
-        }
         if (regPeopleTa.text == "")
         {
             missingData[missingData.length] = qsTr("Observer")
@@ -123,6 +119,10 @@ Page {
         if (locationTf.text == "")
         {
             missingData[missingData.length] = qsTr("Location")
+        }
+        if (birdNameTf.text == "")
+        {
+            missingData[missingData.length] = qsTr("Species")
         }
 
         var allData = "";
@@ -420,6 +420,7 @@ Page {
             regPeopleTa.text = ""
 //            otherPeopleTa.text = ""
             weatherTa.text = ""
+            unsavedData = false
         }
         MyScript.clearObsDataSelections()
     }
@@ -866,6 +867,7 @@ Page {
                             onClicked: window.showListPage("places");
                         }
                         onTextChanged: obsPage.edited = true
+                        validator: RegExpValidator{ regExp: /.{1,}/ }
                     }
                 }
                 Label {
@@ -1075,6 +1077,7 @@ Page {
                         height: 50
                         placeholderText: qsTr("Species")
                         text: ""
+                        validator: RegExpValidator{ regExp: /.{1,}/ }
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.right: parent.right

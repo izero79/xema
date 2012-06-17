@@ -10,6 +10,7 @@ CONFIG -=useMediaKeys
 symbian:DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location
+#DEFINES += PERFTEST
 
 DEFINES += ONLYFORIMEI=0
 
@@ -36,23 +37,23 @@ QML_IMPORT_PATH =
 
 
 # Add more folders to ship with the application, here
-folder_03.source = qml/common
-folder_03.target = qml
-DEPLOYMENTFOLDERS += folder_03
+#folder_03.source = qml/common
+#folder_03.target = qml
+#DEPLOYMENTFOLDERS += folder_03
 
 
-folder_01.source = qml/symbian3
-folder_01.target = qml
-DEPLOYMENTFOLDERS += folder_01
-folder_02.source = qml/symbian3_icons
-folder_02.target = qml
-DEPLOYMENTFOLDERS += folder_02
-folder_04.source = qml/harmattan
-folder_04.target = qml
-DEPLOYMENTFOLDERS += folder_04
-folder_05.source = qml/harmattan_icons
-folder_05.target = qml
-DEPLOYMENTFOLDERS += folder_05
+#folder_01.source = qml/symbian3
+#folder_01.target = qml
+#DEPLOYMENTFOLDERS += folder_01
+#folder_02.source = qml/symbian3_icons
+#folder_02.target = qml
+#DEPLOYMENTFOLDERS += folder_02
+#folder_04.source = qml/harmattan
+#folder_04.target = qml
+#DEPLOYMENTFOLDERS += folder_04
+#folder_05.source = qml/harmattan_icons
+#folder_05.target = qml
+#DEPLOYMENTFOLDERS += folder_05
 
 symbian{
 TARGET.UID3 = 0xE3CA679E
@@ -212,4 +213,6 @@ OTHER_FILES += \
     ykjetrsdata.h \
     ykjetrs-bw.h \
     ykjetrsdata-bw.h \
-    gausskrueger.h
+    gausskrueger.h \
+    qml/harmattan/* \
+    qml/symbian3/*

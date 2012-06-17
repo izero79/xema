@@ -29,10 +29,11 @@ Component {
         }
         Label {
             id: delegateTitle
-            anchors.right: parent.left
+            anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
+            anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
             text: name ? name : ""
             color: "white"

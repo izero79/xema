@@ -88,6 +88,7 @@ Page {
         contentHeight: gpsButton.y + gpsButton.height + 10
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
+        anchors.leftMargin: 5
 
         Timer {
           id: adjuster1

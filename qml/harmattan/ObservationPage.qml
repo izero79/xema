@@ -112,10 +112,6 @@ Page {
         {
             missingData[missingData.length] = qsTr("Start date")
         }
-        if (birdNameTf.text == "")
-        {
-            missingData[missingData.length] = qsTr("Species")
-        }
         if (regPeopleTa.text == "")
         {
             missingData[missingData.length] = qsTr("Observer")
@@ -123,6 +119,10 @@ Page {
         if (locationTf.text == "")
         {
             missingData[missingData.length] = qsTr("Location")
+        }
+        if (birdNameTf.text == "")
+        {
+            missingData[missingData.length] = qsTr("Species")
         }
 
         var allData = "";
@@ -420,9 +420,9 @@ Page {
             regPeopleTa.text = ""
 //            otherPeopleTa.text = ""
             weatherTa.text = ""
+            unsavedData = false
         }
         MyScript.clearObsDataSelections()
-        unsavedData = false
     }
 
     function showErrorDialog()
@@ -458,6 +458,7 @@ Page {
             font.pixelSize: 36
             text: qsTr("Error")
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         content:Item {
             height: 150 //saveErrorDialogText.paintedHeight
@@ -485,12 +486,13 @@ Page {
             }
         }
 
-        buttons: Item { height: saveErrorDialogButton.height + 2 * 20;
+        buttons: Item { height: saveErrorDialogButton.height + 2 * 20; width: parent.width - 20
             anchors.horizontalCenter: parent.horizontalCenter
             Button {
                 id: saveErrorDialogButton
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 text: qsTr("Ok")
                 onClicked: {
@@ -613,7 +615,12 @@ Page {
                 id: flickable2
                 clip: false
                 flickableDirection: Flickable.VerticalFlick
-                anchors.fill: parent
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.bottom: tab3Tools.top
+//                anchors.fill: parent
+                anchors.margins: 5
                 contentWidth: width
                 contentHeight: detailLevel > 1 ? item3.y + item3.height : item4.y + item4.height
 
@@ -788,11 +795,22 @@ Page {
                         anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
+                        enabled: false
                         MouseArea {
                             id: ta1mouse
                             anchors.fill: parent
-                            onClicked: window.showListPage("regpeople", regPeopleTa.text);
+                            onClicked: {
+                                console.log("click")
+                                window.showListPage("regpeople", regPeopleTa.text);
+                            }
                         }
+                        onFocusChanged: {
+                            console.log("onFocusChanged: " + focus)
+                            if( focus == true ) {
+                                window.showListPage("regpeople", regPeopleTa.text);
+                            }
+                        }
+
                         onTextChanged: obsPage.edited = true
 
                     }
@@ -843,6 +861,7 @@ Page {
             }
         }
 
+        // define the content for tab 2
         Page {
             id: tab2content
             clip: true
@@ -903,7 +922,12 @@ Page {
                 id: flickable1
                 clip: false
                 flickableDirection: Flickable.VerticalFlick
-                anchors.fill: parent
+                anchors.margins: 5
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.bottom: tab3Tools.top
+//                anchors.fill: parent
                 contentWidth: width
                 contentHeight: obsTimeItem.y + obsTimeItem.height
 
@@ -1096,6 +1120,8 @@ Page {
                 }
             }
         }
+
+        // define content for tab 3
         Page {
             id: tab3content
             clip: true
@@ -1156,7 +1182,12 @@ Page {
                 id: flickable3
                 clip: false
                 flickableDirection: Flickable.VerticalFlick
-                anchors.fill: parent
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.bottom: tab3Tools.top
+//                anchors.fill: parent
+                anchors.margins: 5
                 contentWidth: width
                 contentHeight: detailLevel > 2 ? item8.y + item8.height : plus.y + plus.height
 

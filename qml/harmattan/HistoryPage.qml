@@ -31,9 +31,10 @@ Page {
                 }
             }
         }
-        ToolIcon {
-            //flat: true
-            iconId: "icon-m-toolbar-share-white" //qml/symbian3_icons/save.svg"
+        ToolButton {
+            flat: true
+//            iconSource: "toolbar-share" //qml/symbian3_icons/save.svg"
+            text: qsTr("Export")
             visible: historyListView.model == historyDateModel
             onClicked: {
                 exportDialog.open()
@@ -120,6 +121,31 @@ Page {
         textfield1.text = ""
     }
 
+    function findBirdFromAbbrev(name)
+    {
+        console.log("findBirdFromAbbrev: " + name)
+        for(var i=0;i<birdModel.rowCount();i++) {
+            // TODO localized names
+            if (currentLanguage == "en") {
+                if(name === birdModel.data(i, 38)) {
+                    return birdModel.data(i, 44)
+                }
+            }
+            else if (currentLanguage == "sv") {
+                if(name === birdModel.data(i, 38)) {
+                    return birdModel.data(i, 46)
+                }
+            }
+            else {
+                if(name === birdModel.data(i, 38)) {
+                    return birdModel.data(i, 36)
+                }
+            }
+        }
+
+        return name
+    }
+
     Dialog {
         id: exportDialog
 
@@ -131,11 +157,12 @@ Page {
             font.pixelSize: 36
             text: qsTr("Export")
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
         content:Item {
-            height: exportDialogText.paintedHeight
+            height: 100
             width: parent.width
-            anchors.topMargin: 10
+            anchors.margins: 10
             Label {
                 id: exportDialogText
                 width: parent.width
@@ -148,11 +175,12 @@ Page {
             }
         }
 
-        buttons: Item { height: exportDialogAllButton.height + 2 * 20; width: parent.width
+        buttons: Item { height: exportDialogAllButton.height + 2 * 20; width: parent.width - 20
             Button {
                 id: exportDialogAllButton
-                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 anchors.left: parent.left
+                anchors.margins: 5
                 width: parent.width / 2
                 text: qsTr("All")
                 onClicked: {
@@ -163,8 +191,9 @@ Page {
             }
             Button {
                 id: exportDialogNewButton
-                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 anchors.left: exportDialogAllButton.right
+                anchors.margins: 5
                 width: parent.width / 2
                 text: qsTr("New")
                 onClicked: {
