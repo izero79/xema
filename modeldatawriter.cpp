@@ -952,7 +952,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
         {
             static int loopCount = 0;
             loopCount++;
-            if( !( loopCount % 100 ) )
+            if( !( loopCount % 30 ) )
             {
                 QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
             }

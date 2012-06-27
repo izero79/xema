@@ -546,5 +546,9 @@
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
+    <message>
+        <source>Please, wait...</source>
+        <translation>Ole hyvä ja odota...</translation>
+    </message>
 </context>
 </TS>

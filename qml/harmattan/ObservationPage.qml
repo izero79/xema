@@ -1,5 +1,5 @@
 import QtQuick 1.1
- import com.nokia.meego 1.1
+import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 import XemaEnums 1.0
 
@@ -510,21 +510,7 @@ Page {
             //flat: true
             iconId: "icon-m-toolbar-back-white" //"toolbar-back"
             onClicked: {
-                if (pageStack.currentPage == MyScript.obsObject)
-                {
-                    unsavedData = MyScript.unSavedDataExists()
-                    MyScript.clearObsDataSelections()
-                    if (needsHistoryReload) {
-                        window.reloadHistory()
-                        needsHistoryReload = false
-                    }
-
-                }
-                else if (pageStack.currentPage == MyScript.listObject)
-                {
-                    backFromList()
-                }
-                pageStack.depth <= 1 ? quit() : pageStack.pop()
+                window.backFromObs()
             }
         }
         ButtonRow {
@@ -622,7 +608,7 @@ Page {
 //                anchors.fill: parent
                 anchors.margins: 5
                 contentWidth: width
-                contentHeight: detailLevel > 1 ? item3.y + item3.height : item4.y + item4.height
+                contentHeight: height //detailLevel > 1 ? item3.y + item3.height : item4.y + item4.height
 
                 Timer {
                   id: adjuster2
@@ -795,22 +781,12 @@ Page {
                         anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
-                        enabled: false
                         MouseArea {
                             id: ta1mouse
                             anchors.fill: parent
-                            onClicked: {
-                                console.log("click")
-                                window.showListPage("regpeople", regPeopleTa.text);
-                            }
+                            onClicked: window.showListPage("regpeople", regPeopleTa.text);
+                            z: regPeopleTa.z + 1
                         }
-                        onFocusChanged: {
-                            console.log("onFocusChanged: " + focus)
-                            if( focus == true ) {
-                                window.showListPage("regpeople", regPeopleTa.text);
-                            }
-                        }
-
                         onTextChanged: obsPage.edited = true
 
                     }
@@ -929,7 +905,7 @@ Page {
                 anchors.bottom: tab3Tools.top
 //                anchors.fill: parent
                 contentWidth: width
-                contentHeight: obsTimeItem.y + obsTimeItem.height
+                contentHeight: height //obsTimeItem.y + obsTimeItem.height
 
                 Timer {
                   id: adjuster1
@@ -1012,6 +988,7 @@ Page {
                             id: tf1mouse
                             anchors.fill: parent
                             onClicked: window.showListPage("places");
+                            z: locationTf.z + 1
                         }
                         onTextChanged: obsPage.edited = true
                     }
@@ -1280,6 +1257,7 @@ Page {
                         height: 50
                         placeholderText: qsTr("Species")
                         text: ""
+                        validator: RegExpValidator{ regExp: /.{1,}/ }
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         anchors.right: parent.right
@@ -1290,6 +1268,7 @@ Page {
                             id: tf7mouse
                             anchors.fill: parent
                             onClicked: window.showListPage("birds");
+                            z: birdNameTf.z + 1
                         }
                         onTextChanged: obsPage.edited = true
 
@@ -1394,6 +1373,7 @@ Page {
                             id: atlastfmouse
                             anchors.fill: parent
                             onClicked: window.showListPage("atlas", atlasTf.text, atlasTf);
+                            z: atlasTf.z + 1
                         }
                         onTextChanged: obsPage.edited = true
                     }

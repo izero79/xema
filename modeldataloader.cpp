@@ -251,7 +251,7 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
     {
         static int loopCount = 0;
         loopCount++;
-        if( !( loopCount % 100 ) )
+        if( !( loopCount % 30 ) )
         {
             QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
         }
@@ -340,7 +340,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
     {
         static int loopCount = 0;
         loopCount++;
-        if( !( loopCount % 50 ) )
+        if( !( loopCount % 30 ) )
         {
             QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
         }
@@ -475,7 +475,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
     {
         static int loopCount = 0;
         loopCount++;
-        if( !( loopCount % 100 ) )
+        if( !( loopCount % 30 ) )
         {
             QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
         }

@@ -260,22 +260,26 @@ void QMLWindow::setAtlasModel(AtlasIndexModel *model)
 
 void QMLWindow::writeNewObservation(const QString &data)
 {
+    setProcessing(true);
     mDataWriter->writeNewObservation(data);//, *mLocationModel, *mPersonModel);
+    setProcessing(false);
 }
 
 void QMLWindow::loadObservation(const QString &id)
 {
+    setProcessing(true);
     qlonglong idNum = id.toLongLong();
     QString data = mDataLoader->loadObservation(idNum);
     QMetaObject::invokeMethod(mRootObject, "dataLoaded",
              Q_ARG(QVariant, data));
+    setProcessing(false);
 }
 
 void QMLWindow::deleteObservation(const QString &id, const QString &date, const QString &place)
 {
+    setProcessing(true);
     qlonglong idNum = id.toLongLong();
     mDataWriter->deleteObservation(idNum);
-    setProcessing(true);
     loadHistoryWithDateAndPlace(date, place);
     loadHistoryWithDate(date);
     reloadHistory();
@@ -310,9 +314,9 @@ void QMLWindow::importOwnData()
 {
     setProcessing(true);
     int err = mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel,mStatusModel);
-    setProcessing(false);
     QMetaObject::invokeMethod(mRootObject, "importError",
              Q_ARG(QVariant,err));
+    setProcessing(false);
 }
 
 void QMLWindow::importData()

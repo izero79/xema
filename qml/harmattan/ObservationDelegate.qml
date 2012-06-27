@@ -135,6 +135,7 @@ Item {
             id: sexTfmouse
             anchors.fill: parent
             onClicked: window.showListPage("sex", sexTf.text, sexTf);
+            z: sexTf.z + 1
         }
         onTextChanged: item1.edited = true
     }
@@ -154,6 +155,7 @@ Item {
             id: ageTfmouse
             anchors.fill: parent
             onClicked: window.showListPage("age", ageTf.text, ageTf);
+            z: ageTf.z + 1
         }
         onTextChanged: item1.edited = true
 
@@ -172,6 +174,7 @@ Item {
             id: dressTfmouse
             anchors.fill: parent
             onClicked: window.showListPage("dress", dressTf.text, dressTf);
+            z: dressTf.z + 1
         }
         onTextChanged: item1.edited = true
 
@@ -191,6 +194,7 @@ Item {
             id: tf5mouse
             anchors.fill: parent
             onClicked: window.showListPage("status", statusTf.text, statusTf);
+            z: statusTf.z + 1
         }
         onTextChanged: item1.edited = true
 

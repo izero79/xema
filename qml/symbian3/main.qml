@@ -236,12 +236,32 @@ PageStackWindow {
         errorDialog.open()
     }
 
-    BusyIndicator {
-        anchors.centerIn: parent
-        running: cppProcessing
-        width: 64
-        height: width
-        visible: running
+    Rectangle {
+        id: processingRec
+        visible: cppProcessing
+        anchors.fill: parent
+        color: "#c0000000"
+
+        BusyIndicator {
+            id: indicator
+            anchors.centerIn: parent
+            running: cppProcessing
+            width: 64
+            height: width
+            visible: running
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: indicator.bottom
+            anchors.topMargin: 5
+            text: qsTr( "Please, wait...")
+
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            enabled: processingRec.visible
+        }
     }
 
     function clearTab() {
@@ -261,6 +281,24 @@ PageStackWindow {
             needsHistoryReload = true
         }
 
+    }
+
+    function backFromObs() {
+        if (pageStack.currentPage == MyScript.obsObject)
+        {
+            window.unsavedData = MyScript.unSavedDataExists()
+            MyScript.clearObsDataSelections()
+            if (window.needsHistoryReload) {
+                window.reloadHistory()
+                window.needsHistoryReload = false
+            }
+
+        }
+        else if (pageStack.currentPage == MyScript.listObject)
+        {
+            window.backFromList()
+        }
+        pageStack.depth <= 1 ? quit() : pageStack.pop()
     }
 
     ToolBarLayout {
