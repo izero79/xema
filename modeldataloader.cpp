@@ -253,7 +253,7 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
         loopCount++;
         if( !( loopCount % 30 ) )
         {
-            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+            QCoreApplication::processEvents();
         }
         QString line;
         line = striimi.readLine();
@@ -342,7 +342,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
         loopCount++;
         if( !( loopCount % 30 ) )
         {
-            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+            QCoreApplication::processEvents();
         }
         QString line;
 #ifdef PERFTEST
@@ -453,6 +453,8 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
     qDebug("loadHistoryDateData Time elapsed: %d ms", t.elapsed());
     qDebug() << model->rowCount() << "items added to model";
 #endif
+    qDebug() << "void ModelDataLoader::loadHistoryDateData(HistoryModel *model) - done";
+
 }
 
 void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &date)
@@ -477,7 +479,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
         loopCount++;
         if( !( loopCount % 30 ) )
         {
-            QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+            QCoreApplication::processEvents();
         }
         QString line;
         line = striimi.readLine();
@@ -603,7 +605,7 @@ QString ModelDataLoader::dataFileDir()
 #elif defined HARMATTAN
     appPath = QString("/home/user/MyDocs/.xema/");
 #elif defined MAC_OS_X_VERSION_10_6
-    appPath = QString("/Users/Tero/");
+    appPath = QString("/Users/Tero/xema/");
 #else
     appPath = QString("C:/");
 
@@ -709,7 +711,7 @@ QString ModelDataLoader::loadObservation(qlonglong id)
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-    QString obsLine;
+    QString obsLine; 
     while (striimi.atEnd() == false)
     {
         obsLine = striimi.readLine();

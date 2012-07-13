@@ -19,9 +19,8 @@
         <file>qml/harmattan/SimpleDelegate.qml</file>
         <file>qml/harmattan/StatusEditPage.qml</file>
         <file>qml/harmattan/StatusListDelegate.qml</file>
-        <file>qml/harmattan_icons/back.svg</file>
-        <file>qml/harmattan_icons/filter.svg</file>
-        <file>qml/harmattan_icons/save.svg</file>
         <file>qml/harmattan_icons/xema96.png</file>
+        <file>qml/harmattan_icons/filter.png</file>
+        <file>qml/harmattan_icons/save.png</file>
     </qresource>
 </RCC>

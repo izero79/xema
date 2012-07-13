@@ -555,7 +555,7 @@ Page {
                 ToolIcon {
                     //flat: true
                     anchors.left: parent.left
-                    iconSource: "/qml/symbian3_icons/filter.svg"
+                    iconSource: "/qml/harmattan_icons/filter.png"
                     onClicked: {
                         if (window.currentDetailLevel < 3)
                         {
@@ -571,7 +571,7 @@ Page {
                     //flat: true
                     visible: false
                     anchors.horizontalCenter: parent.horizontalCenter
-                    iconSource: "/qml/symbian3_icons/save.svg"
+                    iconSource: "/qml/harmattan_icons/save.png"
                     onClicked: {
                         window.save()/*
                         var success = false
@@ -604,11 +604,11 @@ Page {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.right: parent.right
-                anchors.bottom: tab3Tools.top
+                anchors.bottom: tab1Tools.top
 //                anchors.fill: parent
                 anchors.margins: 5
                 contentWidth: width
-                contentHeight: height //detailLevel > 1 ? item3.y + item3.height : item4.y + item4.height
+                contentHeight: detailLevel > 1 ? item3.y + item3.height : item4.y + item4.height
 
                 Timer {
                   id: adjuster2
@@ -852,7 +852,7 @@ Page {
                 ToolIcon {
                     //flat: true
                     anchors.left: parent.left
-                    iconSource: "/qml/symbian3_icons/filter.svg"
+                    iconSource: "/qml/harmattan_icons/filter.png"
                     onClicked: {
                         if (window.currentDetailLevel < 3)
                         {
@@ -868,7 +868,7 @@ Page {
                     //flat: true
                     visible: false
                     anchors.horizontalCenter: parent.horizontalCenter
-                    iconSource: "/qml/symbian3_icons/save.svg"
+                    iconSource: "/qml/harmattan_icons/save.png"
                     onClicked: {
                         window.save()/*
                         var success = false
@@ -902,7 +902,7 @@ Page {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.right: parent.right
-                anchors.bottom: tab3Tools.top
+                anchors.bottom: tab2Tools.top
 //                anchors.fill: parent
                 contentWidth: width
                 contentHeight: height //obsTimeItem.y + obsTimeItem.height
@@ -1113,7 +1113,7 @@ Page {
                 ToolIcon {
                     //flat: true
                     anchors.left: parent.left
-                    iconSource: "/qml/symbian3_icons/filter.svg"
+                    iconSource: "/qml/harmattan_icons/filter.png"
                     onClicked: {
                         if (window.currentDetailLevel < 3)
                         {
@@ -1129,7 +1129,7 @@ Page {
                     //flat: true
                     visible: true
                     anchors.horizontalCenter: parent.horizontalCenter
-                    iconSource: "/qml/symbian3_icons/save.svg"
+                    iconSource: "/qml/harmattan_icons/save.png"
                     onClicked: {
                         window.save()/*
                         var success = false

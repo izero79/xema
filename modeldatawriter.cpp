@@ -5,7 +5,7 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QStringList>
-
+ 
 #include "modeldatawriter.h"
 #include "birdmodel.h"
 #include "bird.h"
@@ -607,7 +607,7 @@ QString ModelDataWriter::dataFileDir()
 #elif defined HARMATTAN
     appPath = QString("/home/user/MyDocs/.xema/");
 #elif defined MAC_OS_X_VERSION_10_6
-    appPath = QString("/Users/Tero/");
+    appPath = QString("/Users/Tero/xema/");
 #else
     appPath = QString("C:/");
 
@@ -954,7 +954,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
             loopCount++;
             if( !( loopCount % 30 ) )
             {
-                QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents|QEventLoop::ExcludeSocketNotifiers);
+                QCoreApplication::processEvents();
             }
             if (prevLines.length() == 0)
             {

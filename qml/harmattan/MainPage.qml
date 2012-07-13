@@ -10,6 +10,7 @@ Page {
         visible: true
         ToolIcon {
             //flat: true
+            visible: false
             iconId: "icon-m-toolbar-back-white"
             onClicked: {
                 pageStack.depth <= 1 ? quit() : pageStack.pop()
@@ -22,6 +23,7 @@ Page {
             onClicked: {
                 aboutDialog.open()
             }
+            anchors.centerIn: parent
         }
     }
 
@@ -59,8 +61,8 @@ Page {
         }
 
         anchors.centerIn: parent
-        width: window.inPortrait ? parent.width : parent.width / 5 * 3
-        height: window.inPortrait ? parent.height / 5 * 2 : parent.height / 5 * 4
+        width: window.inPortrait ? parent.width / 3 * 2: parent.width / 5 * 2
+        height: window.inPortrait ? parent.height / 6 * 2 : parent.height / 5 * 3
         source: ""
         z: 100
         onYChanged: {

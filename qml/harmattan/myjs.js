@@ -76,6 +76,8 @@ function showListPage(type, selectedItems, itemi)
 
 function showObsPage(doNotInit)
 {
+    console.log("showObsPage, doNotInit: " + doNotInit)
+
     if (obsObject)
     {
         console.log("obs exists, push")
@@ -84,13 +86,13 @@ function showObsPage(doNotInit)
             settingsPageComponent.destroy()
             settingsObject = null
             settingsPageComponent = null
-        }
+        }/*
         if(historyPageComponent) {
             historyObject.destroy()
             historyPageComponent.destroy()
             historyObject = null
             historyPageComponent = null
-        }
+        }*/
 
         pageStack.push(obsObject)
         if (doNotInit == false)
@@ -107,17 +109,18 @@ function showObsPage(doNotInit)
         settingsPageComponent.destroy()
         settingsObject = null
         settingsPageComponent = null
-    }
+    }/*
     if(historyPageComponent) {
         historyObject.destroy()
         historyPageComponent.destroy()
         historyObject = null
         historyPageComponent = null
-    }
+    }*/
 
     pageStack.push(obsObject)
     if (doNotInit == false)
     {
+        console.log("create obs, init")
         obsObject.init()
     }
 }

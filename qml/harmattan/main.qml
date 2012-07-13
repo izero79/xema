@@ -134,6 +134,7 @@ PageStackWindow {
 
     function dataLoaded(data)
     {
+        console.log("dataLoaded")
         MyScript.obsObject.dataLoaded(data)
     }
 

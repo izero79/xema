@@ -114,7 +114,7 @@ Item {
         anchors.topMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 0
-        width: 75
+        width: 100
         validator: IntValidator { bottom: 1; }
         inputMethodHints: Qt.ImhDigitsOnly
         onTextChanged: item1.edited = true

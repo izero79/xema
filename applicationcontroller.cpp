@@ -116,6 +116,10 @@ void ApplicationController::initObjects()
 
 ApplicationController::~ApplicationController()
 {
+    mModelWriter->writePersonData(mPersonModel);
+    mModelWriter->writeLocationData(mLocationModel);
+    mModelWriter->writeBirdData(mBirdModel);
+    mModelWriter->writeStatusData(mStatusModel);
     mQMLWin->deleteLater();
     mQMLWin = 0;
     qDebug() << "ApplicationController::~ApplicationController()" << "\n\nApplication Finished";
@@ -148,10 +152,10 @@ void ApplicationController::loadHistoryWithDateAndPlace(const QString &date, con
 
 void ApplicationController::quit()
 {
-    mModelWriter->writePersonData(mPersonModel);
-    mModelWriter->writeLocationData(mLocationModel);
-    mModelWriter->writeBirdData(mBirdModel);
-    mModelWriter->writeStatusData(mStatusModel);
+//    mModelWriter->writePersonData(mPersonModel);
+//    mModelWriter->writeLocationData(mLocationModel);
+//    mModelWriter->writeBirdData(mBirdModel);
+//    mModelWriter->writeStatusData(mStatusModel);
     qApp->quit();
 }
 

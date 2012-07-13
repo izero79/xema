@@ -126,7 +126,7 @@ Page {
         CheckableGroup { id: orderGroup }
         ButtonColumn {
             id: row1
-            spacing: platformStyle.paddingMedium
+            spacing: 10//platformStyle.paddingMedium
             anchors.top: systematicSortText.bottom
             anchors.left: parent.left
             RadioButton {
@@ -193,7 +193,7 @@ Page {
 
         ButtonColumn {
             id: row2
-            spacing: platformStyle.paddingMedium
+            spacing: 10// platformStyle.paddingMedium
             anchors.top: groupHeader.bottom
             anchors.left: parent.left
             RadioButton {
