@@ -290,7 +290,7 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;Ryhmät_swe;\n");
+    striimi << QString("Id;RyhmÃ¤t;RyhmÃ¤t_eng;RyhmÃ¤t_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;RyhmÃ¤t_swe;\n");
     for(int i = 0; i < rows; i++)
     {
         QString line;

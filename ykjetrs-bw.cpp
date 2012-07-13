@@ -7,7 +7,7 @@
  * Created: 2003-02-05
  * Updated: 2003-08-15
  *
- * Seitsem‰n parametrin yhdenmuotoisuusmuunnos ETRF89:n ja kkj:n v‰lill‰.
+ * Seitsem√§n parametrin yhdenmuotoisuusmuunnos ETRF89:n ja kkj:n v√§lill√§.
  */
 
 #include <math.h>
@@ -28,7 +28,6 @@
  * Latitudin, longitudin ja korkeuden muuntaminen suorakulmaisiksi
  * koordinaateiksi ja takaisin.
  */
-
 static void sphericaltoXYZ(double a, double f,
                            double phi, double lambda, double h,
                            double *X, double *Y, double *Z)
@@ -83,14 +82,14 @@ void kkj_etrs_bw_pallo(double fii, double lam, double *Fii, double *Lam)
    double X, Y, Z, x, y, z;
 
    /*
-    * Muunnetaan kaksi kertaa. Ensimm‰isest‰ yrityksest‰ hyˆdynnet‰‰n vain
-    * korkeustieto. Alkuper‰isen pisteen korkeudeksi pistet‰‰n muunnoksessa
-    * saadun korkeuden vastaluku ja n‰in saatu piste muunnetaan uudestaan.
-    * N‰in saadaan lopullinen piste l‰helle nollakorkeutta, jolloin
-    * koordinaatistojen painovoimavektoreiden v‰linen poikkeama ei p‰‰se
-    * v‰‰rist‰m‰‰n pisteen tasopaikkaa.
+    * Muunnetaan kaksi kertaa. Ensimm√§isest√§ yrityksest√§ hy√∂dynnet√§√§n vain
+    * korkeustieto. Alkuper√§isen pisteen korkeudeksi pistet√§√§n muunnoksessa
+    * saadun korkeuden vastaluku ja n√§in saatu piste muunnetaan uudestaan.
+    * N√§in saadaan lopullinen piste l√§helle nollakorkeutta, jolloin
+    * koordinaatistojen painovoimavektoreiden v√§linen poikkeama ei p√§√§se
+    * v√§√§rist√§m√§√§n pisteen tasopaikkaa.
     *
-    * T‰m‰ temppu pienent‰‰ edestakaisen muunnoksen poikkeaman
+    * T√§m√§ temppu pienent√§√§ edestakaisen muunnoksen poikkeaman
     * millimetriluokasta mikrometriluokkaan.
     */
 
@@ -113,10 +112,10 @@ void kkj_etrs_bw_pallo(double fii, double lam, double *Fii, double *Lam)
 /*
  * Ja lopuksi sama tasokoordinaatistossa.
  *
- * 29 000 kilometrin kaista riitt‰nee kotitarpeisiin!
- * Se on yli 155 astetta leve‰ ja kattaa 97.7% maapallon
- * pinnasta. Kauemmaksi ei kannata menn‰, sill‰ Gauss-Kr¸ger-
- * projektiokaavojen virhe on t‰ll‰ et‰isyydell‰ samaa
+ * 29 000 kilometrin kaista riitt√§nee kotitarpeisiin!
+ * Se on yli 155 astetta leve√§ ja kattaa 97.7% maapallon
+ * pinnasta. Kauemmaksi ei kannata menn√§, sill Gauss-Krger-
+ * projektiokaavojen virhe on t√§ll√§ et√§isyydell√§ samaa
  * suuruusluokkaa, kuin ETRF89:n ja kkj:n ero.
  */
 
