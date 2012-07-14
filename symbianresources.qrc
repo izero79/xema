@@ -23,5 +23,6 @@
         <file>qml/symbian3_icons/save.svg</file>
         <file>qml/symbian3_icons/xema96.png</file>
         <file>qml/symbian3/myjs.js</file>
+        <file>qml/splash_240x200.png</file>
     </qresource>
 </RCC>

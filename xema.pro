@@ -7,7 +7,7 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-symbian:DEFINES +=DEBUGONLYTOFILE
+DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location
 #DEFINES += PERFTEST
@@ -109,6 +109,13 @@ unix:!symbian:!maemo5:!macx {
 
 
     DEFINES += HARMATTAN
+
+    splash_portrait.files = splash_portrait.png
+    splash_portrait.path = /opt/xema/
+    splash_landscape.files = splash_landscape.png
+    splash_landscape.path = /opt/xema/
+
+    INSTALLS += splash_portrait splash_landscape
 
 }
 
@@ -215,4 +222,6 @@ OTHER_FILES += \
     ykjetrsdata-bw.h \
     gausskrueger.h \
     qml/harmattan/* \
-    qml/symbian3/*
+    qml/symbian3/* \
+    splash_landscape.png \
+    splash_portrait.png

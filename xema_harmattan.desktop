@@ -4,7 +4,7 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=Xema
-Exec=/usr/bin/invoker --type=d -s /opt/xema/bin/xema
+Exec=/usr/bin/invoker --single-instance --type=q --splash=/opt/xema/splash_portrait.png --splash-landscape=/opt/xema/splash_landscape.png /opt/xema/bin/xema
 Icon=/usr/share/icons/hicolor/80x80/apps/xema80.png
 X-Window-Icon=
 X-HildonDesk-ShowInToolbar=true
