@@ -22,5 +22,6 @@
         <file>qml/harmattan_icons/xema96.png</file>
         <file>qml/harmattan_icons/filter.png</file>
         <file>qml/harmattan_icons/save.png</file>
+        <file>qml/harmattan_icons/i.png</file>
     </qresource>
 </RCC>

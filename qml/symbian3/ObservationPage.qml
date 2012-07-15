@@ -529,8 +529,7 @@ Page {
                 obsPage.currentTab = 3
             }
         }
-
-
+	
         // define the content for tab 1
         Page {
             id: tab1content
@@ -720,6 +719,7 @@ Page {
                             id: ta1mouse
                             anchors.fill: parent
                             onClicked: window.showListPage("regpeople", regPeopleTa.text);
+                            z: regPeopleTa.z + 1
                         }
                         onTextChanged: obsPage.edited = true
 
@@ -865,6 +865,7 @@ Page {
                             id: tf1mouse
                             anchors.fill: parent
                             onClicked: window.showListPage("places");
+                            z: locationTf.z + 1
                         }
                         onTextChanged: obsPage.edited = true
                         validator: RegExpValidator{ regExp: /.{1,}/ }
@@ -1088,6 +1089,7 @@ Page {
                             id: tf7mouse
                             anchors.fill: parent
                             onClicked: window.showListPage("birds");
+                            z: birdNameTf.z + 1
                         }
                         onTextChanged: obsPage.edited = true
 
@@ -1192,6 +1194,7 @@ Page {
                             id: atlastfmouse
                             anchors.fill: parent
                             onClicked: window.showListPage("atlas", atlasTf.text, atlasTf);
+                            z: atlasTf.z + 1
                         }
                         onTextChanged: obsPage.edited = true
                     }

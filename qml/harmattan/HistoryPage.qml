@@ -84,7 +84,7 @@ Page {
     function clicked(name)
     {
         console.log("clicked")
-//        pageStack.pop()
+        //pageStack.pop()
         window.showObsPage(false)
         window.readObs(name)
     }

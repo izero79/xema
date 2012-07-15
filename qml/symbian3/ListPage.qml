@@ -279,7 +279,6 @@ Page {
                 console.log("teksti muuttuu: " + text)
                 listView.model.filter(text)
             }
-
             BusyIndicator {
                 anchors.right: parent.right
                 anchors.top: parent.top

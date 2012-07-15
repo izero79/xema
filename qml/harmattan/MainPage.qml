@@ -16,9 +16,9 @@ Page {
                 pageStack.depth <= 1 ? quit() : pageStack.pop()
             }
         }
-        ToolButton {
-            flat: true
-            text: "i"
+        ToolIcon {
+            //flat: true
+            iconSource: ":../harmattan_icons/i.png"
             visible: true
             onClicked: {
                 aboutDialog.open()

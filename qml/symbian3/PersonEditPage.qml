@@ -52,6 +52,14 @@ Page {
                 pageStack.pop()
             }
         }
+        ToolIcon {
+            iconSource: "/qml/symbian3_icons/undo.svg"
+            visible: !addingNew
+            onClicked: {
+                console.log("person edit page undo clicked")
+                undo()
+            }
+        }
     }
 
     property int currentIndex: -1
@@ -77,6 +85,20 @@ Page {
         currentIndex = index
         console.log("valittu: " + personModel.data(currentIndex, 35))
         personEdited = false
+    }
+
+    function undo()
+    {
+        firstName.text = personModel.data(currentIndex, 38)
+        lastName.text = personModel.data(currentIndex, 39)
+        registeredChkBox.checked = personModel.data(currentIndex, 36)
+        if( personModel.rowCount == 0 ) {
+            defaultChkBox.checked = true
+        }
+        else {
+            defaultChkBox.checked = personModel.data(currentIndex, 37)
+        }
+
     }
 
     Flickable {
@@ -110,6 +132,7 @@ Page {
             anchors.leftMargin: 0
             anchors.top: editText.bottom
             anchors.topMargin: 8
+            validator: RegExpValidator{ regExp: /.{1,}/ }
             onTextChanged: {
                 personEdited = true
             }

@@ -7,11 +7,14 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-DEFINES +=DEBUGONLYTOFILE
+#DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
-MOBILITY +=location
-#DEFINES += PERFTEST
+MOBILITY +=location systeminfo
 
+#DEFINES += PERFTEST
+DEFINES += USE_MOBILITY
+
+#DEFINES += ONLYFORIMEI=357923041627788
 DEFINES += ONLYFORIMEI=0
 
 VERSION = 0.1.9
@@ -152,7 +155,8 @@ SOURCES += main.cpp \
     sex.cpp \
     agemodel.cpp \
     dressmodel.cpp \
-    sexmodel.cpp
+    sexmodel.cpp \
+    systeminfoprovider.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -197,7 +201,8 @@ HEADERS += \
     sex.h \
     agemodel.h \
     dressmodel.h \
-    sexmodel.h
+    sexmodel.h \
+    systeminfoprovider.h
 
 RESOURCES += \
     commonresources.qrc

@@ -55,6 +55,14 @@ Page {
                 pageStack.pop()
             }
         }
+        ToolIcon {
+            iconId: "icon-m-toolbar-undo-white"
+            visible: !addingNew
+            onClicked: {
+                console.log("location edit page undo clicked")
+                undo()
+            }
+        }
     }
 
     property int currentIndex: -1
@@ -64,6 +72,16 @@ Page {
         var dataOk = false;
         if (townTf.text.length > 0 &&
             locationTf.text.length)
+        {
+            dataOk = true;
+        }
+        else if (sweTownTf.text.length > 0 &&
+            sweLocationTf.text.length)
+        {
+            dataOk = true;
+        }
+        else if (engTownTf.text.length > 0 &&
+            engLocationTf.text.length)
         {
             dataOk = true;
         }
@@ -80,6 +98,18 @@ Page {
         currentIndex = index
         console.log("valittu: " + locationModel.data(currentIndex, 35))
         locationEdited = false
+    }
+
+    function undo()
+    {
+        townTf.text = locationModel.data(currentIndex, 35)
+        locationTf.text = locationModel.data(currentIndex, 36)
+        sweTownTf.text = locationModel.data(currentIndex, 44)
+        sweLocationTf.text = locationModel.data(currentIndex, 45)
+        engTownTf.text = locationModel.data(currentIndex, 46)
+        engLocationTf.text = locationModel.data(currentIndex, 47)
+        ykjTf.text = locationModel.data(currentIndex, 38)
+        wgsTf.text = locationModel.data(currentIndex, 39)
     }
 
     Flickable {

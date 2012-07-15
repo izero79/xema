@@ -57,6 +57,14 @@ Page {
                 pageStack.pop()
             }
         }
+        ToolIcon {
+            iconSource: "/qml/symbian3_icons/undo.svg"
+            visible: !addingNew
+            onClicked: {
+                console.log("bird edit page undo clicked")
+                undo()
+            }
+        }
     }
 
     property int currentIndex: -1
@@ -65,11 +73,20 @@ Page {
     {
         var dataOk = false;
         if (name1Tf.text.length > 0 &&
-            name3Tf.text.length > 0 &&
             group1Tf.text.length > 0 &&
-            group3Tf.text.length > 0 &&
-            abbrevTf.text.length > 0 &&
-            categoryTf.text.length > 0)
+            abbrevTf.text.length > 0 )
+        {
+            dataOk = true;
+        }
+        else if (name2Tf.text.length > 0 &&
+            group2Tf.text.length > 0 &&
+            abbrevTf.text.length > 0 )
+        {
+            dataOk = true;
+        }
+        else if (name4Tf.text.length > 0 &&
+            group4Tf.text.length > 0 &&
+            abbrevTf.text.length > 0 )
         {
             dataOk = true;
         }
@@ -85,6 +102,20 @@ Page {
     {
         currentIndex = index
         birdEdited = false
+    }
+
+    function undo()
+    {
+        name1Tf.text = birdModel.data(currentIndex, 36)
+        name2Tf.text = birdModel.data(currentIndex, 46)
+        name3Tf.text = birdModel.data(currentIndex, 39)
+        name4Tf.text = birdModel.data(currentIndex, 48)
+        group1Tf.text = birdModel.data(currentIndex, 40)
+        group2Tf.text = birdModel.data(currentIndex, 47)
+        group3Tf.text = birdModel.data(currentIndex, 42)
+        group4Tf.text = birdModel.data(currentIndex, 49)
+        abbrevTf.text = birdModel.data(currentIndex, 38)
+        categoryTf.text = birdModel.data(currentIndex, 43)
     }
 
     Flickable {
@@ -264,6 +295,7 @@ Page {
             anchors.leftMargin: 0
             anchors.top: group3Tf.bottom
             anchors.topMargin: 8
+            validator: RegExpValidator{ regExp: /.{1,}/ }
             onTextChanged: {
                 birdEdited = true
             }

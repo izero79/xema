@@ -15,6 +15,7 @@
 #include "agemodel.h"
 #include "dressmodel.h"
 #include "sexmodel.h"
+#include "systeminfoprovider.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
@@ -32,6 +33,7 @@ ApplicationController::ApplicationController(QObject *parent) :
     mDressModel(0),
     mSexModel(0)
 {
+    qDebug() << "\n\nSystem Info:" << SystemInfoProvider::versionInfo() << "\n\n";
     initGUI();
     QTimer::singleShot(0, this, SLOT(initObjects()));
 }

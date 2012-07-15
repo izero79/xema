@@ -37,7 +37,7 @@ Page {
         ToolIcon {
             //flat: true
             iconId: "icon-m-toolbar-add-white"
-            visible: listView.model == personModel || listView.model == locationModel || listView.model == birdModel
+            visible: listView.model == personModel || listView.model == locationModel || listView.model == birdModel || listView.model == statusModel
             onClicked: {
                 console.log("Add new")
                 addNewClicked()

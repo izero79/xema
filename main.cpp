@@ -8,6 +8,8 @@
 #include "debugprinter.h"
 #include "dummydebugprinter.h"
 
+#include "systeminfoprovider.h"
+
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -52,6 +54,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #endif
     qDebug() << "\n\nApplication Start";
     qDebug() << QDateTime::currentDateTime() << "\n";
+
+    if( SystemInfoProvider::imeiAccepted() == false )
+    {
+        return 0;
+    }
 
     QString locale = QLocale::system().name();
 

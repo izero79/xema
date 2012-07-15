@@ -46,6 +46,14 @@ Page {
                 pageStack.pop()
             }
         }
+        ToolIcon {
+            iconSource: "/qml/symbian3_icons/undo.svg"
+            visible: !addingNew
+            onClicked: {
+                console.log("status edit page undo clicked")
+                undo()
+            }
+        }
     }
 
     property int currentIndex: -1
@@ -53,8 +61,7 @@ Page {
     function mandatoryInfoExists()
     {
         var dataOk = false;
-        if (name1Tf.text.length > 0 &&
-            abbrevTf.text.length > 0)
+        if (abbrevTf.text.length > 0)
         {
             dataOk = true;
         }
@@ -71,6 +78,15 @@ Page {
         currentIndex = index
         statusEdited = false
     }
+
+    function undo()
+    {
+        name1Tf.text = statusModel.data(currentIndex, 36)
+        name2Tf.text = statusModel.data(currentIndex, 39)
+        name3Tf.text = statusModel.data(currentIndex, 40)
+        abbrevTf.text = statusModel.data(currentIndex, 35)
+    }
+
 
     Flickable {
         id: flickable1
@@ -186,6 +202,7 @@ Page {
             anchors.leftMargin: 0
             anchors.top: name3Tf.bottom
             anchors.topMargin: 8
+            validator: RegExpValidator{ regExp: /.{1,}/ }
             onTextChanged: {
                 statusEdited = true
             }

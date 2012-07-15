@@ -905,7 +905,7 @@ Page {
                 anchors.bottom: tab2Tools.top
 //                anchors.fill: parent
                 contentWidth: width
-                contentHeight: height //obsTimeItem.y + obsTimeItem.height
+                contentHeight: obsTimeItem.y + obsTimeItem.height
 
                 Timer {
                   id: adjuster1
@@ -991,6 +991,7 @@ Page {
                             z: locationTf.z + 1
                         }
                         onTextChanged: obsPage.edited = true
+                        validator: RegExpValidator{ regExp: /.{1,}/ }
                     }
                 }
                 Label {
