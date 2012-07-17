@@ -152,6 +152,7 @@ PageStackWindow {
         {
             MyScript.fillStatusBox()
         }
+        MyScript.clearListPage()
     }
 
     function addPeople()
@@ -325,7 +326,7 @@ PageStackWindow {
                 }
                 pageStack.depth <= 1 ? quit() : pageStack.pop()
             }
-        }
+        }/*
         ToolButton {
             flat: true
             iconSource: "/qml/symbian3_icons/filter.svg"
@@ -346,7 +347,7 @@ PageStackWindow {
             iconSource: "/qml/symbian3_icons/save.svg"
             visible: pageStack.currentPage == MyScript.obsObject && MyScript.obsObject.currentTab == 3
             onClicked: window.save()
-        }
+        }*/
         ToolIcon {
             //flat: true
             iconId: "icon-m-toolbar-delete-white"

@@ -14,6 +14,7 @@ StatusModel::StatusModel(QObject *parent) :
     roles[EngNameOnlyRole] = "engonlyname";
     roles[AbbrevRole] = "abbrev";
     roles[SelectedRole] = "selected";
+    roles[EmptyRole] = "name";
     setRoleNames(roles);
 }
 

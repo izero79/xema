@@ -56,7 +56,8 @@ Page {
                 pageStack.pop()
             }
         }
-        ToolIcon {
+        ToolButton {
+            flat: true
             iconSource: "/qml/symbian3_icons/undo.svg"
             visible: !addingNew
             onClicked: {

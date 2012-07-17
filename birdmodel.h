@@ -30,7 +30,10 @@ public:
         SweGroupOnlyRole,
         EngNameOnlyRole,
         EngGroupOnlyRole, // 49
-        SectionRole
+        SectionRole,
+        EmptyRole1,
+        EmptyRole2,
+        EmptyRole3
     };
 
 signals:

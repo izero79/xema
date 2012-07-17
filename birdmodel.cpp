@@ -22,6 +22,9 @@ BirdModel::BirdModel(QObject *parent) :
     roles[EngNameOnlyRole] = "engonlyname";
     roles[EngGroupOnlyRole] = "engonlygroup";
     roles[SectionRole] = "section";
+    roles[EmptyRole1] = "value";
+    roles[EmptyRole2] = "name";
+    roles[EmptyRole3] = "selected";
     setRoleNames(roles);
 }
 

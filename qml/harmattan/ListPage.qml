@@ -48,8 +48,12 @@ Page {
 
     function init()
     {
+        console.log("listpage init")
+        selectModel()
+        selectDelegate()
         listView.model.filter("")
         filterTf.text = ""
+        console.log("listpage init - done")
     }
 
     function addNewClicked()
@@ -244,6 +248,142 @@ Page {
         }
     }
 
+    function selectDelegate() {
+        console.log("selecting delegate")
+        if (listPageType == "birds")
+        {
+            console.log("selecting delegate - setting sort")
+            if (window.useSystematicSort == true)
+            {
+                listView.model.setSorting(0, true)
+            }
+            else
+            {
+                listView.model.setSorting(1, true)
+            }
+            listView.editMode = false
+            console.log("selecting delegate - setting sort done")
+            listView.delegate = birdDelegate
+        }
+        else if (listPageType == "editbirds")
+        {
+            if (window.useSystematicSort == true)
+            {
+                listView.model.setSorting(0, true)
+            }
+            else
+            {
+                listView.model.setSorting(1, true)
+            }
+            listView.editMode = true
+            listView.delegate = birdDelegate
+        }
+        else if (listPageType == "places")
+        {
+            listView.editMode = false
+            listView.delegate = locationDelegate
+        }
+        else if (listPageType == "editplaces")
+        {
+            listView.editMode = true
+            listView.delegate = locationDelegate
+        }
+        else if (listPageType == "editstatuses")
+        {
+            listView.editMode = true
+            listView.delegate = statusDelegate
+        }
+        else if (listPageType == "status")
+        {
+            listView.editMode = false
+            listView.delegate = statusDelegate
+        }
+        else if (listPageType == "dress" || listPageType == "age" || listPageType == "sex" || listPageType == "atlas")
+        {
+            listView.editMode = false
+            listView.delegate = simpleDelegate
+        }
+        else if (listPageType == "editallpeople")
+        {
+            listView.editMode = true
+            listView.delegate = myTestDelegate
+        }
+        else if (listPageType == "regpeople")
+        {
+            listView.editMode = false
+            listView.showRegistered = true
+            listView.delegate = myTestDelegate
+        }
+        else
+        {
+            listView.editMode = false
+            listView.showRegistered = false
+            listView.delegate = emptyDelegate
+        }
+    }
+
+    function selectModel() {
+        console.log("selecting model")
+        if (listPageType == "atlas")
+        {
+            listView.model = atlasModel
+        }
+        else if (listPageType == "birds")
+        {
+//                listView.section.property = "section"
+//                listView.section.delegate = sectionDelegate
+            listView.model = birdModel
+        }
+        else if (listPageType == "editbirds")
+        {
+            listView.model = birdModel
+        }
+        else if (listPageType == "places")
+        {
+            listView.model = locationModel
+        }
+        else if (listPageType == "editplaces")
+        {
+            listView.model = locationModel
+        }
+        else if (listPageType == "status")
+        {
+            listView.model = statusModel
+        }
+        else if (listPageType == "editstatuses")
+        {
+            listView.model = statusModel
+        }
+        else if (listPageType == "sex")
+        {
+            listView.model = sexModel
+        }
+        else if (listPageType == "dress")
+        {
+            listView.model = dressModel
+        }
+        else if (listPageType == "age")
+        {
+            listView.model = ageModel
+        }
+        else if (listPageType == "regpeople")
+        {
+            listView.model = personModel
+        }
+        else if (listPageType == "editallpeople")
+        {
+            listView.model = personModel
+        }
+        else if (listPageType == "people")
+        {
+            listView.model = personModel
+        }
+        else
+        {
+            listView.model = emptyModel
+        }
+    }
+
     Component.onCompleted: {
         console.log("ListPage loaded")
         listView.model.filter("")
@@ -300,65 +440,16 @@ Page {
         id: listView
         property bool showRegistered: false
         property bool editMode: false
-        model: {
-            if (listPageType == "atlas")
-            {
-                return atlasModel
-            }
-            else if (listPageType == "birds")
-            {
-//                listView.section.property = "section"
-//                listView.section.delegate = sectionDelegate
-                return birdModel
-            }
-            else if (listPageType == "editbirds")
-            {
-                return birdModel
-            }
-            else if (listPageType == "places")
-            {
-                return locationModel
-            }
-            else if (listPageType == "editplaces")
-            {
-                return locationModel
-            }
-            else if (listPageType == "status")
-            {
-                return statusModel
-            }
-            else if (listPageType == "editstatuses")
-            {
-                return statusModel
-            }
-            else if (listPageType == "sex")
-            {
-                return sexModel
-            }
-            else if (listPageType == "dress")
-            {
-                return dressModel
-            }
-            else if (listPageType == "age")
-            {
-                return ageModel
-            }
-            else if (listPageType == "regpeople")
-            {
-                return personModel
-            }
-            else
-            {
-                return personModel
-            }
-        }
+
         anchors.top: item1.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        delegate: {
+        delegate: emptyDelegate/* {
+            console.log("selecting delegate")
             if (listPageType == "birds")
             {
+                console.log("selecting delegate - setting sort")
                 if (window.useSystematicSort == true)
                 {
                     model.setSorting(0, true)
@@ -368,6 +459,7 @@ Page {
                     model.setSorting(1, true)
                 }
                 editMode = false
+                console.log("selecting delegate - setting sort done")
                 return birdDelegate
             }
             else if (listPageType == "editbirds")
@@ -425,8 +517,61 @@ Page {
                 showRegistered = false
                 return myTestDelegate
             }
-        }
+        }*/
         clip: true
+        model: emptyModel/*{
+            console.log("selecting model")
+            if (listPageType == "atlas")
+            {
+                return atlasModel
+            }
+            else if (listPageType == "birds")
+            {
+//                listView.section.property = "section"
+//                listView.section.delegate = sectionDelegate
+                return birdModel
+            }
+            else if (listPageType == "editbirds")
+            {
+                return birdModel
+            }
+            else if (listPageType == "places")
+            {
+                return locationModel
+            }
+            else if (listPageType == "editplaces")
+            {
+                return locationModel
+            }
+            else if (listPageType == "status")
+            {
+                return statusModel
+            }
+            else if (listPageType == "editstatuses")
+            {
+                return statusModel
+            }
+            else if (listPageType == "sex")
+            {
+                return sexModel
+            }
+            else if (listPageType == "dress")
+            {
+                return dressModel
+            }
+            else if (listPageType == "age")
+            {
+                return ageModel
+            }
+            else if (listPageType == "regpeople")
+            {
+                return personModel
+            }
+            else
+            {
+                return personModel
+            }
+        }*/
     }
     ListDelegate {
         id: myTestDelegate
@@ -448,6 +593,16 @@ Page {
         id: simpleDelegate
 
     }
+
+    Component {
+        id: emptyDelegate
+        Item {}
+    }
+
+    ListModel {
+        id: emptyModel
+    }
+
 /*
     Component {
         id: sectionDelegate

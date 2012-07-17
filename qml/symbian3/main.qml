@@ -152,6 +152,7 @@ PageStackWindow {
         {
             MyScript.fillStatusBox()
         }
+        MyScript.clearListPage()
     }
 
     function addPeople()

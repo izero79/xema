@@ -52,9 +52,11 @@ function showListPage(type, selectedItems, itemi)
 {
     if (!listObject)
     {
+        console.log("creating component")
         listPageComponent = Qt.createComponent(Qt.resolvedUrl("ListPage.qml"))
         listObject = listPageComponent.createObject(window)
     }
+    console.log("set type")
     listPageType = type
 
     pageStack.push(listObject)
@@ -71,6 +73,7 @@ function showListPage(type, selectedItems, itemi)
     {
         currentStatusBox = itemi
     }
+    console.log("call init")
     listObject.init()
 }
 
@@ -490,4 +493,11 @@ function addStatus()
     var editorObject = editorCompnent.createObject(window)
     editorObject.addNew()
     pageStack.push(editorObject)
+}
+
+function clearListPage() {
+    if( listObject ) {
+        listObject.selectModel()
+        listObject.selectDelegate()
+    }
 }

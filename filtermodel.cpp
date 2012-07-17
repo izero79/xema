@@ -128,6 +128,7 @@ bool FilterModel::setData(int index, const QVariant &data, int role)
 
 QVariant FilterModel::data(int index, int role)
 {
+    qDebug() << Q_FUNC_INFO;
     QModelIndex idx = sourceModel()->index(index, 0);
 
     return sourceModel()->data(idx, role);
@@ -140,6 +141,6 @@ void FilterModel::removeRow(int index)
 
 HistoryItem* FilterModel::get(int index)
 {
-//    qDebug() << Q_FUNC_INFO;
+    qDebug() << Q_FUNC_INFO;
     return ((HistoryModel*)sourceModel())->get(index);
 }

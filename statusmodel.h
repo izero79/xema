@@ -12,6 +12,7 @@ public:
     explicit StatusModel(QObject *parent = 0);
 
     enum Roles {
+        SelectedRole = Qt::EditRole,
         FilterRole = Qt::UserRole + 1,
         IndexRole,
         AbbrevRole, // 35
@@ -20,7 +21,7 @@ public:
         EngNameRole,
         SweNameOnlyRole,
         EngNameOnlyRole,
-        SelectedRole = Qt::EditRole
+        EmptyRole
     };
 
 signals:
