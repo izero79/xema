@@ -5,7 +5,8 @@ Status::Status() :
     mSweName(),
     mEngName(),
     mAbbrev(),
-    mSelected(false)
+    mSelected(false),
+    mCustom(false)
 {
 }
 
@@ -14,7 +15,8 @@ Status::Status(const QString &name, const QString &abbrev, const QString &swenam
     mSweName(swename),
     mEngName(engname),
     mAbbrev(abbrev),
-    mSelected(false)
+    mSelected(false),
+    mCustom(false)
 {
 
 }
@@ -44,6 +46,10 @@ void Status::setSelected(bool selected)
     mSelected = selected;
 }
 
+void Status::setCustom(bool custom)
+{
+    mCustom = custom;
+}
 
 QString Status::name() const
 {
@@ -80,4 +86,9 @@ QString Status::abbreviation() const
 bool Status::selected() const
 {
     return mSelected;
+}
+
+bool Status::custom() const
+{
+    return mCustom;
 }

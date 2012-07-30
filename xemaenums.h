@@ -28,7 +28,8 @@ public:
         BIRD_ABBREV,
         BIRD_CATEGORY,
         BIRD_ENG_NAME,
-        BIRD_SWE_GROUP
+        BIRD_SWE_GROUP,
+        BIRD_CUSTOM
     };
     enum locationFields {
         LOCATION_TOWN = 0,
@@ -38,7 +39,8 @@ public:
         LOCATION_SWETOWN,
         LOCATION_SWEPLACE,
         LOCATION_ENGTOWN,
-        LOCATION_ENGPLACE
+        LOCATION_ENGPLACE,
+        LOCATION_CUSTOM
     };
     enum personFields {
         PERSON_FIRSTNAME = 0,
@@ -50,7 +52,8 @@ public:
         STATUS_FINABBREV = 0,
         STATUS_FINNAME,
         STATUS_SWENAME,
-        STATUS_ENGNAME
+        STATUS_ENGNAME,
+        STATUS_CUSTOM
     };
     enum observationFields {
         OBS_ID = 0,

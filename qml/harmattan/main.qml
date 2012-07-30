@@ -248,8 +248,7 @@ PageStackWindow {
             id: indicator
             anchors.centerIn: parent
             running: cppProcessing
-            width: 64
-            height: width
+            platformStyle: BusyIndicatorStyle { size: "large" }
             visible: running
         }
         Label {

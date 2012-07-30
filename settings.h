@@ -13,10 +13,16 @@ public:
     bool firstStart();
     bool systematicSorting();
     int detailLevel();
+    static int speciesVersion();
+    static int locationsVersion();
+    static int statusesVersion();
 
     void setFirstStart(bool first);
     void setSystematicSorting(bool systematic);
     void setDetailLevel(int level);
+    static void setSpeciesVersion(int ver);
+    static void setLocationsVersion(int ver);
+    static void setStatusesVersion(int ver);
 
     void resetSettings();
 

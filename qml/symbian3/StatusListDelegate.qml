@@ -34,9 +34,11 @@ Component {
 
             }
             color: "white"
+            font.italic: custom ? true : false
         }
 
         MouseArea {
+            id: ma
             anchors.fill: parent
             onClicked: {
 
@@ -55,5 +57,16 @@ Component {
                 listPage.showContextMenu(realindex)
             }
         }
+        states: [
+            State {
+                name: "pressed"
+                when: ma.pressed == true
+                PropertyChanges {
+                    target: background
+                    color: "#222222"
+                    visible: true
+                }
+            }
+        ]
     }
 }

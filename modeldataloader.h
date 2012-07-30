@@ -19,10 +19,17 @@ class ModelDataLoader : public QObject
 public:
     static ModelDataLoader* instance();
 
-    void loadBirdData(BirdModel *model);
+    void loadInitialBirdData(BirdModel *model);
+    void loadDefaultBirdData(BirdModel *model);
+
     void loadPersonData(PersonModel *model);
-    void loadLocationData(LocationModel *model);
-    void loadStatusData(StatusModel *model);
+
+    void loadInitialLocationData(LocationModel *model);
+    void loadDefaultLocationData(LocationModel *model);
+
+    void loadInitialStatusData(StatusModel *model);
+    void loadDefaultStatusData(StatusModel *model);
+
     void loadAtlasData(AtlasIndexModel *model);
     void loadHistoryData(HistoryModel *model, const QString &date = QString(), const QString &place = QString());
     void loadHistoryDateData(HistoryModel *model);
@@ -36,6 +43,13 @@ signals:
 public slots:
 
 private:
+    void loadBirdData(BirdModel *model, bool defaultOnly);
+    void loadOnlyModifiedBirdData(BirdModel *model);
+    void loadLocationData(LocationModel *model, bool defaultOnly);
+    void loadOnlyModifiedLocationData(LocationModel *model);
+    void loadStatusData(StatusModel *model, bool defaultOnly);
+    void loadOnlyModifiedStatusData(StatusModel *model);
+
     explicit ModelDataLoader(QObject *parent = 0);
     ~ModelDataLoader();
 

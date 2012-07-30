@@ -1,5 +1,5 @@
 import QtQuick 1.1
- import com.nokia.meego 1.1
+import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 
 
@@ -32,6 +32,7 @@ Page {
                         statusModel.setData(rows, name2Tf.text, 39)
                         statusModel.setData(rows, name3Tf.text, 40)
                         statusModel.setData(rows, abbrevTf.text, 35)
+                        statusModel.setData(rows, true, 42)
                     }
                     else
                     {
@@ -40,6 +41,7 @@ Page {
                         statusModel.setData(currentIndex, name2Tf.text, 39)
                         statusModel.setData(currentIndex, name3Tf.text, 40)
                         statusModel.setData(currentIndex, abbrevTf.text, 35)
+                        statusModel.setData(rows, true, 42)
                     }
                 }
                 pageStack.pop()

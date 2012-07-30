@@ -1,11 +1,18 @@
 import QtQuick 1.1
- import com.nokia.meego 1.1
+import com.nokia.meego 1.1
 
 Component {
     Item {
         id: myTestDelegate
         width: parent.width
         height: 60
+        Rectangle {
+            id: background
+            anchors.fill: parent
+            visible: false
+            color: "#222222"
+        }
+
         Label {
             id: delegateTitle
             anchors.right: parent.right
@@ -27,9 +34,11 @@ Component {
 
             }
             color: "white"
+            font.italic: custom ? true : false
         }
 
         MouseArea {
+            id: ma
             anchors.fill: parent
             onClicked: {
                 console.log("click: " + town)
@@ -48,5 +57,15 @@ Component {
                 listPage.showContextMenu(realindex)
             }
         }
+        states: [
+            State {
+                name: "pressed"
+                when: ma.pressed == true
+                PropertyChanges {
+                    target: background
+                    visible: true
+                }
+            }
+        ]
     }
 }

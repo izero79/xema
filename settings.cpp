@@ -56,3 +56,42 @@ int Settings::detailLevel()
     int value = settings.value("detailLevel", 1).toInt();
     return value;
 }
+
+int Settings::speciesVersion()
+{
+    QSettings settings("TeSi", "xema");
+    int value = settings.value("speciesVersion", 0).toInt();
+    return value;
+}
+
+int Settings::locationsVersion()
+{
+    QSettings settings("TeSi", "xema");
+    int value = settings.value("locationsVersion", 0).toInt();
+    return value;
+}
+
+int Settings::statusesVersion()
+{
+    QSettings settings("TeSi", "xema");
+    int value = settings.value("statusesVersion", 0).toInt();
+    return value;
+}
+
+void Settings::setSpeciesVersion(int ver)
+{
+    QSettings settings("TeSi", "xema");
+    settings.setValue("speciesVersion", ver);
+}
+
+void Settings::setLocationsVersion(int ver)
+{
+    QSettings settings("TeSi", "xema");
+    settings.setValue("locationsVersion", ver);
+}
+
+void Settings::setStatusesVersion(int ver)
+{
+    QSettings settings("TeSi", "xema");
+    settings.setValue("statusesVersion", ver);
+}

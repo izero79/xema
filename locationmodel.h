@@ -27,7 +27,9 @@ public:
         SweTownOnlyRole,
         SwePlaceOnlyRole, // 45
         EngTownOnlyRole,
-        EngPlaceOnlyRole // 47
+        EngPlaceOnlyRole, // 47
+        IsCustomRole,
+        FullStringRole
     };
 
 signals:

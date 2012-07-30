@@ -60,7 +60,7 @@ void ApplicationController::initObjects()
     mModelLoader = ModelDataLoader::instance();
 
     mBirdModel = new BirdModel(this);
-    mModelLoader->loadBirdData(mBirdModel);
+    mModelLoader->loadInitialBirdData(mBirdModel);
     mQMLWin->setBirdModel(mBirdModel);
 
     mPersonModel = new PersonModel(this);
@@ -68,11 +68,11 @@ void ApplicationController::initObjects()
     mQMLWin->setPersonModel(mPersonModel);
 
     mLocationModel = new LocationModel(this);
-    mModelLoader->loadLocationData(mLocationModel);
+    mModelLoader->loadInitialLocationData(mLocationModel);
     mQMLWin->setLocationModel(mLocationModel);
 
     mStatusModel = new StatusModel(this);
-    mModelLoader->loadStatusData(mStatusModel);
+    mModelLoader->loadInitialStatusData(mStatusModel);
     mQMLWin->setStatusModel(mStatusModel);
 
     mAgeModel = new AgeModel(this);
@@ -167,7 +167,7 @@ void ApplicationController::restoreSpecies()
     mQMLWin->setProcessing(true);
     mModelWriter->removeCustomSpecies();
     mBirdModel->clear();
-    mModelLoader->loadBirdData(mBirdModel);
+    mModelLoader->loadDefaultBirdData(mBirdModel);
     mQMLWin->setProcessing(false);
 }
 
@@ -177,7 +177,7 @@ void ApplicationController::restoreLocations()
     mQMLWin->setProcessing(true);
     mModelWriter->removeCustomLocations();
     mLocationModel->clear();
-    mModelLoader->loadLocationData(mLocationModel);
+    mModelLoader->loadDefaultLocationData(mLocationModel);
     mQMLWin->setProcessing(false);
 }
 
@@ -197,7 +197,7 @@ void ApplicationController::restoreStatuses()
     mQMLWin->setProcessing(true);
     mModelWriter->removeCustomStatuses();
     mStatusModel->clear();
-    mModelLoader->loadStatusData(mStatusModel);
+    mModelLoader->loadDefaultStatusData(mStatusModel);
     mQMLWin->setProcessing(false);
 }
 
@@ -218,7 +218,7 @@ void ApplicationController::saveLocations()
     qDebug() << "void ApplicationController::saveLocations()";
     mModelWriter->writeLocationData(mLocationModel);
     mLocationModel->clear();
-    mModelLoader->loadLocationData(mLocationModel);
+    mModelLoader->loadInitialLocationData(mLocationModel);
 
 }
 

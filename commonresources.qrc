@@ -11,5 +11,8 @@
         <file>dresses.csv</file>
         <file>sexes.csv</file>
         <file>xema_fi.qm</file>
+        <file>locations.version</file>
+        <file>species.version</file>
+        <file>statuses.version</file>
     </qresource>
 </RCC>

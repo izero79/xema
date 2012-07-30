@@ -17,6 +17,8 @@ LocationModel::LocationModel(QObject *parent) :
     roles[EngPlaceOnlyRole] = "engonlyplace";
     roles[SweTownOnlyRole] = "sweonlytown";
     roles[SwePlaceOnlyRole] = "sweonlyplace";
+    roles[IsCustomRole] = "custom";
+    roles[FullStringRole] = "fullstring";
     setRoleNames(roles);
 }
 
@@ -102,6 +104,14 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     else if (role == WgsCoordinateRole)
     {
         return item.wgsCoordinate();
+    }
+    else if (role == IsCustomRole)
+    {
+        return item.custom();
+    }
+    else if (role == FullStringRole)
+    {
+        return item.town() + ", " + item.place();
     }
     return QVariant();
 }
@@ -209,6 +219,9 @@ bool LocationModel::setData(const QModelIndex &index, const QVariant &value, int
     case EngPlaceRole:
     case EngPlaceOnlyRole:
         tmp.setEngPlace(value.toString());
+        break;
+    case IsCustomRole:
+        tmp.setCustom(value.toBool());
         break;
     default:
         break;

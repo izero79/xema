@@ -18,6 +18,7 @@ public:
     void setEngPlace(const QString &name);
     void setYKJCoordinate(const QString &ykj);
     void setWGSCoordinate(const QString &wgs);
+    void setCustom(bool custom);
 
     QString town() const;
     QString place() const;
@@ -29,6 +30,7 @@ public:
     QString wgsCoordinate() const;
     QString wgsCoordinateForFilter() const;
     QString coordinate() const;
+    bool custom() const;
 
 private:
     QString mTown;
@@ -39,6 +41,7 @@ private:
     QString mSwePlace;
     QString mYKJCoordinate;
     QString mWGSCoordinate;
+    bool mCustom;
 };
 
 #endif // LOCATION_H

@@ -1,5 +1,5 @@
 import QtQuick 1.1
- import com.nokia.meego 1.1
+import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 import QtMobility.location 1.1
 
@@ -38,6 +38,7 @@ Page {
                         locationModel.setData(rows, engLocationTf.text, 47)
                         locationModel.setData(rows, ykjTf.text, 38)
                         locationModel.setData(rows, wgsTf.text, 39)
+                        locationModel.setData(rows, true, 48)
                     }
                     else
                     {
@@ -49,6 +50,7 @@ Page {
                         locationModel.setData(currentIndex, engLocationTf.text, 47)
                         locationModel.setData(currentIndex, ykjTf.text, 38)
                         locationModel.setData(currentIndex, wgsTf.text, 39)
+                        locationModel.setData(currentIndex, true, 48)
                     }
                     window.saveLocations()
                 }

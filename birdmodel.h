@@ -33,7 +33,8 @@ public:
         SectionRole,
         EmptyRole1,
         EmptyRole2,
-        EmptyRole3
+        EmptyRole3,
+        IsCustomRole // 54
     };
 
 signals:

@@ -22,6 +22,7 @@
 #include "agemodel.h"
 #include "sexmodel.h"
 #include <QLocale>
+#include "settings.h"
 
 #ifdef PERFTEST
 #include <QTime>
@@ -46,7 +47,84 @@ ModelDataLoader::~ModelDataLoader() {
     delete mDataLoader;
 }
 
-void ModelDataLoader::loadBirdData(BirdModel *model)
+void ModelDataLoader::loadInitialBirdData(BirdModel *model)
+{
+//    qDebug() << Q_FUNC_INFO;
+    int currentSpeciesVersion = Settings::speciesVersion();
+    int savedVersion = 0;
+//    qDebug() << "current bird version" << currentSpeciesVersion;
+
+    QFile versionFile(":species.version");
+    versionFile.open(QFile::ReadOnly);
+    QTextStream striimi(&versionFile);
+    striimi.setCodec("ISO 8859-1");
+    while (striimi.atEnd() == false)
+    {
+        QString versionLine;
+        versionLine = striimi.readLine();
+        savedVersion = versionLine.toInt();
+    }
+//    qDebug() << "saved bird version" << savedVersion;
+    if( savedVersion > currentSpeciesVersion ) {
+        qDebug() << "There's new version of species list installed. Using it.";
+        loadOnlyModifiedBirdData( model );
+        loadDefaultBirdData( model );
+        Settings::setSpeciesVersion(savedVersion);
+    }
+    else {
+        loadBirdData( model, false );
+        return;
+    }
+}
+
+void ModelDataLoader::loadDefaultBirdData(BirdModel *model)
+{
+    loadBirdData(model, true);
+}
+
+void ModelDataLoader::loadOnlyModifiedBirdData(BirdModel *model)
+{
+    mBirdModel = model;
+    QFile tiedosto(dataFileDir() + "xemabirddata.txt");
+    if (tiedosto.exists() == false)
+    {
+        tiedosto.setFileName(":specieslist.csv");
+    }
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString birdLine;
+        birdLine = striimi.readLine();
+        if(birdLine.section(';', XemaEnums::BIRD_CUSTOM, XemaEnums::BIRD_CUSTOM) != "true") {
+            continue;
+        }
+
+        Bird bird(birdLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID).toInt(),
+                   birdLine.section(';', XemaEnums::BIRD_FIN_GROUP, XemaEnums::BIRD_FIN_GROUP),
+                   birdLine.section(';', XemaEnums::BIRD_SWE_GROUP, XemaEnums::BIRD_SWE_GROUP),
+                   birdLine.section(';', XemaEnums::BIRD_LATIN_GROUP, XemaEnums::BIRD_LATIN_GROUP),
+                   birdLine.section(';', XemaEnums::BIRD_FIN_NAME, XemaEnums::BIRD_FIN_NAME),
+                   birdLine.section(';', XemaEnums::BIRD_SWE_NAME, XemaEnums::BIRD_SWE_NAME),
+                   birdLine.section(';', XemaEnums::BIRD_ABBREV, XemaEnums::BIRD_ABBREV),
+                   birdLine.section(';', XemaEnums::BIRD_LATIN_NAME, XemaEnums::BIRD_LATIN_NAME),
+                   birdLine.section(';', XemaEnums::BIRD_CATEGORY, XemaEnums::BIRD_CATEGORY));
+        // TODO LOC
+        bird.setEngName(birdLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
+        bird.setEngGroup(birdLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
+        if(birdLine.section(';', XemaEnums::BIRD_CUSTOM, XemaEnums::BIRD_CUSTOM) == "true") {
+            bird.setCustom(true);
+        }
+        model->addItem(bird);
+    }
+}
+
+void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly)
 {
 #ifdef PERFTEST
     qDebug() << "Perftest, loadBirdData";
@@ -60,7 +138,7 @@ void ModelDataLoader::loadBirdData(BirdModel *model)
         oldFile.rename(dataFileDir() + "xemabirddata.txt");
     }
     QFile tiedosto(dataFileDir() + "xemabirddata.txt");
-    if (tiedosto.exists() == false)
+    if (defaultOnly == true || tiedosto.exists() == false)
     {
         tiedosto.setFileName(":specieslist.csv");
     }
@@ -87,6 +165,9 @@ void ModelDataLoader::loadBirdData(BirdModel *model)
         // TODO LOC
         bird.setEngName(birdLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
         bird.setEngGroup(birdLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
+        if(birdLine.section(';', XemaEnums::BIRD_CUSTOM, XemaEnums::BIRD_CUSTOM) == "true") {
+            bird.setCustom(true);
+        }
         model->addItem(bird);
     }
 #ifdef PERFTEST
@@ -95,13 +176,8 @@ void ModelDataLoader::loadBirdData(BirdModel *model)
 #endif
 }
 
-void ModelDataLoader::loadLocationData(LocationModel *model)
+void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 {
-#ifdef PERFTEST
-    qDebug() << "Perftest, loadLocationData";
-    QTime t;
-    t.start();
-#endif
     mLocationModel = model;
     if (QFile::exists(dataFileDir() + "lokkitestilocation.txt"))
     {
@@ -110,7 +186,7 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
     }
 
     QFile tiedosto(dataFileDir() + "xemalocationdata.txt");
-    if (tiedosto.exists() == false)
+    if (defaultOnly == true || tiedosto.exists() == false)
     {
         tiedosto.setFileName(":defaultlocations.csv");
     }
@@ -134,12 +210,87 @@ void ModelDataLoader::loadLocationData(LocationModel *model)
         location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
         location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
         location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
+        if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
+            location.setCustom(true);
+        }
         model->addItem(location);
     }
-#ifdef PERFTEST
-    qDebug("loadLocationData Time elapsed: %d ms", t.elapsed());
-    qDebug() << model->rowCount() << "items added to model";
-#endif
+}
+
+void ModelDataLoader::loadInitialLocationData(LocationModel *model)
+{
+    //    qDebug() << Q_FUNC_INFO;
+        int currentLocationVersion = Settings::locationsVersion();
+        int savedVersion = 0;
+        qDebug() << "current location version" << currentLocationVersion;
+
+        QFile versionFile(":locations.version");
+        versionFile.open(QFile::ReadOnly);
+        QTextStream striimi(&versionFile);
+        striimi.setCodec("ISO 8859-1");
+        while (striimi.atEnd() == false)
+        {
+            QString versionLine;
+            versionLine = striimi.readLine();
+            savedVersion = versionLine.toInt();
+        }
+        qDebug() << "saved location version" << savedVersion;
+        if( savedVersion > currentLocationVersion ) {
+            qDebug() << "There's new version of location list installed. Using it.";
+            loadOnlyModifiedLocationData( model );
+            loadDefaultLocationData( model );
+            Settings::setLocationsVersion(savedVersion);
+        }
+        else {
+            loadLocationData( model, false );
+            return;
+        }
+}
+
+void ModelDataLoader::loadDefaultLocationData(LocationModel *model)
+{
+    loadLocationData(model, true);
+}
+
+void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
+{
+    mLocationModel = model;
+
+    QFile tiedosto(dataFileDir() + "xemalocationdata.txt");
+    if (tiedosto.exists() == false)
+    {
+        tiedosto.setFileName(":defaultlocations.csv");
+    }
+    tiedosto.open(QFile::ReadOnly);
+
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString locationLine;
+        locationLine = striimi.readLine();
+        if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) != "true") {
+            continue;
+        }
+
+        locationLine = striimi.readLine();
+        Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
+                          locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
+                          locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
+                          locationLine.section(';', XemaEnums::LOCATION_YKJ, XemaEnums::LOCATION_YKJ));
+        location.setSweTown(locationLine.section(';', XemaEnums::LOCATION_SWETOWN, XemaEnums::LOCATION_SWETOWN));
+        location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
+        location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
+        location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
+        if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
+            location.setCustom(true);
+        }
+        model->addItem(location);
+    }
 }
 
 void ModelDataLoader::loadPersonData(PersonModel *model)
@@ -192,7 +343,42 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
 #endif
 }
 
-void ModelDataLoader::loadStatusData(StatusModel *model)
+void ModelDataLoader::loadInitialStatusData(StatusModel *model)
+{
+    //    qDebug() << Q_FUNC_INFO;
+        int currentStatusesVersion = Settings::statusesVersion();
+        int savedVersion = 0;
+        qDebug() << "current statuses version" << currentStatusesVersion;
+
+        QFile versionFile(":statuses.version");
+        versionFile.open(QFile::ReadOnly);
+        QTextStream striimi(&versionFile);
+        striimi.setCodec("ISO 8859-1");
+        while (striimi.atEnd() == false)
+        {
+            QString versionLine;
+            versionLine = striimi.readLine();
+            savedVersion = versionLine.toInt();
+        }
+        qDebug() << "saved statuses version" << savedVersion;
+        if( savedVersion > currentStatusesVersion ) {
+            qDebug() << "There's new version of status list installed. Using it.";
+            loadOnlyModifiedStatusData( model );
+            loadDefaultStatusData( model );
+            Settings::setStatusesVersion(savedVersion);
+        }
+        else {
+            loadStatusData( model, false );
+            return;
+        }
+}
+
+void ModelDataLoader::loadDefaultStatusData(StatusModel *model)
+{
+    loadStatusData(model, true);
+}
+
+void ModelDataLoader::loadStatusData(StatusModel *model, bool defaultOnly)
 {
 #ifdef PERFTEST
     qDebug() << "Perftest, loadStatusData";
@@ -200,7 +386,7 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
     t.start();
 #endif
     QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
-    if (tiedosto.exists() == false)
+    if (defaultOnly == true || tiedosto.exists() == false)
     {
         tiedosto.setFileName(":defaultstatuses.csv");
     }
@@ -222,6 +408,9 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
                           readLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV),
                           readLine.section(';', XemaEnums::STATUS_SWENAME, XemaEnums::STATUS_SWENAME),
                           readLine.section(';', XemaEnums::STATUS_ENGNAME, XemaEnums::STATUS_ENGNAME));
+            if(readLine.section(';', XemaEnums::STATUS_CUSTOM, XemaEnums::STATUS_CUSTOM) == "true") {
+                status.setCustom(true);
+            }
             model->addItem(status);
         }
     }
@@ -229,6 +418,43 @@ void ModelDataLoader::loadStatusData(StatusModel *model)
     qDebug("loadStatusData Time elapsed: %d ms", t.elapsed());
     qDebug() << model->rowCount() << "items added to model";
 #endif
+}
+
+void ModelDataLoader::loadOnlyModifiedStatusData(StatusModel *model)
+{
+    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    if (tiedosto.exists() == false)
+    {
+        tiedosto.setFileName(":defaultstatuses.csv");
+    }
+
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString readLine;
+        readLine = striimi.readLine();
+
+        if(readLine.section(';', XemaEnums::STATUS_CUSTOM, XemaEnums::STATUS_CUSTOM) != "true") {
+            continue;
+        }
+        if (readLine.isEmpty() == false)
+        {
+            Status status(readLine.section(';', XemaEnums::STATUS_FINNAME, XemaEnums::STATUS_FINNAME),
+                          readLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV),
+                          readLine.section(';', XemaEnums::STATUS_SWENAME, XemaEnums::STATUS_SWENAME),
+                          readLine.section(';', XemaEnums::STATUS_ENGNAME, XemaEnums::STATUS_ENGNAME));
+            if(readLine.section(';', XemaEnums::STATUS_CUSTOM, XemaEnums::STATUS_CUSTOM) == "true") {
+                status.setCustom(true);
+            }
+            model->addItem(status);
+        }
+    }
 }
 
 void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)
@@ -381,6 +607,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 #ifdef PERFTEST
     qDebug("loadHistoryDateData ennen looppia elapsed: %d ms", t.elapsed());
 #endif
+
         for(int i = 0; i < modelRowCount; i++)
         {
 //            qDebug() << "tarkistetaan" << date;
@@ -416,14 +643,16 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 #ifdef PERFTEST
     qDebug("loadHistoryDateData ifissa 1 elapsed: %d ms", t.elapsed());
 #endif
-            QString readPlace;
-    //            QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
-//            readPlace.replace("#", ", ");
-//            readPlace = readLocation(readPlace);
+
+        QString readPlace;
+/*
+    QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
+            readPlace.replace("#", ", ");
+            readPlace = readLocation(readPlace);
 #ifdef PERFTEST
     qDebug("loadHistoryDateData ifissa 2 elapsed: %d ms", t.elapsed());
 #endif
-
+*/
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
                              readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
 #ifdef PERFTEST
@@ -622,30 +851,35 @@ QString ModelDataLoader::readBird(const QString &bird) {
     QTime t;
     t.start();
 #endif
-    for (int i = 0; i < mBirdModel->rowCount(); i++) {
-        if (QString::compare(bird,mBirdModel->getItem(i).abbreviation(),Qt::CaseInsensitive)==0) {
-            // TODO select correct name based on language
-            QString locale = QLocale::system().name();
-            QString lang = locale.section("_",0,0);
-            if (lang == "en") {
+    QString locale = QLocale::system().name();
+    QString lang = locale.section("_",0,0);
+
+    QModelIndex idx = mBirdModel->index(0);
+    QModelIndexList list = mBirdModel->match(idx, BirdModel::AbbrevRole, bird, 1, Qt::MatchExactly);
+    if(list.length() < 1) {
+        return bird;
+    }
+
+    int i = list.at(0).row();
+
+    if (lang == "en") {
 #ifdef PERFTEST
     qDebug("readBird Time elapsed: %d ms", t.elapsed());
 #endif
-                return mBirdModel->getItem(i).engName();
-            }
-            else if (lang == "sv") {
+        return mBirdModel->getItem(i).engName();
+    }
+    else if (lang == "sv") {
 #ifdef PERFTEST
     qDebug("readBird Time elapsed: %d ms", t.elapsed());
 #endif
-                return mBirdModel->getItem(i).sweName();
-            }
+        return mBirdModel->getItem(i).sweName();
+    }
 
 #ifdef PERFTEST
     qDebug("readBird Time elapsed: %d ms", t.elapsed());
 #endif
-            return mBirdModel->getItem(i).finName();
-        }
-    }
+    return mBirdModel->getItem(i).finName();
+
 #ifdef PERFTEST
     qDebug("readBird Time elapsed: %d ms", t.elapsed());
 #endif
@@ -661,31 +895,30 @@ QString ModelDataLoader::readLocation(const QString &location) {
     QTime t;
     t.start();
 #endif
-    for (int i = 0; i < mLocationModel->rowCount(); i++) {
-        QString modelLocation = mLocationModel->getItem(i).town() + ", " + mLocationModel->getItem(i).place();
-        if (QString::compare(location,modelLocation,Qt::CaseInsensitive)==0) {
-            // TODO select correct name based on language
-            QString locale = QLocale::system().name();
-            QString lang = locale.section("_",0,0);
-            if (lang == "en") {
-#ifdef PERFTEST
-    qDebug("readLocation Time elapsed: %d ms", t.elapsed());
-#endif
-                return mLocationModel->getItem(i).engTown() + ", " + mLocationModel->getItem(i).engPlace();
-            }
-            else if (lang == "sv") {
-#ifdef PERFTEST
-    qDebug("readLocation Time elapsed: %d ms", t.elapsed());
-#endif
-                return mLocationModel->getItem(i).sweTown() + ", " + mLocationModel->getItem(i).swePlace();
-            }
+    QString locale = QLocale::system().name();
+    QString lang = locale.section("_",0,0);
 
+    QModelIndex idx = mLocationModel->index(0);
+    QModelIndexList list = mLocationModel->match(idx, LocationModel::FullStringRole, location, 1, Qt::MatchExactly);
+    if(list.length() < 1) {
+        return location;
+    }
+
+    int i = list.at(0).row();
+
+    if (lang == "en") {
 #ifdef PERFTEST
     qDebug("readLocation Time elapsed: %d ms", t.elapsed());
 #endif
-            return location;
-        }
+        return mLocationModel->getItem(i).engTown() + ", " + mLocationModel->getItem(i).engPlace();
     }
+    else if (lang == "sv") {
+#ifdef PERFTEST
+    qDebug("readLocation Time elapsed: %d ms", t.elapsed());
+#endif
+        return mLocationModel->getItem(i).sweTown() + ", " + mLocationModel->getItem(i).swePlace();
+    }
+
 #ifdef PERFTEST
     qDebug("readLocation Time elapsed: %d ms", t.elapsed());
 #endif

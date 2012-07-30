@@ -6,6 +6,12 @@ Component {
         id: myTestDelegate
         width: parent.width
         height: visible ? 60 : 0
+        Rectangle {
+            id: background
+            anchors.fill: parent
+            visible: false
+            color: "#222222"
+        }
         Label {
             id: delegateTitle
             anchors.right: parent.right
@@ -54,6 +60,7 @@ Component {
         }
 
         MouseArea {
+            id: ma
             anchors.fill: parent
             onClicked: {
                 // tstest listPage.clicked(name)
@@ -64,5 +71,15 @@ Component {
             }
 
         }
+        states: [
+            State {
+                name: "pressed"
+                when: ma.pressed == true
+                PropertyChanges {
+                    target: background
+                    visible: true
+                }
+            }
+        ]
     }
 }

@@ -1,7 +1,8 @@
 #include "location.h"
 #include <QDebug>
 
-Location::Location()
+Location::Location() :
+    mCustom(false)
 {
 }
 
@@ -9,7 +10,8 @@ Location::Location(const QString &town, const QString &place, const QString &wgs
     mTown(town),
     mPlace(place),
     mYKJCoordinate(ykjCoordinate),
-    mWGSCoordinate(wgsCoordinate)
+    mWGSCoordinate(wgsCoordinate),
+    mCustom(false)
 {
 
 }
@@ -52,6 +54,11 @@ void Location::setYKJCoordinate(const QString &ykj)
 void Location::setWGSCoordinate(const QString &wgs)
 {
     mWGSCoordinate = wgs;
+}
+
+void Location::setCustom(bool custom)
+{
+    mCustom = custom;
 }
 
 QString Location::town() const
@@ -145,4 +152,9 @@ QString Location::coordinate() const
         }
     }
     return mYKJCoordinate;
+}
+
+bool Location::custom() const
+{
+    return mCustom;
 }

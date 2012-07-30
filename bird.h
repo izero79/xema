@@ -23,6 +23,7 @@ public:
     void setLatinName(const QString &name);
     void setAbbreviation(const QString &abbr);
     void setCategory(const QString &category);
+    void setCustom(bool custom);
 
     int id() const;
     QString finGroup() const;
@@ -35,6 +36,7 @@ public:
     QString latinName() const;
     QString abbreviation() const;
     QString category() const;
+    bool custom() const;
 
 private:
     int mId;
@@ -48,6 +50,7 @@ private:
     QString mLatinName;
     QString mAbbreviation;
     QString mCategory;
+    bool mCustom;
 };
 
 #endif // BIRD_H

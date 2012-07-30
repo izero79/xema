@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.4.1, 2012-07-17T14:05:06. -->
+<!-- Written by Qt Creator 2.4.1, 2012-07-30T15:24:29. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -174,10 +174,12 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">MaemoUploadAndInstallDpkgPackageStep</value>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedFiles">
        <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/xema_0.1.9_armel.deb</value>
+       <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/xema_0.2.0_armel.deb</value>
        <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Debug/xema_0.1.8_armel.deb</value>
        <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/xema_0.1.8_armel.deb</value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedHosts">
+       <value type="QString">192.168.255.11</value>
        <value type="QString">192.168.255.11</value>
        <value type="QString">192.168.255.11</value>
        <value type="QString">192.168.255.11</value>
@@ -186,9 +188,11 @@
        <value type="QString"></value>
        <value type="QString"></value>
        <value type="QString"></value>
+       <value type="QString"></value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedTimes">
-       <value type="QDateTime">2012-07-17T14:04:26</value>
+       <value type="QDateTime">2012-07-30T14:58:28</value>
+       <value type="QDateTime">2012-07-30T15:18:00</value>
        <value type="QDateTime">2012-07-13T23:19:17</value>
        <value type="QDateTime">2012-07-14T13:42:23</value>
       </valuelist>

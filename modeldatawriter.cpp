@@ -187,7 +187,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng\n");
+    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;muokattu\n");
     for(int i = 0; i < rows; i++)
     {
         QString wgs = model->data(model->index(i), LocationModel::WgsCoordinateRole).toString();
@@ -252,6 +252,13 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         line.append(model->getItem(i).engTown(true));
         line.append(";");
         line.append(model->getItem(i).engPlace(true));
+        line.append(";");
+        if(model->getItem(i).custom()) {
+            line.append("true");
+        }
+        else {
+            line.append("false");
+        }
         line.append(";\n");
         striimi << line;
     }
@@ -266,7 +273,7 @@ void ModelDataWriter::writeStatusData(StatusModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("tila;suomeksi;ruotsiksi;englanniksi;\n");
+    striimi << QString("tila;suomeksi;ruotsiksi;englanniksi;muokattu;\n");
     for(int i = 0; i < rows; i++)
     {
         QString line;
@@ -277,6 +284,13 @@ void ModelDataWriter::writeStatusData(StatusModel *model)
         line.append(model->getItem(i).sweName(true));
         line.append(";");
         line.append(model->getItem(i).engName(true));
+        line.append(";");
+        if(model->getItem(i).custom()) {
+            line.append("true");
+        }
+        else {
+            line.append("false");
+        }
         line.append(";\n");
         striimi << line;
     }
@@ -290,7 +304,7 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;Ryhmät_swe;\n");
+    striimi << QString("Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;Ryhmät_swe;muokattu;\n");
     for(int i = 0; i < rows; i++)
     {
         QString line;
@@ -315,6 +329,13 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
         line.append(model->getItem(i).engName(true));
         line.append(";");
         line.append(model->getItem(i).sweGroup(true));
+        line.append(";");
+        if(model->getItem(i).custom()) {
+            line.append("true");
+        }
+        else {
+            line.append("false");
+        }
         line.append(";\n");
         striimi << line;
     }
@@ -1103,6 +1124,7 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
             // TODO add coordinates
             tmp.setYKJCoordinate(ykj);
             tmp.setWGSCoordinate(wgs);
+            tmp.setCustom(true);
             locations->addItem(tmp);
         }
     }
@@ -1359,6 +1381,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
             location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
             location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
+            location.setCustom(true);
 
             int rows = locations->rowCount();
             bool matchFound = false;
@@ -1526,6 +1549,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             // TODO LOC
             bird.setEngName(importLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
             bird.setEngGroup(importLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
+            bird.setCustom(true);
 
             int rows = birds->rowCount();
             bool matchFound = false;
@@ -1609,6 +1633,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                        importLine.section(';', XemaEnums::STATUS_SWENAME, XemaEnums::STATUS_SWENAME),
                        importLine.section(';', XemaEnums::STATUS_ENGNAME, XemaEnums::STATUS_ENGNAME));
 
+            status.setCustom(true);
             int rows = statuses->rowCount();
             bool matchFound = false;
             for (int i = 0; i < rows; i++) {

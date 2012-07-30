@@ -14,12 +14,14 @@ public:
     void setEngName(const QString &name);
     void setAbbrev(const QString &abbr);
     void setSelected(bool selected);
+    void setCustom(bool custom);
 
     QString name() const;
     QString sweName(bool allowEmpty = false) const;
     QString engName(bool allowEmpty = false) const;
     QString abbreviation() const;
     bool selected() const;
+    bool custom() const;
 
 private:
     QString mName;
@@ -27,6 +29,7 @@ private:
     QString mEngName;
     QString mAbbrev;
     bool mSelected;
+    bool mCustom;
 };
 
 #endif // STATUS_H

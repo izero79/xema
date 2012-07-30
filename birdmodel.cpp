@@ -25,6 +25,7 @@ BirdModel::BirdModel(QObject *parent) :
     roles[EmptyRole1] = "value";
     roles[EmptyRole2] = "name";
     roles[EmptyRole3] = "selected";
+    roles[IsCustomRole] = "custom";
     setRoleNames(roles);
 }
 
@@ -125,6 +126,10 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     else if (role == SectionRole)
     {
         return item.finGroup();
+    }
+    else if (role == IsCustomRole)
+    {
+        return item.custom();
     }
     return QVariant();
 }
@@ -239,6 +244,9 @@ bool BirdModel::setData(const QModelIndex &index, const QVariant &value, int rol
         break;
     case AbbrevRole:
         tmp.setAbbreviation(value.toString());
+        break;
+    case IsCustomRole:
+        tmp.setCustom(value.toBool());
         break;
     default:
         break;

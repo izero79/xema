@@ -15,6 +15,7 @@ StatusModel::StatusModel(QObject *parent) :
     roles[AbbrevRole] = "abbrev";
     roles[SelectedRole] = "selected";
     roles[EmptyRole] = "name";
+    roles[IsCustomRole] = "custom";
     setRoleNames(roles);
 }
 
@@ -75,6 +76,10 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const
     else if (role == SelectedRole)
     {
         return item.selected();
+    }
+    else if (role == IsCustomRole)
+    {
+        return item.custom();
     }
     return QVariant();
 }
@@ -171,6 +176,9 @@ bool StatusModel::setData(const QModelIndex &index, const QVariant &value, int r
         break;
     case SelectedRole:
         tmp.setSelected(value.toBool());
+        break;
+    case IsCustomRole:
+        tmp.setCustom(value.toBool());
         break;
     default:
         break;

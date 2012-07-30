@@ -20,8 +20,9 @@ public:
         SweNameRole,
         EngNameRole,
         SweNameOnlyRole,
-        EngNameOnlyRole,
-        EmptyRole
+        EngNameOnlyRole, // 40
+        EmptyRole,
+        IsCustomRole
     };
 
 signals:

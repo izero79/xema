@@ -1,16 +1,24 @@
 import QtQuick 1.1
- import com.nokia.meego 1.1
+import com.nokia.meego 1.1
 
 Component {
     Item {
         id: myTestDelegate
         width: parent.width
-        height: 60
+        height: 80
+        Rectangle {
+            id: background
+            anchors.fill: parent
+            visible: false
+            color: "#222222"
+        }
+
         Label {
             id: delegateTitle
             anchors.right: delegateTitleNumber.left
             anchors.top: parent.top
-            height: parent.height / 2
+            anchors.topMargin: 10
+            height: 30
             anchors.left: parent.left
             anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
@@ -36,7 +44,8 @@ Component {
             id: delegateTitleNumber
             anchors.right: delegateAdd.left
             anchors.top: parent.top
-            height: parent.height / 2
+            anchors.topMargin: 10
+            height: delegateTitle.height
             width: 50
             verticalAlignment: Text.AlignVCenter
             text: {
@@ -61,7 +70,7 @@ Component {
             id: delegateSubTitle
             anchors.right: delegateSubTitleNumber.left
             anchors.top: delegateTitle.bottom
-            height: parent.height / 2
+            height: 30
             anchors.left: parent.left
             anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
@@ -75,7 +84,7 @@ Component {
             id: delegateSubTitleNumber
             anchors.right: delegateAdd.left
             anchors.top: delegateTitle.bottom
-            height: parent.height / 2
+            height: delegateSubTitle.height
             verticalAlignment: Text.AlignVCenter
             width: 50
             text: ""
@@ -117,6 +126,7 @@ Component {
         }
 
         MouseArea {
+            id: ma
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
@@ -146,5 +156,15 @@ Component {
                 }
             }
         }
+        states: [
+            State {
+                name: "pressed"
+                when: ma.pressed == true
+                PropertyChanges {
+                    target: background
+                    visible: true
+                }
+            }
+        ]
     }
 }

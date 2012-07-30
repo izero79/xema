@@ -1,5 +1,5 @@
 import QtQuick 1.1
- import com.nokia.meego 1.1
+import com.nokia.meego 1.1
 import "myjs.js" as MyScript
 
 
@@ -38,6 +38,7 @@ Page {
                         birdModel.setData(rows, group3Tf.text, 42)
                         birdModel.setData(rows, abbrevTf.text, 38)
                         birdModel.setData(rows, categoryTf.text, 43)
+                        birdModel.setData(rows, true, 54)
                     }
                     else
                     {
@@ -51,6 +52,7 @@ Page {
                         birdModel.setData(currentIndex, categoryTf.text, 43)
                         birdModel.setData(currentIndex, name4Tf.text, 44)
                         birdModel.setData(currentIndex, group4Tf.text, 45)
+                        birdModel.setData(currentIndex, true, 54)
                     }
                 }
                 pageStack.pop()

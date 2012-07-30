@@ -6,6 +6,12 @@ Component {
         id: myTestDelegate
         width: parent.width
         height: 60
+        Rectangle {
+            id: background
+            anchors.fill: parent
+            visible: false
+            color: "#222222"
+        }
         Label {
             id: delegateTitle
             anchors.right: parent.right
@@ -27,9 +33,11 @@ Component {
             }
 
             color: "white"
+            font.italic: custom ? true : false
         }
 
         MouseArea {
+            id: ma
             anchors.fill: parent
             onClicked: {
                 console.log("clicked bird: " + finname)
@@ -47,5 +55,15 @@ Component {
                 listPage.showContextMenu(realindex)
             }
         }
+        states: [
+            State {
+                name: "pressed"
+                when: ma.pressed == true
+                PropertyChanges {
+                    target: background
+                    visible: true
+                }
+            }
+        ]
     }
 }

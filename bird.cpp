@@ -1,7 +1,8 @@
 #include "bird.h"
 
 Bird::Bird() :
-    mId(0)
+    mId(0),
+    mCustom(false)
 {
 }
 
@@ -16,7 +17,8 @@ Bird::Bird(int id,  const QString &finGroup, const QString &sweGroup, const QStr
     mEngName(sweName),
     mLatinName(latin),
     mAbbreviation(abbr),
-    mCategory(category)
+    mCategory(category),
+    mCustom(false)
 {
 
 }
@@ -75,6 +77,11 @@ void Bird::setLatinName(const QString &name)
 void Bird::setCategory(const QString &category)
 {
     mCategory = category;
+}
+
+void Bird::setCustom(bool custom)
+{
+    mCustom = custom;
 }
 
 int Bird::id() const
@@ -155,4 +162,9 @@ QString Bird::latinName() const
 QString Bird::category() const
 {
     return mCategory;
+}
+
+bool Bird::custom() const
+{
+    return mCustom;
 }
