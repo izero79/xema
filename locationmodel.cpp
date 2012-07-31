@@ -113,6 +113,20 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     {
         return item.town() + ", " + item.place();
     }
+    else if (role == SortingNameRole)
+    {
+        QString locale = QLocale::system().name();
+        QString lang = locale.section("_",0,0);
+        if (lang == "en") {
+            return item.engTown(false) + ", " + item.engPlace(false);
+        }
+        else if (lang == "sv") {
+            return item.sweTown(false) + ", " + item.swePlace(false);
+        }
+        else {
+            return item.town() + ", " + item.place();
+        }
+    }
     return QVariant();
 }
 

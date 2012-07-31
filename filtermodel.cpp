@@ -35,7 +35,7 @@ void FilterModel::setSorting(int type, bool ascending)
     }
     else if (type == 1)
     {
-        setSortRole(Qt::UserRole + 4);
+        setSortRole(Qt::UserRole + 100);
 
         sort(0, Qt::AscendingOrder);
         return;

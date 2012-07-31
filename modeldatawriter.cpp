@@ -415,7 +415,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
             {
                 start.append("#");
             }
-            start.append("true#\n");
+            start.append("#true#\n");
 //            qDebug() << "uus rivi export setin jalkeen" << start;
             outstriimi2 << start;
         }
@@ -429,10 +429,11 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
     newtiedosto.rename(dataFileDir() + "xemadata.txt");
 }
 
-void ModelDataWriter::exportOwnData() {
+void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, StatusModel *sModel, PersonModel *pModel) {
 //    qDebug() << "exportOwnData";
 
     // LOCATIONS
+/*
     QFile ownlocationfile(dataFileDir() + "xemalocationdata.txt");
     ownlocationfile.open(QFile::ReadOnly);
     QTextStream instream1(&ownlocationfile);
@@ -442,13 +443,31 @@ void ModelDataWriter::exportOwnData() {
     origlocationfile.open(QFile::ReadOnly);
     QTextStream instream2(&origlocationfile);
     instream2.setCodec("ISO 8859-1");
-
+*/
     QFile exportfile(exportDir() + "xema_exported_locations.txt");
 
     exportfile.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi(&exportfile);
     outstriimi.setCodec("ISO 8859-1");
 
+    int lRowCount = lModel->rowCount();
+
+    outstriimi << "Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;\n";
+
+    for( int i = 0; i < lRowCount; i++ ) {
+        if( lModel->getItem(i).custom() == true ) {
+            outstriimi << lModel->getItem(i).town() << ";";
+            outstriimi << lModel->getItem(i).place() << ";";
+            outstriimi << lModel->getItem(i).wgsCoordinate() << ";";
+            outstriimi << lModel->getItem(i).ykjCoordinate() << ";";
+            outstriimi << lModel->getItem(i).sweTown(true) << ";";
+            outstriimi << lModel->getItem(i).swePlace(true) << ";";
+            outstriimi << lModel->getItem(i).engTown(true) << ";";
+            outstriimi << lModel->getItem(i).engPlace(true) << ";\n";
+        }
+    }
+
+/*
     while (instream1.atEnd() == false)
     {
         QString ownLocationLine;
@@ -469,9 +488,9 @@ void ModelDataWriter::exportOwnData() {
             outstriimi << "\n";
         }
     }
-
+*/
     // PERSONS
-
+/*
     QFile ownpersonfile(dataFileDir() + "xemapersondata.txt");
     ownpersonfile.open(QFile::ReadOnly);
     QTextStream personinstream1(&ownpersonfile);
@@ -481,13 +500,33 @@ void ModelDataWriter::exportOwnData() {
     origpersonfile.open(QFile::ReadOnly);
     QTextStream personinstream2(&origpersonfile);
     personinstream2.setCodec("ISO 8859-1");
-
+*/
     QFile exportfile2(exportDir() + "xema_exported_persons.txt");
 
     exportfile2.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi2(&exportfile2);
     outstriimi2.setCodec("ISO 8859-1");
 
+    int pRowCount = pModel->rowCount();
+
+    for( int i = 0; i < pRowCount; i++ ) {
+        outstriimi2 << pModel->getItem(i).firstName() << ";";
+        outstriimi2 << pModel->getItem(i).surName() << ";";
+        if( pModel->getItem(i).registered() ) {
+            outstriimi2 << "true;";
+        }
+        else {
+            outstriimi2 << "false;";
+        }
+        if( pModel->getItem(i).defaultName() ) {
+            outstriimi2 << "true;\n";
+        }
+        else {
+            outstriimi2 << "false;\n";
+        }
+    }
+
+/*
     while (personinstream1.atEnd() == false)
     {
         QString ownPersonLine;
@@ -508,9 +547,9 @@ void ModelDataWriter::exportOwnData() {
             outstriimi2 << "\n";
         }
     }
-
+*/
     // BIRDS
-
+/*
     QFile ownbirdfile(dataFileDir() + "xemabirddata.txt");
     ownbirdfile.open(QFile::ReadOnly);
     QTextStream birdinstream1(&ownbirdfile);
@@ -520,13 +559,35 @@ void ModelDataWriter::exportOwnData() {
     origbirdfile.open(QFile::ReadOnly);
     QTextStream birdinstream2(&origbirdfile);
     birdinstream2.setCodec("ISO 8859-1");
-
+*/
     QFile exportfile3(exportDir() + "xema_exported_birds.txt");
 
     exportfile3.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi3(&exportfile3);
     outstriimi3.setCodec("ISO 8859-1");
 
+    int bRowCount = bModel->rowCount();
+
+    outstriimi3 << "Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;Ryhmät_ruo;\n";
+
+    for( int i = 0; i < bRowCount; i++ ) {
+        if( bModel->getItem(i).custom() == true ) {
+            outstriimi3 << bModel->getItem(i).id() << ";";
+            outstriimi3 << bModel->getItem(i).finGroup() << ";";
+            outstriimi3 << bModel->getItem(i).engGroup(true) << ";";
+            outstriimi3 << bModel->getItem(i).latinGroup() << ";";
+            outstriimi3 << bModel->getItem(i).finName() << ";";
+            outstriimi3 << bModel->getItem(i).sweName(true) << ";";
+            outstriimi3 << bModel->getItem(i).abbreviation() << ";";
+            outstriimi3 << bModel->getItem(i).latinName() << ";";
+            outstriimi3 << bModel->getItem(i).category() << ";";
+            outstriimi3 << bModel->getItem(i).engName(true) << ";";
+            outstriimi3 << bModel->getItem(i).sweGroup(true) << ";\n";
+        }
+    }
+
+
+/*
     while (birdinstream1.atEnd() == false)
     {
         QString ownBirdLine;
@@ -550,9 +611,9 @@ void ModelDataWriter::exportOwnData() {
             outstriimi3 << "\n";
         }
     }
-
+*/
     // STATUSES
-
+/*
     QFile ownstatusfile(dataFileDir() + "xemastatusdata.txt");
     ownstatusfile.open(QFile::ReadOnly);
     QTextStream statusinstream1(&ownstatusfile);
@@ -562,13 +623,27 @@ void ModelDataWriter::exportOwnData() {
     origstatusfile.open(QFile::ReadOnly);
     QTextStream statusinstream2(&origstatusfile);
     statusinstream2.setCodec("ISO 8859-1");
-
+*/
     QFile exportfile4(exportDir() + "xema_exported_statuses.txt");
 
     exportfile4.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi4(&exportfile4);
     outstriimi4.setCodec("ISO 8859-1");
 
+    int sRowCount = sModel->rowCount();
+
+    outstriimi4 << "tila;suomeksi;ruotsiksi;englanniksi;\n";
+
+    for( int i = 0; i < sRowCount; i++ ) {
+        if( sModel->getItem(i).custom() == true ) {
+            outstriimi4 << sModel->getItem(i).abbreviation() << ";";
+            outstriimi4 << sModel->getItem(i).name() << ";";
+            outstriimi4 << sModel->getItem(i).sweName(true) << ";";
+            outstriimi4 << sModel->getItem(i).engName(true) << ";\n";
+        }
+    }
+
+/*
     while (statusinstream1.atEnd() == false)
     {
         QString ownStatusLine;
@@ -592,6 +667,7 @@ void ModelDataWriter::exportOwnData() {
             outstriimi4 << "\n";
         }
     }
+    */
 }
 
 qlonglong ModelDataWriter::getNewId()

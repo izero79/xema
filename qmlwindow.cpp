@@ -306,7 +306,7 @@ void QMLWindow::exportData(bool onlyNew)
 void QMLWindow::exportOwnData()
 {
     setProcessing(true);
-    mDataWriter->exportOwnData();
+    mDataWriter->exportOwnData(mLocationModel, mBirdModel, mStatusModel, mPersonModel);
     setProcessing(false);
 }
 

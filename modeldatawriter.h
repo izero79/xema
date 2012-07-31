@@ -25,7 +25,7 @@ public:
     void writeStatusData(StatusModel *model);
     void writeBirdData(BirdModel *model);
     void exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds);
-    void exportOwnData();
+    void exportOwnData(LocationModel *lModel, BirdModel *bModel, StatusModel *sModel, PersonModel *pModel);
 
     void removeCustomSpecies();
     void removeCustomLocations();

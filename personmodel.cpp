@@ -70,6 +70,10 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
     {
         return item.selected();
     }
+    else if (role == SortingNameRole)
+    {
+        return item.surName() + ", " + item.firstName();
+    }
     return QVariant();
 }
 

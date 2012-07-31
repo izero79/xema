@@ -22,7 +22,8 @@ public:
         SweNameOnlyRole,
         EngNameOnlyRole, // 40
         EmptyRole,
-        IsCustomRole
+        IsCustomRole,
+        SortingNameRole = Qt::UserRole + 100
     };
 
 signals:

@@ -131,6 +131,20 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     {
         return item.custom();
     }
+    else if (role == SortingNameRole)
+    {
+        QString locale = QLocale::system().name();
+        QString lang = locale.section("_",0,0);
+        if (lang == "en") {
+            return item.engName(false);
+        }
+        else if (lang == "sv") {
+            return item.sweName(false);
+        }
+        else {
+            return item.finName();
+        }
+    }
     return QVariant();
 }
 

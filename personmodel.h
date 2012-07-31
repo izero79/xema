@@ -20,7 +20,8 @@ public:
         DefaultRole,
         FirstNameRole, // 38
         SurNameRole,
-        SelectedRole = Qt::EditRole
+        SelectedRole = Qt::EditRole,
+        SortingNameRole = Qt::UserRole + 100
     };
 
 signals:

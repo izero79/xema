@@ -29,7 +29,8 @@ public:
         EngTownOnlyRole,
         EngPlaceOnlyRole, // 47
         IsCustomRole,
-        FullStringRole
+        FullStringRole,
+        SortingNameRole = Qt::UserRole + 100
     };
 
 signals:

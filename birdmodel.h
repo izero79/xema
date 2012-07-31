@@ -34,7 +34,8 @@ public:
         EmptyRole1,
         EmptyRole2,
         EmptyRole3,
-        IsCustomRole // 54
+        IsCustomRole, // 54
+        SortingNameRole = Qt::UserRole + 100
     };
 
 signals:
