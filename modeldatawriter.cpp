@@ -342,7 +342,7 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
     tiedosto.close();
 }
 
-void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds)
+void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter)
 {
     QDateTime date;
     date = QDateTime::currentDateTime();
@@ -351,31 +351,35 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
     fileName.append(".csv");
 //    qDebug() << "void ModelDataWriter::exportHistory(bool onlyNew)" << onlyNew;
     QFile tiedosto(dataFileDir() + "xemadata.txt");
-    QFile newtiedosto(dataFileDir() + "xemadata.tmp.txt");
-    QFile tmptiedosto(exportDir() + fileName);
+    QFile tmptiedosto(dataFileDir() + "xemadata.tmp.txt");
+    QFile exporttiedosto(exportDir() + fileName);
 
     tiedosto.open(QFile::ReadOnly);
-    newtiedosto.open(QFile::ReadWrite|QFile::Truncate);
     tmptiedosto.open(QFile::ReadWrite|QFile::Truncate);
+    exporttiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream instriimi(&tiedosto);
-    QTextStream outstriimi(&tmptiedosto);
-    QTextStream outstriimi2(&newtiedosto);
+    QTextStream export_stream(&exporttiedosto);
+    QTextStream tmp_stream(&tmptiedosto);
     instriimi.setCodec("ISO 8859-1");
-    outstriimi.setCodec("ISO 8859-1");
-    outstriimi2.setCodec("ISO 8859-1");
+    export_stream.setCodec("ISO 8859-1");
+    tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
-    QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#\n");
-    outstriimi << header;
+    QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää\n");
+    if( delimiter != "#") {
+        header.replace("#",";");
+    }
+    export_stream << header;
     while (instriimi.atEnd() == false)
     {
         obsLine = instriimi.readLine();
         if (obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Id")
         {
-            outstriimi2 << obsLine;
-            outstriimi2 << "\n";
+            tmp_stream << obsLine;
+            tmp_stream << "\n";
             continue;
         }
+//        qDebug() << "ObsRivi ennen exporttia" << obsLine;
         int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
         int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
@@ -401,8 +405,8 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
         if (onlyNew == false || exported == "false")
         {
 //            qDebug() << "VALMIS EXPORT RIVI" << formatToTiira(obsLine,locations,persons,birds);
-            outstriimi << formatToTiira(obsLine,locations,persons,birds);
-            outstriimi << "\n";
+            export_stream << formatToTiira(obsLine,locations,persons,birds,delimiter);
+            export_stream << "\n";
         }
         if (obsLine.length() > 20)
         {
@@ -411,39 +415,29 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
             newLine = obsLine;
 
             QString start = newLine.mid(0, pos);
+
             if (start.endsWith("#") == false)
             {
                 start.append("#");
             }
-            start.append("#true#\n");
-//            qDebug() << "uus rivi export setin jalkeen" << start;
-            outstriimi2 << start;
+            start.append("true#\n");
+//            qDebug() << "uus rivi datassa export setin jalkeen" << start;
+            tmp_stream << start;
         }
     }
     tiedosto.close();
     tmptiedosto.close();
-    newtiedosto.close();
+    exporttiedosto.close();
 
     QFile::remove(dataFileDir() + "xemadata.backup");
     tiedosto.rename(dataFileDir() + "xemadata.backup");
-    newtiedosto.rename(dataFileDir() + "xemadata.txt");
+    tmptiedosto.rename(dataFileDir() + "xemadata.txt");
 }
 
 void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, StatusModel *sModel, PersonModel *pModel) {
 //    qDebug() << "exportOwnData";
 
     // LOCATIONS
-/*
-    QFile ownlocationfile(dataFileDir() + "xemalocationdata.txt");
-    ownlocationfile.open(QFile::ReadOnly);
-    QTextStream instream1(&ownlocationfile);
-    instream1.setCodec("ISO 8859-1");
-
-    QFile origlocationfile(":defaultlocations.csv");
-    origlocationfile.open(QFile::ReadOnly);
-    QTextStream instream2(&origlocationfile);
-    instream2.setCodec("ISO 8859-1");
-*/
     QFile exportfile(exportDir() + "xema_exported_locations.txt");
 
     exportfile.open(QFile::ReadWrite|QFile::Truncate);
@@ -452,7 +446,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int lRowCount = lModel->rowCount();
 
-    outstriimi << "Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;\n";
+    outstriimi << "kunta;paikka;wgs;ykj;ort_sv;plats_sv;town_en;place_en\n";
 
     for( int i = 0; i < lRowCount; i++ ) {
         if( lModel->getItem(i).custom() == true ) {
@@ -463,44 +457,11 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
             outstriimi << lModel->getItem(i).sweTown(true) << ";";
             outstriimi << lModel->getItem(i).swePlace(true) << ";";
             outstriimi << lModel->getItem(i).engTown(true) << ";";
-            outstriimi << lModel->getItem(i).engPlace(true) << ";\n";
+            outstriimi << lModel->getItem(i).engPlace(true) << "\n";
         }
     }
 
-/*
-    while (instream1.atEnd() == false)
-    {
-        QString ownLocationLine;
-        ownLocationLine = instream1.readLine();
-        bool matchFound = false;
-        instream2.seek(0);
-        while (instream2.atEnd() == false)
-        {
-            QString origLocationLine;
-            origLocationLine = instream2.readLine();
-            if (ownLocationLine == origLocationLine) {
-                matchFound = true;
-                break;
-            }
-        }
-        if (matchFound == false) {
-            outstriimi << ownLocationLine;
-            outstriimi << "\n";
-        }
-    }
-*/
     // PERSONS
-/*
-    QFile ownpersonfile(dataFileDir() + "xemapersondata.txt");
-    ownpersonfile.open(QFile::ReadOnly);
-    QTextStream personinstream1(&ownpersonfile);
-    personinstream1.setCodec("ISO 8859-1");
-
-    QFile origpersonfile(":defaultpersons.csv");
-    origpersonfile.open(QFile::ReadOnly);
-    QTextStream personinstream2(&origpersonfile);
-    personinstream2.setCodec("ISO 8859-1");
-*/
     QFile exportfile2(exportDir() + "xema_exported_persons.txt");
 
     exportfile2.open(QFile::ReadWrite|QFile::Truncate);
@@ -508,6 +469,8 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
     outstriimi2.setCodec("ISO 8859-1");
 
     int pRowCount = pModel->rowCount();
+
+    outstriimi2 << "firstname;surname;registered;default\n";
 
     for( int i = 0; i < pRowCount; i++ ) {
         outstriimi2 << pModel->getItem(i).firstName() << ";";
@@ -519,47 +482,14 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
             outstriimi2 << "false;";
         }
         if( pModel->getItem(i).defaultName() ) {
-            outstriimi2 << "true;\n";
+            outstriimi2 << "true\n";
         }
         else {
-            outstriimi2 << "false;\n";
+            outstriimi2 << "false\n";
         }
     }
 
-/*
-    while (personinstream1.atEnd() == false)
-    {
-        QString ownPersonLine;
-        ownPersonLine = personinstream1.readLine();
-        bool matchFound = false;
-        personinstream2.seek(0);
-        while (personinstream2.atEnd() == false)
-        {
-            QString origPersonLine;
-            origPersonLine = personinstream2.readLine();
-            if (ownPersonLine == origPersonLine) {
-                matchFound = true;
-                break;
-            }
-        }
-        if (matchFound == false) {
-            outstriimi2 << ownPersonLine;
-            outstriimi2 << "\n";
-        }
-    }
-*/
     // BIRDS
-/*
-    QFile ownbirdfile(dataFileDir() + "xemabirddata.txt");
-    ownbirdfile.open(QFile::ReadOnly);
-    QTextStream birdinstream1(&ownbirdfile);
-    birdinstream1.setCodec("ISO 8859-1");
-
-    QFile origbirdfile(":specieslist.csv");
-    origbirdfile.open(QFile::ReadOnly);
-    QTextStream birdinstream2(&origbirdfile);
-    birdinstream2.setCodec("ISO 8859-1");
-*/
     QFile exportfile3(exportDir() + "xema_exported_birds.txt");
 
     exportfile3.open(QFile::ReadWrite|QFile::Truncate);
@@ -568,7 +498,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int bRowCount = bModel->rowCount();
 
-    outstriimi3 << "Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;Ryhmät_ruo;\n";
+    outstriimi3 << "Id;ryhmä;group_en;group_lat;laji;art;abbrev;latin;category;species;grupp_sv\n";
 
     for( int i = 0; i < bRowCount; i++ ) {
         if( bModel->getItem(i).custom() == true ) {
@@ -582,48 +512,12 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
             outstriimi3 << bModel->getItem(i).latinName() << ";";
             outstriimi3 << bModel->getItem(i).category() << ";";
             outstriimi3 << bModel->getItem(i).engName(true) << ";";
-            outstriimi3 << bModel->getItem(i).sweGroup(true) << ";\n";
+            outstriimi3 << bModel->getItem(i).sweGroup(true) << "\n";
         }
     }
 
 
-/*
-    while (birdinstream1.atEnd() == false)
-    {
-        QString ownBirdLine;
-        ownBirdLine = birdinstream1.readLine();
-        if (ownBirdLine.isEmpty()) {
-            continue;
-        }
-        bool matchFound = false;
-        birdinstream2.seek(0);
-        while (birdinstream2.atEnd() == false)
-        {
-            QString origBirdLine;
-            origBirdLine = birdinstream2.readLine();
-            if (ownBirdLine == origBirdLine) {
-                matchFound = true;
-                break;
-            }
-        }
-        if (matchFound == false) {
-            outstriimi3 << ownBirdLine;
-            outstriimi3 << "\n";
-        }
-    }
-*/
     // STATUSES
-/*
-    QFile ownstatusfile(dataFileDir() + "xemastatusdata.txt");
-    ownstatusfile.open(QFile::ReadOnly);
-    QTextStream statusinstream1(&ownstatusfile);
-    statusinstream1.setCodec("ISO 8859-1");
-
-    QFile origstatusfile(":defaultstatuses.csv");
-    origstatusfile.open(QFile::ReadOnly);
-    QTextStream statusinstream2(&origstatusfile);
-    statusinstream2.setCodec("ISO 8859-1");
-*/
     QFile exportfile4(exportDir() + "xema_exported_statuses.txt");
 
     exportfile4.open(QFile::ReadWrite|QFile::Truncate);
@@ -632,42 +526,17 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int sRowCount = sModel->rowCount();
 
-    outstriimi4 << "tila;suomeksi;ruotsiksi;englanniksi;\n";
+    outstriimi4 << "abbrev;tila;status_sv;status_en\n";
 
     for( int i = 0; i < sRowCount; i++ ) {
         if( sModel->getItem(i).custom() == true ) {
             outstriimi4 << sModel->getItem(i).abbreviation() << ";";
             outstriimi4 << sModel->getItem(i).name() << ";";
             outstriimi4 << sModel->getItem(i).sweName(true) << ";";
-            outstriimi4 << sModel->getItem(i).engName(true) << ";\n";
+            outstriimi4 << sModel->getItem(i).engName(true) << "\n";
         }
     }
 
-/*
-    while (statusinstream1.atEnd() == false)
-    {
-        QString ownStatusLine;
-        ownStatusLine = statusinstream1.readLine();
-        if (ownStatusLine.isEmpty()) {
-            continue;
-        }
-        bool matchFound = false;
-        statusinstream2.seek(0);
-        while (statusinstream2.atEnd() == false)
-        {
-            QString origBirdLine;
-            origBirdLine = statusinstream2.readLine();
-            if (ownStatusLine == origBirdLine) {
-                matchFound = true;
-                break;
-            }
-        }
-        if (matchFound == false) {
-            outstriimi4 << ownStatusLine;
-            outstriimi4 << "\n";
-        }
-    }
-    */
 }
 
 qlonglong ModelDataWriter::getNewId()
@@ -814,7 +683,7 @@ void ModelDataWriter::removeHistory()
     tiedosto.remove();
 }
 
-QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds)
+QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter)
 {
 
 //    for(int i = 0; i < data.count("#"); i++)
@@ -964,7 +833,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
                                  XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
     loppu.prepend("#");
-    loppu.append("#");
+    loppu.append("");
 
     QString firstRow = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_INDIRECT);
     firstRow.replace("#koiras#", "#k#");
@@ -999,6 +868,13 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     eka.replace("#false","#", Qt::CaseSensitive);
 //    qDebug() << "EXPORT, eka 24" << eka;
 //    qDebug() << "EKA MUUTOKSEN JALKEEN" << eka;
+    if( eka.endsWith( "#") == true ) {
+        eka.remove(eka.size()-1,1);
+    }
+    if( delimiter != "#" ) {
+        eka.replace("#", delimiter);
+    }
+//    qDebug() << "FORMAT TO TIIRA JALKEEN" << eka;
     return eka;
 }
 
@@ -1433,11 +1309,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
-            if (line.count(delimiter) != 4 && line.count(delimiter) != 8) {
+            if (line.count(delimiter) != 7) {
 //                qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
                 delimiter = ";";
             }
-            if (line.count(delimiter) != 4 && line.count(delimiter) != 8) {
+            if (line.count(delimiter) != 7) {
 //                qDebug() << "INVALID LOCATION FILE";
                 if (!(importError&XemaEnums::IMPORT_LOCATIONERROR)) {
                     importError += XemaEnums::IMPORT_LOCATIONERROR;
@@ -1449,6 +1325,10 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         while (importstream.atEnd() == false) {
             QString locationLine;
             locationLine = importstream.readLine();
+            if(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN) == "kunta") {
+                continue;
+            }
+
             Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
                               locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                               locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
@@ -1519,11 +1399,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
-            if (line.count(delimiter) != 4) {
+            if (line.count(delimiter) != 3) {
 //                qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
                 delimiter = ";";
             }
-            if (line.count(delimiter) != 4) {
+            if (line.count(delimiter) != 3) {
 //                qDebug() << "INVALID PERSON FILE";
                 if (!(importError&XemaEnums::IMPORT_PERSONERROR)) {
                     importError += XemaEnums::IMPORT_PERSONERROR;
@@ -1535,6 +1415,9 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         while (importstream.atEnd() == false) {
             QString importLine;
             importLine = importstream.readLine();
+            if(importLine.section(';', XemaEnums::PERSON_FIRSTNAME, XemaEnums::PERSON_FIRSTNAME) == "firstname") {
+                continue;
+            }
             bool registered = false;
             if (QString::compare(importLine.section(';', XemaEnums::PERSON_REGISTERED, XemaEnums::PERSON_REGISTERED), "true", Qt::CaseInsensitive) == 0) {
                 registered = true;
@@ -1596,11 +1479,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
-            if (line.count(delimiter) != 9 && line.count(delimiter) != 11) {
+            if (line.count(delimiter) != 10) {
 //                qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
                 delimiter = ";";
             }
-            if (line.count(delimiter) != 9 && line.count(delimiter) != 11) {
+            if (line.count(delimiter) != 10) {
 //                qDebug() << "INVALID BIRD FILE";
                 if (!(importError&XemaEnums::IMPORT_BIRDERROR)) {
                     importError += XemaEnums::IMPORT_BIRDERROR;
@@ -1612,6 +1495,10 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         while (importstream.atEnd() == false) {
             QString importLine;
             importLine = importstream.readLine();
+
+            if(importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID) == "Id") {
+                continue;
+            }
 
             Bird bird(importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID).toInt(),
                        importLine.section(';', XemaEnums::BIRD_FIN_GROUP, XemaEnums::BIRD_FIN_GROUP),
@@ -1687,11 +1574,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
-            if (line.count(delimiter) != 4) {
+            if (line.count(delimiter) != 3) {
 //                qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
                 delimiter = ";";
             }
-            if (line.count(delimiter) != 4) {
+            if (line.count(delimiter) != 3) {
 //                qDebug() << "INVALID STATUS FILE";
                 if (!(importError&XemaEnums::IMPORT_STATUSERROR)) {
                     importError += XemaEnums::IMPORT_STATUSERROR;
@@ -1703,6 +1590,9 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         while (importstream.atEnd() == false) {
             QString importLine;
             importLine = importstream.readLine();
+            if(importLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV) == "abbrev") {
+                continue;
+            }
 
             Status status(importLine.section(';', XemaEnums::STATUS_FINNAME, XemaEnums::STATUS_FINNAME),
                        importLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV),

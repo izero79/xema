@@ -157,7 +157,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
     connect(mRootObject,SIGNAL(loadHistoryWithDate(QString)),this,SIGNAL(loadHistoryWithDate(QString)));
     connect(mRootObject,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)),this,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)));
-    connect(mRootObject,SIGNAL(exportData(bool)),this,SLOT(exportData(bool)));
+    connect(mRootObject,SIGNAL(exportData(bool,QString)),this,SLOT(exportData(bool,QString)));
     connect(mRootObject,SIGNAL(restoreObservers()),this,SIGNAL(restoreObservers()));
     connect(mRootObject,SIGNAL(restoreLocations()),this,SIGNAL(restoreLocations()));
     connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
@@ -296,10 +296,10 @@ void QMLWindow::saveSystematicSorting(bool systematic)
     mSettings->setSystematicSorting(systematic);
 }
 
-void QMLWindow::exportData(bool onlyNew)
+void QMLWindow::exportData(bool onlyNew, const QString &delimiter)
 {
     setProcessing(true);
-    mDataWriter->exportHistory(onlyNew,mLocationModel,mPersonModel,mBirdModel);
+    mDataWriter->exportHistory(onlyNew,mLocationModel,mPersonModel,mBirdModel,delimiter);
     setProcessing(false);
 }
 

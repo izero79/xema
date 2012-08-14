@@ -281,11 +281,13 @@ Page {
         }
         else if (listPageType == "places")
         {
+            listView.model.setSorting(1, true)
             listView.editMode = false
             listView.delegate = locationDelegate
         }
         else if (listPageType == "editplaces")
         {
+            listView.model.setSorting(1, true)
             listView.editMode = true
             listView.delegate = locationDelegate
         }
@@ -306,17 +308,20 @@ Page {
         }
         else if (listPageType == "editallpeople")
         {
+            listView.model.setSorting(1, true)
             listView.editMode = true
             listView.delegate = myTestDelegate
         }
         else if (listPageType == "regpeople")
         {
+            listView.model.setSorting(1, true)
             listView.editMode = false
             listView.showRegistered = true
             listView.delegate = myTestDelegate
         }
         else
         {
+            listView.model.setSorting(1, true)
             listView.editMode = false
             listView.showRegistered = false
             listView.delegate = emptyDelegate

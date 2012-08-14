@@ -68,7 +68,7 @@ private slots:
     void deleteObservation(const QString &id, const QString &date, const QString &place);
     void saveDetailLevel(int level);
     void saveSystematicSorting(bool systematic);
-    void exportData(bool onlyNew);
+    void exportData(bool onlyNew, const QString &delimiter);
     void exportOwnData();
     void importOwnData();
     void openBrowser( const QString &url );

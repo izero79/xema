@@ -66,10 +66,6 @@
 <context>
     <name>HistoryPage</name>
     <message>
-        <source>import</source>
-        <translation>Tuo</translation>
-    </message>
-    <message>
         <source>Remove</source>
         <translation>Poista</translation>
     </message>
@@ -91,6 +87,14 @@
     </message>
     <message>
         <source>Import</source>
+        <translation>Tuo</translation>
+    </message>
+    <message>
+        <source>Which delimiter to use?</source>
+        <translation>Valitse erotusmerkki</translation>
+    </message>
+    <message>
+        <source>import</source>
         <translation>Tuo</translation>
     </message>
 </context>
@@ -485,58 +489,8 @@
         <translation>Yhtään tiedostoa ei tuotu</translation>
     </message>
     <message>
-        <source>Imported locations
-</source>
-        <translation>Tuotiin paikat</translation>
-    </message>
-    <message>
-        <source>Imported persons
-</source>
-        <translation>Tuotiin havainnoijat</translation>
-    </message>
-    <message>
-        <source>Imported birds
-</source>
-        <translation>Tuotiin lajit</translation>
-    </message>
-    <message>
-        <source>Imported status
-</source>
-        <translation>Tuontiin tilat</translation>
-    </message>
-    <message>
-        <source>Imported history
-</source>
-        <translation>Tuotiin havainnot</translation>
-    </message>
-    <message>
         <source>Import error</source>
         <translation>Tuontivirhe</translation>
-    </message>
-    <message>
-        <source>Error with locations file
-</source>
-        <translation>Virheellinen paikkatiedosto</translation>
-    </message>
-    <message>
-        <source>Error with persons file
-</source>
-        <translation>Virheellinen havainnoijatiedosto</translation>
-    </message>
-    <message>
-        <source>Error with birds file
-</source>
-        <translation>Virheellinen lajitiedosto</translation>
-    </message>
-    <message>
-        <source>Error with status file
-</source>
-        <translation>Virheellinen tilatiedosto</translation>
-    </message>
-    <message>
-        <source>Error with history file
-</source>
-        <translation>Virheellinen havaintotiedosto</translation>
     </message>
     <message>
         <source>Error</source>
@@ -549,6 +503,50 @@
     <message>
         <source>Please, wait...</source>
         <translation>Ole hyvä ja odota...</translation>
+    </message>
+    <message>
+        <source>Imported locations</source>
+        <translation>Tuotiin paikat</translation>
+    </message>
+    <message>
+        <source>Imported persons</source>
+        <translation>Tuotiin havainnoijat</translation>
+    </message>
+    <message>
+        <source>Imported birds</source>
+        <translation>Tuotiin lajit</translation>
+    </message>
+    <message>
+        <source>Imported status</source>
+        <translation>Tuotiin tilat</translation>
+    </message>
+    <message>
+        <source>Imported history</source>
+        <translation>Tuotiin havainnot</translation>
+    </message>
+    <message>
+        <source>Error with locations file</source>
+        <translation>Virhe paikkatiedostossa</translation>
+    </message>
+    <message>
+        <source>Error with persons file</source>
+        <translation>Virhe havainnoijatiedostossa</translation>
+    </message>
+    <message>
+        <source>Error with birds file</source>
+        <translation>Virhe lajitiedostossa</translation>
+    </message>
+    <message>
+        <source>Error with status file</source>
+        <translation>Virhe tilatiedostossa</translation>
+    </message>
+    <message>
+        <source>Error with history file</source>
+        <translation>Virhe havaintotiedostossa</translation>
+    </message>
+    <message>
+        <source>Imported statuses</source>
+        <translation>Tuotiin tilat</translation>
     </message>
 </context>
 </TS>

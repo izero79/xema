@@ -132,11 +132,6 @@ void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly)
     t.start();
 #endif
     mBirdModel = model;
-    if (QFile::exists(dataFileDir() + "lokkitestibirds.txt"))
-    {
-        QFile oldFile(dataFileDir() + "lokkitestibirds.txt");
-        oldFile.rename(dataFileDir() + "xemabirddata.txt");
-    }
     QFile tiedosto(dataFileDir() + "xemabirddata.txt");
     if (defaultOnly == true || tiedosto.exists() == false)
     {
@@ -179,11 +174,6 @@ void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly)
 void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 {
     mLocationModel = model;
-    if (QFile::exists(dataFileDir() + "lokkitestilocation.txt"))
-    {
-        QFile oldFile(dataFileDir() + "lokkitestilocation.txt");
-        oldFile.rename(dataFileDir() + "xemalocationdata.txt");
-    }
 
     QFile tiedosto(dataFileDir() + "xemalocationdata.txt");
     if (defaultOnly == true || tiedosto.exists() == false)
@@ -220,31 +210,31 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 void ModelDataLoader::loadInitialLocationData(LocationModel *model)
 {
     //    qDebug() << Q_FUNC_INFO;
-        int currentLocationVersion = Settings::locationsVersion();
-        int savedVersion = 0;
-        qDebug() << "current location version" << currentLocationVersion;
+    int currentLocationVersion = Settings::locationsVersion();
+    int savedVersion = 0;
+    qDebug() << "current location version" << currentLocationVersion;
 
-        QFile versionFile(":locations.version");
-        versionFile.open(QFile::ReadOnly);
-        QTextStream striimi(&versionFile);
-        striimi.setCodec("ISO 8859-1");
-        while (striimi.atEnd() == false)
-        {
-            QString versionLine;
-            versionLine = striimi.readLine();
-            savedVersion = versionLine.toInt();
-        }
-        qDebug() << "saved location version" << savedVersion;
-        if( savedVersion > currentLocationVersion ) {
-            qDebug() << "There's new version of location list installed. Using it.";
-            loadOnlyModifiedLocationData( model );
-            loadDefaultLocationData( model );
-            Settings::setLocationsVersion(savedVersion);
-        }
-        else {
-            loadLocationData( model, false );
-            return;
-        }
+    QFile versionFile(":locations.version");
+    versionFile.open(QFile::ReadOnly);
+    QTextStream striimi(&versionFile);
+    striimi.setCodec("ISO 8859-1");
+    while (striimi.atEnd() == false)
+    {
+        QString versionLine;
+        versionLine = striimi.readLine();
+        savedVersion = versionLine.toInt();
+    }
+    qDebug() << "saved location version" << savedVersion;
+    if( savedVersion > currentLocationVersion ) {
+        qDebug() << "There's new version of location list installed. Using it.";
+        loadOnlyModifiedLocationData( model );
+        loadDefaultLocationData( model );
+        Settings::setLocationsVersion(savedVersion);
+    }
+    else {
+        loadLocationData( model, false );
+        return;
+    }
 }
 
 void ModelDataLoader::loadDefaultLocationData(LocationModel *model)
@@ -300,12 +290,6 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
     QTime t;
     t.start();
 #endif
-    if (QFile::exists(dataFileDir() + "lokkitestiperson.txt"))
-    {
-        QFile oldFile(dataFileDir() + "lokkitestiperson.txt");
-        oldFile.rename(dataFileDir() + "xemapersondata.txt");
-    }
-
     QFile tiedosto(dataFileDir() + "xemapersondata.txt");
     if (tiedosto.exists() == false)
     {
@@ -644,15 +628,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
     qDebug("loadHistoryDateData ifissa 1 elapsed: %d ms", t.elapsed());
 #endif
 
-        QString readPlace;
-/*
-    QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
-            readPlace.replace("#", ", ");
-            readPlace = readLocation(readPlace);
-#ifdef PERFTEST
-    qDebug("loadHistoryDateData ifissa 2 elapsed: %d ms", t.elapsed());
-#endif
-*/
+            QString readPlace;
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
                              readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
 #ifdef PERFTEST

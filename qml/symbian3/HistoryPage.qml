@@ -151,6 +151,9 @@ Page {
     Dialog {
         id: exportDialog
 
+        property int step: 1
+        property bool onlyNew: false
+
         title: Label {
             height: 30
             anchors.centerIn: parent
@@ -171,7 +174,7 @@ Page {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: qsTr("Do you want to export all data, or just new data?")
+                text: exportDialog.step == 1 ? qsTr("Do you want to export all data, or just new data?") : qsTr("Which delimiter to use?")
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 font.pixelSize: 20
             }
@@ -184,11 +187,17 @@ Page {
                 anchors.left: parent.left
                 anchors.margins: 5
                 width: parent.width / 2
-                text: qsTr("All")
+                text: exportDialog.step == 1 ? qsTr("All") : ("#")
                 onClicked: {
+                    if( exportDialog.step == 1 ) {
+                        exportDialog.onlyNew = false
+                        exportDialog.step = 2
+                        return
+                    }
                     console.log("all")
-                    window.exportData(false)
+                    window.exportData(exportDialog.onlyNew,"#")
                     exportDialog.close()
+                    exportDialog.step = 1
                 }
             }
             Button {
@@ -197,11 +206,18 @@ Page {
                 anchors.left: exportDialogAllButton.right
                 anchors.margins: 5
                 width: parent.width / 2
-                text: qsTr("New")
+                text: exportDialog.step == 1 ? qsTr("New") : (";")
                 onClicked: {
+                    if( exportDialog.step == 1 ) {
+                        exportDialog.onlyNew = true
+                        exportDialog.step = 2
+                        return
+                    }
+
                     console.log("new")
-                    window.exportData(true)
+                    window.exportData(exportDialog.onlyNew,";")
                     exportDialog.close()
+                    exportDialog.step = 1
                 }
             }
         }

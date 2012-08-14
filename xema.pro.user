@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.4.1, 2012-07-31T23:39:49. -->
+<!-- Written by Qt Creator 2.4.1, 2012-08-14T23:09:09. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">0</value>
+  <value type="int">1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -176,9 +176,11 @@
        <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/xema_0.1.9_armel.deb</value>
        <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/xema_0.2.0_armel.deb</value>
        <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Debug/xema_0.1.8_armel.deb</value>
+       <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/xema_0.2.1_armel.deb</value>
        <value type="QString">/Users/Tero/koodaus/Qt/xema-build-harmattan-MeeGo_1_2_Harmattan_API__Qt_SDK__Release/xema_0.1.8_armel.deb</value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedHosts">
+       <value type="QString">192.168.255.11</value>
        <value type="QString">192.168.255.11</value>
        <value type="QString">192.168.255.11</value>
        <value type="QString">192.168.255.11</value>
@@ -189,11 +191,13 @@
        <value type="QString"></value>
        <value type="QString"></value>
        <value type="QString"></value>
+       <value type="QString"></value>
       </valuelist>
       <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.LastDeployedTimes">
        <value type="QDateTime">2012-07-30T14:58:28</value>
-       <value type="QDateTime">2012-07-31T23:26:50</value>
+       <value type="QDateTime">2012-08-01T12:41:20</value>
        <value type="QDateTime">2012-07-13T23:19:17</value>
+       <value type="QDateTime">2012-08-08T15:49:22</value>
        <value type="QDateTime">2012-07-14T13:42:23</value>
       </valuelist>
      </valuemap>
