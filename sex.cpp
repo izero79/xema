@@ -1,4 +1,5 @@
 #include "sex.h"
+#include "settings.h"
 
 Sex::Sex() {
 }
@@ -24,6 +25,19 @@ void Sex::setSweName(const QString &name)
 void Sex::setEngName(const QString &name)
 {
     mEngName = name;
+}
+
+QString Sex::localizedName() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweName();
+    } else if (lang == "en") {
+        return engName();
+    }
+    else
+        return finName();
+
 }
 
 QString Sex::finName() const

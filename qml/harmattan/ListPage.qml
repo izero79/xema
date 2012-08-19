@@ -389,6 +389,20 @@ Page {
         }
     }
 
+    function setSelected( string )
+    {
+        filterTf.text = string
+/*
+        for(var i = 0; i < listView.model.rowCount(); i++)
+        {
+            if( string == listView.model.data(i, 49 )) {
+                console.log("loyty")
+                listView.positionViewAtIndex( i, ListView.Center)
+            }
+        }
+*/
+    }
+
     Component.onCompleted: {
         console.log("ListPage loaded")
         listView.model.filter("")
@@ -413,6 +427,7 @@ Page {
             id: filterTf
             height: 50
             text: "" //listPageType
+            placeholderText: qsTr("Search")
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.right: parent.right
@@ -420,10 +435,31 @@ Page {
             anchors.left: parent.left
             anchors.leftMargin: 0
             onTextChanged: {
-                console.log("teksti muuttuu: " + text)
+                //console.log("teksti muuttuu: " + text)
                 listView.model.filter(text)
             }
+            Image {
+                anchors { top: parent.top; right: parent.right; margins: 1 }
+                id: clearText
+                fillMode: Image.PreserveAspectFit
+                smooth: true;
+                source: ":../harmattan_icons/icon-m-input-clear.png"
+                height: 48 //parent.height - 8 * 2
+                width: 48 //parent.height - 8 * 2
+                visible: !busyIndicator.visible && filterTf.text
+
+                MouseArea {
+                    id: clear
+                    anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+                    height: filterTf.height; width: filterTf.height
+                    onClicked: {
+                        filterTf.text = ""
+                        filterTf.forceActiveFocus()
+                    }
+                }
+            }
             BusyIndicator {
+                id: busyIndicator
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom

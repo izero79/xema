@@ -1,4 +1,5 @@
 #include "age.h"
+#include "settings.h"
 
 Age::Age() {
 }
@@ -30,6 +31,19 @@ void Age::setEngName(const QString &name)
 void Age::setValue(const QString &value)
 {
     mValue = value;
+}
+
+QString Age::localizedName() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweName();
+    } else if (lang == "en") {
+        return engName();
+    }
+    else
+        return finName();
+
 }
 
 QString Age::finName() const

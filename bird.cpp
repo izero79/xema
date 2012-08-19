@@ -1,4 +1,5 @@
 #include "bird.h"
+#include "settings.h"
 
 Bird::Bird() :
     mId(0),
@@ -121,6 +122,18 @@ QString Bird::latinGroup() const
     return mLatinGroup;
 }
 
+QString Bird::localizedName() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweName();
+    } else if (lang == "en") {
+        return engName();
+    }
+    else
+        return finName();
+
+}
 
 QString Bird::finName() const
 {

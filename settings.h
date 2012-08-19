@@ -16,6 +16,7 @@ public:
     static int speciesVersion();
     static int locationsVersion();
     static int statusesVersion();
+    static QString lang();
 
     void setFirstStart(bool first);
     void setSystematicSorting(bool systematic);

@@ -78,6 +78,14 @@ int Settings::statusesVersion()
     return value;
 }
 
+QString Settings::lang()
+{
+    //return "en"; // for testing
+    QString locale = QLocale::system().name();
+    return locale.section("_",0,0);
+}
+
+
 void Settings::setSpeciesVersion(int ver)
 {
     QSettings settings("TeSi", "xema");

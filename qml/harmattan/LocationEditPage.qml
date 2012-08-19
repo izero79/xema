@@ -53,6 +53,16 @@ Page {
                         locationModel.setData(currentIndex, true, 48)
                     }
                     window.saveLocations()
+                    if ( currentLanguage == "sv") {
+                        window.newLocationCreated( sweTownTf.text + ", " + sweLocationTf.text )
+                    }
+                    else if ( currentLanguage == "en") {
+                        window.newLocationCreated( engTownTf.text + ", " + engLocationTf.text )
+                    }
+                    else {
+                        window.newLocationCreated( townTf.text + ", " + locationTf.text )
+                    }
+
                 }
                 pageStack.pop()
             }

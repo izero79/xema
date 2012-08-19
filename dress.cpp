@@ -1,4 +1,6 @@
 #include "dress.h"
+#include "settings.h"
+
 #include <QDebug>
 
 Dress::Dress() {
@@ -32,6 +34,20 @@ void Dress::setValue(const QString &value)
 {
     mValue = value;
 }
+
+QString Dress::localizedName() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweName();
+    } else if (lang == "en") {
+        return engName();
+    }
+    else
+        return finName();
+
+}
+
 
 QString Dress::finName() const
 {

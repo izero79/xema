@@ -23,12 +23,12 @@ Page {
                 else if (placeListVisible == true)
                 {
                     historyListView.model = historyDateModel
-                    textfield1.text = ""
+                    filterTf.text = ""
                 }
                 else
                 {
                     historyListView.model = historyPlaceModel
-                    textfield1.text = ""
+                    filterTf.text = ""
                 }
             }
         }
@@ -100,27 +100,27 @@ Page {
     function showDate(pvm)
     {
         window.loadHistoryWithDate(pvm)
-        //textfield1.text = ""
+        //filterTf.text = ""
         console.log("showDate " + pvm)
         historyListView.model = historyPlaceModel
-        historyPlaceModel.filter(textfield1.text)
+        historyPlaceModel.filter(filterTf.text)
     }
 
     function showPlace(place, pvm)
     {
         window.loadHistoryWithDateAndPlace(pvm, place)
-        //textfield1.text = ""
+        //filterTf.text = ""
         console.log("showDate " + place + " pvm " +pvm)
         historyListView.model = historyModel
 
 //        var filterString = place + ", " + pvm
-        historyModel.filter(textfield1.text)
+        historyModel.filter(filterTf.text)
     }
 
     function init()
     {
         historyListView.model = historyDateModel
-        textfield1.text = ""
+        filterTf.text = ""
     }
 
     function findBirdFromAbbrev(name)
@@ -174,7 +174,7 @@ Page {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: exportDialog.step == 1 ? qsTr("Do you want to export all data, or just new data?") : qsTr("Which delimiter to use?")
+                text: exportDialog.step == 1 ? qsTr("Do you want to export all data, or just new data?") : qsTr("Choose delimiter to be used")
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 font.pixelSize: 20
             }
@@ -249,7 +249,7 @@ Page {
         anchors.topMargin: 8
 
         TextField {
-            id: textfield1
+            id: filterTf
             height: 50
             text: listPageType
             anchors.top: parent.top
@@ -259,8 +259,28 @@ Page {
             anchors.left: parent.left
             anchors.leftMargin: 0
             onTextChanged: {
-                console.log("teksti muuttuu: " + text)
+                //console.log("teksti muuttuu: " + text)
                 historyListView.model.filter(text)
+            }
+            Image {
+                anchors { top: parent.top; right: parent.right; margins: 1 }
+                id: clearText
+                fillMode: Image.PreserveAspectFit
+                smooth: true;
+                source: ":../symbian3_icons/icon-m-input-clear.png"
+                height: 48 //parent.height - 8 * 2
+                width: 48 //parent.height - 8 * 2
+                visible: filterTf.text
+
+                MouseArea {
+                    id: clear
+                    anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+                    height: filterTf.height; width: filterTf.height
+                    onClicked: {
+                        filterTf.text = ""
+                        filterTf.forceActiveFocus()
+                    }
+                }
             }
         }
     }

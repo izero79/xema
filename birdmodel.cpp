@@ -1,4 +1,6 @@
 #include "birdmodel.h"
+#include "settings.h"
+
 #include <QDebug>
 
 BirdModel::BirdModel(QObject *parent) :
@@ -53,9 +55,7 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.finName() + ", " +
-                        item.sweName() + ", " +
-                        item.engName() + ", " +
+        return QString(item.localizedName() + ", " +
                         item.latinName() + ", " +
                         item.abbreviation() + ", ");
     }
@@ -133,8 +133,7 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     }
     else if (role == SortingNameRole)
     {
-        QString locale = QLocale::system().name();
-        QString lang = locale.section("_",0,0);
+        QString lang = Settings::lang();
         if (lang == "en") {
             return item.engName(false);
         }

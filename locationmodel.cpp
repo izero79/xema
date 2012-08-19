@@ -1,4 +1,6 @@
 #include "locationmodel.h"
+#include "settings.h"
+
 #include <QDebug>
 
 LocationModel::LocationModel(QObject *parent) :
@@ -46,8 +48,8 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.town() + ", " +
-                        item.place() + ", " + item.wgsCoordinateForFilter());
+        return QString(item.localizedTown() + ", " +
+                        item.localizedPlace() + ", " + item.wgsCoordinateForFilter());
     }
     else if (role == IndexRole)
     {
@@ -115,8 +117,7 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     }
     else if (role == SortingNameRole)
     {
-        QString locale = QLocale::system().name();
-        QString lang = locale.section("_",0,0);
+        QString lang = Settings::lang();
         if (lang == "en") {
             return item.engTown(false) + ", " + item.engPlace(false);
         }

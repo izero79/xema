@@ -90,12 +90,12 @@
         <translation>Tuo</translation>
     </message>
     <message>
-        <source>Which delimiter to use?</source>
-        <translation>Valitse erotusmerkki</translation>
-    </message>
-    <message>
         <source>import</source>
         <translation>Tuo</translation>
+    </message>
+    <message>
+        <source>Choose delimiter to be used</source>
+        <translation>Valitse erotinmerkki</translation>
     </message>
 </context>
 <context>
@@ -111,6 +111,10 @@
     <message>
         <source>Remove</source>
         <translation>Poista</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Etsi</translation>
     </message>
 </context>
 <context>
@@ -515,10 +519,6 @@
     <message>
         <source>Imported birds</source>
         <translation>Tuotiin lajit</translation>
-    </message>
-    <message>
-        <source>Imported status</source>
-        <translation>Tuotiin tilat</translation>
     </message>
     <message>
         <source>Imported history</source>

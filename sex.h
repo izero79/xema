@@ -13,6 +13,7 @@ public:
     void setSweName(const QString &name);
     void setEngName(const QString &name);
 
+    QString localizedName() const;
     QString finName() const;
     QString sweName() const;
     QString engName() const;

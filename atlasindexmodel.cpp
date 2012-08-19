@@ -37,7 +37,7 @@ QVariant AtlasIndexModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return item.value();
+        return QString( item.value() + ", " + item.localizedName());
     }
     else if (role == IndexRole)
     {

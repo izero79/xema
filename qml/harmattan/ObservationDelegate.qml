@@ -114,7 +114,7 @@ Item {
         anchors.topMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 0
-        width: 100
+        width: 200
         validator: IntValidator { bottom: 1; }
         inputMethodHints: Qt.ImhDigitsOnly
         onTextChanged: item1.edited = true
@@ -168,7 +168,7 @@ Item {
         y: sexTf.y
         anchors.right: parent.right
         anchors.rightMargin: 0
-        width: 100
+        width: 150
         visible: detailLevel > 1
         MouseArea {
             id: dressTfmouse

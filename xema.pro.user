@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.4.1, 2012-08-14T23:09:09. -->
+<!-- Written by Qt Creator 2.4.1, 2012-08-19T13:41:38. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -197,7 +197,7 @@
        <value type="QDateTime">2012-07-30T14:58:28</value>
        <value type="QDateTime">2012-08-01T12:41:20</value>
        <value type="QDateTime">2012-07-13T23:19:17</value>
-       <value type="QDateTime">2012-08-08T15:49:22</value>
+       <value type="QDateTime">2012-08-19T13:26:30</value>
        <value type="QDateTime">2012-07-14T13:42:23</value>
       </valuelist>
      </valuemap>

@@ -17,6 +17,7 @@ public:
     void setCustom(bool custom);
 
     QString name() const;
+    QString localizedName() const;
     QString sweName(bool allowEmpty = false) const;
     QString engName(bool allowEmpty = false) const;
     QString abbreviation() const;

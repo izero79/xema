@@ -179,6 +179,26 @@ PageStackWindow {
         MyScript.addStatus()
     }
 
+    function newLocationCreated( location )
+    {
+        MyScript.listObject.setSelected( location )
+    }
+
+    function newBirdCreated( bird )
+    {
+        MyScript.listObject.setSelected( bird )
+    }
+
+    function newPersonCreated( name )
+    {
+        MyScript.listObject.setSelected( name )
+    }
+
+    function newStatusCreated( name )
+    {
+        MyScript.listObject.setSelected( name )
+    }
+
     function newObsWithData(date, place, species)
     {
 

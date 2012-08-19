@@ -1,6 +1,7 @@
 #include <QDebug>
 
 #include "statusmodel.h"
+#include "settings.h"
 
 StatusModel::StatusModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -43,7 +44,7 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.name() + ", " + item.abbreviation());
+        return QString(item.localizedName() + ", " + item.abbreviation());
     }
     else if (role == IndexRole)
     {
@@ -83,8 +84,7 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const
     }
     else if (role == SortingNameRole)
     {
-        QString locale = QLocale::system().name();
-        QString lang = locale.section("_",0,0);
+        QString lang = Settings::lang();
         if (lang == "en") {
             return item.engName(false);
         }

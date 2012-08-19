@@ -179,6 +179,26 @@ PageStackWindow {
         MyScript.addStatus()
     }
 
+    function newLocationCreated( location )
+    {
+        MyScript.listObject.setSelected( location )
+    }
+
+    function newBirdCreated( bird )
+    {
+        MyScript.listObject.setSelected( bird )
+    }
+
+    function newPersonCreated( name )
+    {
+        MyScript.listObject.setSelected( name )
+    }
+
+    function newStatusCreated( name )
+    {
+        MyScript.listObject.setSelected( name )
+    }
+
     function newObsWithData(date, place, species)
     {
 
@@ -199,40 +219,40 @@ PageStackWindow {
         else {
             errorDialog.titleText = qsTr("Import complete")
             if (errorNo&XemaEnums.IMPORT_LOCATION_OK) {
-                errorDialog.dialogText += qsTr("Imported locations") +"\n"
+                errorDialog.dialogText += qsTr("Imported locations") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_PERSON_OK) {
-                errorDialog.dialogText += qsTr("Imported persons") +"\n"
+                errorDialog.dialogText += qsTr("Imported persons") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_BIRD_OK) {
-                errorDialog.dialogText += qsTr("Imported birds") +"\n"
+                errorDialog.dialogText += qsTr("Imported birds") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_STATUS_OK) {
-                errorDialog.dialogText += qsTr("Imported status") +"\n"
+                errorDialog.dialogText += qsTr("Imported statuses") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_HISTORY_OK) {
-                errorDialog.dialogText += qsTr("Imported history") +"\n"
+                errorDialog.dialogText += qsTr("Imported history") + "\n"
             }
 
             if (errorNo&XemaEnums.IMPORT_LOCATIONERROR) {
                 errorDialog.titleText = qsTr("Import error")
-                errorDialog.dialogText += qsTr("Error with locations file") +"\n"
+                errorDialog.dialogText += qsTr("Error with locations file") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_PERSONERROR) {
                 errorDialog.titleText = qsTr("Import error")
-                errorDialog.dialogText += qsTr("Error with persons file") +"\n"
+                errorDialog.dialogText += qsTr("Error with persons file") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_BIRDERROR) {
                 errorDialog.titleText = qsTr("Import error")
-                errorDialog.dialogText += qsTr("Error with birds file") +"\n"
+                errorDialog.dialogText += qsTr("Error with birds file") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_STATUSERROR) {
                 errorDialog.titleText = qsTr("Import error")
-                errorDialog.dialogText += qsTr("Error with status file") +"\n"
+                errorDialog.dialogText += qsTr("Error with status file") + "\n"
             }
             if (errorNo&XemaEnums.IMPORT_HISTORYERROR) {
                 errorDialog.titleText = qsTr("Import error")
-                errorDialog.dialogText += qsTr("Error with history file") +"\n"
+                errorDialog.dialogText += qsTr("Error with history file") + "\n"
             }
         }
         errorDialog.open()

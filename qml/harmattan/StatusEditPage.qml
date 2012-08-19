@@ -28,20 +28,29 @@ Page {
                         }
 
                         var rows = statusModel.rowCount()
-                        statusModel.setData(rows, name1Tf.text, 36)
-                        statusModel.setData(rows, name2Tf.text, 39)
-                        statusModel.setData(rows, name3Tf.text, 40)
+                        statusModel.setData(rows, finNameTf.text, 36)
+                        statusModel.setData(rows, sweNameTf.text, 39)
+                        statusModel.setData(rows, engNameTf.text, 40)
                         statusModel.setData(rows, abbrevTf.text, 35)
                         statusModel.setData(rows, true, 42)
                     }
                     else
                     {
                         console.log("modifying")
-                        statusModel.setData(currentIndex, name1Tf.text, 36)
-                        statusModel.setData(currentIndex, name2Tf.text, 39)
-                        statusModel.setData(currentIndex, name3Tf.text, 40)
+                        statusModel.setData(currentIndex, finNameTf.text, 36)
+                        statusModel.setData(currentIndex, sweNameTf.text, 39)
+                        statusModel.setData(currentIndex, engNameTf.text, 40)
                         statusModel.setData(currentIndex, abbrevTf.text, 35)
                         statusModel.setData(currentIndex, true, 42)
+                    }
+                    if ( currentLanguage == "sv") {
+                        window.newStatusCreated( sweNameTf.text + ", " + abbrevTf.text )
+                    }
+                    else if ( currentLanguage == "en") {
+                        window.newStatusCreated( engNameTf.text + ", " + abbrevTf.text )
+                    }
+                    else {
+                        window.newStatusCreated( finNameTf.text + ", " + abbrevTf.text )
                     }
                 }
                 pageStack.pop()
@@ -82,9 +91,9 @@ Page {
 
     function undo()
     {
-        name1Tf.text = statusModel.data(currentIndex, 36)
-        name2Tf.text = statusModel.data(currentIndex, 39)
-        name3Tf.text = statusModel.data(currentIndex, 40)
+        finNameTf.text = statusModel.data(currentIndex, 36)
+        sweNameTf.text = statusModel.data(currentIndex, 39)
+        engNameTf.text = statusModel.data(currentIndex, 40)
         abbrevTf.text = statusModel.data(currentIndex, 35)
     }
 
@@ -147,14 +156,14 @@ Page {
             anchors.leftMargin: 0
             anchors.rightMargin: 0
             anchors.left: parent.left
+            width: parent.width
             horizontalAlignment: Text.AlignLeft
             anchors.top: parent.top
             color: "#ffffff"
         }
 
         TextField {
-            id: name1Tf
-            width: 240
+            id: finNameTf
             height: 50
             placeholderText: qsTr("Finnish name")
             text: statusModel.data(currentIndex, 36)
@@ -162,20 +171,21 @@ Page {
             anchors.leftMargin: 0
             anchors.top: editText.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 statusEdited = true
             }
         }
 
         TextField {
-            id: name2Tf
-            width: 240
+            id: sweNameTf
+            width: parent.width
             height: 50
             placeholderText: qsTr("Swedish name")
             text: statusModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name1Tf.bottom
+            anchors.top: finNameTf.bottom
             anchors.topMargin: 8
             onTextChanged: {
                 statusEdited = true
@@ -183,13 +193,14 @@ Page {
         }
 
         TextField {
-            id: name3Tf
+            id: engNameTf
             placeholderText: qsTr("English name")
             text: statusModel.data(currentIndex, 40)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name2Tf.bottom
+            anchors.top: sweNameTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 statusEdited = true
             }
@@ -201,8 +212,9 @@ Page {
             text: statusModel.data(currentIndex, 35)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name3Tf.bottom
+            anchors.top: engNameTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             validator: RegExpValidator{ regExp: /.{1,}/ }
             onTextChanged: {
                 statusEdited = true
@@ -218,6 +230,7 @@ Page {
             anchors.leftMargin: 0
             anchors.top: abbrevTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 statusEdited = true
             }

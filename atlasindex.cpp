@@ -1,4 +1,5 @@
 #include "atlasIndex.h"
+#include "settings.h"
 
 AtlasIndex::AtlasIndex() {
 }
@@ -30,6 +31,19 @@ void AtlasIndex::setEngName(const QString &name)
 void AtlasIndex::setValue(const QString &value)
 {
     mValue = value;
+}
+
+QString AtlasIndex::localizedName() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweName();
+    } else if (lang == "en") {
+        return engName();
+    }
+    else
+        return finName();
+
 }
 
 QString AtlasIndex::finName() const

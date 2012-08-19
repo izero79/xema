@@ -23,5 +23,6 @@
         <file>qml/harmattan_icons/filter.png</file>
         <file>qml/harmattan_icons/save.png</file>
         <file>qml/harmattan_icons/i.png</file>
+        <file>qml/harmattan_icons/icon-m-input-clear.png</file>
     </qresource>
 </RCC>

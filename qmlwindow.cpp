@@ -84,7 +84,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    setSource(QUrl("qrc:qml/harmattan/main.qml"));
+    setSource(QUrl("qrc:qml/symbian3/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
 }
@@ -170,8 +170,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
     connect(mRootObject,SIGNAL(openUrl(QString)),this,SLOT(openBrowser(QString)));
 
-    QString locale = QLocale::system().name();
-    QString lang = locale.section("_",0,0);
+    QString lang = Settings::lang();
     mRootObject->setProperty( "currentLanguage", lang );
 
     mSettings = new Settings(this);

@@ -38,7 +38,7 @@ QVariant DressModel::data(const QModelIndex &index, int role) const
     if (role == FilterRole)
     {
         return QString(item.value() + ", " +
-                       item.finName() + ", " + item.sweName() + ", " + item.engName());
+                       item.localizedName());
     }
     else if (role == IndexRole)
     {

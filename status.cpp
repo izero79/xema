@@ -1,4 +1,5 @@
 #include "status.h"
+#include "settings.h"
 
 Status::Status() :
     mName(),
@@ -49,6 +50,19 @@ void Status::setSelected(bool selected)
 void Status::setCustom(bool custom)
 {
     mCustom = custom;
+}
+
+QString Status::localizedName() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweName();
+    } else if (lang == "en") {
+        return engName();
+    }
+    else
+        return name();
+
 }
 
 QString Status::name() const

@@ -20,6 +20,8 @@ public:
     void setWGSCoordinate(const QString &wgs);
     void setCustom(bool custom);
 
+    QString localizedTown() const;
+    QString localizedPlace() const;
     QString town() const;
     QString place() const;
     QString engTown(bool allowEmpty = false) const;

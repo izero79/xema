@@ -46,6 +46,7 @@ Page {
                         personModel.setData(currentIndex, firstName.text, 38)
                         personModel.setData(currentIndex, lastName.text, 39)
                     }
+                    window.newPersonCreated( firstName.text + " " + lastName.text )
                     window.savePersons()
                 }
                 pageStack.pop()
@@ -123,7 +124,7 @@ Page {
 
         TextField {
             id: firstName
-            width: 240
+            width: parent.width
             height: 50
             placeholderText: qsTr("First name")
             text: personModel.data(currentIndex, 38)
@@ -139,7 +140,7 @@ Page {
 
         TextField {
             id: lastName
-            width: 240
+            width: parent.width
             height: 50
             placeholderText: qsTr("Last name")
             text: personModel.data(currentIndex, 39)

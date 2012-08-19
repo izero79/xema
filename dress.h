@@ -15,6 +15,7 @@ public:
     void setEngName(const QString &name);
 
     QString value() const;
+    QString localizedName() const;
     QString finName() const;
     QString sweName() const;
     QString engName() const;

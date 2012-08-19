@@ -37,8 +37,7 @@ QVariant AgeModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.value() + ", " +
-                       item.finName() + ", " + item.sweName() + ", " + item.engName());
+        return QString(item.value() + ", " + item.localizedName());
     }
     else if (role == IndexRole)
     {

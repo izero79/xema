@@ -37,7 +37,7 @@ QVariant SexModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.finName() + ", " + item.sweName() + ", " + item.engName());
+        return QString(item.localizedName());
     }
     else if (role == IndexRole)
     {

@@ -1114,7 +1114,7 @@ Page {
                     anchors.topMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    width: 150
+                    width: 170
                     onClicked: {
                         MyScript.createObjects();
                     }
@@ -1125,8 +1125,8 @@ Page {
                     anchors.top: obsDelegateItem.bottom
                     anchors.topMargin: 8
                     anchors.left: plus.right
-                    anchors.leftMargin: 0
-                    width: 150
+                    anchors.leftMargin: 8
+                    width: 170
                     visible: obsCount > 1
                     onClicked: {
                         MyScript.removeObject();
@@ -1186,7 +1186,7 @@ Page {
                         anchors.topMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        width: 150
+                        width: 125
                         visible: detailLevel > 2
                         validator: IntValidator { bottom: 0 }
                         inputMethodHints: Qt.ImhDigitsOnly
@@ -1201,9 +1201,9 @@ Page {
                     CheckBox {
                         id: hideChkBox
                         anchors.top: moreInfoTa.bottom
-                        anchors.topMargin: 0
+                        anchors.topMargin: 2
                         anchors.left: atlasTf.right
-                        anchors.leftMargin: 0
+                        anchors.leftMargin: 5
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         text: qsTr("Hidden")

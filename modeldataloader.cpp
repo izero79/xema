@@ -827,8 +827,7 @@ QString ModelDataLoader::readBird(const QString &bird) {
     QTime t;
     t.start();
 #endif
-    QString locale = QLocale::system().name();
-    QString lang = locale.section("_",0,0);
+    QString lang = Settings::lang();
 
     QModelIndex idx = mBirdModel->index(0);
     QModelIndexList list = mBirdModel->match(idx, BirdModel::AbbrevRole, bird, 1, Qt::MatchExactly);
@@ -871,8 +870,7 @@ QString ModelDataLoader::readLocation(const QString &location) {
     QTime t;
     t.start();
 #endif
-    QString locale = QLocale::system().name();
-    QString lang = locale.section("_",0,0);
+    QString lang = Settings::lang();
 
     QModelIndex idx = mLocationModel->index(0);
     QModelIndexList list = mLocationModel->match(idx, LocationModel::FullStringRole, location, 1, Qt::MatchExactly);

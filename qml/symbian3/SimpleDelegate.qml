@@ -63,8 +63,8 @@ Component {
             id: ma
             anchors.fill: parent
             onClicked: {
-                // tstest listPage.clicked(name)
-                listPage.clicked(index)
+                console.log("simple click, ri: " + realindex)
+                listPage.clicked(realindex)
             }
             onPressAndHold: {
                 listPage.showContextMenu()

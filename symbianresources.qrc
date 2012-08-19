@@ -25,5 +25,6 @@
         <file>qml/symbian3/myjs.js</file>
         <file>qml/splash_240x200.png</file>
         <file>qml/symbian3_icons/undo.svg</file>
+        <file>qml/symbian3_icons/icon-m-input-clear.png</file>
     </qresource>
 </RCC>

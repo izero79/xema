@@ -1,4 +1,5 @@
 #include "location.h"
+#include "settings.h"
 #include <QDebug>
 
 Location::Location() :
@@ -59,6 +60,31 @@ void Location::setWGSCoordinate(const QString &wgs)
 void Location::setCustom(bool custom)
 {
     mCustom = custom;
+}
+
+QString Location::localizedTown() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweTown();
+    } else if (lang == "en") {
+        return engTown();
+    }
+    else
+        return town();
+
+}
+
+QString Location::localizedPlace() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return swePlace();
+    } else if (lang == "en") {
+        return engPlace();
+    }
+    else
+        return place();
 }
 
 QString Location::town() const

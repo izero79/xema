@@ -29,31 +29,40 @@ Page {
                         }
 
                         var rows = birdModel.rowCount()
-                        birdModel.setData(rows, name1Tf.text, 36)
-                        birdModel.setData(rows, name2Tf.text, 37)
-                        birdModel.setData(rows, name3Tf.text, 39)
-                        birdModel.setData(rows, name4Tf.text, 44)
-                        birdModel.setData(rows, group4Tf.text, 45)
-                        birdModel.setData(rows, group1Tf.text, 40)
-                        birdModel.setData(rows, group2Tf.text, 41)
-                        birdModel.setData(rows, group3Tf.text, 42)
+                        birdModel.setData(rows, finNameTf.text, 36)
+                        birdModel.setData(rows, sweNameTf.text, 37)
+                        birdModel.setData(rows, latinNameTf.text, 39)
+                        birdModel.setData(rows, engNameTf.text, 44)
+                        birdModel.setData(rows, engGroupTf.text, 45)
+                        birdModel.setData(rows, finGroupTf.text, 40)
+                        birdModel.setData(rows, sweGroupTf.text, 41)
+                        birdModel.setData(rows, latinGroupTf.text, 42)
                         birdModel.setData(rows, abbrevTf.text, 38)
                         birdModel.setData(rows, categoryTf.text, 43)
                         birdModel.setData(rows, true, 54)
                     }
                     else
                     {
-                        birdModel.setData(currentIndex, name1Tf.text, 36)
-                        birdModel.setData(currentIndex, name2Tf.text, 37)
-                        birdModel.setData(currentIndex, name3Tf.text, 39)
-                        birdModel.setData(currentIndex, group1Tf.text, 40)
-                        birdModel.setData(currentIndex, group2Tf.text, 41)
-                        birdModel.setData(currentIndex, group3Tf.text, 42)
+                        birdModel.setData(currentIndex, finNameTf.text, 36)
+                        birdModel.setData(currentIndex, sweNameTf.text, 37)
+                        birdModel.setData(currentIndex, latinNameTf.text, 39)
+                        birdModel.setData(currentIndex, finGroupTf.text, 40)
+                        birdModel.setData(currentIndex, sweGroupTf.text, 41)
+                        birdModel.setData(currentIndex, latinGroupTf.text, 42)
                         birdModel.setData(currentIndex, abbrevTf.text, 38)
                         birdModel.setData(currentIndex, categoryTf.text, 43)
-                        birdModel.setData(currentIndex, name4Tf.text, 44)
-                        birdModel.setData(currentIndex, group4Tf.text, 45)
+                        birdModel.setData(currentIndex, engNameTf.text, 44)
+                        birdModel.setData(currentIndex, engGroupTf.text, 45)
                         birdModel.setData(currentIndex, true, 54)
+                    }
+                    if ( currentLanguage == "sv") {
+                        window.newBirdCreated( sweNameTf.text + ", " + latinNameTf.text )
+                    }
+                    else if ( currentLanguage == "en") {
+                        window.newBirdCreated( engNameTf.text + ", " + latinNameTf.text )
+                    }
+                    else {
+                        window.newBirdCreated( finNameTf.text + ", " + latinNameTf.text )
                     }
                 }
                 pageStack.pop()
@@ -75,20 +84,20 @@ Page {
     function mandatoryInfoExists()
     {
         var dataOk = false;
-        if (name1Tf.text.length > 0 &&
-            group1Tf.text.length > 0 &&
+        if (finNameTf.text.length > 0 &&
+            finGroupTf.text.length > 0 &&
             abbrevTf.text.length > 0 )
         {
             dataOk = true;
         }
-        else if (name2Tf.text.length > 0 &&
-            group2Tf.text.length > 0 &&
+        else if (sweNameTf.text.length > 0 &&
+            sweGroupTf.text.length > 0 &&
             abbrevTf.text.length > 0 )
         {
             dataOk = true;
         }
-        else if (name4Tf.text.length > 0 &&
-            group4Tf.text.length > 0 &&
+        else if (engNameTf.text.length > 0 &&
+            engGroupTf.text.length > 0 &&
             abbrevTf.text.length > 0 )
         {
             dataOk = true;
@@ -109,14 +118,14 @@ Page {
 
     function undo()
     {
-        name1Tf.text = birdModel.data(currentIndex, 36)
-        name2Tf.text = birdModel.data(currentIndex, 46)
-        name3Tf.text = birdModel.data(currentIndex, 39)
-        name4Tf.text = birdModel.data(currentIndex, 48)
-        group1Tf.text = birdModel.data(currentIndex, 40)
-        group2Tf.text = birdModel.data(currentIndex, 47)
-        group3Tf.text = birdModel.data(currentIndex, 42)
-        group4Tf.text = birdModel.data(currentIndex, 49)
+        finNameTf.text = birdModel.data(currentIndex, 36)
+        sweNameTf.text = birdModel.data(currentIndex, 46)
+        latinNameTf.text = birdModel.data(currentIndex, 39)
+        engNameTf.text = birdModel.data(currentIndex, 48)
+        finGroupTf.text = birdModel.data(currentIndex, 40)
+        sweGroupTf.text = birdModel.data(currentIndex, 47)
+        latinGroupTf.text = birdModel.data(currentIndex, 42)
+        engGroupTf.text = birdModel.data(currentIndex, 49)
         abbrevTf.text = birdModel.data(currentIndex, 38)
         categoryTf.text = birdModel.data(currentIndex, 43)
     }
@@ -185,8 +194,8 @@ Page {
         }
 
         TextField {
-            id: name1Tf
-            width: 240
+            id: finNameTf
+            width: parent.width
             height: 50
             placeholderText: qsTr("Finnish name")
             text: birdModel.data(currentIndex, 36)
@@ -200,14 +209,14 @@ Page {
         }
 
         TextField {
-            id: name2Tf
-            width: 240
+            id: sweNameTf
+            width: parent.width
             height: 50
             placeholderText: qsTr("Swedish name")
             text: birdModel.data(currentIndex, 46)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name1Tf.bottom
+            anchors.top: finNameTf.bottom
             anchors.topMargin: 8
             onTextChanged: {
                 birdEdited = true
@@ -215,14 +224,14 @@ Page {
         }
 
         TextField {
-            id: name4Tf
-            width: 240
+            id: engNameTf
+            width: parent.width
             height: 50
             placeholderText: qsTr("English name")
             text: birdModel.data(currentIndex, 48)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name2Tf.bottom
+            anchors.top: sweNameTf.bottom
             anchors.topMargin: 8
             onTextChanged: {
                 birdEdited = true
@@ -230,62 +239,67 @@ Page {
         }
 
         TextField {
-            id: name3Tf
+            id: latinNameTf
             placeholderText: qsTr("Latin name")
             text: birdModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name4Tf.bottom
+            anchors.top: engNameTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 birdEdited = true
             }
         }
 
         TextField {
-            id: group1Tf
+            id: finGroupTf
             placeholderText: qsTr("Group in finnish")
             text: birdModel.data(currentIndex, 40)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: name3Tf.bottom
+            anchors.top: latinNameTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 birdEdited = true
             }
         }
         TextField {
-            id: group2Tf
+            id: sweGroupTf
             placeholderText: qsTr("Group in swedish")
             text: birdModel.data(currentIndex, 47)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: group1Tf.bottom
+            anchors.top: finGroupTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 birdEdited = true
             }
         }
         TextField {
-            id: group4Tf
+            id: engGroupTf
             placeholderText: qsTr("Group in english")
             text: birdModel.data(currentIndex, 49)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: group2Tf.bottom
+            anchors.top: sweGroupTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 birdEdited = true
             }
         }
         TextField {
-            id: group3Tf
+            id: latinGroupTf
             placeholderText: qsTr("Group in latin")
             text: birdModel.data(currentIndex, 42)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: group4Tf.bottom
+            anchors.top: engGroupTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 birdEdited = true
             }
@@ -296,8 +310,9 @@ Page {
             text: birdModel.data(currentIndex, 38)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: group3Tf.bottom
+            anchors.top: latinGroupTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             validator: RegExpValidator{ regExp: /.{1,}/ }
             onTextChanged: {
                 birdEdited = true
@@ -311,6 +326,7 @@ Page {
             anchors.leftMargin: 0
             anchors.top: abbrevTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 birdEdited = true
             }
@@ -324,6 +340,7 @@ Page {
             anchors.leftMargin: 0
             anchors.top: categoryTf.bottom
             anchors.topMargin: 8
+            width: parent.width
             onTextChanged: {
                 birdEdited = true
             }
