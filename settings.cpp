@@ -80,7 +80,7 @@ int Settings::statusesVersion()
 
 QString Settings::lang()
 {
-    //return "en"; // for testing
+//    return "en"; // for testing
     QString locale = QLocale::system().name();
     return locale.section("_",0,0);
 }

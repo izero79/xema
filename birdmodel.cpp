@@ -24,6 +24,8 @@ BirdModel::BirdModel(QObject *parent) :
     roles[EngNameOnlyRole] = "engonlyname";
     roles[EngGroupOnlyRole] = "engonlygroup";
     roles[SectionRole] = "section";
+    roles[LocalizedNameRole] = "localizedName";
+    roles[LocalizedGroupRole] = "localizedGroup";
     roles[EmptyRole1] = "value";
     roles[EmptyRole2] = "name";
     roles[EmptyRole3] = "selected";
@@ -66,6 +68,14 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
     else if (role == IdRole)
     {
         return item.id();
+    }
+    else if (role == LocalizedNameRole)
+    {
+        return item.localizedName();
+    }
+    else if (role == LocalizedGroupRole)
+    {
+        return item.localizedGroup();
     }
     else if (role == FinNameRole)
     {

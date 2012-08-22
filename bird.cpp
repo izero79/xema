@@ -135,6 +135,19 @@ QString Bird::localizedName() const
 
 }
 
+QString Bird::localizedGroup() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweGroup();
+    } else if (lang == "en") {
+        return engGroup();
+    }
+    else
+        return finGroup();
+
+}
+
 QString Bird::finName() const
 {
     return mFinName;

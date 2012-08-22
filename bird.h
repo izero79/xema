@@ -31,6 +31,7 @@ public:
     QString engGroup(bool allowEmpty = false) const;
     QString latinGroup() const;
     QString localizedName() const;
+    QString localizedGroup() const;
     QString finName() const;
     QString sweName(bool allowEmpty = false) const;
     QString engName(bool allowEmpty = false) const;

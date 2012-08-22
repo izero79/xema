@@ -23,6 +23,7 @@ public:
         EngNameOnlyRole, // 40
         EmptyRole,
         IsCustomRole,
+        LocalizedNameRole,
         SortingNameRole = Qt::UserRole + 100
     };
 

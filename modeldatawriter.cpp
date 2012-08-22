@@ -415,12 +415,9 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
             newLine = obsLine;
 
             QString start = newLine.mid(0, pos);
+//            qDebug() << "start" << start;
 
-            if (start.endsWith("#") == false)
-            {
-                start.append("#");
-            }
-            start.append("true#\n");
+            start.append("#true#\n");
 //            qDebug() << "uus rivi datassa export setin jalkeen" << start;
             tmp_stream << start;
         }

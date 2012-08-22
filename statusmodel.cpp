@@ -17,6 +17,7 @@ StatusModel::StatusModel(QObject *parent) :
     roles[SelectedRole] = "selected";
     roles[EmptyRole] = "name";
     roles[IsCustomRole] = "custom";
+    roles[LocalizedNameRole] = "localizedName";
     setRoleNames(roles);
 }
 
@@ -49,6 +50,10 @@ QVariant StatusModel::data(const QModelIndex &index, int role) const
     else if (role == IndexRole)
     {
         return index.row();
+    }
+    if (role == LocalizedNameRole)
+    {
+        return item.localizedName();
     }
     else if (role == FinNameRole)
     {

@@ -136,14 +136,50 @@ Page {
         allData += startTimeTf.text + delimiter
         allData += endTimeTf.text + delimiter
         // uusi, town
-        var location = findLocation(locationTf.text)
+//        var location = findLocation(locationTf.text)
+/*
         var town = location.substring(0, location.indexOf(", ") )
         var place = location.substring(location.indexOf(", ")+2 )
         allData += town + delimiter
         allData += place + delimiter
         // uusi, x-coord
+        console.log("location index: " +findLocationIndex(locationTf.text))
+//        allData += addCoords(town, place)
         allData += delimiter
+
         // uusi, y-coord
+//        allData += delimiter
+*/
+        var locationIndex = findLocationIndex(locationTf.text)
+        if (locationIndex < 0) {
+            console.log("location index < 0")
+            var town = locationTf.text.substring(0, locationTf.text.indexOf(", ") )
+            var place = locationTf.text.substring(locationTf.text.indexOf(", ")+2 )
+            allData += town + delimiter
+            allData += place + delimiter
+        }
+        else {
+            var name = locationNameByIndex(locationIndex)
+            if( name == -1 )
+            {
+                console.log("joo, name: " +name)
+                var currentLocation = locationTf.text
+                var ctown = currentLocation.substring(0, currentLocation.indexOf(", ") )
+                var cplace = currentLocation.substring(currentLocation.indexOf(", ")+2 )
+                console.log("testi: " + ctown + "#" + cplace)
+                allData += ctown
+                allData += delimiter
+                allData += cplace
+                allData += delimiter
+            }
+            else {
+                allData += locationNameByIndex(locationIndex)
+                allData += delimiter
+
+            }
+        }
+
+        allData += locationCoordinantesByIndex(locationIndex)
         allData += delimiter
         // uusi, accuracy
         allData += delimiter
@@ -303,14 +339,74 @@ Page {
         return name
     }
 
+    function findLocationIndex(name)
+    {
+        var j = -1
+        console.log("findLocationIndex(name)" + name)
+        var town = name.split(", ",2);
+        console.log("town[0] " +town[0])
+        console.log("town[1] " +town[1])
+        for(var i=0;i<locationModel.rowCount();i++) {
+            // TODO localized names
+            if (currentLanguage == "en") {
+                if(town[0] === locationModel.data(i, 42)) {
+                    if(town[1] === locationModel.data(i, 43)) {
+                        j = i
+                        break;
+                    }
+                }
+            }
+            else if (currentLanguage == "sv") {
+                if(town[0] === locationModel.data(i, 40)) {
+                    if(town[1] === locationModel.data(i, 41)) {
+                        j = i
+                        break;
+                    }
+                }
+            }
+            else {
+                if(town[0] === locationModel.data(i, 35)) {
+                    if(town[1] === locationModel.data(i, 36)) {
+                        j = i
+                        break;
+                    }
+                }
+            }
+
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
+    function locationNameByIndex(index)
+    {
+        if( !locationModel.data(index, 35) || !locationModel.data(index, 36) )
+        {
+            return -1
+        }
+
+        return locationModel.data(index, 35) + "#" + locationModel.data(index, 36)
+    }
+
+    function locationCoordinantesByIndex(index)
+    {
+        if(!locationModel.data(index, 38)) {
+            return "#"
+        }
+
+        var ykjs = locationModel.data(index, 38)
+        var ykj = ykjs.split(":",2);
+        return ykj[1] + "#" + ykj[0]
+    }
+
     function findLocation(name)
     {
         console.log("findLocation(name)" + name)
+        var town = name.split(", ",2);
+        console.log("town[0] " +town[0])
+        console.log("town[1] " +town[1])
         for(var i=0;i<locationModel.rowCount();i++) {
             // TODO localized names
-            var town = name.split(", ",2);
-            console.log("town[0] " +town[0])
-            console.log("town[1] " +town[1])
             if (currentLanguage == "en") {
                 if(town[0] === locationModel.data(i, 42)) {
                     if(town[1] === locationModel.data(i, 43)) {

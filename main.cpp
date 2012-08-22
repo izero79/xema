@@ -66,7 +66,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     QTranslator translator;
     bool ok = translator.load(QString(":/xema_") + locale);
-//   bool ok = translator.load(QString(":/xema_en"));
+//    bool ok = translator.load(QString(":/xema_en"));
     qDebug() << "Translator loaded ok:" << ok;
     if( !ok ) {
         ok = translator.load(QString(":/xema_en_US"));

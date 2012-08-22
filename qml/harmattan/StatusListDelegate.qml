@@ -21,7 +21,8 @@ Component {
             anchors.left: parent.left
             anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
-            text: {
+            text: abbrev + " (" + localizedName + ")"
+            /*{
                 if (currentLanguage == "en") {
                     return abbrev + " (" + engname + ")"
                 }
@@ -32,7 +33,7 @@ Component {
                     return abbrev + " (" + finname + ")"
                 }
 
-            }
+            }*/
             color: "white"
             font.italic: custom ? true : false
         }

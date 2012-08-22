@@ -20,7 +20,8 @@ Component {
             anchors.left: parent.left
             anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
-            text: {
+            text: localizedName + ", " + latinname
+            /* {
                 if (currentLanguage == "en") {
                     return engname + ", " + latinname
                 }
@@ -30,7 +31,7 @@ Component {
                 else {
                     return finname + ", " + latinname
                 }
-            }
+            }*/
 
             color: "white"
             font.italic: custom ? true : false

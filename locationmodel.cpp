@@ -21,6 +21,8 @@ LocationModel::LocationModel(QObject *parent) :
     roles[SwePlaceOnlyRole] = "sweonlyplace";
     roles[IsCustomRole] = "custom";
     roles[FullStringRole] = "fullstring";
+    roles[LocalizedTownRole] = "localizedTown";
+    roles[LocalizedPlaceRole] = "localizedPlace";
     setRoleNames(roles);
 }
 
@@ -54,6 +56,14 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     else if (role == IndexRole)
     {
         return index.row();
+    }
+    else if (role == LocalizedTownRole)
+    {
+        return item.localizedTown();
+    }
+    else if (role == LocalizedPlaceRole)
+    {
+        return item.localizedPlace();
     }
     else if (role == TownRole)
     {

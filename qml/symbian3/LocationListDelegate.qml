@@ -21,7 +21,9 @@ Component {
             anchors.left: parent.left
             anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
-            text: {
+            text: localizedTown + ", " + localizedPlace
+            /*
+            {
                 if (currentLanguage == "en") {
                     return engtown + ", " + engplace
                 }
@@ -32,7 +34,7 @@ Component {
                     return town + ", " + place
                 }
 
-            }
+            }*/
             color: "white"
             font.italic: custom ? true : false
         }
