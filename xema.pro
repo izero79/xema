@@ -1,7 +1,7 @@
 #CONFIG +=debug
 #CONFIG -=release
 CONFIG -=liteVersion
-CONFIG -=forOvi
+CONFIG +=forOvi
 CONFIG -=forUnsinged
 CONFIG -=S603x
 CONFIG -=Symbian1
@@ -20,11 +20,11 @@ DEFINES += USE_MOBILITY
 #DEFINES += ONLYFORIMEI=353391047094061
 DEFINES += ONLYFORIMEI=0
 
-VERSION = 0.2.2
+VERSION = 1.0.0
 
-DEFINES += MAJORVERSION=0
-DEFINES += MINORVERSION=2
-DEFINES += PATCHVERSION=2
+DEFINES += MAJORVERSION=1
+DEFINES += MINORVERSION=0
+DEFINES += PATCHVERSION=0
 
 TARGET = xema
 DEPLOYMENT.display_name = "Xema"
@@ -62,7 +62,41 @@ QML_IMPORT_PATH =
 #DEPLOYMENTFOLDERS += folder_05
 
 symbian{
-TARGET.UID3 = 0xE3CA679E
+
+forOvi{
+    # For symbian signed app
+    # when building signed app, enable define below
+    DEFINES += BUILDFORSIGNED
+
+    # UID for ovi store
+    symbian:TARGET.UID3 = 0x20046EA2
+
+    # needed for network info, but needs signing
+    symbian:TARGET.CAPABILITY += ReadDeviceData
+    symbian:TARGET.CAPABILITY += SwEvent
+    symbian:TARGET.CAPABILITY += ReadUserData
+
+}else{
+    !forUnsigned{
+        # For symbian signed app
+        # when building signed app, enable define below
+        DEFINES += BUILDFORSIGNED
+
+        # UID for symbian signed
+        symbian:TARGET.UID3 = 0x2006AF48
+
+        # needed for network info, but needs signing
+        symbian:TARGET.CAPABILITY += ReadDeviceData
+        symbian:TARGET.CAPABILITY += SwEvent
+        symbian:TARGET.CAPABILITY += ReadUserData
+    }else{
+        # For self signed app:
+        # UID for self signed
+        # A0015538 should be
+        symbian:TARGET.UID3 = 0xE3CA679E
+    }
+}
+
 
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will
