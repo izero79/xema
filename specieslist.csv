@@ -698,7 +698,7 @@ Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENG
 697;Kertut;Warblers;Sylviidae;Iberiantiltaltti;Iberisk gransångare;PHYIBE;Phylloscopus ibericus;A;Iberian Chiffchaff;Sångare;
 698;Kertut;Warblers;Sylviidae;Tiltaltti;Gransångare;PHYCOL;Phylloscopus collybita;A;Common Chiffchaff;Sångare;
 699;Kertut;Warblers;Sylviidae;Tiltaltti (hily/hihku -ääninen);Gransångare (hily-läte);PHYCOLHILY;Phylloscopus collybita hily;R;Common Chiffchaff (calling hily);Sångare;
-700;Kertut;Warblers;Sylviidae;Tiltaltti (hii -ääninen);Gransångare (hii-läte);PHYCOLHII;Phylloscopus collybita hii;R;Common Chiffchaff (calling hii);Sångare;
+700;Kertut;Warblers;Sylviidae;Tiltaltti (hii -ääninen);Gransångare (hii-läte);PHYCOLHIIT;Phylloscopus collybita hii;R;Common Chiffchaff (calling hii);Sångare;
 701;Kertut;Warblers;Sylviidae;Tiltaltti (alalaji collybita);Gransångare (rasen collybita);PHYCOLCOL;Phylloscopus collybita collybita;R;Common Chiffchaff (subspecies collybita);Sångare;
 702;Kertut;Warblers;Sylviidae;Idäntiltaltti;Gransångare (rasen tristis);PHYCOLTRI;Phylloscopus collybita tristis;R;Common Chiffchaff (subspecies tristis);Sångare;
 703;Kertut;Warblers;Sylviidae;Tiltaltti / pajulintu;Gransångare / lövsångare;PHYCOL/PHYLUS;Phylloscopus collybita/trochilus;S;Common Chiffchaff / Willow Warbler;Sångare;

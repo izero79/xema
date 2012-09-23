@@ -43,7 +43,7 @@ Page {
         ToolButton {
             flat: true
 //            iconSource: "toolbar-filter"
-            text: qsTr("import")
+            text: qsTr("Import")
             visible: historyListView.model == historyDateModel
             onClicked: {
                 window.importData()

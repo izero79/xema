@@ -869,7 +869,7 @@ Page {
                     TextArea {
                         id: regPeopleTa
                         height: 100
-                        placeholderText: qsTr("Registered")
+                        placeholderText: qsTr("Observers")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0

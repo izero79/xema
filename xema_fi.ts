@@ -90,10 +90,6 @@
         <translation>Tuo</translation>
     </message>
     <message>
-        <source>import</source>
-        <translation>Tuo</translation>
-    </message>
-    <message>
         <source>Choose delimiter to be used</source>
         <translation>Valitse erotinmerkki</translation>
     </message>
@@ -293,10 +289,6 @@
         <translation>Havainnoijat</translation>
     </message>
     <message>
-        <source>Registered</source>
-        <translation>Rekisteröityneet</translation>
-    </message>
-    <message>
         <source>Weather</source>
         <translation>Sää</translation>
     </message>
@@ -459,7 +451,7 @@
     <name>StatusEditPage</name>
     <message>
         <source>Edit statuses</source>
-        <translation>Muokkaa tiloja</translation>
+        <translation>Muokkaa tilaa</translation>
     </message>
     <message>
         <source>Finnish name</source>
