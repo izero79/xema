@@ -929,7 +929,7 @@ QString ModelDataLoader::loadObservation(qlonglong id)
     }
     tiedosto.close();
     QString lineId = obsLine.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID);
-    if (lineId == "Id" || lineId.isEmpty() == true)
+    if (lineId == "Id" || lineId == "Rivi-ID" || lineId.isEmpty() == true)
     {
 #ifdef PERFTEST
     qDebug("loadObservation Time elapsed: %d ms", t.elapsed());

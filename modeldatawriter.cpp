@@ -365,7 +365,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
     tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
-    QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää\n");
+    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää\n");
     if( delimiter != "#") {
         header.replace("#",";");
     }
@@ -373,7 +373,8 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
     while (instriimi.atEnd() == false)
     {
         obsLine = instriimi.readLine();
-        if (obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Id")
+        if (obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Id" ||
+            obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Rivi-ID")
         {
             tmp_stream << obsLine;
             tmp_stream << "\n";
@@ -910,6 +911,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
             }
 
             if (line.section(delimiter, XemaEnums::TIIRA_ID, XemaEnums::TIIRA_ID) != "Id" &&
+                line.section(delimiter, XemaEnums::TIIRA_ID, XemaEnums::TIIRA_ID) != "Rivi-ID" &&
                 line.section(delimiter, XemaEnums::TIIRA_ID, XemaEnums::TIIRA_ID) != "Havainto id" )
             {
                 importstream.seek(0);
