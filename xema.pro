@@ -1,8 +1,8 @@
 #CONFIG +=debug
 #CONFIG -=release
 CONFIG -=liteVersion
-CONFIG +=forOvi
-CONFIG -=forUnsinged
+CONFIG -=forOvi
+CONFIG -=forUnsigned
 CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
@@ -93,7 +93,7 @@ forOvi{
         # For self signed app:
         # UID for self signed
         # A0015538 should be
-        symbian:TARGET.UID3 = 0xE3CA679E
+        symbian:TARGET.UID3 = 0xA0015538
     }
 }
 
