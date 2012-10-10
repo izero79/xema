@@ -17,6 +17,7 @@ class ModelDataLoader;
 class AgeModel;
 class SexModel;
 class DressModel;
+class CoordinateConverter;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -98,6 +99,7 @@ private:
     Settings *mSettings;
     ModelDataWriter *mDataWriter;
     ModelDataLoader *mDataLoader;
+    CoordinateConverter *mCoordinateConverter;
 };
 
 #endif // QMLWINDOW_H

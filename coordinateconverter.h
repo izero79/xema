@@ -11,6 +11,8 @@ public:
     explicit CoordinateConverter(QObject *parent = 0);
     QPair<double,double> wgsToykj(const double &xcoord, const double &ycoord);
     QPair<double,double> ykjTowgs(double xcoord, double ycoord);
+    QString wgsToYkjString(const QString &wgsString);
+    QString ykjToWgsString(const QString &ykjString);
 
 signals:
     

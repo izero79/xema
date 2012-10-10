@@ -71,3 +71,11 @@ QPair<double,double> CoordinateConverter::ykjTowgs(double xcoord, double ycoord)
     result.second = newY;
     return result;
 }
+
+QString wgsToYkjString(const QString &wgsString) {
+    return wgsString;
+}
+
+QString ykjToWgsString(const QString &ykjString) {
+    return ykjString;
+}

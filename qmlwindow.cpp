@@ -24,6 +24,7 @@
 #include "agemodel.h"
 #include "dressmodel.h"
 #include "sexmodel.h"
+#include "coordinateconverter.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -48,7 +49,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mFilteredAtlasModel(0),
     mSettings(0),
     mDataWriter(0),
-    mDataLoader(0)
+    mDataLoader(0),
+    mCoordinateConverter(0)
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView = new QDeclarativeView(this);
@@ -87,6 +89,10 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/symbian3/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
+
+    mCoordinateConverter = new CoordinateConverter(this);
+    mRootContext->setContextProperty("CoordinateConverter", mCoordinateConverter);
+
 }
 
 QMLWindow::~QMLWindow()
