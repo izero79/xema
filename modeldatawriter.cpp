@@ -199,6 +199,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         line.append(";");
         if (ykj.isEmpty() == true && wgs.isEmpty() == false)
         {
+            ykj = mCoordinates->wgsToYkjString(wgs);/*
             QString x = wgs.section(":", 0, 0);
             QString y = wgs.section(":", 1, 1);
             double dx = x.toDouble();
@@ -217,11 +218,12 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
             ykjY.setNum(newY);
             ykj = ykjX;
             ykj.append(":");
-            ykj.append(ykjY);
+            ykj.append(ykjY);*/
         }
 
         if (ykj.isEmpty() == false && wgs.isEmpty() == true)
         {
+            wgs = mCoordinates->ykjToWgsString(ykj);/*
             QString x = ykj.section(":", 0, 0);
             QString y = ykj.section(":", 1, 1);
             double dx = x.toDouble();
@@ -238,7 +240,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
             wgsY.setNum(wgsy,'g',6);
             wgs = wgsX;
             wgs.append(":");
-            wgs.append(wgsY);
+            wgs.append(wgsY);*/
         }
 
         line.append(wgs);

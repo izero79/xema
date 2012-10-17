@@ -10,6 +10,9 @@ Location::Location() :
 Location::Location(const QString &town, const QString &place, const QString &wgsCoordinate, const QString &ykjCoordinate) :
     mTown(town),
     mPlace(place),
+    mFinCountry("Suomi"),
+    mEngCountry("Finland"),
+    mSweCountry("Finland"),
     mYKJCoordinate(ykjCoordinate),
     mWGSCoordinate(wgsCoordinate),
     mCustom(false)
@@ -27,6 +30,11 @@ void Location::setPlace(const QString &name)
     mPlace = name;
 }
 
+void Location::setFinCountry(const QString &country)
+{
+    mFinCountry = country;
+}
+
 void Location::setEngTown(const QString &name)
 {
     mEngTown = name;
@@ -37,6 +45,11 @@ void Location::setEngPlace(const QString &name)
     mEngPlace = name;
 }
 
+void Location::setEngCountry(const QString &country)
+{
+    mEngCountry = country;
+}
+
 void Location::setSweTown(const QString &name)
 {
     mSweTown = name;
@@ -45,6 +58,11 @@ void Location::setSweTown(const QString &name)
 void Location::setSwePlace(const QString &name)
 {
     mSwePlace = name;
+}
+
+void Location::setSweCountry(const QString &country)
+{
+    mSweCountry = country;
 }
 
 void Location::setYKJCoordinate(const QString &ykj)
@@ -87,6 +105,18 @@ QString Location::localizedPlace() const
         return place();
 }
 
+QString Location::localizedCountry() const
+{
+    QString lang = Settings::lang();
+    if (lang == "sv") {
+        return sweCountry();
+    } else if (lang == "en") {
+        return engCountry();
+    }
+    else
+        return finCountry();
+}
+
 QString Location::town() const
 {
     return mTown;
@@ -95,6 +125,11 @@ QString Location::town() const
 QString Location::place() const
 {
     return mPlace;
+}
+
+QString Location::finCountry() const
+{
+    return mFinCountry;
 }
 
 QString Location::engTown(bool allowEmpty) const
@@ -119,6 +154,17 @@ QString Location::engPlace(bool allowEmpty) const
     return mPlace;
 }
 
+QString Location::engCountry(bool allowEmpty) const
+{
+    if (mEngCountry.isEmpty() == false) {
+        return mEngCountry;
+    }
+    else if (allowEmpty) {
+        return mEngCountry;
+    }
+    return mFinCountry;
+}
+
 QString Location::sweTown(bool allowEmpty) const
 {
     if (mSweTown.isEmpty() == false) {
@@ -139,6 +185,17 @@ QString Location::swePlace(bool allowEmpty) const
         return mSwePlace;
     }
     return mPlace;
+}
+
+QString Location::sweCountry(bool allowEmpty) const
+{
+    if (mSweCountry.isEmpty() == false) {
+        return mSweCountry;
+    }
+    else if (allowEmpty) {
+        return mSweCountry;
+    }
+    return mFinCountry;
 }
 
 QString Location::ykjCoordinate() const

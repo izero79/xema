@@ -293,6 +293,7 @@ Page {
 
         TextField {
             id: ykjTf
+            property bool settingValue: false
             placeholderText: qsTr("YKJ coordinates")
             text: locationModel.data(currentIndex, 38)
             anchors.left: parent.left
@@ -301,12 +302,20 @@ Page {
             anchors.topMargin: 8
             width: parent.width / 2
             onTextChanged: {
-                locationEdited = true
+                if (ykjTf.settingValue == false) {
+                    locationEdited = true
+                    console.log("ykjTf: " + ykjTf.text)
+                    var wgsString = CoordinateConverter.ykjToWgsString(ykjTf.text)
+                    wgsTf.settingValue = true
+                    wgsTf.text = wgsString
+                    wgsTf.settingValue = false
+                }
             }
         }
 
         TextField {
             id: wgsTf
+            property bool settingValue: false
             placeholderText: qsTr("WGS coordinates")
             text: locationModel.data(currentIndex, 39)
             anchors.left: parent.left
@@ -315,7 +324,14 @@ Page {
             anchors.topMargin: 8
             width: parent.width / 2
             onTextChanged: {
-                locationEdited = true
+                if (wgsTf.settingValue == false) {
+                    locationEdited = true
+                    console.log("wgsTf: " + wgsTf.text)
+                    var ykjString = CoordinateConverter.wgsToYkjString(wgsTf.text)
+                    ykjTf.settingValue = true
+                    ykjTf.text = ykjString
+                    ykjTf.settingValue = true
+                }
             }
         }
 

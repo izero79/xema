@@ -2,6 +2,7 @@
 #include "ykjetrs.h"
 #include "gausskrueger.h"
 #include <QDebug>
+#include <QRegExp>
 
 /*
  * Gauss-Krüger-projektiomuunnosobjektit
@@ -51,8 +52,13 @@ QPair<double,double> CoordinateConverter::wgsToykj(const double &xcoord, const d
     int rc = 0;
     rc=etrstm35fin_ykj(newX, newY, &newX, &newY);
 
-    result.first = newX;
-    result.second = newY;
+    if (newX < 0 || newY < 0) {
+        result.first = 0;
+        result.second = 0;
+    } else {
+        result.first = newX;
+        result.second = newY;
+    }
     return result;
 }
 
@@ -67,15 +73,93 @@ QPair<double,double> CoordinateConverter::ykjTowgs(double xcoord, double ycoord)
     gk_rectangulartospherical(&etrs_gk, newX, newY, &newX, &newY);
     newX/=DEG, newY/=DEG;
 
-    result.first = newX;
-    result.second = newY;
+    if (newX < 0 || newY < 0) {
+        result.first = 0;
+        result.second = 0;
+    } else {
+        result.first = newX;
+        result.second = newY;
+    }
     return result;
 }
 
-QString wgsToYkjString(const QString &wgsString) {
-    return wgsString;
+QString CoordinateConverter::wgsToYkjString(const QString &wgsString) {
+    if (wgsString.contains(":") == false || wgsString.length() < 3) {
+        return QString();
+    }
+
+    qDebug() << Q_FUNC_INFO << wgsString;
+    QString tmpString = wgsString;
+    tmpString.remove(":");
+    tmpString = tmpString.remove(".");
+    QRegExp re("\\-{0,1}\\d*\\-{0,1}\\d*");  // a digit (\d), zero or more times (*)
+    if (re.exactMatch(tmpString) == false) {
+        return QString();
+    }
+
+    QString x = wgsString.section(":", 0, 0);
+    QString y = wgsString.section(":", 1, 1);
+    double dx = x.toDouble();
+    double dy = y.toDouble();
+    if (dx < -90 || dx > 90 || dy < -180 || dy > 180) {
+        return QString();
+    }
+    double ykjx = 0;
+    double ykjy = 0;
+    QPair<double,double> newCoord;
+    newCoord = wgsToykj(dx, dy);
+    ykjx = newCoord.first;
+    ykjy = newCoord.second;
+    if (ykjx == 0 || ykjy == 0) {
+        return QString();
+    }
+    long newX = ykjx;
+    long newY = ykjy;
+    QString ykjX;
+    ykjX.setNum(newX);
+    QString ykjY;
+    ykjY.setNum(newY);
+    QString ykj = ykjX;
+    ykj.append(":");
+    ykj.append(ykjY);
+    return ykj;
+
 }
 
-QString ykjToWgsString(const QString &ykjString) {
-    return ykjString;
+QString CoordinateConverter::ykjToWgsString(const QString &ykjString) {
+    if (ykjString.contains(":") == false || ykjString.length() < 3) {
+        return QString();
+    }
+    qDebug() << Q_FUNC_INFO << ykjString;
+    QString tmpString = ykjString;
+    tmpString.remove(":");
+    QRegExp re("\\d*");  // a digit (\d), zero or more times (*)
+    if (re.exactMatch(tmpString) == false) {
+       return QString();
+    }
+
+    QString x = ykjString.section(":", 0, 0);
+    QString y = ykjString.section(":", 1, 1);
+    double dx = x.toDouble();
+    double dy = y.toDouble();
+    if (dx < 0 || dy < 0) {
+        return QString();
+    }
+    double wgsx = 0;
+    double wgsy = 0;
+    QPair<double,double> newCoord;
+    newCoord = ykjTowgs(dx, dy);
+    wgsx = newCoord.first;
+    wgsy = newCoord.second;
+    if (wgsx == 0 || wgsy == 0) {
+        return QString();
+    }
+    QString wgsX;
+    wgsX.setNum(wgsx,'g',6);
+    QString wgsY;
+    wgsY.setNum(wgsy,'g',6);
+    QString wgs = wgsX;
+    wgs.append(":");
+    wgs.append(wgsY);
+    return wgs;
 }
