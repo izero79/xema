@@ -744,6 +744,10 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
         if (locations->getItem(i).town() == town && locations->getItem(i).place() == place)
         {
             QString coordinate = locations->getItem(i).wgsCoordinate();
+            //qDebug() << "export paikka" << coordinate;
+            if (coordinate == "" || coordinate == "0:0") {
+                continue;
+            }
             QString x = coordinate.section(":", 0, 0);
             QString y = coordinate.section(":", 1, 1);
             double dx = x.toDouble();
