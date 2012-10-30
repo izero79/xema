@@ -1,0 +1,9 @@
+1.0.1
+Koordinaattimuunnos YKJ<->WGS tapahtuu samantien paikkaa muokatessa
+Selv‰sti virheellisi‰ koordinaatteja ei vied‰ csv-tiedostoon
+lajilistaan korjaus: hii-‰‰ninen Tiltaltti PHYCOLHIIT (ei PHYCOLHII)
+csv-tiedostossa Id sarake vaihdettu Rivi-ID:ksi Tiiraa varten
+
+Korjaus lajilistaan.
+Parannuksia koordinaattien k‰sittelyihin.
+Korjauksia havaintojen vientiin.
