@@ -91,7 +91,7 @@ Page {
 
     function newObsWithData(date, place, species)
     {
-        pageStack.pop()
+        //pageStack.pop()
         window.showObsPage(false)
         window.newObsWithData(date, place, species)
     }
