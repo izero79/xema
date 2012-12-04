@@ -257,6 +257,7 @@ Page {
             anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
+            inputMethodHints: Qt.ImhNoPredictiveText
             onTextChanged: {
                 //console.log("teksti muuttuu: " + text)
                 historyListView.model.filter(text)
