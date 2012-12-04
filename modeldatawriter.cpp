@@ -446,7 +446,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int lRowCount = lModel->rowCount();
 
-    outstriimi << "kunta;paikka;wgs;ykj;ort_sv;plats_sv;town_en;place_en\n";
+    outstriimi << "town_fi;place_fi;wgs;ykj;town_sv;place_sv;town_en;place_en;country_fi;country_sv;country_en\n";
 
     for( int i = 0; i < lRowCount; i++ ) {
         if( lModel->getItem(i).custom() == true ) {
@@ -470,7 +470,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int pRowCount = pModel->rowCount();
 
-    outstriimi2 << "firstname;surname;registered;default\n";
+    outstriimi2 << "firstname;lastname;registered;default\n";
 
     for( int i = 0; i < pRowCount; i++ ) {
         outstriimi2 << pModel->getItem(i).firstName() << ";";
@@ -498,7 +498,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int bRowCount = bModel->rowCount();
 
-    outstriimi3 << "Id;ryhmä;group_en;group_lat;laji;art;abbrev;latin;category;species;grupp_sv\n";
+    outstriimi3 << "id;group_fi;group_en;group_lat;name_fi;name_sv;abbrev_lat;name_lat;category;name_en;group_sv\n";
 
     for( int i = 0; i < bRowCount; i++ ) {
         if( bModel->getItem(i).custom() == true ) {
@@ -526,7 +526,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int sRowCount = sModel->rowCount();
 
-    outstriimi4 << "abbrev;tila;status_sv;status_en\n";
+    outstriimi4 << "abbrev;status_fi;status_sv;status_en\n";
 
     for( int i = 0; i < sRowCount; i++ ) {
         if( sModel->getItem(i).custom() == true ) {
@@ -1330,7 +1330,8 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         while (importstream.atEnd() == false) {
             QString locationLine;
             locationLine = importstream.readLine();
-            if(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN) == "kunta") {
+            QString firstSection = locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN);
+            if (firstSection == "kunta" || firstSection == "town_fi" ) {
                 continue;
             }
 
@@ -1389,7 +1390,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
     // PERSONS
 
     filters.clear();
-    filters << "*person*.csv" << "*person*.txt" << "*people*.csv" << "*people*.txt";
+    filters << "*person*.csv" << "*person*.txt" << "*people*.csv" << "*people*.txt" << "*observer*.csv" << "*observer*.txt";
     importFiles.clear();
 
     importFiles = dir.entryList(filters,QDir::Files);
@@ -1500,11 +1501,12 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         while (importstream.atEnd() == false) {
             QString importLine;
             importLine = importstream.readLine();
+            QString firstSection = importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID);
 
-            if(importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID) == "Id") {
+            if( firstSection == "Id" || firstSection == "id" ) {
                 continue;
             }
-
+            
             Bird bird(importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID).toInt(),
                        importLine.section(';', XemaEnums::BIRD_FIN_GROUP, XemaEnums::BIRD_FIN_GROUP),
                        importLine.section(';', XemaEnums::BIRD_SWE_GROUP, XemaEnums::BIRD_SWE_GROUP),
