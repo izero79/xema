@@ -214,7 +214,7 @@ QString Location::wgsCoordinateForFilter() const
     {
         QString latitude = mWGSCoordinate.section(':',0, 0);
         QString longitude = mWGSCoordinate.section(':',1, 1);
-        latitude = latitude.left(4);
+        latitude = latitude.left(4); // TODO korjaa tama
         longitude = longitude.left(4);
         return QString(latitude+":"+longitude);
     }

@@ -30,8 +30,14 @@ public:
         EngPlaceOnlyRole, // 47
         IsCustomRole,
         FullStringRole,
-        LocalizedTownRole,
+        LocalizedTownRole, // 50
         LocalizedPlaceRole,
+        CountryRole,
+        SweCountryRole,
+        EngCountryRole,
+        LocalizedCountryRole, // 55
+        SweCountryOnlyRole,
+        EngCountryOnlyRole,
         SortingNameRole = Qt::UserRole + 100
     };
 

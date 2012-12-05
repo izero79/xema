@@ -23,6 +23,12 @@ LocationModel::LocationModel(QObject *parent) :
     roles[FullStringRole] = "fullstring";
     roles[LocalizedTownRole] = "localizedTown";
     roles[LocalizedPlaceRole] = "localizedPlace";
+    roles[CountryRole] = "country";
+    roles[SweCountryRole] = "swecountry";
+    roles[EngCountryRole] = "engcountry";
+    roles[LocalizedCountryRole] = "localizedCountry";
+    roles[EngCountryOnlyRole] = "engonlycountry";
+    roles[SweCountryOnlyRole] = "sweonlycountry";
     setRoleNames(roles);
 }
 
@@ -50,8 +56,8 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.localizedTown() + ", " +
-                        item.localizedPlace() + ", " + item.wgsCoordinateForFilter());
+        return QString(item.localizedPlace() + ", " +
+                        item.localizedTown() + ", " + item.localizedCountry() + ", " + item.wgsCoordinateForFilter());
     }
     else if (role == IndexRole)
     {
@@ -65,6 +71,10 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     {
         return item.localizedPlace();
     }
+    else if (role == LocalizedCountryRole)
+    {
+        return item.localizedCountry();
+    }
     else if (role == TownRole)
     {
         return item.town();
@@ -72,6 +82,18 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     else if (role == PlaceRole)
     {
         return item.place();
+    }
+    else if (role == CountryRole)
+    {
+        return item.finCountry();
+    }
+    else if (role == SweCountryRole)
+    {
+        return item.sweCountry();
+    }
+    else if (role == EngCountryRole)
+    {
+        return item.engCountry();
     }
     else if (role == EngTownRole)
     {
@@ -125,17 +147,25 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
     {
         return item.town() + ", " + item.place();
     }
+    else if (role == EngCountryOnlyRole)
+    {
+        return item.engCountry(true);
+    }
+    else if (role == SweCountryOnlyRole)
+    {
+        return item.sweCountry(true);
+    }
     else if (role == SortingNameRole)
     {
         QString lang = Settings::lang();
         if (lang == "en") {
-            return item.engTown(false) + ", " + item.engPlace(false);
+            return item.engCountry(false) + ", " + item.engTown(false) + ", " + item.engPlace(false);
         }
         else if (lang == "sv") {
-            return item.sweTown(false) + ", " + item.swePlace(false);
+            return item.sweCountry(false) + ", " + item.sweTown(false) + ", " + item.swePlace(false);
         }
         else {
-            return item.town() + ", " + item.place();
+            return item.finCountry() + ", " + item.town() + ", " + item.place();
         }
     }
     return QVariant();
@@ -223,6 +253,9 @@ bool LocationModel::setData(const QModelIndex &index, const QVariant &value, int
     case PlaceRole:
         tmp.setPlace(value.toString());
         break;
+    case CountryRole:
+        tmp.setFinCountry(value.toString());
+        break;
     case YkjCoordinateRole:
         tmp.setYKJCoordinate(value.toString());
         break;
@@ -244,6 +277,14 @@ bool LocationModel::setData(const QModelIndex &index, const QVariant &value, int
     case EngPlaceRole:
     case EngPlaceOnlyRole:
         tmp.setEngPlace(value.toString());
+        break;
+    case SweCountryRole:
+    case SweCountryOnlyRole:
+        tmp.setSweCountry(value.toString());
+        break;
+    case EngCountryRole:
+    case EngCountryOnlyRole:
+        tmp.setEngCountry(value.toString());
         break;
     case IsCustomRole:
         tmp.setCustom(value.toBool());

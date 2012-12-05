@@ -187,7 +187,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;muokattu\n");
+    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;maa:maa_swe;maa_eng;muokattu\n");
     for(int i = 0; i < rows; i++)
     {
         QString wgs = model->data(model->index(i), LocationModel::WgsCoordinateRole).toString();
@@ -254,6 +254,12 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         line.append(model->getItem(i).engTown(true));
         line.append(";");
         line.append(model->getItem(i).engPlace(true));
+        line.append(";");
+        line.append(model->getItem(i).finCountry());
+        line.append(";");
+        line.append(model->getItem(i).sweCountry(true));
+        line.append(";");
+        line.append(model->getItem(i).engCountry(true));
         line.append(";");
         if(model->getItem(i).custom()) {
             line.append("true");
@@ -457,7 +463,10 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
             outstriimi << lModel->getItem(i).sweTown(true) << ";";
             outstriimi << lModel->getItem(i).swePlace(true) << ";";
             outstriimi << lModel->getItem(i).engTown(true) << ";";
-            outstriimi << lModel->getItem(i).engPlace(true) << "\n";
+            outstriimi << lModel->getItem(i).engPlace(true) << ";";
+            outstriimi << lModel->getItem(i).finCountry() << ";";
+            outstriimi << lModel->getItem(i).sweCountry(true) << ";";
+            outstriimi << lModel->getItem(i).engCountry(true) << "\n";
         }
     }
 
@@ -1311,15 +1320,18 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
+        int delimCount = 0;
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
-            if (line.count(delimiter) != 7) {
-//                qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
+            delimCount = line.count(delimiter);
+            if (delimCount != 7 && delimCount != 8 && delimCount != 10 && delimCount != 11) {
+                qDebug() << "SETTING DELIMITER TO ;" << line.count(";");
                 delimiter = ";";
+                delimCount = line.count(delimiter);
             }
-            if (line.count(delimiter) != 7) {
-//                qDebug() << "INVALID LOCATION FILE";
+            if (delimCount != 7 && delimCount != 8 && delimCount != 10 && delimCount != 11) {
+                qDebug() << "INVALID LOCATION FILE";
                 if (!(importError&XemaEnums::IMPORT_LOCATIONERROR)) {
                     importError += XemaEnums::IMPORT_LOCATIONERROR;
                 }
@@ -1343,6 +1355,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
             location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
             location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
+            if( delimCount > 9) {
+                location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
+                location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
+                location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
+            }
             location.setCustom(true);
 
             int rows = locations->rowCount();

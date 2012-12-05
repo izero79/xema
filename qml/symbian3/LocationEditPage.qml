@@ -40,6 +40,9 @@ Page {
                         locationModel.setData(rows, ykjTf.text, 38)
                         locationModel.setData(rows, wgsTf.text, 39)
                         locationModel.setData(rows, true, 48)
+                        locationModel.setData(rows, countryTf.text, 52)
+                        locationModel.setData(rows, sweCountryTf.text, 56)
+                        locationModel.setData(rows, engCountryTf.text, 57)
                     }
                     else
                     {
@@ -52,16 +55,19 @@ Page {
                         locationModel.setData(currentIndex, ykjTf.text, 38)
                         locationModel.setData(currentIndex, wgsTf.text, 39)
                         locationModel.setData(currentIndex, true, 48)
+                        locationModel.setData(currentIndex, countryTf.text, 52)
+                        locationModel.setData(currentIndex, sweCountryTf.text, 56)
+                        locationModel.setData(currentIndex, engCountryTf.text, 57)
                     }
                     window.saveLocations()
                     if ( currentLanguage == "sv") {
-                        window.newLocationCreated( sweTownTf.text + ", " + sweLocationTf.text )
+                        window.newLocationCreated( sweLocationTf.text + ", " + sweTownTf.text )
                     }
                     else if ( currentLanguage == "en") {
-                        window.newLocationCreated( engTownTf.text + ", " + engLocationTf.text )
+                        window.newLocationCreated( engLocationTf.text + ", " + engTownTf.text )
                     }
                     else {
-                        window.newLocationCreated( townTf.text + ", " + locationTf.text )
+                        window.newLocationCreated( locationTf.text + ", " + townTf.text )
                     }
 
                 }
@@ -124,6 +130,9 @@ Page {
         engLocationTf.text = locationModel.data(currentIndex, 47)
         ykjTf.text = locationModel.data(currentIndex, 38)
         wgsTf.text = locationModel.data(currentIndex, 39)
+        countryTf.text = locationModel.data(currentIndex, 52)
+        sweCountryTf.text = locationModel.data(currentIndex, 56)
+        engCountryTf.text = locationModel.data(currentIndex, 57)
     }
 
     Flickable {
@@ -194,7 +203,7 @@ Page {
             id: townTf
             width: 240
             height: 50
-            placeholderText: qsTr("Town")
+            placeholderText: qsTr("Town in finnish")
             text: locationModel.data(currentIndex, 35)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -211,11 +220,28 @@ Page {
             id: locationTf
             width: 240
             height: 50
-            placeholderText: qsTr("Location")
+            placeholderText: qsTr("Location in finnish")
             text: locationModel.data(currentIndex, 36)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: townTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+        TextField {
+            id: countryTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Country in finnish")
+            text: locationModel.data(currentIndex, 52)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: locationTf.bottom
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -232,7 +258,7 @@ Page {
             text: locationModel.data(currentIndex, 44)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: locationTf.bottom
+            anchors.top: countryTf.bottom
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -259,6 +285,23 @@ Page {
         }
 
         TextField {
+            id: sweCountryTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Country in swedish")
+            text: locationModel.data(currentIndex, 56)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: sweLocationTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+        TextField {
             id: engTownTf
             width: 240
             height: 50
@@ -266,7 +309,7 @@ Page {
             text: locationModel.data(currentIndex, 46)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: sweLocationTf.bottom
+            anchors.top: sweCountryTf.bottom
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -292,6 +335,22 @@ Page {
             }
         }
 
+        TextField {
+            id: engCountryTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Country in english")
+            text: locationModel.data(currentIndex, 57)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: engLocationTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
 
         TextField {
             id: ykjTf
@@ -300,7 +359,7 @@ Page {
             text: locationModel.data(currentIndex, 38)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: engLocationTf.bottom
+            anchors.top: engCountryTf.bottom
             anchors.topMargin: 8
             width: parent.width / 2
             onTextChanged: {

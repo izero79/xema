@@ -5,7 +5,7 @@ Component {
     Item {
         id: myTestDelegate
         width: parent.width
-        height: 60
+        height: 80
         Rectangle {
             id: background
             anchors.fill: parent
@@ -17,11 +17,11 @@ Component {
             id: delegateTitle
             anchors.right: parent.right
             anchors.top: parent.top
-            anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.leftMargin: 5
             verticalAlignment: Text.AlignVCenter
-            text: localizedTown + ", " + localizedPlace
+            height: 30
+            text: localizedPlace
             /*
             {
                 if (currentLanguage == "en") {
@@ -36,6 +36,20 @@ Component {
 
             }*/
             color: "white"
+            font.italic: custom ? true : false
+        }
+        Label {
+            id: delegateSubTitle
+            anchors.right: parent.right
+            anchors.top: delegateTitle.bottom
+            height: 30
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            verticalAlignment: Text.AlignVCenter
+            text: localizedTown + ", " + localizedCountry
+            color: "white"
+            elide: Text.ElideRight
+            font.pixelSize: delegateTitle.font.pixelSize - 2
             font.italic: custom ? true : false
         }
 

@@ -40,6 +40,9 @@ public:
         LOCATION_SWEPLACE,
         LOCATION_ENGTOWN,
         LOCATION_ENGPLACE,
+        LOCATION_COUNTRY,
+        LOCATION_SWECOUNTRY,
+        LOCATION_ENGCOUNTRY,
         LOCATION_CUSTOM
     };
     enum personFields {

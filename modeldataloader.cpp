@@ -192,6 +192,7 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
     {
         QString locationLine;
         locationLine = striimi.readLine();
+        int delimCount = locationLine.count(";");
         Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
                           locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                           locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
@@ -200,9 +201,20 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
         location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
         location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
         location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
-        if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
-            location.setCustom(true);
+        if( delimCount > 9) {
+            location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
+            location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
+            location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
+            if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
+                location.setCustom(true);
+            }
+        } else {
+            if(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
+                location.setCustom(true);
+            }
+
         }
+
         model->addItem(location);
     }
 }
@@ -263,8 +275,16 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
     {
         QString locationLine;
         locationLine = striimi.readLine();
-        if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) != "true") {
-            continue;
+        int delimCount = locationLine.count(";");
+        if( delimCount > 9) {
+            if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
+                continue;
+            }
+        } else {
+            if(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
+                continue;
+            }
+
         }
 
         locationLine = striimi.readLine();
@@ -276,9 +296,20 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
         location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
         location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
         location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
-        if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
-            location.setCustom(true);
+        if( delimCount > 9) {
+            location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
+            location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
+            location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
+            if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
+                location.setCustom(true);
+            }
+        } else {
+            if(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
+                location.setCustom(true);
+            }
+
         }
+
         model->addItem(location);
     }
 }
