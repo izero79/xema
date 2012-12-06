@@ -108,7 +108,7 @@ Item {
         id: countTf
         property int headerHeight: 0
         height: 50
-        placeholderText: qsTr("Count")
+        placeholderText: qsTr("Individuals *")
         text: ""
         anchors.top: parent.top
         anchors.topMargin: 8

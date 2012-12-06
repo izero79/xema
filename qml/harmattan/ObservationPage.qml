@@ -135,21 +135,7 @@ Page {
         allData += stopDateTf.text + delimiter
         allData += startTimeTf.text + delimiter
         allData += endTimeTf.text + delimiter
-        // uusi, town
-//        var location = findLocation(locationTf.text)
-/*
-        var town = location.substring(0, location.indexOf(", ") )
-        var place = location.substring(location.indexOf(", ")+2 )
-        allData += town + delimiter
-        allData += place + delimiter
-        // uusi, x-coord
-        console.log("location index: " +findLocationIndex(locationTf.text))
-//        allData += addCoords(town, place)
-        allData += delimiter
 
-        // uusi, y-coord
-//        allData += delimiter
-*/
         var locationIndex = findLocationIndex(locationTf.text)
         if (locationIndex < 0) {
             console.log("location index < 0")
@@ -226,6 +212,7 @@ Page {
 
         allData += weatherTa.text
         allData += delimiter
+        // TODO maa kentta
         allData += exportedChkBox.checked
         allData += delimiter
 
@@ -775,7 +762,7 @@ Page {
                         id: startDateTf
                         width: 160
                         height: 50
-                        placeholderText: "0.0.0000"
+                        placeholderText: "0.0.0000 *"
                         text: ""
                         inputMethodHints: Qt.ImhPreferNumbers
                         anchors.top: parent.top
@@ -869,7 +856,7 @@ Page {
                     TextArea {
                         id: regPeopleTa
                         height: 100
-                        placeholderText: qsTr("Observers")
+                        placeholderText: qsTr("Observers *")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -1059,7 +1046,7 @@ Page {
                 }
 
                 Item {
-                    id: item1
+                    id: locationItem
                     width: parent.width
                     height: 50
                     anchors.right: parent.right
@@ -1072,7 +1059,7 @@ Page {
                     TextField {
                         id: locationTf
                         height: 50
-                        placeholderText: qsTr("Location")
+                        placeholderText: qsTr("Location *")
                         text: ""
                         anchors.top: parent.top
                         anchors.topMargin: 0
@@ -1090,6 +1077,74 @@ Page {
                         validator: RegExpValidator{ regExp: /.{1,}/ }
                     }
                 }
+
+                Label {
+                    id: locationOfBirdText
+                    color: "#ffffff"
+                    text: qsTr("Location of bird")
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: locationItem.bottom
+                    anchors.topMargin: 8
+                    font.pixelSize: 18
+                }
+
+                Item {
+                    id: birdLocationItem
+                    width: parent.width
+                    height: 108
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: locationOfBirdText.bottom
+                    anchors.topMargin: 8
+
+                    TextField {
+                        id: birdLocationTf
+                        height: 50
+                        placeholderText: qsTr("Coordinates")
+                        text: ""
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        onTextChanged: obsPage.edited = true
+                    }
+
+                    TextField {
+                        id: birdDirectionTf
+                        height: 50
+                        placeholderText: qsTr("Direction")
+                        text: ""
+                        anchors.top: birdLocationTf.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        width: parent.width / 2
+                        onTextChanged: obsPage.edited = true
+                    }
+
+                    TextField {
+                        id: birdDistanceTf
+                        height: 50
+                        placeholderText: qsTr("Distance (m)")
+                        text: ""
+                        anchors.top: birdLocationTf.bottom
+                        anchors.topMargin: 8
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        width: parent.width / 2
+                        onTextChanged: obsPage.edited = true
+                    }
+
+                }
+
                 Label {
                     id: obsTimeText
                     color: "#ffffff"
@@ -1099,7 +1154,7 @@ Page {
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     verticalAlignment: Text.AlignVCenter
-                    anchors.top: item1.bottom
+                    anchors.top: birdLocationItem.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
                     visible: detailLevel > 1
@@ -1352,7 +1407,7 @@ Page {
                     TextField {
                         id: birdNameTf
                         height: 50
-                        placeholderText: qsTr("Species")
+                        placeholderText: qsTr("Species *")
                         text: ""
                         validator: RegExpValidator{ regExp: /.{1,}/ }
                         anchors.top: parent.top

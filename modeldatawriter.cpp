@@ -898,7 +898,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
     QDir dir;
     dir.cd(importDir());
     QStringList filters;
-    filters << "*history*.csv" << "*history*.txt";
+    filters << "*history*.csv" << "*history*.txt" << "*record*.csv" << "*record*.txt";;
     QStringList importFiles;
     importFiles = dir.entryList(filters,QDir::Files);
 //    qDebug() << "IMPORT" << importFiles;
