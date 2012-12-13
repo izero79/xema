@@ -147,7 +147,8 @@ public:
     };
 
     enum sexFields {
-        SEX_FIN = 0,
+        SEX_VALUE = 0
+        SEX_FIN,
         SEX_SWE,
         SEX_ENG
     };
