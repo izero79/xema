@@ -515,6 +515,9 @@ Page {
         if (currentTab <= 3)
         {
             birdNameTf.text = ""
+            birdCoordinatesTf.text = ""
+            directionTf.text = ""
+            distanceTf.text = ""
             moreInfoTa.text = ""
             atlasTf.text = ""
             hideChkBox.checked = false

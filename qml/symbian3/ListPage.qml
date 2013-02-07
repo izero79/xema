@@ -716,8 +716,12 @@ Page {
 
 
                     maxVerticalAccurary = positionSource.position.verticalAccuracy
-                    var latitude = positionSource.position.coordinate.latitude.toFixed(1)
-                    var longitude = positionSource.position.coordinate.longitude.toFixed(1)
+                    var latitude = positionSource.position.coordinate.latitude.toFixed(4)
+                    var longitude = positionSource.position.coordinate.longitude.toFixed(4)
+                    var indexOfDot = latitude.indexOf(".");
+                    latitude = latitude.slice(0,indexOfDot+2);
+                    indexOfDot = longitude.indexOf(".");
+                    longitude = longitude.slice(0,indexOfDot+2);
                     filterTf.text = latitude + ":" + longitude
                     console.log("accuracy now: " + positionSource.accuracy)
                 }

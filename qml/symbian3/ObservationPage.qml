@@ -515,6 +515,9 @@ Page {
         if (currentTab <= 3)
         {
             birdNameTf.text = ""
+            birdCoordinatesTf.text = ""
+            directionTf.text = ""
+            distanceTf.text = ""
             moreInfoTa.text = ""
             atlasTf.text = ""
             hideChkBox.checked = false
@@ -646,7 +649,7 @@ Page {
                 obsPage.currentTab = 3
             }
         }
-    	
+
         // define the content for tab 1
         Page {
             id: tab1content
