@@ -1169,10 +1169,12 @@ Page {
 
                     if (focusChildY >= 300)
                     {
-                        focusChildY = focusChildY + 97
+                        console.log("focusChildY >= 300: " + focusChildY)
+
+                        focusChildY = focusChildY + 255
                     }
 
-                    console.log("fcY: " + focusChildY +", fch: " +focusChildHeight +", fchh: " +focusChildHeaderHeight)
+                    console.log("focusChildY: " + focusChildY +", focusChildHeight: " +focusChildHeight +", focusChildHeaderHeight: " +focusChildHeaderHeight)
                     console.log("new contentY: " + (focusChildY - focusChildHeaderHeight))
                     flickable3.contentY = focusChildY - focusChildHeaderHeight
                 }
@@ -1293,6 +1295,7 @@ Page {
                     }
                     TextField {
                         id: distanceTf
+                        property int headerHeight: -y
                         height: 50
                         placeholderText: qsTr("Distance (m)")
                         text: ""
@@ -1383,7 +1386,7 @@ Page {
 
                     TextArea {
                         id: moreInfoTa
-                        property int headerHeight: text8.height + 8
+                        property int headerHeight: 300 - text8.height
                         height: 150
                         placeholderText: qsTr("More information")
                         text: ""
