@@ -57,7 +57,8 @@ QVariant BirdModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.localizedName() + ", " +
+        return QString( item.category() + ", " +
+                        item.localizedName() + ", " +
                         item.latinName() + ", " +
                         item.abbreviation() + ", ");
     }

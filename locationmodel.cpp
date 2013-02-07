@@ -56,8 +56,8 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString(item.localizedPlace() + ", " +
-                        item.localizedTown() + ", " + item.localizedCountry() + ", " + item.wgsCoordinateForFilter());
+        return QString( item.localizedCountry() + ", " + item.localizedPlace() + ", " +
+                        item.localizedTown() + ", " + item.wgsCoordinateForFilter());
     }
     else if (role == IndexRole)
     {

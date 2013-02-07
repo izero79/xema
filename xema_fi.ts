@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>Finnish name</source>
-        <translation>Suomenkielinen nimi</translation>
+        <translation>Suomenkielinen nimi *</translation>
     </message>
     <message>
         <source>Swedish name</source>
@@ -32,7 +32,7 @@
     </message>
     <message>
         <source>Group in finnish</source>
-        <translation>Ryhmä suomeksi</translation>
+        <translation>Ryhmä suomeksi *</translation>
     </message>
     <message>
         <source>Group in swedish</source>
@@ -43,10 +43,6 @@
         <translation>Ryhmä latinaksi</translation>
     </message>
     <message>
-        <source>Abbreviation</source>
-        <translation>Lyhenne</translation>
-    </message>
-    <message>
         <source>Category</source>
         <translation>Kategoria</translation>
     </message>
@@ -55,12 +51,16 @@
         <translation>Id numero</translation>
     </message>
     <message>
-        <source>English name</source>
+        <source>English name *</source>
         <translation>Englanninkielinen nimi</translation>
     </message>
     <message>
-        <source>Group in english</source>
+        <source>Group in english *</source>
         <translation>Ryhmä englanniksi</translation>
+    </message>
+    <message>
+        <source>Abbreviation *</source>
+        <translation>Lyhenne *</translation>
     </message>
 </context>
 <context>
@@ -120,14 +120,6 @@
         <translation>Muokkaa paikkaa</translation>
     </message>
     <message>
-        <source>Town</source>
-        <translation>Paikkakunta</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Paikka</translation>
-    </message>
-    <message>
         <source>YKJ coordinates</source>
         <translation>YKJ koordinaatit</translation>
     </message>
@@ -156,12 +148,32 @@
         <translation>Paikka ruotsiksi</translation>
     </message>
     <message>
-        <source>Town in english</source>
+        <source>Town in finnish</source>
+        <translation>Paikkakunta *</translation>
+    </message>
+    <message>
+        <source>Location in finnish</source>
+        <translation>Paikka *</translation>
+    </message>
+    <message>
+        <source>Country in finnish</source>
+        <translation>Maa</translation>
+    </message>
+    <message>
+        <source>Country in swedish</source>
+        <translation>Maa ruotsiksi</translation>
+    </message>
+    <message>
+        <source>Town in english *</source>
         <translation>Paikkakunta englanniksi</translation>
     </message>
     <message>
-        <source>Location in english</source>
+        <source>Location in english *</source>
         <translation>Paikka englanniksi</translation>
+    </message>
+    <message>
+        <source>Country in english</source>
+        <translation>Maa englanniksi</translation>
     </message>
 </context>
 <context>
@@ -185,10 +197,6 @@
 </context>
 <context>
     <name>ObservationDelegate</name>
-    <message>
-        <source>Count</source>
-        <translation>Määrä</translation>
-    </message>
     <message>
         <source>Sex</source>
         <translation>Sukupuoli</translation>
@@ -228,6 +236,10 @@
     <message>
         <source>More information</source>
         <translation>Lisätietoja</translation>
+    </message>
+    <message>
+        <source>Individuals *</source>
+        <translation>Määrä *</translation>
     </message>
 </context>
 <context>
@@ -320,16 +332,40 @@
         <source>Hidden</source>
         <translation>Piilota havainto</translation>
     </message>
+    <message>
+        <source>Observers *</source>
+        <translation>Havainnoijat *</translation>
+    </message>
+    <message>
+        <source>Location *</source>
+        <translation>Paikka *</translation>
+    </message>
+    <message>
+        <source>Species *</source>
+        <translation>Laji *</translation>
+    </message>
+    <message>
+        <source>Location of bird</source>
+        <translation>Linnun paikka</translation>
+    </message>
+    <message>
+        <source>Coordinates</source>
+        <translation>Koordinaatit</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation>Suunta</translation>
+    </message>
+    <message>
+        <source>Distance (m)</source>
+        <translation>Etäisyys (m)</translation>
+    </message>
 </context>
 <context>
     <name>PersonEditPage</name>
     <message>
         <source>Edit person</source>
         <translation>Muokkaa henkilöä</translation>
-    </message>
-    <message>
-        <source>First name</source>
-        <translation>Etunimi</translation>
     </message>
     <message>
         <source>Last name</source>
@@ -342,6 +378,10 @@
     <message>
         <source>Default</source>
         <translation>Oletusnimi</translation>
+    </message>
+    <message>
+        <source>First name *</source>
+        <translation>Etunimi *</translation>
     </message>
 </context>
 <context>
@@ -466,12 +506,12 @@
         <translation>Selite englanniksi</translation>
     </message>
     <message>
-        <source>Abbreviation</source>
-        <translation>Lyhenne</translation>
-    </message>
-    <message>
         <source>Id number</source>
         <translation>Id numero</translation>
+    </message>
+    <message>
+        <source>Abbreviation *</source>
+        <translation>Lyhenne *</translation>
     </message>
 </context>
 <context>
