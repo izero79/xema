@@ -118,6 +118,25 @@ Item {
         validator: IntValidator { bottom: 1; }
         inputMethodHints: Qt.ImhDigitsOnly
         onTextChanged: item1.edited = true
+    }
+    TextField {
+        id: statusTf
+        height: 50
+        placeholderText: qsTr("Status")
+        text: ""
+        anchors.left: countTf.right
+        anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 8
+        MouseArea {
+            id: tf5mouse
+            anchors.fill: parent
+            onClicked: window.showListPage("status", statusTf.text, statusTf);
+            z: statusTf.z + 1
+        }
+        onTextChanged: item1.edited = true
 
     }
     TextField {
@@ -175,26 +194,6 @@ Item {
             anchors.fill: parent
             onClicked: window.showListPage("dress", dressTf.text, dressTf);
             z: dressTf.z + 1
-        }
-        onTextChanged: item1.edited = true
-
-    }
-    TextField {
-        id: statusTf
-        height: 50
-        placeholderText: qsTr("Status")
-        text: ""
-        anchors.left: countTf.right
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 8
-        MouseArea {
-            id: tf5mouse
-            anchors.fill: parent
-            onClicked: window.showListPage("status", statusTf.text, statusTf);
-            z: statusTf.z + 1
         }
         onTextChanged: item1.edited = true
 

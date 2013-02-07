@@ -305,7 +305,7 @@ Page {
             id: engTownTf
             width: 240
             height: 50
-            placeholderText: qsTr("Town in english")
+            placeholderText: qsTr("Town in english *")
             text: locationModel.data(currentIndex, 46)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -322,7 +322,7 @@ Page {
             id: engLocationTf
             width: 240
             height: 50
-            placeholderText: qsTr("Location in english")
+            placeholderText: qsTr("Location in english *")
             text: locationModel.data(currentIndex, 47)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -391,7 +391,7 @@ Page {
                     var ykjString = CoordinateConverter.wgsToYkjString(wgsTf.text)
                     ykjTf.settingValue = true
                     ykjTf.text = ykjString
-                    ykjTf.settingValue = true
+                    ykjTf.settingValue = false
                 }
             }
         }

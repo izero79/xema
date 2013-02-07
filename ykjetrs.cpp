@@ -16,9 +16,9 @@
 #include "ykjetrs-bw.h"
 
 static int pistekolmiossa(double x, double y,
-			  double x1, double y1,
-			  double x2, double y2,
-			  double x3, double y3)
+    		    	  double x1, double y1,
+    		    	  double x2, double y2,
+    		    	  double x3, double y3)
    {   
    double fab, fbc, fca;
 
@@ -36,7 +36,7 @@ static int pistekolmiossa(double x, double y,
    }
 
 static int muunnos(double p, double i, double *pp, double *ip,
-		   const struct ykjetrsdata *data)
+    		   const struct ykjetrsdata *data)
    {
    int n, f;
    const short *s;
@@ -47,20 +47,20 @@ static int muunnos(double p, double i, double *pp, double *ip,
 
    if(f>=0 && n>=0 && f<data->index_p && n<data->index_i)
       for(s=data->index[f*data->index_i+n]; *s!=-1; s++)
-	 {
-	 a=data->piste[data->kolmio[*s][0]];
-	 b=data->piste[data->kolmio[*s][1]];
-	 c=data->piste[data->kolmio[*s][2]];
+    	 {
+    	 a=data->piste[data->kolmio[*s][0]];
+    	 b=data->piste[data->kolmio[*s][1]];
+    	 c=data->piste[data->kolmio[*s][2]];
 
-	 if(pistekolmiossa(p, i, a[0], a[1], b[0], b[1], c[0], c[1]))
-	    {
-	    a=data->args[*s];
-	    *pp=a[0]*p+a[1]*i+a[2];
-	    *ip=a[3]*p+a[4]*i+a[5];
+    	 if(pistekolmiossa(p, i, a[0], a[1], b[0], b[1], c[0], c[1]))
+    	    {
+    	    a=data->args[*s];
+    	    *pp=a[0]*p+a[1]*i+a[2];
+    	    *ip=a[3]*p+a[4]*i+a[5];
 
-	    return YKJETRS_OK;
-	    }
-	 }
+    	    return YKJETRS_OK;
+    	    }
+    	 }
    
    return 0;
    }

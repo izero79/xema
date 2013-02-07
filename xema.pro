@@ -191,7 +191,9 @@ SOURCES += main.cpp \
     agemodel.cpp \
     dressmodel.cpp \
     sexmodel.cpp \
-    systeminfoprovider.cpp
+    systeminfoprovider.cpp \
+    direction.cpp \
+    directionmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -237,7 +239,9 @@ HEADERS += \
     agemodel.h \
     dressmodel.h \
     sexmodel.h \
-    systeminfoprovider.h
+    systeminfoprovider.h \
+    direction.h \
+    directionmodel.h
 
 RESOURCES += \
     commonresources.qrc

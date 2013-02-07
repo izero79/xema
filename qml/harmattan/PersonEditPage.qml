@@ -126,7 +126,7 @@ Page {
             id: firstName
             width: parent.width
             height: 50
-            placeholderText: qsTr("First name")
+            placeholderText: qsTr("First name *")
             text: personModel.data(currentIndex, 38)
             anchors.left: parent.left
             anchors.leftMargin: 0

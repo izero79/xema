@@ -373,7 +373,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
     tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
-    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää\n");
+    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa\n");
     if( delimiter != "#") {
         header.replace("#",";");
     }
@@ -708,6 +708,11 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     int xemaRows = data.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT).toInt();
     QString town = data.section("#", XemaEnums::OBS_TOWN, XemaEnums::OBS_TOWN);
     QString place = data.section("#", XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION);
+    QString birdX = data.section("#", XemaEnums::OBS_BIRD_XCOORD, XemaEnums::OBS_BIRD_XCOORD);
+    QString birdY = data.section("#", XemaEnums::OBS_BIRD_YCOORD, XemaEnums::OBS_BIRD_YCOORD);
+    qDebug() << "EXPORT, birdX " << birdX;
+    qDebug() << "EXPORT, birdY " << birdY;
+
     QString toka = "#" + town + "#" + place;
     QString eka = id;
 //    qDebug() << "EXPORT, eka 2" << eka;
@@ -748,14 +753,17 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
 
     // add location coordinates if found
     bool locationAdded = false;
+    QString country = "";
     for(int i = 0; i < rowCount; i++)
     {
         if (locations->getItem(i).town() == town && locations->getItem(i).place() == place)
         {
+            // save country
+            country =  locations->getItem(i).finCountry();
             QString coordinate = locations->getItem(i).wgsCoordinate();
             //qDebug() << "export paikka" << coordinate;
-            if (coordinate == "" || coordinate == "0:0") {
-                continue;
+            if (coordinate == "" || coordinate == "0:0" || coordinate == "0") {
+                break;
             }
             QString x = coordinate.section(":", 0, 0);
             QString y = coordinate.section(":", 1, 1);
@@ -787,7 +795,12 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
 
     eka += toka;
 //    qDebug() << "EXPORT, eka 7" << eka;
-    eka += QString("######");
+    eka += QString("##");
+    eka += birdX;
+    eka += "#";
+    eka += birdY;
+    eka += "#";
+    eka += QString ("##");
 //    qDebug() << "EXPORT, eka 8" << eka;
     eka += vali;
 //    qDebug() << "EXPORT, eka 9" << eka;
@@ -845,8 +858,11 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     // include exported or not (24 vs 25)
     QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
                                  XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
+
     loppu.prepend("#");
-    loppu.append("");
+    loppu.append("#");
+    loppu.append(country);
+    loppu.append("#");
 
     QString firstRow = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_INDIRECT);
     firstRow.replace("#koiras#", "#k#");
@@ -887,7 +903,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     if( delimiter != "#" ) {
         eka.replace("#", delimiter);
     }
-//    qDebug() << "FORMAT TO TIIRA JALKEEN" << eka;
+    qDebug() << "FORMAT TO TIIRA JALKEEN" << eka;
     return eka;
 }
 
@@ -1044,6 +1060,7 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
     readyLine.append("#");
 
     QString location = readLine.section(delimiter, XemaEnums::TIIRA_LOCATION, XemaEnums::TIIRA_LOCATION);
+    QString country = readLine.section(delimiter, XemaEnums::TIIRA_EXTRA_COUNTRY, XemaEnums::TIIRA_EXTRA_COUNTRY);
     readyLine += location;
     readyLine.append("#");
 
@@ -1087,9 +1104,9 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
                 wgs.append(wgsY);
             }
 
-            // TODO add coordinates
             tmp.setYKJCoordinate(ykj);
             tmp.setWGSCoordinate(wgs);
+            tmp.setFinCountry(country);
             tmp.setCustom(true);
             locations->addItem(tmp);
         }
@@ -1187,7 +1204,7 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
     readyLine += rowCount;
     readyLine.append("#");
 
-    QString weather = readLine.section(delimiter,XemaEnums::TIIRA_EXTRA1,XemaEnums::TIIRA_EXTRA1); // WEATHER ON INDIRECTIN PAIKALLA
+    QString weather = readLine.section(delimiter,XemaEnums::TIIRA_EXTRA_WEATHER,XemaEnums::TIIRA_EXTRA_WEATHER); // WEATHER ON INDIRECTIN PAIKALLA
     for(int i = 0;i < lines.length();i++)
     {
         QString row;

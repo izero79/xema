@@ -14,5 +14,7 @@
         <file>locations.version</file>
         <file>species.version</file>
         <file>statuses.version</file>
+        <file>directions.csv</file>
+        <file>directions.version</file>
     </qresource>
 </RCC>

@@ -3,6 +3,7 @@
 #include "gausskrueger.h"
 #include <QDebug>
 #include <QRegExp>
+#include <QStringList>
 
 /*
  * Gauss-Krüger-projektiomuunnosobjektit
@@ -20,6 +21,9 @@ static struct gk_args etrs_gk;
 #define Hayford_f (1.0/297.0)  /* ja litistyneisyys */
 #define GRS80_a   6378137.0    /* Samat GRS80-ellipsoidille */
 #define GRS80_f   (1.0/298.257222101)
+
+static double degreesPerM_E = 0.000021320512;
+static double degreesPerM_N = 0.000008979482;
 
 CoordinateConverter::CoordinateConverter(QObject *parent) :
     QObject(parent),
@@ -162,4 +166,132 @@ QString CoordinateConverter::ykjToWgsString(const QString &ykjString) {
     wgs.append(":");
     wgs.append(wgsY);
     return wgs;
+}
+
+
+QString CoordinateConverter::countCoordinates( const QString &wgs, int distanceInM, const QString &direction) {
+    if (distanceInM < 0) {
+        return "";
+    }
+    if (wgs.isEmpty() || wgs.contains(":") == false || wgs.length() < 3) {
+        return "";
+    }
+
+    if (validDirection(direction) == false ) {
+        return "";
+    }
+
+    if (distanceInM == 0) {
+        return wgs;
+    }
+
+    QPair<double,double> directionXY = directionValues(direction);
+
+    QString wgsX = wgs.section(":", 0, 0);
+    QString wgsY = wgs.section(":", 1, 1);
+    double x = wgsX.toDouble();
+    double y = wgsY.toDouble();
+
+
+    double newX = x + degreesPerM_N * directionXY.first * distanceInM;
+    double newY = y + degreesPerM_E * directionXY.second * distanceInM;
+
+    QString newWgsX;
+    newWgsX.setNum(newX,'g',6);
+    QString newWgsY;
+    newWgsY.setNum(newY,'g',6);
+    QString newCoords = newWgsX;
+    newCoords.append(":");
+    newCoords.append(newWgsY);
+
+    return newCoords;
+}
+
+bool CoordinateConverter::validDirection(const QString &direction) {
+    bool valid = false;
+    QStringList valids;
+    valids << "N" << "E" << "S" << "W";
+    valids << "NE" << "SE" << "SW" << "NW";
+    valids << "NNE" << "ENE" << "ESE" << "SSE";
+    valids << "SSW" << "WSW" << "WNW" << "NNW";
+    if (valids.contains(direction)) {
+        valid = true;
+    }
+    return valid;
+}
+
+QPair<double, double> CoordinateConverter::directionValues(const QString &direction) {
+    QPair<double, double> values;
+    double x = 0;
+    double y = 0;
+    if (direction == "N") {
+        x = 1;
+        y = 0;
+    }
+    if (direction == "NNE") {
+        x = 0.923878;
+        y = 0.382683;
+    }
+    if (direction == "NE") {
+        x = 0.707107;
+        y = 0.707107;
+    }
+    if (direction == "ENE") {
+        x = 0.382683;
+        y = 0.923878;
+    }
+    if (direction == "E") {
+        x = 0;
+        y = 1;
+    }
+    if (direction == "ESE") {
+        x = -0.382683;
+        y = 0.923878;
+    }
+    if (direction == "SE") {
+        x = -0.707107;
+        y = 0.707107;
+    }
+    if (direction == "SSE") {
+        x = -0.923878;
+        y = 0.382683;
+    }
+
+    if (direction == "S") {
+        x = -1;
+        y = 0;
+    }
+    if (direction == "SSW") {
+        x = -0.923878;
+        y = -0.382683;
+    }
+    if (direction == "SW") {
+        x = -0.707107;
+        y = -0.707107;
+    }
+    if (direction == "WSW") {
+        x = -0.382683;
+        y = -0.923878;
+    }
+    if (direction == "W") {
+        x = 0;
+        y = -1;
+    }
+    if (direction == "WNW") {
+        x = 0.382683;
+        y = -0.923878;
+    }
+    if (direction == "NW") {
+        x = 0.707107;
+        y = -0.707107;
+    }
+    if (direction == "NNW") {
+        x = 0.923878;
+        y = -0.382683;
+    }
+
+    values.first = x;
+    values.second = y;
+
+    return values;
 }

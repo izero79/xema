@@ -21,6 +21,7 @@
 #include "dressmodel.h"
 #include "agemodel.h"
 #include "sexmodel.h"
+#include "directionmodel.h"
 #include <QLocale>
 #include "settings.h"
 
@@ -1037,6 +1038,32 @@ void ModelDataLoader::loadAgeData(AgeModel *model)
                        line.section(';', XemaEnums::AGE_FIN, XemaEnums::AGE_FIN),
                        line.section(';', XemaEnums::AGE_SWE, XemaEnums::AGE_SWE),
                        line.section(';', XemaEnums::AGE_ENG, XemaEnums::AGE_ENG));
+            model->addItem(item);
+        }
+    }
+}
+
+void ModelDataLoader::loadDirectionData(DirectionModel *model)
+{
+    QFile tiedosto(":directions.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString line;
+        line = striimi.readLine();
+        if (line.isEmpty() == false)
+        {
+            qDebug() << "loadDirectionData" << line;
+            Direction item(line.section(';', XemaEnums::DIRECTION_VALUE, XemaEnums::DIRECTION_VALUE),
+                       line.section(';', XemaEnums::DIRECTION_FIN, XemaEnums::DIRECTION_FIN),
+                       line.section(';', XemaEnums::DIRECTION_SWE, XemaEnums::DIRECTION_SWE),
+                       line.section(';', XemaEnums::DIRECTION_ENG, XemaEnums::DIRECTION_ENG));
             model->addItem(item);
         }
     }

@@ -15,6 +15,7 @@ class ModelDataWriter;
 class AgeModel;
 class SexModel;
 class DressModel;
+class DirectionModel;
 
 class ApplicationController : public QObject
 {
@@ -66,6 +67,7 @@ private:
     AgeModel *mAgeModel;
     DressModel *mDressModel;
     SexModel *mSexModel;
+    DirectionModel *mDirectionModel;
 };
 
 #endif // APPLICATIONCONTROLLER_H

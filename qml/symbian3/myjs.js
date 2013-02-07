@@ -69,7 +69,7 @@ function showListPage(type, selectedItems, itemi)
         currentStatusBox = itemi
         listObject.selectStatus(selectedItems)
     }
-    else if (type == "sex" || type == "age" || type == "dress" || type == "atlas")
+    else if (type == "sex" || type == "age" || type == "dress" || type == "atlas" || type == "direction")
     {
         currentStatusBox = itemi
     }
@@ -306,6 +306,19 @@ function fillDressBox(index)
     }
     else {
         currentStatusBox.text = dressModel.data(index, 35)
+    }
+}
+
+function fillDirectionBox(index)
+{
+    if (currentLanguage == "en") {
+        currentStatusBox.text = directionModel.data(index, 35)
+    }
+    else if (currentLanguage == "sv") {
+        currentStatusBox.text = directionModel.data(index, 35)
+    }
+    else {
+        currentStatusBox.text = directionModel.data(index, 35)
     }
 }
 

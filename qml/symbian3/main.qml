@@ -122,6 +122,11 @@ PageStackWindow {
         MyScript.fillDressBox(name)
     }
 
+    function directionChanged(name)
+    {
+        MyScript.fillDirectionBox(name)
+    }
+
     function ageChanged(name)
     {
         MyScript.fillAgeBox(name)

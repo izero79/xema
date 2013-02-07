@@ -24,6 +24,7 @@
 #include "agemodel.h"
 #include "dressmodel.h"
 #include "sexmodel.h"
+#include "directionmodel.h"
 #include "coordinateconverter.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
@@ -47,6 +48,9 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mFilteredHistoryDateModel(0),
     mFilteredHistoryPlaceModel(0),
     mFilteredAtlasModel(0),
+    mFilteredDressModel(0),
+    mFilteredSexModel(0),
+    mFilteredDirectionModel(0),
     mSettings(0),
     mDataWriter(0),
     mDataLoader(0),
@@ -132,6 +136,7 @@ void QMLWindow::init()
     mFilteredSexModel = new FilterModel(this);
     mFilteredDressModel = new FilterModel(this);
     mFilteredAgeModel = new FilterModel(this);
+    mFilteredDirectionModel = new FilterModel(this);
 
     mRootContext->setContextProperty("birdModel", mFilteredBirdModel);
     mRootContext->setContextProperty("personModel", mFilteredPersonModel);
@@ -144,6 +149,7 @@ void QMLWindow::init()
     mRootContext->setContextProperty("sexModel", mFilteredSexModel);
     mRootContext->setContextProperty("dressModel", mFilteredDressModel);
     mRootContext->setContextProperty("ageModel", mFilteredAgeModel);
+    mRootContext->setContextProperty("directionModel", mFilteredDirectionModel);
 
     QString majorVersion;
     majorVersion.setNum( MAJORVERSION );
@@ -234,6 +240,11 @@ void QMLWindow::setDressModel(DressModel *model)
 void QMLWindow::setSexModel(SexModel *model)
 {
     mFilteredSexModel->setSourceModel(model);
+}
+
+void QMLWindow::setDirectionModel(DirectionModel *model)
+{
+    mFilteredDirectionModel->setSourceModel(model);
 }
 
 void QMLWindow::setHistoryModel(HistoryModel *model)

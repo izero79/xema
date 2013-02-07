@@ -16,6 +16,7 @@
 #include "dressmodel.h"
 #include "sexmodel.h"
 #include "systeminfoprovider.h"
+#include "directionmodel.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
@@ -31,7 +32,8 @@ ApplicationController::ApplicationController(QObject *parent) :
     mModelWriter(0),
     mAgeModel(0),
     mDressModel(0),
-    mSexModel(0)
+    mSexModel(0),
+    mDirectionModel(0)
 {
     qDebug() << "\n\nSystem Info:" << SystemInfoProvider::versionInfo() << "\n\n";
     initGUI();
@@ -82,6 +84,10 @@ void ApplicationController::initObjects()
     mSexModel = new SexModel(this);
     mModelLoader->loadSexData(mSexModel);
     mQMLWin->setSexModel(mSexModel);
+
+    mDirectionModel = new DirectionModel(this);
+    mModelLoader->loadDirectionData(mDirectionModel);
+    mQMLWin->setDirectionModel(mDirectionModel);
 
     mDressModel = new DressModel(this);
     mModelLoader->loadDressData(mDressModel);

@@ -227,7 +227,7 @@ Page {
             id: engNameTf
             width: parent.width
             height: 50
-            placeholderText: qsTr("English name")
+            placeholderText: qsTr("English name *")
             text: birdModel.data(currentIndex, 48)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -280,7 +280,7 @@ Page {
         }
         TextField {
             id: engGroupTf
-            placeholderText: qsTr("Group in english")
+            placeholderText: qsTr("Group in english *")
             text: birdModel.data(currentIndex, 49)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -306,7 +306,7 @@ Page {
         }
         TextField {
             id: abbrevTf
-            placeholderText: qsTr("Abbreviation")
+            placeholderText: qsTr("Abbreviation *")
             text: birdModel.data(currentIndex, 38)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -341,6 +341,7 @@ Page {
             anchors.top: categoryTf.bottom
             anchors.topMargin: 8
             width: parent.width
+    		    	visible: false
             onTextChanged: {
                 birdEdited = true
             }

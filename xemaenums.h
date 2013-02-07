@@ -136,7 +136,8 @@ public:
         TIIRA_BONGAUS,
         TIIRA_NEST,
         TIIRA_INDIRECT, // 34
-        TIIRA_EXTRA1 // 35 weather
+        TIIRA_EXTRA_WEATHER, // 35 weather
+        TIIRA_EXTRA_COUNTRY // 36 country
     };
 
     enum atlasIndexFields {
@@ -147,7 +148,7 @@ public:
     };
 
     enum sexFields {
-        SEX_VALUE = 0
+        SEX_VALUE = 0,
         SEX_FIN,
         SEX_SWE,
         SEX_ENG
@@ -165,6 +166,13 @@ public:
         AGE_FIN,
         AGE_SWE,
         AGE_ENG
+    };
+
+    enum directionFields {
+        DIRECTION_VALUE = 0,
+        DIRECTION_FIN,
+        DIRECTION_SWE,
+        DIRECTION_ENG
     };
 
     static const int OBS_SUBFIELDCOUNT = 12;

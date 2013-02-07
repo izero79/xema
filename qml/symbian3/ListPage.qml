@@ -190,6 +190,10 @@ Page {
         {
             window.dressChanged(name)
         }
+        else if (listPageType == "direction")
+        {
+            window.directionChanged(name)
+        }
         pageStack.pop()
     }
 
@@ -319,6 +323,11 @@ Page {
             listView.showRegistered = true
             listView.delegate = myTestDelegate
         }
+        else if (listPageType == "direction")
+        {
+            listView.editMode = false
+            listView.delegate = simpleDelegate
+        }
         else
         {
             listView.model.setSorting(1, true)
@@ -383,6 +392,10 @@ Page {
         else if (listPageType == "people")
         {
             listView.model = personModel
+        }
+        else if (listPageType == "direction")
+        {
+            listView.model = directionModel
         }
         else
         {

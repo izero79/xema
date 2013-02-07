@@ -17,6 +17,7 @@ class ModelDataLoader;
 class AgeModel;
 class SexModel;
 class DressModel;
+class DirectionModel;
 class CoordinateConverter;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -59,6 +60,7 @@ public slots:
     void setHistoryPlaceModel(HistoryModel *model);
     void setAtlasModel(AtlasIndexModel *model);
     void setSexModel(SexModel *model);
+    void setDirectionModel(DirectionModel *model);
     void setDressModel(DressModel *model);
     void setAgeModel(AgeModel *model);
     void setProcessing(bool processing);
@@ -96,6 +98,7 @@ private:
     FilterModel *mFilteredAgeModel;
     FilterModel *mFilteredDressModel;
     FilterModel *mFilteredSexModel;
+    FilterModel *mFilteredDirectionModel;
     Settings *mSettings;
     ModelDataWriter *mDataWriter;
     ModelDataLoader *mDataLoader;

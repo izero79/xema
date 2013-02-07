@@ -208,7 +208,7 @@ Page {
 
         TextField {
             id: abbrevTf
-            placeholderText: qsTr("Abbreviation")
+            placeholderText: qsTr("Abbreviation *")
             text: statusModel.data(currentIndex, 35)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -234,6 +234,7 @@ Page {
             onTextChanged: {
                 statusEdited = true
             }
+            visible: false
         }
     }
 }

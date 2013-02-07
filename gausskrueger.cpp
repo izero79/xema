@@ -28,7 +28,7 @@ static double atanh(double x) { return 0.5*log((1.0+x)/(1.0-x)); }
 #endif
 */
 void gk_init(struct gk_args *args, double a, double f,
-	     double k0, double E0, double lambda0)
+    	     double k0, double E0, double lambda0)
    {
    double b, Dn, rn2, rn3, rn4;
 
@@ -57,7 +57,7 @@ void gk_init(struct gk_args *args, double a, double f,
    }
 
 void gk_sphericaltorectangular(struct gk_args *args, double fii, double lambda,
-			       double *N, double *E)
+    		    	       double *N, double *E)
    {
    double t, ksi1, eta1;
 
@@ -67,7 +67,7 @@ void gk_sphericaltorectangular(struct gk_args *args, double fii, double lambda,
    eta1=atanh(sin(lambda)/sqrt(1.0+t*t));
 
    *N=args->A1*(ksi1+args->h1p*sin(2.0*ksi1)*cosh(2.0*eta1)+
-		     args->h2p*sin(4.0*ksi1)*cosh(4.0*eta1)+
+    		     args->h2p*sin(4.0*ksi1)*cosh(4.0*eta1)+
                      args->h3p*sin(6.0*ksi1)*cosh(6.0*eta1)+
                      args->h4p*sin(8.0*ksi1)*cosh(8.0*eta1));
 
@@ -78,7 +78,7 @@ void gk_sphericaltorectangular(struct gk_args *args, double fii, double lambda,
    }
 
 void gk_rectangulartospherical(struct gk_args *args, double N, double E,
-			       double *fii, double *lambda)
+    		    	       double *fii, double *lambda)
    {
    double ksi, eta, sksi, seta, q, t;
    int i;

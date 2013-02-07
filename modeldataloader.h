@@ -12,6 +12,7 @@ class AtlasIndexModel;
 class AgeModel;
 class DressModel;
 class SexModel;
+class DirectionModel;
 
 class ModelDataLoader : public QObject
 {
@@ -38,6 +39,7 @@ public:
     void loadSexData(SexModel *model);
     void loadDressData(DressModel *model);
     void loadAgeData(AgeModel *model);
+    void loadDirectionData(DirectionModel *model);
 signals:
 
 public slots:

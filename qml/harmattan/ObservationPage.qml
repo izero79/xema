@@ -51,6 +51,9 @@ Page {
         moreInfoTa.text = ""
         atlasTf.text = ""
         hideChkBox.checked = false
+        birdCoordinatesTf.text = ""
+        directionTf.text = ""
+        distanceTf.text = ""
 
         MyScript.removeObjects();
         MyScript.createObjects();
@@ -169,10 +172,25 @@ Page {
         allData += delimiter
         // uusi, accuracy
         allData += delimiter
-        // uusi, x-coord bird
-        allData += delimiter
-        // uusi, y-coord bird
-        allData += delimiter
+
+        if (birdCoordinatesTf.text != "") {
+            var birdYKJ = CoordinateConverter.wgsToYkjString(birdCoordinatesTf.text)
+            var birdYKJArray = birdYKJ.split(":",2);
+
+            // uusi, x-coord bird
+            allData += birdYKJArray[1]
+            allData += delimiter
+            // uusi, y-coord bird
+            allData += birdYKJArray[0]
+            allData += delimiter
+        } else {
+            // uusi, x-coord bird
+            allData += delimiter
+            // uusi, y-coord bird
+            allData += delimiter
+
+        }
+
         // uusi, accuracy bird
         allData += delimiter
         // uusi, paikannettu
@@ -212,7 +230,6 @@ Page {
 
         allData += weatherTa.text
         allData += delimiter
-        // TODO maa kentta
         allData += exportedChkBox.checked
         allData += delimiter
 
@@ -330,14 +347,15 @@ Page {
     {
         var j = -1
         console.log("findLocationIndex(name)" + name)
-        var town = name.split(", ",2);
+        var town = name.split(", ",1);
+        var place = name.slice(town[0].length + 2); // comma and space
         console.log("town[0] " +town[0])
-        console.log("town[1] " +town[1])
+        console.log("place " +place)
         for(var i=0;i<locationModel.rowCount();i++) {
             // TODO localized names
             if (currentLanguage == "en") {
                 if(town[0] === locationModel.data(i, 42)) {
-                    if(town[1] === locationModel.data(i, 43)) {
+                    if(place === locationModel.data(i, 43)) {
                         j = i
                         break;
                     }
@@ -345,7 +363,7 @@ Page {
             }
             else if (currentLanguage == "sv") {
                 if(town[0] === locationModel.data(i, 40)) {
-                    if(town[1] === locationModel.data(i, 41)) {
+                    if(place === locationModel.data(i, 41)) {
                         j = i
                         break;
                     }
@@ -353,7 +371,7 @@ Page {
             }
             else {
                 if(town[0] === locationModel.data(i, 35)) {
-                    if(town[1] === locationModel.data(i, 36)) {
+                    if(place === locationModel.data(i, 36)) {
                         j = i
                         break;
                     }
@@ -417,6 +435,19 @@ Page {
         return name
     }
 
+    function getLocationCoords() {
+        var locationIndex = findLocationIndex(locationTf.text)
+        if (locationIndex < 0) {
+            return "";
+        }
+        if(!locationModel.data(locationIndex, 39)) {
+            return ""
+        } else {
+            console.log("location coords: " +locationModel.data(locationIndex, 39))
+            return locationModel.data(locationIndex, 39)
+        }
+    }
+
     function dataLoaded(data)
     {
         console.log("data loaded now: " + data)
@@ -456,6 +487,9 @@ Page {
         }
         currentField++
         weatherTa.text = fields[currentField]
+        var birdCoords = fields[XemaEnums.OBS_BIRD_YCOORD] + ":" + fields[XemaEnums.OBS_BIRD_XCOORD]
+        console.log("bird-koordinaatit: " + birdCoords )
+        birdCoordinatesTf.text = CoordinateConverter.ykjToWgsString(birdCoords)
 
     }
 
@@ -621,7 +655,7 @@ Page {
                 obsPage.currentTab = 3
             }
         }
-	
+
         // define the content for tab 1
         Page {
             id: tab1content
@@ -1073,76 +1107,16 @@ Page {
                             onClicked: window.showListPage("places");
                             z: locationTf.z + 1
                         }
-                        onTextChanged: obsPage.edited = true
+                        onTextChanged: {
+                            obsPage.edited = true
+                            var locationCoords = getLocationCoords()
+                            if (locationCoords != "") {
+                                var coordinates = CoordinateConverter.countCoordinates(locationCoords, distanceTf.text, directionTf.text)
+                                birdCoordinatesTf.text = coordinates
+                            }
+                        }
                         validator: RegExpValidator{ regExp: /.{1,}/ }
                     }
-                }
-
-                Label {
-                    id: locationOfBirdText
-                    color: "#ffffff"
-                    text: qsTr("Location of bird")
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.top: locationItem.bottom
-                    anchors.topMargin: 8
-                    font.pixelSize: 18
-                }
-
-                Item {
-                    id: birdLocationItem
-                    width: parent.width
-                    height: 108
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.top: locationOfBirdText.bottom
-                    anchors.topMargin: 8
-
-                    TextField {
-                        id: birdLocationTf
-                        height: 50
-                        placeholderText: qsTr("Coordinates")
-                        text: ""
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        onTextChanged: obsPage.edited = true
-                    }
-
-                    TextField {
-                        id: birdDirectionTf
-                        height: 50
-                        placeholderText: qsTr("Direction")
-                        text: ""
-                        anchors.top: birdLocationTf.bottom
-                        anchors.topMargin: 8
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        width: parent.width / 2
-                        onTextChanged: obsPage.edited = true
-                    }
-
-                    TextField {
-                        id: birdDistanceTf
-                        height: 50
-                        placeholderText: qsTr("Distance (m)")
-                        text: ""
-                        anchors.top: birdLocationTf.bottom
-                        anchors.topMargin: 8
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        width: parent.width / 2
-                        onTextChanged: obsPage.edited = true
-                    }
-
                 }
 
                 Label {
@@ -1154,7 +1128,7 @@ Page {
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     verticalAlignment: Text.AlignVCenter
-                    anchors.top: birdLocationItem.bottom
+                    anchors.top: locationItem.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
                     visible: detailLevel > 1
@@ -1426,12 +1400,105 @@ Page {
 
                     }
                 }
+                Label {
+                    id: birdPlaceLabel
+                    color: "#ffffff"
+                    text: qsTr("Location of bird")
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: birdNameItem.bottom
+                    anchors.topMargin: 8
+                    font.pixelSize: 18
+                    visible: detailLevel > 2
+                }
+
+                Item {
+                    id: birdPlaceItem
+                    height: 110
+                    anchors.top: birdPlaceLabel.bottom
+                    anchors.topMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    visible: detailLevel > 2
+
+                    TextField {
+                        id: birdCoordinatesTf
+                        property int headerHeight: 0
+                        placeholderText: qsTr("Coordinates")
+                        anchors.top: parent.top
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        height: 50
+                        onTextChanged: obsPage.edited = true
+                        enabled: false;
+                    }
+
+                    TextField {
+                        id: directionTf
+                        property int headerHeight: 0
+                        height: 50
+                        placeholderText: qsTr("Direction")
+                        text: ""
+                        anchors.top: birdCoordinatesTf.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        width: 200
+                        MouseArea {
+                            id: directionMouse
+                            anchors.fill: parent
+                            onClicked: window.showListPage("direction", directionTf.text, directionTf);
+                            z: directionTf.z + 1
+                        }
+                        onTextChanged: {
+                            obsPage.edited = true
+                            console.log("directionTf: " + directionTf.text)
+                            var locationCoords = getLocationCoords()
+                            if (locationCoords != "") {
+                                var coordinates = CoordinateConverter.countCoordinates(locationCoords, distanceTf.text, directionTf.text)
+                                birdCoordinatesTf.text = coordinates
+                            }
+                        }
+                    }
+                    TextField {
+                        id: distanceTf
+                        height: 50
+                        placeholderText: qsTr("Distance (m)")
+                        text: ""
+                        anchors.left: directionTf.right
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.top: birdCoordinatesTf.bottom
+                        anchors.topMargin: 8
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        validator: IntValidator { bottom: 0 }
+                        onTextChanged: {
+                            obsPage.edited = true
+                            console.log("distanceTf: " + distanceTf.text)
+                            var locationCoords = getLocationCoords()
+                            if (locationCoords != "") {
+                                var coordinates = CoordinateConverter.countCoordinates(locationCoords, distanceTf.text, directionTf.text)
+                                birdCoordinatesTf.text = coordinates
+                            }
+                        }
+
+                    }
+                }
 
                 Item {
                     id: obsDelegateItem
                     objectName: "obsDelegateItem"
-                    anchors.top: birdNameItem.bottom
-                    anchors.topMargin: 8
+                    anchors.top: detailLevel > 2 ? birdPlaceItem.bottom : birdNameItem.bottom;
+                    anchors.topMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
