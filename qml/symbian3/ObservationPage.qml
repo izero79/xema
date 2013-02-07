@@ -10,7 +10,7 @@ Page {
     property int detailLevel: window.currentDetailLevel
     property int currentId: 0
     property int currentTab: 1
-    property int delegateHeight: detailLevel == 3 ? 300 : detailLevel == 2 ? 150 : 75
+    property int delegateHeight: detailLevel == 3 ? 330 : detailLevel == 2 ? 180 : 145
     property variant missingInfo: null
     property bool edited: false
 

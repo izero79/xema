@@ -104,13 +104,28 @@ Item {
     anchors.leftMargin: 0
     height: delegateHeight
     width: parent.width
+    Label {
+        id: rowLabel
+        property int headerHeight: 0
+        color: "#ffffff"
+        text: qsTr("Row")
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        verticalAlignment: Text.AlignVCenter
+        anchors.top: parent.top
+        anchors.topMargin: 8
+        font.pixelSize: 18
+    }
+
     TextField {
         id: countTf
         property int headerHeight: 0
         height: 50
         placeholderText: qsTr("Individuals *")
         text: ""
-        anchors.top: parent.top
+        anchors.top: rowLabel.bottom
         anchors.topMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -128,7 +143,7 @@ Item {
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        anchors.top: parent.top
+        anchors.top: rowLabel.bottom
         anchors.topMargin: 8
         MouseArea {
             id: tf5mouse

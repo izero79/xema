@@ -251,6 +251,7 @@ Page {
         TextField {
             id: filterTf
             height: 50
+            placeholderText: qsTr("Search")
             text: listPageType
             anchors.top: parent.top
             anchors.topMargin: 0
