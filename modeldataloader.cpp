@@ -118,9 +118,7 @@ void ModelDataLoader::loadOnlyModifiedBirdData(BirdModel *model)
         // TODO LOC
         bird.setEngName(birdLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
         bird.setEngGroup(birdLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
-        if(birdLine.section(';', XemaEnums::BIRD_CUSTOM, XemaEnums::BIRD_CUSTOM) == "true") {
-            bird.setCustom(true);
-        }
+        bird.setCustom(true);
         model->addItem(bird);
     }
 }
@@ -462,9 +460,7 @@ void ModelDataLoader::loadOnlyModifiedStatusData(StatusModel *model)
                           readLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV),
                           readLine.section(';', XemaEnums::STATUS_SWENAME, XemaEnums::STATUS_SWENAME),
                           readLine.section(';', XemaEnums::STATUS_ENGNAME, XemaEnums::STATUS_ENGNAME));
-            if(readLine.section(';', XemaEnums::STATUS_CUSTOM, XemaEnums::STATUS_CUSTOM) == "true") {
-                status.setCustom(true);
-            }
+            status.setCustom(true);
             model->addItem(status);
         }
     }
