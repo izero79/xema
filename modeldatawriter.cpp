@@ -187,7 +187,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;maa:maa_swe;maa_eng;muokattu\n");
+    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;maa;maa_swe;maa_eng;muokattu\n");
     for(int i = 0; i < rows; i++)
     {
         QString wgs = model->data(model->index(i), LocationModel::WgsCoordinateRole).toString();

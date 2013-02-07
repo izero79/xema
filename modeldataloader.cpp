@@ -206,11 +206,11 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
             location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
             location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
             location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
-            if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
+            if(defaultOnly == false && locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
                 location.setCustom(true);
             }
         } else {
-            if(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
+            if(defaultOnly == false && locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
                 location.setCustom(true);
             }
 
@@ -239,9 +239,11 @@ void ModelDataLoader::loadInitialLocationData(LocationModel *model)
     }
     qDebug() << "saved location version" << savedVersion;
     if( savedVersion > currentLocationVersion ) {
-        qDebug() << "There's new version of location list installed. Using it.";
+        //qDebug() << "There's new version of location list installed. Using it. Model has now" << model->rowCount() << "rows";
         loadOnlyModifiedLocationData( model );
+        //qDebug() << "Only modified rows loaded. Model has now" << model->rowCount() << "rows";
         loadDefaultLocationData( model );
+        //qDebug() << "All rows laoded. Model has now" << model->rowCount() << "rows";
         Settings::setLocationsVersion(savedVersion);
     }
     else {
@@ -276,19 +278,21 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
     {
         QString locationLine;
         locationLine = striimi.readLine();
+        //qDebug() << "loadOnlyModifiedLocationData" << "luettiin rivi" << locationLine;
         int delimCount = locationLine.count(";");
+        //qDebug() << "loadOnlyModifiedLocationData" << "delimCount" << delimCount;
         if( delimCount > 9) {
-            if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
+            if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "false") {
                 continue;
             }
         } else {
-            if(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
+            if(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "false") {
                 continue;
             }
 
         }
 
-        locationLine = striimi.readLine();
+        //locationLine = striimi.readLine();
         Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
                           locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                           locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
@@ -301,15 +305,8 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
             location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
             location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
             location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
-            if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
-                location.setCustom(true);
-            }
-        } else {
-            if(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
-                location.setCustom(true);
-            }
-
         }
+        location.setCustom(true);
 
         model->addItem(location);
     }
