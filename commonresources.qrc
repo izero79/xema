@@ -11,10 +11,14 @@
         <file>dresses.csv</file>
         <file>sexes.csv</file>
         <file>xema_fi.qm</file>
-        <file>locations.version</file>
-        <file>species.version</file>
-        <file>statuses.version</file>
         <file>directions.csv</file>
         <file>directions.version</file>
+        <file>defaultlocations.version</file>
+        <file>defaultstatuses.version</file>
+        <file>specieslist.version</file>
+        <file>ages.version</file>
+        <file>atlasindexes.version</file>
+        <file>dresses.version</file>
+        <file>sexes.version</file>
     </qresource>
 </RCC>

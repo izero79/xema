@@ -55,7 +55,7 @@ void ModelDataLoader::loadInitialBirdData(BirdModel *model)
     int savedVersion = 0;
 //    qDebug() << "current bird version" << currentSpeciesVersion;
 
-    QFile versionFile(":species.version");
+    QFile versionFile(":specieslist.version");
     versionFile.open(QFile::ReadOnly);
     QTextStream striimi(&versionFile);
     striimi.setCodec("ISO 8859-1");
@@ -227,7 +227,7 @@ void ModelDataLoader::loadInitialLocationData(LocationModel *model)
     int savedVersion = 0;
     qDebug() << "current location version" << currentLocationVersion;
 
-    QFile versionFile(":locations.version");
+    QFile versionFile(":defaultlocations.version");
     versionFile.open(QFile::ReadOnly);
     QTextStream striimi(&versionFile);
     striimi.setCodec("ISO 8859-1");
@@ -366,7 +366,7 @@ void ModelDataLoader::loadInitialStatusData(StatusModel *model)
         int savedVersion = 0;
         qDebug() << "current statuses version" << currentStatusesVersion;
 
-        QFile versionFile(":statuses.version");
+        QFile versionFile(":defaultstatuses.version");
         versionFile.open(QFile::ReadOnly);
         QTextStream striimi(&versionFile);
         striimi.setCodec("ISO 8859-1");
