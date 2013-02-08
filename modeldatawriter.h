@@ -40,7 +40,11 @@ public:
 private:
     explicit ModelDataWriter(QObject *parent = 0);
     ~ModelDataWriter();
-    QMap<int, int> getSectionNumbers(const QString &headerLine, const QString &delimiter);
+    QMap<int, int> getHistorySectionNumbers(const QString &headerLine, const QString &delimiter);
+    QMap<int, int> getBirdSectionNumbers(const QString &headerLine, const QString &delimiter);
+    QMap<int, int> getLocationSectionNumbers(const QString &headerLine, const QString &delimiter);
+    QMap<int, int> getPersonSectionNumbers(const QString &headerLine, const QString &delimiter);
+    QMap<int, int> getStatusSectionNumbers(const QString &headerLine, const QString &delimiter);
     qlonglong getNewId();
     QString dataFileDir();
     QString exportDir();

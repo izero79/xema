@@ -174,7 +174,6 @@ SOURCES += main.cpp \
     filtermodel.cpp \
     status.cpp \
     statusmodel.cpp \
-    modeldatawriter.cpp \
     historyitem.cpp \
     historymodel.cpp \
     settings.cpp \
@@ -193,7 +192,8 @@ SOURCES += main.cpp \
     sexmodel.cpp \
     systeminfoprovider.cpp \
     direction.cpp \
-    directionmodel.cpp
+    directionmodel.cpp \
+    modeldatawriter.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)

@@ -949,7 +949,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
                 importError += XemaEnums::IMPORT_HISTORYERROR;
                 continue;
             }
-            sectionMap = getSectionNumbers(line, delimiter);
+            sectionMap = getHistorySectionNumbers(line, delimiter);
         }
         //qDebug() << Q_FUNC_INFO << sectionMap;
         QStringList prevLines;
@@ -1730,7 +1730,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
     return importError;
 }
 
-QMap<int, int> ModelDataWriter::getSectionNumbers(const QString &headerLine, const QString &delimiter) {
+QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLine, const QString &delimiter) {
     QMap<int, int> sections;
     //qDebug() << Q_FUNC_INFO << "header" << headerLine;
     QStringList headerSections = headerLine.toLower().split(delimiter);
@@ -1819,7 +1819,7 @@ QMap<int, int> ModelDataWriter::getSectionNumbers(const QString &headerLine, con
                 break;
             }
             case XemaEnums::TIIRA_INFO: {
-                int index = headerSections.indexOf("lis‰tietoja");
+                int index = headerSections.indexOf("listietoja");
                 sections.insert(XemaEnums::TIIRA_INFO, index);
                 break;
             }
@@ -1859,7 +1859,7 @@ QMap<int, int> ModelDataWriter::getSectionNumbers(const QString &headerLine, con
                 break;
             }
             case XemaEnums::TIIRA_BIRDCOUNT: {
-                int index = headerSections.indexOf("m‰‰r‰");
+                int index = headerSections.indexOf("mr");
                 sections.insert(XemaEnums::TIIRA_BIRDCOUNT, index);
                 break;
             }
@@ -1884,7 +1884,7 @@ QMap<int, int> ModelDataWriter::getSectionNumbers(const QString &headerLine, con
                 break;
             }
             case XemaEnums::TIIRA_AGE: {
-                int index = headerSections.indexOf("ik‰");
+                int index = headerSections.indexOf("ik");
                 sections.insert(XemaEnums::TIIRA_AGE, index);
                 break;
             }
@@ -1894,7 +1894,7 @@ QMap<int, int> ModelDataWriter::getSectionNumbers(const QString &headerLine, con
                 break;
             }
             case XemaEnums::TIIRA_BIRDINFO: {
-                int index = headerSections.indexOf("lis‰tietoja_2");
+                int index = headerSections.indexOf("listietoja_2");
                 sections.insert(XemaEnums::TIIRA_BIRDINFO, index);
                 break;
             }
@@ -1909,23 +1909,225 @@ QMap<int, int> ModelDataWriter::getSectionNumbers(const QString &headerLine, con
                 break;
             }
             case XemaEnums::TIIRA_NEST: {
-                int index = headerSections.indexOf("pesint‰");
+                int index = headerSections.indexOf("pesint");
                 sections.insert(XemaEnums::TIIRA_NEST, index);
                 break;
             }
             case XemaEnums::TIIRA_INDIRECT: {
-                int index = headerSections.indexOf("ep‰suora havainto");
+                int index = headerSections.indexOf("epsuora havainto");
                 sections.insert(XemaEnums::TIIRA_INDIRECT, index);
                 break;
             }
             case XemaEnums::TIIRA_EXTRA_WEATHER: {
-                int index = headerSections.indexOf("s‰‰");
+                int index = headerSections.indexOf("s");
                 sections.insert(XemaEnums::TIIRA_EXTRA_WEATHER, index);
                 break;
             }
             case XemaEnums::TIIRA_EXTRA_COUNTRY: {
                 int index = headerSections.indexOf("maa");
                 sections.insert(XemaEnums::TIIRA_EXTRA_COUNTRY, index);
+                break;
+            }
+        }
+    }
+
+    return sections;
+}
+
+QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine, const QString &delimiter) {
+    QMap<int, int> sections;
+    //qDebug() << Q_FUNC_INFO << "header" << headerLine;
+    QStringList headerSections = headerLine.toLower().split(delimiter);
+    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+    for (int i = XemaEnums::BIRD_ID; i <= XemaEnums::BIRD_SWE_GROUP; i++) {
+        switch (i) {
+            case XemaEnums::BIRD_ID: {
+                int index = headerSections.indexOf("id");
+                sections.insert(XemaEnums::BIRD_ID, index);
+                break;
+            }
+            case XemaEnums::BIRD_FIN_GROUP: {
+                int index = headerSections.indexOf("group_fi");
+                sections.insert(XemaEnums::BIRD_FIN_GROUP, index);
+                break;
+            }
+            case XemaEnums::BIRD_ENG_GROUP: {
+                int index = headerSections.indexOf("group_en");
+                sections.insert(XemaEnums::BIRD_ENG_GROUP, index);
+                break;
+            }
+            case XemaEnums::BIRD_LATIN_GROUP: {
+                int index = headerSections.indexOf("group_lat");
+                sections.insert(XemaEnums::BIRD_LATIN_GROUP, index);
+                break;
+            }
+            case XemaEnums::BIRD_FIN_NAME: {
+                int index = headerSections.indexOf("name_fi");
+                sections.insert(XemaEnums::BIRD_FIN_NAME, index);
+                break;
+            }
+            case XemaEnums::BIRD_SWE_NAME: {
+                int index = headerSections.indexOf("name_sv");
+                sections.insert(XemaEnums::BIRD_SWE_NAME, index);
+                break;
+            }
+            case XemaEnums::BIRD_LATIN_NAME: {
+                int index = headerSections.indexOf("name_lat");
+                sections.insert(XemaEnums::BIRD_LATIN_NAME, index);
+                break;
+            }
+            case XemaEnums::BIRD_ABBREV: {
+                int index = headerSections.indexOf("abbrev_lat");
+                sections.insert(XemaEnums::BIRD_ABBREV, index);
+                break;
+            }
+            case XemaEnums::BIRD_CATEGORY: {
+                int index = headerSections.indexOf("category");
+                sections.insert(XemaEnums::BIRD_CATEGORY, index);
+                break;
+            }
+            case XemaEnums::BIRD_ENG_NAME: {
+                int index = headerSections.indexOf("name_en");
+                sections.insert(XemaEnums::BIRD_ENG_NAME, index);
+                break;
+            }
+            case XemaEnums::BIRD_SWE_GROUP: {
+                int index = headerSections.indexOf("group_sv");
+                sections.insert(XemaEnums::BIRD_SWE_GROUP, index);
+                break;
+            }
+        }
+    }
+
+    return sections;
+}
+
+QMap<int, int> ModelDataWriter::getLocationSectionNumbers(const QString &headerLine, const QString &delimiter) {
+    QMap<int, int> sections;
+    //qDebug() << Q_FUNC_INFO << "header" << headerLine;
+    QStringList headerSections = headerLine.toLower().split(delimiter);
+    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+    for (int i = XemaEnums::LOCATION_TOWN; i <= XemaEnums::LOCATION_ENGCOUNTRY; i++) {
+        switch (i) {
+            case XemaEnums::LOCATION_TOWN: {
+                int index = headerSections.indexOf("id");
+                sections.insert(XemaEnums::LOCATION_TOWN, index);
+                break;
+            }
+            case XemaEnums::LOCATION_PLACE: {
+                int index = headerSections.indexOf("group_fi");
+                sections.insert(XemaEnums::LOCATION_PLACE, index);
+                break;
+            }
+            case XemaEnums::LOCATION_WGS: {
+                int index = headerSections.indexOf("group_en");
+                sections.insert(XemaEnums::LOCATION_WGS, index);
+                break;
+            }
+            case XemaEnums::LOCATION_YKJ: {
+                int index = headerSections.indexOf("group_lat");
+                sections.insert(XemaEnums::LOCATION_YKJ, index);
+                break;
+            }
+            case XemaEnums::LOCATION_SWETOWN: {
+                int index = headerSections.indexOf("name_fi");
+                sections.insert(XemaEnums::LOCATION_SWETOWN, index);
+                break;
+            }
+            case XemaEnums::LOCATION_SWEPLACE: {
+                int index = headerSections.indexOf("name_sv");
+                sections.insert(XemaEnums::LOCATION_SWEPLACE, index);
+                break;
+            }
+            case XemaEnums::LOCATION_ENGTOWN: {
+                int index = headerSections.indexOf("name_lat");
+                sections.insert(XemaEnums::LOCATION_ENGTOWN, index);
+                break;
+            }
+            case XemaEnums::LOCATION_ENGPLACE: {
+                int index = headerSections.indexOf("abbrev_lat");
+                sections.insert(XemaEnums::LOCATION_ENGPLACE, index);
+                break;
+            }
+            case XemaEnums::LOCATION_COUNTRY: {
+                int index = headerSections.indexOf("category");
+                sections.insert(XemaEnums::LOCATION_COUNTRY, index);
+                break;
+            }
+            case XemaEnums::LOCATION_SWECOUNTRY: {
+                int index = headerSections.indexOf("name_en");
+                sections.insert(XemaEnums::LOCATION_SWECOUNTRY, index);
+                break;
+            }
+            case XemaEnums::LOCATION_ENGCOUNTRY: {
+                int index = headerSections.indexOf("group_sv");
+                sections.insert(XemaEnums::LOCATION_ENGCOUNTRY, index);
+                break;
+            }
+        }
+    }
+
+    return sections;
+}
+
+QMap<int, int> ModelDataWriter::getPersonSectionNumbers(const QString &headerLine, const QString &delimiter) {
+    QMap<int, int> sections;
+    //qDebug() << Q_FUNC_INFO << "header" << headerLine;
+    QStringList headerSections = headerLine.toLower().split(delimiter);
+    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+    for (int i = XemaEnums::PERSON_FIRSTNAME; i <= XemaEnums::PERSON_DEFAULT; i++) {
+        switch (i) {
+            case XemaEnums::PERSON_FIRSTNAME: {
+                int index = headerSections.indexOf("firstname");
+                sections.insert(XemaEnums::PERSON_FIRSTNAME, index);
+                break;
+            }
+            case XemaEnums::PERSON_SURNAME: {
+                int index = headerSections.indexOf("lastname");
+                sections.insert(XemaEnums::PERSON_SURNAME, index);
+                break;
+            }
+            case XemaEnums::PERSON_REGISTERED: {
+                int index = headerSections.indexOf("registered");
+                sections.insert(XemaEnums::PERSON_REGISTERED, index);
+                break;
+            }
+            case XemaEnums::PERSON_DEFAULT: {
+                int index = headerSections.indexOf("default");
+                sections.insert(XemaEnums::PERSON_DEFAULT, index);
+                break;
+            }
+        }
+    }
+
+    return sections;
+}
+
+QMap<int, int> ModelDataWriter::getStatusSectionNumbers(const QString &headerLine, const QString &delimiter) {
+    QMap<int, int> sections;
+    //qDebug() << Q_FUNC_INFO << "header" << headerLine;
+    QStringList headerSections = headerLine.toLower().split(delimiter);
+    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+    for (int i = XemaEnums::STATUS_FINABBREV; i <= XemaEnums::STATUS_ENGNAME; i++) {
+        switch (i) {
+            case XemaEnums::STATUS_FINABBREV: {
+                int index = headerSections.indexOf("abbrev");
+                sections.insert(XemaEnums::STATUS_FINABBREV, index);
+                break;
+            }
+            case XemaEnums::STATUS_FINNAME: {
+                int index = headerSections.indexOf("status_fi");
+                sections.insert(XemaEnums::STATUS_FINNAME, index);
+                break;
+            }
+            case XemaEnums::STATUS_SWENAME: {
+                int index = headerSections.indexOf("status_sv");
+                sections.insert(XemaEnums::STATUS_SWENAME, index);
+                break;
+            }
+            case XemaEnums::STATUS_ENGNAME: {
+                int index = headerSections.indexOf("status_en");
+                sections.insert(XemaEnums::STATUS_ENGNAME, index);
                 break;
             }
         }
