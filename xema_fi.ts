@@ -93,6 +93,10 @@
         <source>Choose delimiter to be used</source>
         <translation>Valitse erotinmerkki</translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation>Etsi</translation>
+    </message>
 </context>
 <context>
     <name>ListPage</name>
@@ -240,6 +244,10 @@
     <message>
         <source>Individuals *</source>
         <translation>Määrä *</translation>
+    </message>
+    <message>
+        <source>Row</source>
+        <translation>Rivi</translation>
     </message>
 </context>
 <context>

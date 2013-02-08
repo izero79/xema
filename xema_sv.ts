@@ -141,6 +141,12 @@
         <source>New</source>
         <translation>Nya</translation>
     </message>
+    <message>
+        <location filename="qml/harmattan/HistoryPage.qml" line="253"/>
+        <location filename="qml/symbian3/HistoryPage.qml" line="254"/>
+        <source>Search</source>
+        <translation>Sök</translation>
+    </message>
 </context>
 <context>
     <name>ListPage</name>
@@ -292,70 +298,76 @@
 <context>
     <name>ObservationDelegate</name>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="145"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="145"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="160"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="160"/>
         <source>Sex</source>
         <translation>Kön</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="164"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="164"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="179"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="179"/>
         <source>Age</source>
         <translation>Ålder</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="185"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="185"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="200"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="200"/>
         <source>Dress</source>
         <translation>Dräkt</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="125"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="125"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="140"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="140"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
         <location filename="qml/harmattan/ObservationDelegate.qml" line="111"/>
         <location filename="qml/symbian3/ObservationDelegate.qml" line="111"/>
+        <source>Row</source>
+        <translation>Raden</translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="126"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="126"/>
         <source>Individuals *</source>
         <translation>Individer *</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="207"/>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="252"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="207"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="252"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="222"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="267"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="222"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="267"/>
         <source>0:00</source>
         <translation>0:00</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="233"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="233"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="248"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="248"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="286"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="286"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="301"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="301"/>
         <source>Loft</source>
         <translation>Flock</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="308"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="308"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="323"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="323"/>
         <source>Bird-watch</source>
         <translation>Ospontan</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="320"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="320"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="335"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="335"/>
         <source>Nesting</source>
         <translation>Häckning</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationDelegate.qml" line="337"/>
-        <location filename="qml/symbian3/ObservationDelegate.qml" line="337"/>
+        <location filename="qml/harmattan/ObservationDelegate.qml" line="352"/>
+        <location filename="qml/symbian3/ObservationDelegate.qml" line="352"/>
         <source>More information</source>
         <translation>Mera information</translation>
     </message>
@@ -382,9 +394,9 @@
     </message>
     <message>
         <location filename="qml/harmattan/ObservationPage.qml" line="124"/>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1071"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1074"/>
         <location filename="qml/symbian3/ObservationPage.qml" line="124"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="948"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="951"/>
         <source>Location</source>
         <translation>Plats</translation>
     </message>
@@ -395,152 +407,152 @@
         <translation>Individer</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="576"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="576"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="579"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="579"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="591"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="591"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="594"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="594"/>
         <source>Mandatory information missing:</source>
         <translation>Oblilgatorisk information fattas:</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="614"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="614"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="617"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="617"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="634"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="626"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="637"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="629"/>
         <source>Day</source>
         <translation>Dag</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="635"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="627"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="638"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="630"/>
         <source>Place</source>
         <translation>Plats</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="636"/>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1360"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="628"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1180"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="639"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1363"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="631"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1185"/>
         <source>Observation</source>
         <translation>Observation</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="774"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="708"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="777"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="711"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="822"/>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1179"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="756"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1056"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="825"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1182"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="759"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1059"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="869"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="803"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="872"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="806"/>
         <source>Observers</source>
         <translation>Observatörer</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="893"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="827"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="896"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="830"/>
         <source>Observers *</source>
         <translation>Observatörer *</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="914"/>
-        <location filename="qml/harmattan/ObservationPage.qml" line="943"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="848"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="877"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="917"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="946"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="851"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="880"/>
         <source>Weather</source>
         <translation>Vädret</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1096"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="973"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1099"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="976"/>
         <source>Location *</source>
         <translation>Plats *</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1125"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1002"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1128"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1005"/>
         <source>Time</source>
         <translation>Tid</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1384"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1204"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1387"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1209"/>
         <source>Species *</source>
         <translation>Arten *</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1406"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1226"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1409"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1231"/>
         <source>Location of bird</source>
         <translation>Fågelns läge</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1432"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1252"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1435"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1257"/>
         <source>Coordinates</source>
         <translation>Koordinater</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1448"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1268"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1451"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1273"/>
         <source>Direction</source>
         <translation>Vädersträck</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1474"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1294"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1477"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1300"/>
         <source>Distance (m)</source>
         <translation>Distans (m)</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1510"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1330"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1513"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1336"/>
         <source>Add row</source>
-        <translation>Addera längden</translation>
+        <translation>Addera raden</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1522"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1342"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1525"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1348"/>
         <source>Remove row</source>
         <translation>Radera raden</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1537"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1357"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1540"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1363"/>
         <source>Additional information</source>
         <translation>Tillägsinformation</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1565"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1385"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1568"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1391"/>
         <source>More information</source>
         <translation>Mera information</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1581"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1401"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1584"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1407"/>
         <source>Atlas index</source>
         <translation>Atlas index</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ObservationPage.qml" line="1607"/>
-        <location filename="qml/symbian3/ObservationPage.qml" line="1427"/>
+        <location filename="qml/harmattan/ObservationPage.qml" line="1610"/>
+        <location filename="qml/symbian3/ObservationPage.qml" line="1433"/>
         <source>Hidden</source>
         <translation>Göm observationen</translation>
     </message>

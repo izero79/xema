@@ -1,0 +1,15 @@
+1.0.2
+Korjauksia käyttöliittymään.
+Paikkalistan gps-suodatus korjattu.
+Paikkatiedoissa maa-kenttä.
+Linnun paikan syöttömahdollisuus.
+
+
+Koordinaattimuunnos YKJ<->WGS tapahtuu samantien paikkaa muokatessa
+Selvästi virheellisiä koordinaatteja ei viedä csv-tiedostoon
+lajilistaan korjaus: hii-ääninen Tiltaltti PHYCOLHIIT (ei PHYCOLHII)
+csv-tiedostossa Id sarake vaihdettu Rivi-ID:ksi Tiiraa varten
+
+Korjaus lajilistaan.
+Parannuksia koordinaattien käsittelyihin.
+Korjauksia havaintojen vientiin.
