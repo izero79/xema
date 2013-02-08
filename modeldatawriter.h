@@ -2,6 +2,7 @@
 #define MODELDATAWRITER_H
 
 #include <QObject>
+#include <QMap>
 
 class BirdModel;
 class PersonModel;
@@ -33,12 +34,13 @@ public:
     void removeCustomObservers();
     void removeHistory();
     int importHistory(LocationModel *locations, PersonModel *persons);
-    void importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter);
+    void importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter);
     int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
 
 private:
     explicit ModelDataWriter(QObject *parent = 0);
     ~ModelDataWriter();
+    QMap<int, int> getSectionNumbers(const QString &headerLine, const QString &delimiter);
     qlonglong getNewId();
     QString dataFileDir();
     QString exportDir();

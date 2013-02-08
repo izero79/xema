@@ -925,6 +925,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
         importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
+        QMap<int, int> sectionMap;
 
         if (importstream.atEnd() == false)
         {
@@ -945,9 +946,12 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
                 line.section(delimiter, XemaEnums::TIIRA_ID, XemaEnums::TIIRA_ID) != "Rivi-ID" &&
                 line.section(delimiter, XemaEnums::TIIRA_ID, XemaEnums::TIIRA_ID) != "Havainto id" )
             {
-                importstream.seek(0);
+                importError += XemaEnums::IMPORT_HISTORYERROR;
+                continue;
             }
+            sectionMap = getSectionNumbers(line, delimiter);
         }
+        //qDebug() << Q_FUNC_INFO << sectionMap;
         QStringList prevLines;
         QString currentLine;
         bool previousNotHandled = true;
@@ -976,14 +980,14 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
             else
             {
 //                qDebug() << "IMPORT eri id, kasittele edelliset nyt" << currentLine;
-                importLine(prevLines, locations, persons, delimiter);
+                importLineWithSections(sectionMap, prevLines, locations, persons, delimiter);
                 prevLines.clear();
                 prevLines.append(currentLine);
                 previousNotHandled = false;
             }
         }
 
-        importLine(prevLines, locations, persons, delimiter);
+        importLineWithSections(sectionMap, prevLines, locations, persons, delimiter);
 
         QDateTime date;
         date = QDateTime::currentDateTime();
@@ -1006,13 +1010,14 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
     return importError;
 }
 
-void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter)
+void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter)
 {
     if (lines.size() < 1)
     {
         return;
     }
 //    qDebug() << "IMPORT lines" << lines;
+
     QString rowCount;
     rowCount.setNum(lines.size());
     QString readyLine;
@@ -1021,11 +1026,14 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
 //    readyLine.append(delimiter);
     readyLine.append("0#");
     QString readLine = lines.at(0);
-    QString speciesAbbrev = readLine.section(delimiter,XemaEnums::TIIRA_SPECIES_ABBR, XemaEnums::TIIRA_SPECIES_ABBR);
+    int tiira_abbr = sectionMap.value(XemaEnums::TIIRA_SPECIES_ABBR);
+    QString speciesAbbrev = readLine.section(delimiter,tiira_abbr,tiira_abbr);
     readyLine.append(speciesAbbrev);
 
-    QString date1 = readLine.section(delimiter, XemaEnums::TIIRA_DATE1, XemaEnums::TIIRA_DATE1);
-    QString date2 = readLine.section(delimiter, XemaEnums::TIIRA_DATE2, XemaEnums::TIIRA_DATE2);
+    int tiira_date1 = sectionMap.value(XemaEnums::TIIRA_DATE1);
+    int tiira_date2 = sectionMap.value(XemaEnums::TIIRA_DATE2);
+    QString date1 = readLine.section(delimiter, tiira_date1, tiira_date1);
+    QString date2 = readLine.section(delimiter, tiira_date2, tiira_date2);
 
     int faultyLine = 0;
     readyLine.append("#");
@@ -1044,25 +1052,32 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
         readyLine += date2;
     }
     readyLine.append("#");
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_TIME1, XemaEnums::TIIRA_TIME1);
+    int tiira_time1 = sectionMap.value(XemaEnums::TIIRA_TIME1);
+    readyLine += readLine.section(delimiter, tiira_time1, tiira_time1);
     readyLine.append("#");
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_TIME2, XemaEnums::TIIRA_TIME2);
+    int tiira_time2 = sectionMap.value(XemaEnums::TIIRA_TIME2);
+    readyLine += readLine.section(delimiter, tiira_time2, tiira_time2);
     readyLine.append("#");
 
-    QString town = readLine.section(delimiter, XemaEnums::TIIRA_TOWN, XemaEnums::TIIRA_TOWN);
+    int tiira_town = sectionMap.value(XemaEnums::TIIRA_TOWN);
+    QString town = readLine.section(delimiter, tiira_town, tiira_town);
     if (town.isEmpty()) {
         faultyLine++;
         int firstMark = readLine.indexOf(delimiter);
         readLine.remove(firstMark,1);
-        town = readLine.section(delimiter, XemaEnums::TIIRA_TOWN, XemaEnums::TIIRA_TOWN);
+        town = readLine.section(delimiter, tiira_town, tiira_town);
     }
     readyLine += town;
     readyLine.append("#");
 
-    QString location = readLine.section(delimiter, XemaEnums::TIIRA_LOCATION, XemaEnums::TIIRA_LOCATION);
-    QString country = readLine.section(delimiter, XemaEnums::TIIRA_EXTRA_COUNTRY, XemaEnums::TIIRA_EXTRA_COUNTRY);
+    int tiira_location = sectionMap.value(XemaEnums::TIIRA_LOCATION);
+    QString location = readLine.section(delimiter, tiira_location, tiira_location);
+    int tiira_country = sectionMap.value(XemaEnums::TIIRA_EXTRA_COUNTRY);
+    QString country = readLine.section(delimiter, tiira_country, tiira_country);
     readyLine += location;
     readyLine.append("#");
+    int tiira_xcoord = sectionMap.value(XemaEnums::TIIRA_XCOORD);
+    int tiira_ycoord = sectionMap.value(XemaEnums::TIIRA_YCOORD);
 
     if (locations) {
         bool locationExists = false;
@@ -1080,8 +1095,8 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
             QString y;
             QString ykj;
             QString wgs;
-            x = readLine.section(delimiter, XemaEnums::TIIRA_XCOORD, XemaEnums::TIIRA_XCOORD);
-            y = readLine.section(delimiter, XemaEnums::TIIRA_YCOORD, XemaEnums::TIIRA_YCOORD);
+            x = readLine.section(delimiter, tiira_xcoord, tiira_xcoord);
+            y = readLine.section(delimiter, tiira_ycoord, tiira_ycoord);
             ykj.append(x);
             ykj.append(":");
             ykj.append(y);
@@ -1113,48 +1128,58 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
         }
     }
 
-    QString x = readLine.section(delimiter, XemaEnums::TIIRA_XCOORD, XemaEnums::TIIRA_XCOORD);
-    QString y = readLine.section(delimiter, XemaEnums::TIIRA_YCOORD, XemaEnums::TIIRA_YCOORD);
+    QString x = readLine.section(delimiter, tiira_xcoord, tiira_xcoord);
+    QString y = readLine.section(delimiter, tiira_ycoord, tiira_ycoord);
 
     if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {
-        readyLine += readLine.section(delimiter, XemaEnums::TIIRA_XCOORD, XemaEnums::TIIRA_XCOORD);
+        readyLine += x;
     }
     readyLine.append("#");
 
     if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {
-        readyLine += readLine.section(delimiter, XemaEnums::TIIRA_YCOORD, XemaEnums::TIIRA_YCOORD);
+        readyLine += y;
     }
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_ACCURACY, XemaEnums::TIIRA_ACCURACY);
+    int tiira_accuracy = sectionMap.value(XemaEnums::TIIRA_ACCURACY);
+    readyLine += readLine.section(delimiter, tiira_accuracy, tiira_accuracy);
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_BIRD_XCOORD, XemaEnums::TIIRA_BIRD_XCOORD);
+    int tiira_bird_xcoord = sectionMap.value(XemaEnums::TIIRA_BIRD_XCOORD);
+    readyLine += readLine.section(delimiter, tiira_bird_xcoord, tiira_bird_xcoord);
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_BIRD_YCOORD, XemaEnums::TIIRA_BIRD_YCOORD);
+    int tiira_bird_ycoord = sectionMap.value(XemaEnums::TIIRA_BIRD_YCOORD);
+    readyLine += readLine.section(delimiter, tiira_bird_ycoord, tiira_bird_ycoord);
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_BIRD_ACCURACY, XemaEnums::TIIRA_BIRD_ACCURACY);
+    int tiira_bird_accuracy = sectionMap.value(XemaEnums::TIIRA_BIRD_ACCURACY);
+    readyLine += readLine.section(delimiter, tiira_bird_accuracy, tiira_bird_accuracy);
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_PAIKANNETTU, XemaEnums::TIIRA_PAIKANNETTU);
+    int tiira_paikannettu = sectionMap.value(XemaEnums::TIIRA_PAIKANNETTU);
+    readyLine += readLine.section(delimiter, tiira_paikannettu, tiira_paikannettu);
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_INFO, XemaEnums::TIIRA_INFO);
+    int tiira_info = sectionMap.value(XemaEnums::TIIRA_INFO);
+    readyLine += readLine.section(delimiter, tiira_info, tiira_info);
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_ATLAS, XemaEnums::TIIRA_ATLAS);
+    int tiira_atlas = sectionMap.value(XemaEnums::TIIRA_ATLAS);
+    readyLine += readLine.section(delimiter, tiira_atlas, tiira_atlas);
     readyLine.append("#");
 
-    QString saver = readLine.section(delimiter, XemaEnums::TIIRA_SAVER, XemaEnums::TIIRA_SAVER);
+    int tiira_saver = sectionMap.value(XemaEnums::TIIRA_SAVER);
+    QString saver = readLine.section(delimiter, tiira_saver, tiira_saver);
     readyLine += saver;
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_SAVETIME, XemaEnums::TIIRA_SAVETIME);
+    int tiira_savetime = sectionMap.value(XemaEnums::TIIRA_SAVETIME);
+    readyLine += readLine.section(delimiter, tiira_savetime, tiira_savetime);
     readyLine.append("#");
 
-    QString observers = readLine.section(delimiter, XemaEnums::TIIRA_PERSONS, XemaEnums::TIIRA_PERSONS);
+    int tiira_persons = sectionMap.value(XemaEnums::TIIRA_PERSONS);
+    QString observers = readLine.section(delimiter, tiira_persons, tiira_persons);
 //    observers.remove(saver);
 //    qDebug() << "OBS:" <<observers;
     QStringList observerList = observers.split(",");
@@ -1198,7 +1223,8 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
     readyLine.append("#"); // other people
 
     // hidden
-    if(QString::compare(readLine.section(delimiter, XemaEnums::TIIRA_HIDDEN, XemaEnums::TIIRA_HIDDEN),"X", Qt::CaseInsensitive)==0)
+    int tiira_hidden = sectionMap.value(XemaEnums::TIIRA_HIDDEN);
+    if(QString::compare(readLine.section(delimiter, tiira_hidden, tiira_hidden),"X", Qt::CaseInsensitive)==0)
     {
         readyLine.append("true#");
     }
@@ -1212,51 +1238,66 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
     readyLine += rowCount;
     readyLine.append("#");
 
-    QString weather = readLine.section(delimiter,XemaEnums::TIIRA_EXTRA_WEATHER,XemaEnums::TIIRA_EXTRA_WEATHER); // WEATHER ON INDIRECTIN PAIKALLA
+    int tiira_weather = sectionMap.value(XemaEnums::TIIRA_EXTRA_WEATHER);
+    QString weather = readLine.section(delimiter,tiira_weather,tiira_weather);
     for(int i = 0;i < lines.length();i++)
     {
         QString row;
-        row = lines.at(i).section(delimiter, XemaEnums::TIIRA_BIRDCOUNT, XemaEnums::TIIRA_INDIRECT);
+        int tiira_birdcount = sectionMap.value(XemaEnums::TIIRA_BIRDCOUNT);
+        int offset = tiira_birdcount;
+        int tiira_birdtime1 = sectionMap.value(XemaEnums::TIIRA_BIRDTIME1);
+        int tiira_birdtime2 = sectionMap.value(XemaEnums::TIIRA_BIRDTIME2);
+        int tiira_sex = sectionMap.value(XemaEnums::TIIRA_SEX);
+        int tiira_dress = sectionMap.value(XemaEnums::TIIRA_DRESS);
+        int tiira_age = sectionMap.value(XemaEnums::TIIRA_AGE);
+        int tiira_status = sectionMap.value(XemaEnums::TIIRA_STATUS);
+        int tiira_birdinfo = sectionMap.value(XemaEnums::TIIRA_BIRDINFO);
+        int tiira_loft = sectionMap.value(XemaEnums::TIIRA_LOFT);
+        int tiira_bongaus = sectionMap.value(XemaEnums::TIIRA_BONGAUS);
+        int tiira_nest = sectionMap.value(XemaEnums::TIIRA_NEST);
+        int tiira_indirect = sectionMap.value(XemaEnums::TIIRA_INDIRECT);
+
+        row = lines.at(i).section(delimiter, tiira_birdcount, tiira_indirect);
         for ( int faults = faultyLine; faults > 0; faults--) {
             int firstMark = row.indexOf(delimiter);
             row.remove(firstMark,1);
         }
 
-//        qDebug() << "alarivi" << row;
-        readyLine += row.section(delimiter,0,0);
+        //qDebug() << "alarivi" << i << "data" << row;
+        readyLine += row.section(delimiter,tiira_birdcount-offset,tiira_birdcount-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,1,1);
+        readyLine += row.section(delimiter,tiira_birdtime1-offset,tiira_birdtime1-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,2,2);
-        if (row.section(delimiter,3,3) == "k")
+        readyLine += row.section(delimiter,tiira_birdtime2-offset,tiira_birdtime2-offset);
+        if (row.section(delimiter,tiira_sex-offset,tiira_sex-offset) == "k")
         {
             readyLine.append("#koiras#");
         }
-        else if (row.section(delimiter,3,3) == "n")
+        else if (row.section(delimiter,tiira_sex-offset,tiira_sex-offset) == "n")
         {
             readyLine.append("#naaras#");
         }
-        else if (row.section(delimiter,3,3) == "p")
+        else if (row.section(delimiter,tiira_sex-offset,tiira_sex-offset) == "p")
         {
             readyLine.append("#pariutuneet#");
         }
         else
         {
             readyLine.append("#");
-            readyLine += row.section(delimiter,3,3);
+            readyLine += row.section(delimiter,tiira_sex-offset,tiira_sex-offset);
             readyLine.append("#");
         }
-        readyLine += row.section(delimiter,4,4);
+        readyLine += row.section(delimiter,tiira_dress-offset,tiira_dress-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,5,5);
+        readyLine += row.section(delimiter,tiira_age-offset,tiira_age-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,6,6);
+        readyLine += row.section(delimiter,tiira_status-offset,tiira_status-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,7,7);
+        readyLine += row.section(delimiter,tiira_birdinfo-offset,tiira_birdinfo-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,8,8);
+        readyLine += row.section(delimiter,tiira_loft-offset,tiira_loft-offset);
         readyLine.append("#");
-        if(QString::compare(row.section(delimiter,9,9),"X", Qt::CaseInsensitive)==0)
+        if(QString::compare(row.section(delimiter,tiira_bongaus-offset,tiira_bongaus-offset),"X", Qt::CaseInsensitive)==0)
         {
             readyLine.append("true#");
         }
@@ -1264,7 +1305,7 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
         {
             readyLine.append("false#");
         }
-        if(QString::compare(row.section(delimiter,10,10),"X", Qt::CaseInsensitive)==0)
+        if(QString::compare(row.section(delimiter,tiira_nest-offset,tiira_nest-offset),"X", Qt::CaseInsensitive)==0)
         {
             readyLine.append("true#");
         }
@@ -1273,14 +1314,14 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
             readyLine.append("false#");
         }
 
-        readyLine += row.section(delimiter,11,11);
+        readyLine += row.section(delimiter,tiira_indirect-offset,tiira_indirect-offset);
         readyLine.append("#");
     }
     readyLine.append(weather);
     // exported to true
     readyLine.append("#true#");
 
-//    qDebug() << "VALMIS RIVI" << readyLine;
+    //qDebug() << "VALMIS RIVI" << readyLine;
 
     writeNewObservation(readyLine);
 }
@@ -1687,4 +1728,208 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         }
     }
     return importError;
+}
+
+QMap<int, int> ModelDataWriter::getSectionNumbers(const QString &headerLine, const QString &delimiter) {
+    QMap<int, int> sections;
+    //qDebug() << Q_FUNC_INFO << "header" << headerLine;
+    QStringList headerSections = headerLine.toLower().split(delimiter);
+    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+    for (int i = XemaEnums::TIIRA_ID; i <= XemaEnums::TIIRA_EXTRA_COUNTRY; i++) {
+        switch (i) {
+            case XemaEnums::TIIRA_ID: {
+                int index = headerSections.indexOf("rivi-id");
+                if (index < 0) {
+                    index = headerSections.indexOf("havainto id");
+                }
+                if (index < 0) {
+                    index = headerSections.indexOf("id");
+                }
+                sections.insert(XemaEnums::TIIRA_ID, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SPECIES_ABBR: {
+                int index = headerSections.indexOf("laji");
+                sections.insert(XemaEnums::TIIRA_SPECIES_ABBR, index);
+                break;
+            }
+            case XemaEnums::TIIRA_DATE1: {
+                int index = headerSections.indexOf("pvm1");
+                sections.insert(XemaEnums::TIIRA_DATE1, index);
+                break;
+            }
+            case XemaEnums::TIIRA_DATE2: {
+                int index = headerSections.indexOf("pvm2");
+                sections.insert(XemaEnums::TIIRA_DATE2, index);
+                break;
+            }
+            case XemaEnums::TIIRA_TIME1: {
+                int index = headerSections.indexOf("kello_hav_1");
+                sections.insert(XemaEnums::TIIRA_TIME1, index);
+                break;
+            }
+            case XemaEnums::TIIRA_TIME2: {
+                int index = headerSections.indexOf("kello_hav_2");
+                sections.insert(XemaEnums::TIIRA_TIME2, index);
+                break;
+            }
+            case XemaEnums::TIIRA_TOWN: {
+                int index = headerSections.indexOf("kunta");
+                sections.insert(XemaEnums::TIIRA_TOWN, index);
+                break;
+            }
+            case XemaEnums::TIIRA_LOCATION: {
+                int index = headerSections.indexOf("paikka");
+                sections.insert(XemaEnums::TIIRA_LOCATION, index);
+                break;
+            }
+            case XemaEnums::TIIRA_YCOORD: {
+                int index = headerSections.indexOf("y-koord");
+                sections.insert(XemaEnums::TIIRA_YCOORD, index);
+                break;
+            }
+            case XemaEnums::TIIRA_XCOORD: {
+                int index = headerSections.indexOf("x-koord");
+                sections.insert(XemaEnums::TIIRA_XCOORD, index);
+                break;
+            }
+            case XemaEnums::TIIRA_ACCURACY: {
+                int index = headerSections.indexOf("tarkkuus");
+                sections.insert(XemaEnums::TIIRA_ACCURACY, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BIRD_XCOORD: {
+                int index = headerSections.indexOf("x-koord-linnun");
+                sections.insert(XemaEnums::TIIRA_BIRD_XCOORD, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BIRD_YCOORD: {
+                int index = headerSections.indexOf("y-koord-linnun");
+                sections.insert(XemaEnums::TIIRA_BIRD_YCOORD, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BIRD_ACCURACY: {
+                int index = headerSections.indexOf("tarkkuus_linnun");
+                sections.insert(XemaEnums::TIIRA_BIRD_ACCURACY, index);
+                break;
+            }
+            case XemaEnums::TIIRA_PAIKANNETTU: {
+                int index = headerSections.indexOf("paikannettu");
+                sections.insert(XemaEnums::TIIRA_PAIKANNETTU, index);
+                break;
+            }
+            case XemaEnums::TIIRA_INFO: {
+                int index = headerSections.indexOf("lisätietoja");
+                sections.insert(XemaEnums::TIIRA_INFO, index);
+                break;
+            }
+            case XemaEnums::TIIRA_ATLAS: {
+                int index = headerSections.indexOf("atlaskoodi");
+                sections.insert(XemaEnums::TIIRA_ATLAS, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SAVER: {
+                int index = headerSections.indexOf("tallentaja");
+                sections.insert(XemaEnums::TIIRA_SAVER, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SAVETIME: {
+                int index = headerSections.indexOf("tallennusaika");
+                sections.insert(XemaEnums::TIIRA_SAVETIME, index);
+                break;
+            }
+            case XemaEnums::TIIRA_PERSONS: {
+                int index = headerSections.indexOf("havainnoijat");
+                sections.insert(XemaEnums::TIIRA_PERSONS, index);
+                break;
+            }
+            case XemaEnums::TIIRA_HIDDEN: {
+                int index = headerSections.indexOf("salattu");
+                sections.insert(XemaEnums::TIIRA_HIDDEN, index);
+                break;
+            }
+            case XemaEnums::TIIRA_KOONTIHAVAINTO: {
+                int index = headerSections.indexOf("koontihavainto");
+                sections.insert(XemaEnums::TIIRA_KOONTIHAVAINTO, index);
+                break;
+            }
+            case XemaEnums::TIIRA_KUULUUHAVAINTOON: {
+                int index = headerSections.indexOf("kuuluu havaintoon");
+                sections.insert(XemaEnums::TIIRA_KUULUUHAVAINTOON, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BIRDCOUNT: {
+                int index = headerSections.indexOf("määrä");
+                sections.insert(XemaEnums::TIIRA_BIRDCOUNT, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BIRDTIME1: {
+                int index = headerSections.indexOf("kello_lintu_1");
+                sections.insert(XemaEnums::TIIRA_BIRDTIME1, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BIRDTIME2: {
+                int index = headerSections.indexOf("kello_lintu_2");
+                sections.insert(XemaEnums::TIIRA_BIRDTIME2, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SEX: {
+                int index = headerSections.indexOf("sukupuoli");
+                sections.insert(XemaEnums::TIIRA_SEX, index);
+                break;
+            }
+            case XemaEnums::TIIRA_DRESS: {
+                int index = headerSections.indexOf("puku");
+                sections.insert(XemaEnums::TIIRA_DRESS, index);
+                break;
+            }
+            case XemaEnums::TIIRA_AGE: {
+                int index = headerSections.indexOf("ikä");
+                sections.insert(XemaEnums::TIIRA_AGE, index);
+                break;
+            }
+            case XemaEnums::TIIRA_STATUS: {
+                int index = headerSections.indexOf("tila");
+                sections.insert(XemaEnums::TIIRA_STATUS, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BIRDINFO: {
+                int index = headerSections.indexOf("lisätietoja_2");
+                sections.insert(XemaEnums::TIIRA_BIRDINFO, index);
+                break;
+            }
+            case XemaEnums::TIIRA_LOFT: {
+                int index = headerSections.indexOf("parvi");
+                sections.insert(XemaEnums::TIIRA_LOFT, index);
+                break;
+            }
+            case XemaEnums::TIIRA_BONGAUS: {
+                int index = headerSections.indexOf("bongattu");
+                sections.insert(XemaEnums::TIIRA_BONGAUS, index);
+                break;
+            }
+            case XemaEnums::TIIRA_NEST: {
+                int index = headerSections.indexOf("pesintä");
+                sections.insert(XemaEnums::TIIRA_NEST, index);
+                break;
+            }
+            case XemaEnums::TIIRA_INDIRECT: {
+                int index = headerSections.indexOf("epäsuora havainto");
+                sections.insert(XemaEnums::TIIRA_INDIRECT, index);
+                break;
+            }
+            case XemaEnums::TIIRA_EXTRA_WEATHER: {
+                int index = headerSections.indexOf("sää");
+                sections.insert(XemaEnums::TIIRA_EXTRA_WEATHER, index);
+                break;
+            }
+            case XemaEnums::TIIRA_EXTRA_COUNTRY: {
+                int index = headerSections.indexOf("maa");
+                sections.insert(XemaEnums::TIIRA_EXTRA_COUNTRY, index);
+                break;
+            }
+        }
+    }
+
+    return sections;
 }

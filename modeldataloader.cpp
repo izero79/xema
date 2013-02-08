@@ -1052,7 +1052,7 @@ void ModelDataLoader::loadDirectionData(DirectionModel *model)
         line = striimi.readLine();
         if (line.isEmpty() == false)
         {
-            qDebug() << "loadDirectionData" << line;
+            //qDebug() << "loadDirectionData" << line;
             Direction item(line.section(';', XemaEnums::DIRECTION_VALUE, XemaEnums::DIRECTION_VALUE),
                        line.section(';', XemaEnums::DIRECTION_FIN, XemaEnums::DIRECTION_FIN),
                        line.section(';', XemaEnums::DIRECTION_SWE, XemaEnums::DIRECTION_SWE),
