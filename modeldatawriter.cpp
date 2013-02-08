@@ -1387,6 +1387,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
         QString delimiter("#");
         int delimCount = 0;
+        QMap<int, int> sectionMap;
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
@@ -1403,6 +1404,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 }
                 continue;
             }
+            sectionMap = getLocationSectionNumbers(line, delimiter);
             importstream.seek(0);
         }
         while (importstream.atEnd() == false) {
@@ -1412,19 +1414,30 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             if (firstSection == "kunta" || firstSection == "town_fi" ) {
                 continue;
             }
+            int location_town = sectionMap.value(XemaEnums::LOCATION_TOWN);
+            int location_place = sectionMap.value(XemaEnums::LOCATION_PLACE);
+            int location_wgs = sectionMap.value(XemaEnums::LOCATION_WGS);
+            int location_ykj = sectionMap.value(XemaEnums::LOCATION_YKJ);
+            int location_swetown = sectionMap.value(XemaEnums::LOCATION_SWETOWN);
+            int location_engtown = sectionMap.value(XemaEnums::LOCATION_ENGTOWN);
+            int location_sweplace = sectionMap.value(XemaEnums::LOCATION_SWEPLACE);
+            int location_engplace = sectionMap.value(XemaEnums::LOCATION_ENGPLACE);
+            int location_country = sectionMap.value(XemaEnums::LOCATION_COUNTRY);
+            int location_swecountry = sectionMap.value(XemaEnums::LOCATION_SWECOUNTRY);
+            int location_engcountry = sectionMap.value(XemaEnums::LOCATION_ENGCOUNTRY);
 
-            Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
-                              locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
-                              locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
-                              locationLine.section(';', XemaEnums::LOCATION_YKJ, XemaEnums::LOCATION_YKJ));
-            location.setSweTown(locationLine.section(';', XemaEnums::LOCATION_SWETOWN, XemaEnums::LOCATION_SWETOWN));
-            location.setEngTown(locationLine.section(';', XemaEnums::LOCATION_ENGTOWN, XemaEnums::LOCATION_ENGTOWN));
-            location.setSwePlace(locationLine.section(';', XemaEnums::LOCATION_SWEPLACE, XemaEnums::LOCATION_SWEPLACE));
-            location.setEngPlace(locationLine.section(';', XemaEnums::LOCATION_ENGPLACE, XemaEnums::LOCATION_ENGPLACE));
+            Location location(locationLine.section(';', location_town, location_town),
+                              locationLine.section(';', location_place, location_place),
+                              locationLine.section(';', location_wgs, location_wgs),
+                              locationLine.section(';', location_ykj, location_ykj));
+            location.setSweTown(locationLine.section(';', location_swetown, location_swetown));
+            location.setEngTown(locationLine.section(';', location_engtown, location_engtown));
+            location.setSwePlace(locationLine.section(';', location_sweplace, location_sweplace));
+            location.setEngPlace(locationLine.section(';', location_engplace, location_engplace));
             if( delimCount > 9) {
-                location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
-                location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
-                location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
+                location.setFinCountry(locationLine.section(';', location_country, location_country));
+                location.setSweCountry(locationLine.section(';', location_swecountry, location_swecountry));
+                location.setEngCountry(locationLine.section(';', location_engcountry, location_engcountry));
             }
             location.setCustom(true);
 
@@ -1485,6 +1498,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
+        QMap<int, int> sectionMap;
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
@@ -1500,6 +1514,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
             importstream.seek(0);
+            sectionMap = getLocationSectionNumbers(line, delimiter);
         }
         while (importstream.atEnd() == false) {
             QString importLine;
@@ -1507,13 +1522,21 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             if(importLine.section(';', XemaEnums::PERSON_FIRSTNAME, XemaEnums::PERSON_FIRSTNAME) == "firstname") {
                 continue;
             }
+            int person_registered = sectionMap.value(XemaEnums::PERSON_REGISTERED);
+            int person_default = sectionMap.value(XemaEnums::PERSON_DEFAULT);
+            int person_firstname = sectionMap.value(XemaEnums::PERSON_FIRSTNAME);
+            int person_surname = sectionMap.value(XemaEnums::PERSON_SURNAME);
             bool registered = false;
-            if (QString::compare(importLine.section(';', XemaEnums::PERSON_REGISTERED, XemaEnums::PERSON_REGISTERED), "true", Qt::CaseInsensitive) == 0) {
+            if (QString::compare(importLine.section(';', person_registered, person_registered), "true", Qt::CaseInsensitive) == 0) {
                 registered = true;
             }
-            Person person(importLine.section(';', XemaEnums::PERSON_FIRSTNAME, XemaEnums::PERSON_FIRSTNAME),
-                              importLine.section(';', XemaEnums::PERSON_SURNAME, XemaEnums::PERSON_SURNAME),
-                              registered, false );
+            bool defaultName = false;
+            if (QString::compare(importLine.section(';', person_default, person_default), "true", Qt::CaseInsensitive) == 0) {
+                defaultName = true;
+            }
+            Person person(importLine.section(';', person_firstname, person_firstname),
+                              importLine.section(';', person_surname, person_surname),
+                              registered, defaultName );
             int rows = persons->rowCount();
             bool matchFound = false;
             for (int i = 0; i < rows; i++) {
@@ -1565,6 +1588,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
+        QMap<int, int> sectionMap;
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
@@ -1580,6 +1604,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
             importstream.seek(0);
+            sectionMap = getLocationSectionNumbers(line, delimiter);
         }
         while (importstream.atEnd() == false) {
             QString importLine;
@@ -1590,18 +1615,30 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
 
-            Bird bird(importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID).toInt(),
-                       importLine.section(';', XemaEnums::BIRD_FIN_GROUP, XemaEnums::BIRD_FIN_GROUP),
-                       importLine.section(';', XemaEnums::BIRD_SWE_GROUP, XemaEnums::BIRD_SWE_GROUP),
-                       importLine.section(';', XemaEnums::BIRD_LATIN_GROUP, XemaEnums::BIRD_LATIN_GROUP),
-                       importLine.section(';', XemaEnums::BIRD_FIN_NAME, XemaEnums::BIRD_FIN_NAME),
-                       importLine.section(';', XemaEnums::BIRD_SWE_NAME, XemaEnums::BIRD_SWE_NAME),
-                       importLine.section(';', XemaEnums::BIRD_ABBREV, XemaEnums::BIRD_ABBREV),
-                       importLine.section(';', XemaEnums::BIRD_LATIN_NAME, XemaEnums::BIRD_LATIN_NAME),
-                       importLine.section(';', XemaEnums::BIRD_CATEGORY, XemaEnums::BIRD_CATEGORY));
+            int bird_id = sectionMap.value(XemaEnums::BIRD_ID);
+            int bird_fin_group = sectionMap.value(XemaEnums::BIRD_FIN_GROUP);
+            int bird_swe_group = sectionMap.value(XemaEnums::BIRD_SWE_GROUP);
+            int bird_latin_group = sectionMap.value(XemaEnums::BIRD_LATIN_GROUP);
+            int bird_fin_name = sectionMap.value(XemaEnums::BIRD_FIN_NAME);
+            int bird_swe_name = sectionMap.value(XemaEnums::BIRD_SWE_NAME);
+            int bird_abbrev = sectionMap.value(XemaEnums::BIRD_ABBREV);
+            int bird_latin_name = sectionMap.value(XemaEnums::BIRD_LATIN_NAME);
+            int bird_category = sectionMap.value(XemaEnums::BIRD_CATEGORY);
+            int bird_eng_name = sectionMap.value(XemaEnums::BIRD_ENG_NAME);
+            int bird_eng_group = sectionMap.value(XemaEnums::BIRD_ENG_GROUP);
+
+            Bird bird(importLine.section(';', bird_id, bird_id).toInt(),
+                       importLine.section(';', bird_fin_group, bird_fin_group),
+                       importLine.section(';', bird_swe_group, bird_swe_group),
+                       importLine.section(';', bird_latin_group, bird_latin_group),
+                       importLine.section(';', bird_fin_name, bird_fin_name),
+                       importLine.section(';', bird_swe_name, bird_swe_name),
+                       importLine.section(';', bird_abbrev, bird_abbrev),
+                       importLine.section(';', bird_latin_name, bird_latin_name),
+                       importLine.section(';', bird_category, bird_category));
             // TODO LOC
-            bird.setEngName(importLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
-            bird.setEngGroup(importLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
+            bird.setEngName(importLine.section(';', bird_eng_name, bird_eng_name));
+            bird.setEngGroup(importLine.section(';', bird_eng_group, bird_eng_group));
             bird.setCustom(true);
 
             int rows = birds->rowCount();
@@ -1661,6 +1698,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importstream.setCodec("ISO 8859-1");
 
         QString delimiter("#");
+        QMap<int, int> sectionMap;
 
         if (importstream.atEnd() == false) {
             QString line = importstream.readLine();
@@ -1676,6 +1714,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
             importstream.seek(0);
+            sectionMap = getLocationSectionNumbers(line, delimiter);
         }
         while (importstream.atEnd() == false) {
             QString importLine;
@@ -1683,11 +1722,15 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             if(importLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV) == "abbrev") {
                 continue;
             }
+            int status_finname = sectionMap.value(XemaEnums::STATUS_FINNAME);
+            int status_swename = sectionMap.value(XemaEnums::STATUS_SWENAME);
+            int status_engname = sectionMap.value(XemaEnums::STATUS_ENGNAME);
+            int status_finabbrev = sectionMap.value(XemaEnums::STATUS_FINABBREV);
 
-            Status status(importLine.section(';', XemaEnums::STATUS_FINNAME, XemaEnums::STATUS_FINNAME),
-                       importLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV),
-                       importLine.section(';', XemaEnums::STATUS_SWENAME, XemaEnums::STATUS_SWENAME),
-                       importLine.section(';', XemaEnums::STATUS_ENGNAME, XemaEnums::STATUS_ENGNAME));
+            Status status(importLine.section(';', status_finname, status_finname),
+                       importLine.section(';', status_swename, status_swename),
+                       importLine.section(';', status_engname, status_engname),
+                       importLine.section(';', status_finabbrev, status_finabbrev));
 
             status.setCustom(true);
             int rows = statuses->rowCount();
