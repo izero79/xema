@@ -5,7 +5,7 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QStringList>
- 
+
 #include "modeldatawriter.h"
 #include "birdmodel.h"
 #include "bird.h"
@@ -1085,7 +1085,7 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
             ykj.append(x);
             ykj.append(":");
             ykj.append(y);
-            if (x.isEmpty() == false && y.isEmpty() == false)
+            if (x.isEmpty() == false && y.isEmpty() == false && x != "0" && y != "0")
             {
                 double dx = x.toDouble();
                 double dy = y.toDouble();
@@ -1102,20 +1102,28 @@ void ModelDataWriter::importLine(const QStringList &lines, LocationModel *locati
                 wgs = wgsX;
                 wgs.append(":");
                 wgs.append(wgsY);
+                tmp.setYKJCoordinate(ykj);
+                tmp.setWGSCoordinate(wgs);
             }
-
-            tmp.setYKJCoordinate(ykj);
-            tmp.setWGSCoordinate(wgs);
-            tmp.setFinCountry(country);
+            if (country.isEmpty() == false) {
+              tmp.setFinCountry(country);
+            }
             tmp.setCustom(true);
             locations->addItem(tmp);
         }
     }
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_XCOORD, XemaEnums::TIIRA_XCOORD);
+    QString x = readLine.section(delimiter, XemaEnums::TIIRA_XCOORD, XemaEnums::TIIRA_XCOORD);
+    QString y = readLine.section(delimiter, XemaEnums::TIIRA_YCOORD, XemaEnums::TIIRA_YCOORD);
+
+    if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {
+        readyLine += readLine.section(delimiter, XemaEnums::TIIRA_XCOORD, XemaEnums::TIIRA_XCOORD);
+    }
     readyLine.append("#");
 
-    readyLine += readLine.section(delimiter, XemaEnums::TIIRA_YCOORD, XemaEnums::TIIRA_YCOORD);
+    if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {
+        readyLine += readLine.section(delimiter, XemaEnums::TIIRA_YCOORD, XemaEnums::TIIRA_YCOORD);
+    }
     readyLine.append("#");
 
     readyLine += readLine.section(delimiter, XemaEnums::TIIRA_ACCURACY, XemaEnums::TIIRA_ACCURACY);
@@ -1540,7 +1548,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             if( firstSection == "Id" || firstSection == "id" ) {
                 continue;
             }
-            
+
             Bird bird(importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID).toInt(),
                        importLine.section(';', XemaEnums::BIRD_FIN_GROUP, XemaEnums::BIRD_FIN_GROUP),
                        importLine.section(';', XemaEnums::BIRD_SWE_GROUP, XemaEnums::BIRD_SWE_GROUP),
