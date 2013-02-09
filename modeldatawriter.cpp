@@ -1991,6 +1991,9 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
             }
             case XemaEnums::BIRD_FIN_GROUP: {
                 int index = headerSections.indexOf("group_fi");
+                if (index < 0) {
+                    index = headerSections.indexOf("ryhmä");
+                }
                 sections.insert(XemaEnums::BIRD_FIN_GROUP, index);
                 break;
             }
@@ -2006,21 +2009,33 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
             }
             case XemaEnums::BIRD_FIN_NAME: {
                 int index = headerSections.indexOf("name_fi");
+                if (index < 0) {
+                    index = headerSections.indexOf("laji");
+                }
                 sections.insert(XemaEnums::BIRD_FIN_NAME, index);
                 break;
             }
             case XemaEnums::BIRD_SWE_NAME: {
                 int index = headerSections.indexOf("name_sv");
+                if (index < 0) {
+                    index = headerSections.indexOf("art");
+                }
                 sections.insert(XemaEnums::BIRD_SWE_NAME, index);
                 break;
             }
             case XemaEnums::BIRD_LATIN_NAME: {
                 int index = headerSections.indexOf("name_lat");
+                if (index < 0) {
+                    index = headerSections.indexOf("latin");
+                }
                 sections.insert(XemaEnums::BIRD_LATIN_NAME, index);
                 break;
             }
             case XemaEnums::BIRD_ABBREV: {
                 int index = headerSections.indexOf("abbrev_lat");
+                if (index < 0) {
+                    index = headerSections.indexOf("abbrev");
+                }
                 sections.insert(XemaEnums::BIRD_ABBREV, index);
                 break;
             }
@@ -2031,11 +2046,17 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
             }
             case XemaEnums::BIRD_ENG_NAME: {
                 int index = headerSections.indexOf("name_en");
+                if (index < 0) {
+                    index = headerSections.indexOf("species");
+                }
                 sections.insert(XemaEnums::BIRD_ENG_NAME, index);
                 break;
             }
             case XemaEnums::BIRD_SWE_GROUP: {
                 int index = headerSections.indexOf("group_sv");
+                if (index < 0) {
+                    index = headerSections.indexOf("grupp_sv");
+                }
                 sections.insert(XemaEnums::BIRD_SWE_GROUP, index);
                 break;
             }
@@ -2053,57 +2074,69 @@ QMap<int, int> ModelDataWriter::getLocationSectionNumbers(const QString &headerL
     for (int i = XemaEnums::LOCATION_TOWN; i <= XemaEnums::LOCATION_ENGCOUNTRY; i++) {
         switch (i) {
             case XemaEnums::LOCATION_TOWN: {
-                int index = headerSections.indexOf("id");
+                int index = headerSections.indexOf("town_fi");
+                if (index < 0) {
+                    index = headerSections.indexOf("kunta");
+                }
                 sections.insert(XemaEnums::LOCATION_TOWN, index);
                 break;
             }
             case XemaEnums::LOCATION_PLACE: {
-                int index = headerSections.indexOf("group_fi");
+                int index = headerSections.indexOf("place_fi");
+                if (index < 0) {
+                    index = headerSections.indexOf("paikka");
+                }
                 sections.insert(XemaEnums::LOCATION_PLACE, index);
                 break;
             }
             case XemaEnums::LOCATION_WGS: {
-                int index = headerSections.indexOf("group_en");
+                int index = headerSections.indexOf("wgs");
                 sections.insert(XemaEnums::LOCATION_WGS, index);
                 break;
             }
             case XemaEnums::LOCATION_YKJ: {
-                int index = headerSections.indexOf("group_lat");
+                int index = headerSections.indexOf("ykj");
                 sections.insert(XemaEnums::LOCATION_YKJ, index);
                 break;
             }
             case XemaEnums::LOCATION_SWETOWN: {
-                int index = headerSections.indexOf("name_fi");
+                int index = headerSections.indexOf("town_sv");
+                if (index < 0) {
+                    index = headerSections.indexOf("ort_sv");
+                }
                 sections.insert(XemaEnums::LOCATION_SWETOWN, index);
                 break;
             }
             case XemaEnums::LOCATION_SWEPLACE: {
-                int index = headerSections.indexOf("name_sv");
+                int index = headerSections.indexOf("place_sv");
+                if (index < 0) {
+                    index = headerSections.indexOf("plats_sv");
+                }
                 sections.insert(XemaEnums::LOCATION_SWEPLACE, index);
                 break;
             }
             case XemaEnums::LOCATION_ENGTOWN: {
-                int index = headerSections.indexOf("name_lat");
+                int index = headerSections.indexOf("town_en");
                 sections.insert(XemaEnums::LOCATION_ENGTOWN, index);
                 break;
             }
             case XemaEnums::LOCATION_ENGPLACE: {
-                int index = headerSections.indexOf("abbrev_lat");
+                int index = headerSections.indexOf("place_en");
                 sections.insert(XemaEnums::LOCATION_ENGPLACE, index);
                 break;
             }
             case XemaEnums::LOCATION_COUNTRY: {
-                int index = headerSections.indexOf("category");
+                int index = headerSections.indexOf("country_fi");
                 sections.insert(XemaEnums::LOCATION_COUNTRY, index);
                 break;
             }
             case XemaEnums::LOCATION_SWECOUNTRY: {
-                int index = headerSections.indexOf("name_en");
+                int index = headerSections.indexOf("country_sv");
                 sections.insert(XemaEnums::LOCATION_SWECOUNTRY, index);
                 break;
             }
             case XemaEnums::LOCATION_ENGCOUNTRY: {
-                int index = headerSections.indexOf("group_sv");
+                int index = headerSections.indexOf("country_en");
                 sections.insert(XemaEnums::LOCATION_ENGCOUNTRY, index);
                 break;
             }
@@ -2127,6 +2160,9 @@ QMap<int, int> ModelDataWriter::getPersonSectionNumbers(const QString &headerLin
             }
             case XemaEnums::PERSON_SURNAME: {
                 int index = headerSections.indexOf("lastname");
+                if (index < 0) {
+                    index = headerSections.indexOf("surname");
+                }
                 sections.insert(XemaEnums::PERSON_SURNAME, index);
                 break;
             }
@@ -2160,6 +2196,9 @@ QMap<int, int> ModelDataWriter::getStatusSectionNumbers(const QString &headerLin
             }
             case XemaEnums::STATUS_FINNAME: {
                 int index = headerSections.indexOf("status_fi");
+                if (index < 0) {
+                    index = headerSections.indexOf("tila");
+                }
                 sections.insert(XemaEnums::STATUS_FINNAME, index);
                 break;
             }
