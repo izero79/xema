@@ -826,7 +826,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     loppu.prepend("#");
     loppu.append("#");
     loppu.append(country);
-    loppu.append("#");
+    //loppu.append("#");
 
     QString firstRow = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_INDIRECT);
     firstRow.replace("#koiras#", "#k#");
