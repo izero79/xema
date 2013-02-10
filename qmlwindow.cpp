@@ -338,7 +338,7 @@ void QMLWindow::importOwnData()
 void QMLWindow::importData()
 {
     setProcessing(true);
-    int err = mDataWriter->importHistory(mLocationModel, mPersonModel);
+    int err = mDataWriter->importHistory(mLocationModel, mPersonModel, mStatusModel, mBirdModel);
     if (err&XemaEnums::IMPORT_HISTORY_OK) {
         reloadHistory();
     }

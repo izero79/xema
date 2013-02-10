@@ -199,48 +199,12 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         line.append(";");
         if (ykj.isEmpty() == true && wgs.isEmpty() == false)
         {
-            ykj = mCoordinates->wgsToYkjString(wgs);/*
-            QString x = wgs.section(":", 0, 0);
-            QString y = wgs.section(":", 1, 1);
-            double dx = x.toDouble();
-            double dy = y.toDouble();
-            double ykjx = 0;
-            double ykjy = 0;
-            QPair<double,double> newCoord;
-            newCoord = mCoordinates->wgsToykj(dx, dy);
-            ykjx = newCoord.first;
-            ykjy = newCoord.second;
-            long newX = ykjx;
-            long newY = ykjy;
-            QString ykjX;
-            ykjX.setNum(newX);
-            QString ykjY;
-            ykjY.setNum(newY);
-            ykj = ykjX;
-            ykj.append(":");
-            ykj.append(ykjY);*/
+            ykj = mCoordinates->wgsToYkjString(wgs);
         }
 
         if (ykj.isEmpty() == false && wgs.isEmpty() == true)
         {
-            wgs = mCoordinates->ykjToWgsString(ykj);/*
-            QString x = ykj.section(":", 0, 0);
-            QString y = ykj.section(":", 1, 1);
-            double dx = x.toDouble();
-            double dy = y.toDouble();
-            double wgsx = 0;
-            double wgsy = 0;
-            QPair<double,double> newCoord;
-            newCoord = mCoordinates->ykjTowgs(dx, dy);
-            wgsx = newCoord.first;
-            wgsy = newCoord.second;
-            QString wgsX;
-            wgsX.setNum(wgsx,'g',6);
-            QString wgsY;
-            wgsY.setNum(wgsy,'g',6);
-            wgs = wgsX;
-            wgs.append(":");
-            wgs.append(wgsY);*/
+            wgs = mCoordinates->ykjToWgsString(ykj);
         }
 
         line.append(wgs);
@@ -907,7 +871,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     return eka;
 }
 
-int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *persons)
+int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *persons, StatusModel *statuses, BirdModel *birds)
 {
     int importError = XemaEnums::IMPORT_NOERRORS;
 //    qDebug() << "IMPORT";
@@ -951,7 +915,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
             }
             sectionMap = getHistorySectionNumbers(line, delimiter);
         }
-        //qDebug() << Q_FUNC_INFO << sectionMap;
+//        qDebug() << Q_FUNC_INFO << sectionMap;
         QStringList prevLines;
         QString currentLine;
         bool previousNotHandled = true;
@@ -980,14 +944,14 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
             else
             {
 //                qDebug() << "IMPORT eri id, kasittele edelliset nyt" << currentLine;
-                importLineWithSections(sectionMap, prevLines, locations, persons, delimiter);
+                importLineWithSections(sectionMap, prevLines, locations, persons, delimiter, statuses, birds);
                 prevLines.clear();
                 prevLines.append(currentLine);
                 previousNotHandled = false;
             }
         }
 
-        importLineWithSections(sectionMap, prevLines, locations, persons, delimiter);
+        importLineWithSections(sectionMap, prevLines, locations, persons, delimiter, statuses, birds);
 
         QDateTime date;
         date = QDateTime::currentDateTime();
@@ -1010,7 +974,7 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
     return importError;
 }
 
-void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter)
+void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter, StatusModel *statuses, BirdModel *birds)
 {
     if (lines.size() < 1)
     {
@@ -1029,6 +993,27 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     int tiira_abbr = sectionMap.value(XemaEnums::TIIRA_SPECIES_ABBR);
     QString speciesAbbrev = readLine.section(delimiter,tiira_abbr,tiira_abbr);
     readyLine.append(speciesAbbrev);
+
+    if (birds && speciesAbbrev.trimmed().isEmpty() == false ) {
+        bool birdExists = false;
+        for (int i = 0; i < birds->rowCount(); i++) {
+            if (QString::compare(speciesAbbrev,birds->getItem(i).abbreviation(), Qt::CaseInsensitive) == 0 ) {
+                birdExists = true;
+                break;
+            }
+        }
+        if (birdExists == false && speciesAbbrev.trimmed().isEmpty() == false) {
+            Bird tmp;
+            tmp.setAbbreviation(speciesAbbrev);
+            tmp.setFinName(speciesAbbrev);
+            tmp.setSweName(speciesAbbrev);
+            tmp.setEngName(speciesAbbrev);
+            tmp.setLatinName(speciesAbbrev);
+            tmp.setCustom(true);
+            birds->addItem(tmp);
+        }
+    }
+
 
     int tiira_date1 = sectionMap.value(XemaEnums::TIIRA_DATE1);
     int tiira_date2 = sectionMap.value(XemaEnums::TIIRA_DATE2);
@@ -1079,7 +1064,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     int tiira_xcoord = sectionMap.value(XemaEnums::TIIRA_XCOORD);
     int tiira_ycoord = sectionMap.value(XemaEnums::TIIRA_YCOORD);
 
-    if (locations) {
+    if (locations && town.trimmed().isEmpty() == false && location.trimmed().isEmpty() == false) {
         bool locationExists = false;
         for (int i = 0; i < locations->rowCount(); i++) {
             if (QString::compare(town,locations->getItem(i).town(), Qt::CaseInsensitive) == 0 ) {
@@ -1291,7 +1276,8 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
         readyLine.append("#");
         readyLine += row.section(delimiter,tiira_age-offset,tiira_age-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,tiira_status-offset,tiira_status-offset);
+        QString status = row.section(delimiter,tiira_status-offset,tiira_status-offset);
+        readyLine += status;
         readyLine.append("#");
         readyLine += row.section(delimiter,tiira_birdinfo-offset,tiira_birdinfo-offset);
         readyLine.append("#");
@@ -1316,6 +1302,23 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
 
         readyLine += row.section(delimiter,tiira_indirect-offset,tiira_indirect-offset);
         readyLine.append("#");
+
+        if (statuses && status.trimmed().isEmpty() == false ) {
+            bool statusExists = false;
+            for (int i = 0; i < statuses->rowCount(); i++) {
+                if (QString::compare(status,statuses->getItem(i).abbreviation(), Qt::CaseInsensitive) == 0 ) {
+                    statusExists = true;
+                    break;
+                }
+            }
+            if (statusExists == false && status.trimmed().isEmpty() == false) {
+                Status tmp;
+                tmp.setAbbrev(status);
+                tmp.setCustom(true);
+                statuses->addItem(tmp);
+            }
+        }
+
     }
     readyLine.append(weather);
     // exported to true
@@ -1410,10 +1413,6 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         while (importstream.atEnd() == false) {
             QString locationLine;
             locationLine = importstream.readLine();
-            QString firstSection = locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN);
-            if (firstSection == "kunta" || firstSection == "town_fi" ) {
-                continue;
-            }
             int location_town = sectionMap.value(XemaEnums::LOCATION_TOWN);
             int location_place = sectionMap.value(XemaEnums::LOCATION_PLACE);
             int location_wgs = sectionMap.value(XemaEnums::LOCATION_WGS);
@@ -1425,6 +1424,11 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             int location_country = sectionMap.value(XemaEnums::LOCATION_COUNTRY);
             int location_swecountry = sectionMap.value(XemaEnums::LOCATION_SWECOUNTRY);
             int location_engcountry = sectionMap.value(XemaEnums::LOCATION_ENGCOUNTRY);
+
+            QString firstSection = locationLine.section(';', location_town, location_town);
+            if (firstSection == "kunta" || firstSection == "town_fi" ) {
+                continue;
+            }
 
             Location location(locationLine.section(';', location_town, location_town),
                               locationLine.section(';', location_place, location_place),
@@ -1514,18 +1518,19 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
             importstream.seek(0);
-            sectionMap = getLocationSectionNumbers(line, delimiter);
+            sectionMap = getPersonSectionNumbers(line, delimiter);
+//            qDebug() << sectionMap;
         }
         while (importstream.atEnd() == false) {
             QString importLine;
             importLine = importstream.readLine();
-            if(importLine.section(';', XemaEnums::PERSON_FIRSTNAME, XemaEnums::PERSON_FIRSTNAME) == "firstname") {
-                continue;
-            }
             int person_registered = sectionMap.value(XemaEnums::PERSON_REGISTERED);
             int person_default = sectionMap.value(XemaEnums::PERSON_DEFAULT);
             int person_firstname = sectionMap.value(XemaEnums::PERSON_FIRSTNAME);
             int person_surname = sectionMap.value(XemaEnums::PERSON_SURNAME);
+            if(importLine.section(';', person_firstname, person_firstname) == "firstname") {
+                continue;
+            }
             bool registered = false;
             if (QString::compare(importLine.section(';', person_registered, person_registered), "true", Qt::CaseInsensitive) == 0) {
                 registered = true;
@@ -1604,17 +1609,12 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
             importstream.seek(0);
-            sectionMap = getLocationSectionNumbers(line, delimiter);
+            sectionMap = getBirdSectionNumbers(line, delimiter);
+//            qDebug() << sectionMap;
         }
         while (importstream.atEnd() == false) {
             QString importLine;
             importLine = importstream.readLine();
-            QString firstSection = importLine.section(';', XemaEnums::BIRD_ID, XemaEnums::BIRD_ID);
-
-            if( firstSection == "Id" || firstSection == "id" ) {
-                continue;
-            }
-
             int bird_id = sectionMap.value(XemaEnums::BIRD_ID);
             int bird_fin_group = sectionMap.value(XemaEnums::BIRD_FIN_GROUP);
             int bird_swe_group = sectionMap.value(XemaEnums::BIRD_SWE_GROUP);
@@ -1627,14 +1627,22 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             int bird_eng_name = sectionMap.value(XemaEnums::BIRD_ENG_NAME);
             int bird_eng_group = sectionMap.value(XemaEnums::BIRD_ENG_GROUP);
 
+            QString firstSection = importLine.section(';', bird_id, bird_id);
+
+            if( firstSection == "Id" || firstSection == "id" ) {
+                continue;
+            }
+
+            qDebug() << "suomigroup" << importLine.section(';', bird_fin_group, bird_fin_group);
+
             Bird bird(importLine.section(';', bird_id, bird_id).toInt(),
                        importLine.section(';', bird_fin_group, bird_fin_group),
                        importLine.section(';', bird_swe_group, bird_swe_group),
                        importLine.section(';', bird_latin_group, bird_latin_group),
                        importLine.section(';', bird_fin_name, bird_fin_name),
                        importLine.section(';', bird_swe_name, bird_swe_name),
-                       importLine.section(';', bird_abbrev, bird_abbrev),
                        importLine.section(';', bird_latin_name, bird_latin_name),
+                       importLine.section(';', bird_abbrev, bird_abbrev),
                        importLine.section(';', bird_category, bird_category));
             // TODO LOC
             bird.setEngName(importLine.section(';', bird_eng_name, bird_eng_name));
@@ -1714,23 +1722,25 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
             importstream.seek(0);
-            sectionMap = getLocationSectionNumbers(line, delimiter);
+            sectionMap = getStatusSectionNumbers(line, delimiter);
         }
         while (importstream.atEnd() == false) {
             QString importLine;
             importLine = importstream.readLine();
-            if(importLine.section(';', XemaEnums::STATUS_FINABBREV, XemaEnums::STATUS_FINABBREV) == "abbrev") {
-                continue;
-            }
             int status_finname = sectionMap.value(XemaEnums::STATUS_FINNAME);
             int status_swename = sectionMap.value(XemaEnums::STATUS_SWENAME);
             int status_engname = sectionMap.value(XemaEnums::STATUS_ENGNAME);
             int status_finabbrev = sectionMap.value(XemaEnums::STATUS_FINABBREV);
 
+            if(importLine.section(';', status_finabbrev, status_finabbrev) == "abbrev") {
+                continue;
+            }
+
             Status status(importLine.section(';', status_finname, status_finname),
+                       importLine.section(';', status_finabbrev, status_finabbrev),
                        importLine.section(';', status_swename, status_swename),
-                       importLine.section(';', status_engname, status_engname),
-                       importLine.section(';', status_finabbrev, status_finabbrev));
+                       importLine.section(';', status_engname, status_engname)
+                       );
 
             status.setCustom(true);
             int rows = statuses->rowCount();
@@ -1775,9 +1785,19 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 
 QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLine, const QString &delimiter) {
     QMap<int, int> sections;
-    //qDebug() << Q_FUNC_INFO << "header" << headerLine;
-    QStringList headerSections = headerLine.toLower().split(delimiter);
-    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+//    qDebug() << Q_FUNC_INFO << "header" << headerLine;
+    QString header = headerLine;
+    header = header.toLower();
+    header.replace(QRegExp(delimiter + "s.{2}(?![a-zA-Z])"), delimiter + "sää");
+    header.replace(QRegExp(delimiter + "ik.{1}(?![a-zA-Z])"), delimiter + "ikä");
+    header.replace(QRegExp(delimiter + "lis.{1}tietoja"), delimiter + "lisätietoja");
+    header.replace(QRegExp(delimiter + "m.{2}r.{1}(?![a-zA-Z])"), delimiter + "määrä");
+    header.replace(QRegExp(delimiter + "pesint.{1}(?![a-zA-Z])"), delimiter + "pesintä");
+    header.replace(QRegExp(delimiter + "ep.{1}suora"), delimiter + "epäsuora");
+//    qDebug() << Q_FUNC_INFO << "header nyt" << header;
+    QStringList headerSections = header.split(delimiter);
+
+//    qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
     for (int i = XemaEnums::TIIRA_ID; i <= XemaEnums::TIIRA_EXTRA_COUNTRY; i++) {
         switch (i) {
             case XemaEnums::TIIRA_ID: {
@@ -1862,7 +1882,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_INFO: {
-                int index = headerSections.indexOf("listietoja");
+                int index = headerSections.indexOf("lisätietoja");
                 sections.insert(XemaEnums::TIIRA_INFO, index);
                 break;
             }
@@ -1902,7 +1922,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_BIRDCOUNT: {
-                int index = headerSections.indexOf("mr");
+                int index = headerSections.indexOf("määrä");
                 sections.insert(XemaEnums::TIIRA_BIRDCOUNT, index);
                 break;
             }
@@ -1927,7 +1947,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_AGE: {
-                int index = headerSections.indexOf("ik");
+                int index = headerSections.indexOf("ikä");
                 sections.insert(XemaEnums::TIIRA_AGE, index);
                 break;
             }
@@ -1937,7 +1957,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_BIRDINFO: {
-                int index = headerSections.indexOf("listietoja_2");
+                int index = headerSections.indexOf("lisätietoja_2");
                 sections.insert(XemaEnums::TIIRA_BIRDINFO, index);
                 break;
             }
@@ -1952,17 +1972,20 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_NEST: {
-                int index = headerSections.indexOf("pesint");
+                int index = headerSections.indexOf("pesintä");
                 sections.insert(XemaEnums::TIIRA_NEST, index);
                 break;
             }
             case XemaEnums::TIIRA_INDIRECT: {
-                int index = headerSections.indexOf("epsuora havainto");
+                int index = headerSections.indexOf("epäsuora havainto");
                 sections.insert(XemaEnums::TIIRA_INDIRECT, index);
                 break;
             }
             case XemaEnums::TIIRA_EXTRA_WEATHER: {
-                int index = headerSections.indexOf("s");
+                int index = headerSections.indexOf(QString("sää"));
+                if (index < 0) {
+                    index = headerSections.indexOf("weather");
+                }
                 sections.insert(XemaEnums::TIIRA_EXTRA_WEATHER, index);
                 break;
             }
@@ -1979,9 +2002,12 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
 
 QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine, const QString &delimiter) {
     QMap<int, int> sections;
-    //qDebug() << Q_FUNC_INFO << "header" << headerLine;
-    QStringList headerSections = headerLine.toLower().split(delimiter);
-    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+    QString header = headerLine;
+//    qDebug() << Q_FUNC_INFO << "header" << header;
+    header.replace(QRegExp("ryhmä"), "group_fi");
+//    qDebug() << Q_FUNC_INFO << "header nyt" << header;
+    QStringList headerSections = header.toLower().split(delimiter);
+//    qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
     for (int i = XemaEnums::BIRD_ID; i <= XemaEnums::BIRD_SWE_GROUP; i++) {
         switch (i) {
             case XemaEnums::BIRD_ID: {
@@ -1991,6 +2017,9 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
             }
             case XemaEnums::BIRD_FIN_GROUP: {
                 int index = headerSections.indexOf("group_fi");
+                if (index < 0) {
+                    index = headerSections.indexOf("ryhmã¤");
+                }
                 if (index < 0) {
                     index = headerSections.indexOf("ryhmä");
                 }

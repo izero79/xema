@@ -33,8 +33,8 @@ public:
     void removeCustomStatuses();
     void removeCustomObservers();
     void removeHistory();
-    int importHistory(LocationModel *locations, PersonModel *persons);
-    void importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter);
+    int importHistory(LocationModel *locations, PersonModel *persons, StatusModel *statuses, BirdModel *birds);
+    void importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter, StatusModel *statuses, BirdModel *birds);
     int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
 
 private:
