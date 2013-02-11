@@ -151,28 +151,64 @@
 <context>
     <name>ListPage</name>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="21"/>
-        <location filename="qml/symbian3/ListPage.qml" line="22"/>
+        <location filename="qml/harmattan/ListPage.qml" line="27"/>
+        <location filename="qml/symbian3/ListPage.qml" line="28"/>
         <source>Stop GPS</source>
         <translation>Stoppa GPS</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="21"/>
-        <location filename="qml/symbian3/ListPage.qml" line="22"/>
+        <location filename="qml/harmattan/ListPage.qml" line="27"/>
+        <location filename="qml/symbian3/ListPage.qml" line="28"/>
         <source>Start GPS</source>
         <translation>Starta GPS</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="96"/>
-        <location filename="qml/symbian3/ListPage.qml" line="97"/>
+        <location filename="qml/harmattan/ListPage.qml" line="27"/>
+        <location filename="qml/symbian3/ListPage.qml" line="28"/>
+        <source>Stop Compass</source>
+        <translation>Stoppa kompass</translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/ListPage.qml" line="27"/>
+        <location filename="qml/symbian3/ListPage.qml" line="28"/>
+        <source>Start Compass</source>
+        <translation>Starta kompass</translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/ListPage.qml" line="113"/>
+        <location filename="qml/symbian3/ListPage.qml" line="114"/>
         <source>Remove</source>
         <translation>Radera</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="443"/>
-        <location filename="qml/symbian3/ListPage.qml" line="444"/>
+        <location filename="qml/harmattan/ListPage.qml" line="527"/>
+        <location filename="qml/symbian3/ListPage.qml" line="528"/>
         <source>Search</source>
         <translation>Sök</translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/ListPage.qml" line="442"/>
+        <location filename="qml/symbian3/ListPage.qml" line="443"/>
+        <source>Calibrate compass by moving the device in a figure eight pattern.</source>
+        <translation>Kalibrera kompass genom att röra apparat i en åtta.</translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/ListPage.qml" line="443"/>
+        <location filename="qml/symbian3/ListPage.qml" line="444"/>
+        <source>Calibration</source>
+        <oldsource>Calibration needed</oldsource>
+        <translation>Kalibrera</translation>
+    </message>
+    <message>
+        <location filename="qml/symbian3/ListPage.qml" line="475"/>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/ListPage.qml" line="502"/>
+        <location filename="qml/symbian3/ListPage.qml" line="503"/>
+        <source>Cancel</source>
+        <translation>Avbryta</translation>
     </message>
 </context>
 <context>

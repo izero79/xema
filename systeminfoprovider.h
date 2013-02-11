@@ -21,6 +21,7 @@ public slots:
 
     static QString versionInfo();
     static bool imeiAccepted();
+    static bool compassSupported();
 };
 
 #endif // SYSTEMINFOPROVIDER_H

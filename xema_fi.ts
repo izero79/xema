@@ -116,6 +116,30 @@
         <source>Search</source>
         <translation>Etsi</translation>
     </message>
+    <message>
+        <source>Stop Compass</source>
+        <translation>Pysäytä kompassi</translation>
+    </message>
+    <message>
+        <source>Start Compass</source>
+        <translation>Käytä kompassia</translation>
+    </message>
+    <message>
+        <source>Calibrate compass by moving the device in a figure eight pattern.</source>
+        <translation>Kalibroi kompassi liikuttamalla laitetta kahdeksikon muotoista rataa.</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Calibration</source>
+        <translation>Kalibrointi</translation>
+    </message>
 </context>
 <context>
     <name>LocationEditPage</name>

@@ -117,3 +117,21 @@ bool SystemInfoProvider::imeiAccepted()
 #endif
     return true;
 }
+
+bool SystemInfoProvider::compassSupported()
+{
+    bool isSupported = true;
+#ifdef USE_MOBILITY
+    QSystemDeviceInfo devInfo;
+    if (QString::compare(devInfo.model(),"X7", Qt::CaseInsensitive) == 0) {
+        isSupported = false;
+    }
+    if (QString::compare(devInfo.model(),"X7-00", Qt::CaseInsensitive) == 0) {
+        isSupported = false;
+    }
+    if (QString::compare(devInfo.productName(),"RM-707", Qt::CaseInsensitive) == 0) {
+        isSupported = false;
+    }
+#endif
+    return isSupported;
+}

@@ -1,10 +1,15 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import QtMobility.location 1.1
+import QtMobility.sensors 1.2
 
 Page {
     id: listPage
     tools: listToolBarLayout
+    property bool useGPS: listView.model == locationModel
+    property bool useCompass: listView.model == directionModel && window.compassSupported
+    property bool activeGPS: positionSource.active
+    property bool activeCompass: compass.active
 
     ToolBarLayout {
         id: listToolBarLayout
@@ -14,23 +19,35 @@ Page {
             onClicked: {
                 window.backFromList()
                 positionSource.stop()
+                compass.stop()
                 pageStack.pop()
             }
         }
         ToolButton {
             flat: false
-            text: positionSource.active ? qsTr("Stop GPS") : qsTr("Start GPS")
-//            iconSource: "toolbar-search"
-            visible: listView.model == locationModel && listView.editMode == false
+            text: useGPS ? (activeGPS ? qsTr("Stop GPS") : qsTr("Start GPS")) : (useCompass ? (activeCompass ? qsTr("Stop Compass") : qsTr("Start Compass")) : "")
+            visible: useGPS || useCompass
             onClicked: {
-                console.log("start gps")
-                if(positionSource.active)
-                {
-                    positionSource.stop()
-                }
-                else
-                {
-                    positionSource.start()
+                if (useGPS) {
+                    console.log("start gps")
+                    if(activeGPS)
+                    {
+                        positionSource.stop()
+                    }
+                    else
+                    {
+                        positionSource.start()
+                    }
+                } else if (useCompass) {
+                    console.log("start compass")
+                    if(activeCompass)
+                    {
+                        compass.stop()
+                    }
+                    else
+                    {
+                        compass.start()
+                    }
                 }
 
             }
@@ -136,6 +153,10 @@ Page {
         if(positionSource.active)
         {
             positionSource.stop()
+        }
+        if(compass.active)
+        {
+            compass.stop()
         }
         if (listPageType == "atlas")
         {
@@ -417,12 +438,78 @@ Page {
 */
     }
 
+    function showCalibrateDialog()
+    {
+        calibrateDialog.dialogText = qsTr("Calibrate compass by moving the device in a figure eight pattern.")
+        calibrateDialog.titleText = qsTr("Calibration")
+        calibrateDialog.open()
+    }
+
+    function hideCalibrateDialog()
+    {
+        calibrateDialog.close()
+    }
+
+
     Component.onCompleted: {
         console.log("ListPage loaded")
         listView.model.filter("")
         for(var i = 0; i < listView.model.rowCount(); i++)
         {
             listView.model.setData(i, false, 2)
+        }
+    }
+
+    Dialog {
+        id: calibrateDialog
+        property alias titleText: titleTextField.text
+        property alias dialogText: dialogTextField.text
+
+        title: Label {
+            id: titleTextField
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr("")
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        content:Item {
+            height: 150
+            width: parent.width
+            anchors.margins: 10
+            Label {
+                id: dialogTextField
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: ""
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Item { height: calibrateDialog.height + 2 * 20; width: parent.width - 20
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button {
+                id: calibrateDialogButton
+                anchors.bottom: parent.bottom
+                anchors.margins: 5
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 200
+                text: qsTr("Cancel")
+                onClicked: {
+                    compass.stop()
+                    calibrateDialog.close()
+                }
+            }
+        }
+        onClickedOutside: {
+            compass.stop()
+            calibrateDialog.close()
         }
     }
 
@@ -480,7 +567,7 @@ Page {
                 anchors.bottom: parent.bottom
                 anchors.margins: 5
                 width: height
-                running: positionSource.active
+                running: positionSource.active || compass.active
                 visible: running
             }
 
@@ -726,6 +813,79 @@ Page {
                     console.log("accuracy now: " + positionSource.accuracy)
                 }
             }
+        }
+    }
+    Compass {
+        id: compass
+        active: false
+
+        onReadingChanged: {
+            console.log("kalibrointi: " + reading.calibrationLevel);
+            if (reading.calibrationLevel < 1)
+            {
+                if (calibrateDialog.status != DialogStatus.Open) {
+                    showCalibrateDialog();
+                }
+                return;
+            }
+            if (reading.calibrationLevel >= 1 && calibrateDialog.status == DialogStatus.Open)
+            {
+                hideCalibrateDialog();
+            }
+
+            console.log(reading.azimuth);
+            var value = reading.azimuth;
+            var direction = "";
+            if (value > 349 || value <= 11) {
+                direction = "N";
+            }
+            if (value > 11 && value <= 34) {
+                direction = "NNE";
+            }
+            if (value > 34 && value <= 56) {
+                direction = "NE";
+            }
+            if (value > 56 && value <= 79) {
+                direction = "ENE";
+            }
+            if (value > 79 && value <= 101) {
+                direction = "E";
+            }
+            if (value > 101 && value <= 124) {
+                direction = "ESE";
+            }
+            if (value > 124 && value <= 146) {
+                direction = "SE";
+            }
+            if (value > 146 && value <= 169) {
+                direction = "SSE";
+            }
+            if (value > 169 && value <= 191) {
+                direction = "S";
+            }
+            if (value > 191 && value <= 214) {
+                direction = "SSW";
+            }
+            if (value > 214 && value <= 236) {
+                direction = "SW";
+            }
+            if (value > 236 && value <= 259) {
+                direction = "WSW";
+            }
+            if (value > 259 && value <= 281) {
+                direction = "W";
+            }
+            if (value > 281 && value <= 304) {
+                direction = "WNW";
+            }
+            if (value > 304 && value <= 326) {
+                direction = "NW";
+            }
+            if (value > 326 && value <= 349) {
+                direction = "NNW";
+            }
+            console.log("suunta:" + direction);
+            filterTf.text = "^" + direction  + ",";
         }
     }
 }

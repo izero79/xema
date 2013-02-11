@@ -12,6 +12,7 @@ PageStackWindow {
     property int currentDetailLevel: 1
     property bool unsavedData: false
     property string currentLanguage: ""
+    property bool compassSupported: false
     property string appName: "Xema"
     property string versionString: "0.0.0"
     property bool cppProcessing: true

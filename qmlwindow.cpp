@@ -26,6 +26,7 @@
 #include "sexmodel.h"
 #include "directionmodel.h"
 #include "coordinateconverter.h"
+#include "systeminfoprovider.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -90,7 +91,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    setSource(QUrl("qrc:qml/symbian3/main.qml"));
+    setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
 
@@ -183,6 +184,8 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(openUrl(QString)),this,SLOT(openBrowser(QString)));
 
     QString lang = Settings::lang();
+    bool compassSupported = SystemInfoProvider::compassSupported();
+    mRootObject->setProperty("compassSupported", compassSupported);
     mRootObject->setProperty( "currentLanguage", lang );
 
     mSettings = new Settings(this);
