@@ -827,7 +827,7 @@ Page {
 
         onReadingChanged: {
             console.log("kalibrointi: " + reading.calibrationLevel);
-            if (reading.calibrationLevel < 10)
+            if (reading.calibrationLevel < 1)
             {
                 if (calibrateDialog.status != DialogStatus.Open) {
                     showCalibrateDialog();
