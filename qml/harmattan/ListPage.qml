@@ -10,6 +10,7 @@ Page {
     property bool useCompass: listView.model == directionModel && window.compassSupported
     property bool activeGPS: positionSource.active
     property bool activeCompass: compass.active
+    property real calibLevel: 0.0
 
     ToolBarLayout {
         id: listToolBarLayout
@@ -493,6 +494,16 @@ Page {
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 font.pixelSize: 20
             }
+            ProgressBar {
+                id: calibSlider
+                anchors.top: dialogTextField.bottom
+                anchors.topMargin: 8
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 300
+                minimumValue: 0
+                maximumValue: 1
+                value: listPage.calibLevel
+            }
         }
 
         buttons: Item { height: calibrateDialog.height + 2 * 20; width: parent.width - 20
@@ -510,10 +521,8 @@ Page {
                 }
             }
         }
-        onStatusChanged: {
-            if (status==DialogStatus.Closing||(status==DialogStatus.Closed)) {
-                compass.stop()
-            }
+        onRejected: {
+            compass.stop()
         }
 
         //onClickedOutside: calibrateDialog.close()
@@ -829,6 +838,7 @@ Page {
             console.log("kalibrointi: " + reading.calibrationLevel);
             if (reading.calibrationLevel < 1)
             {
+                listPage.calibLevel = reading.calibrationLevel;
                 if (calibrateDialog.status != DialogStatus.Open) {
                     showCalibrateDialog();
                 }
@@ -891,7 +901,8 @@ Page {
                 direction = "NNW";
             }
             console.log("suunta:" + direction);
-            filterTf.text = "^" + direction  + ",";
+            listView.model.filter("^" + direction  + ",");
+            filterTf.text = direction;
         }
     }
 }
