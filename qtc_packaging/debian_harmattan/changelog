@@ -1,7 +1,7 @@
-xema (1.0.2) unstable; urgency=low
-  * <Add change description here>
+xema (1.0.2) stable; urgency=low
+  * Fixes and new features.
 
- -- unknown <Tero@unknown>  Thu, 07 Feb 2013 15:00:48 +0200
+ -- Tero Siironen <izero79@gmail.com>  Thu, 07 Feb 2013 15:00:48 +0200
 
 xema (1.0.1) unstable; urgency=low
   * <Add change description here>

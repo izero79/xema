@@ -501,7 +501,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 300
                 minimumValue: 0
-                maximumValue: 1
+                maximumValue: 0.65
                 value: listPage.calibLevel
             }
         }
@@ -836,7 +836,7 @@ Page {
 
         onReadingChanged: {
             console.log("kalibrointi: " + reading.calibrationLevel);
-            if (reading.calibrationLevel < 1)
+            if (reading.calibrationLevel < 0.65)
             {
                 listPage.calibLevel = reading.calibrationLevel;
                 if (calibrateDialog.status != DialogStatus.Open) {
@@ -844,7 +844,7 @@ Page {
                 }
                 return;
             }
-            if (reading.calibrationLevel >= 1 && calibrateDialog.status == DialogStatus.Open)
+            if (reading.calibrationLevel >= 0.65 && calibrateDialog.status == DialogStatus.Open)
             {
                 hideCalibrateDialog();
             }
