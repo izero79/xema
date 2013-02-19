@@ -7,7 +7,7 @@
         <location filename="qml/harmattan/AboutDialog.qml" line="12"/>
         <location filename="qml/symbian3/AboutDialog.qml" line="12"/>
         <source>version </source>
-        <translation>version</translation>
+        <translation>version </translation>
     </message>
     <message>
         <location filename="qml/harmattan/AboutDialog.qml" line="13"/>
