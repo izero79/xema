@@ -832,7 +832,7 @@ Page {
 
         onReadingChanged: {
             console.log("kalibrointi: " + reading.calibrationLevel);
-            if (reading.calibrationLevel <0.65)
+            if (reading.calibrationLevel < 0.3)
             {
                 listPage.calibLevel = reading.calibrationLevel;
                 if (calibrateDialog.status != DialogStatus.Open) {
@@ -840,6 +840,11 @@ Page {
                 }
                 return;
             }
+            if (reading.calibrationLevel >= 0.3 && reading.calibrationLevel < 0.65)
+            {
+                // TODO start timer
+            }
+
             if (reading.calibrationLevel >= 0.65 && calibrateDialog.status == DialogStatus.Open)
             {
                 hideCalibrateDialog();
