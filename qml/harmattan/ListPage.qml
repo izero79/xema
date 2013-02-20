@@ -830,21 +830,40 @@ Page {
             }
         }
     }
+    Timer {
+        id: compassTimer
+        running: false
+        interval: 3000
+        repeat: false
+        onTriggered: {
+            console.log("Compass timer triggered")
+            compass.timerCalibrated = true
+        }
+
+    }
+
     Compass {
         id: compass
         active: false
+        property bool timerCalibrated: false
 
         onReadingChanged: {
             console.log("kalibrointi: " + reading.calibrationLevel);
             if (reading.calibrationLevel < 0.65)
             {
                 listPage.calibLevel = reading.calibrationLevel;
+                timerCalibrated = false
                 if (calibrateDialog.status != DialogStatus.Open) {
                     showCalibrateDialog();
                 }
                 return;
             }
-            if (reading.calibrationLevel >= 0.65 && calibrateDialog.status == DialogStatus.Open)
+            if (reading.calibrationLevel >= 0.65 && reading.calibrationLevel < 1.0 && timerCalibrated == false && compassTimer.running == false)
+            {
+                compassTimer.start()
+            }
+
+            if ((reading.calibrationLevel >= 1.0 || reading.calibrationLevel >= 0.65 && timerCalibrated == true ) && calibrateDialog.status == DialogStatus.Open)
             {
                 hideCalibrateDialog();
             }
