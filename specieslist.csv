@@ -136,7 +136,7 @@ Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENG
 135;Sorsat;Ducks;Anatidae;Vesilintu;Sjöfågel;V;V;S;Waterfowl;Änder
 136;Sorsat;Ducks;Anatidae;Iso vesilintu;Stor sjöfågel;IV;IV;S;Large waterfowl;Änder
 137;Sorsat;Ducks;Anatidae;Pieni vesilintu;Liten sjöfågel;PV;PV;S;Small waterfowl;Änder
-138;Metsäkanat;Grouse;Tetraonidae;Pyy;Järpe;BONBON;Bonasa bonasia;A;Hazel Grouse;Skogshöns
+138;Metsäkanat;Grouse;Tetraonidae;Pyy;Järpe;TETBON;Tetrastes bonasia;A;Hazel Grouse;Skogshöns
 139;Metsäkanat;Grouse;Tetraonidae;Riekkolaji;Lagopus (släktet);LAGSP;Lagopus sp;S;Lagopus (genus);Skogshöns
 140;Metsäkanat;Grouse;Tetraonidae;Riekko;Dalripa;LAGLAG;Lagopus lagopus;A;Willow Grouse;Skogshöns
 141;Metsäkanat;Grouse;Tetraonidae;Kiiruna;Fjällripa;LAGMUT;Lagopus muta;A;Rock Ptarmigan;Skogshöns
