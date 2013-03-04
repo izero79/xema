@@ -84,20 +84,17 @@ Page {
     function mandatoryInfoExists()
     {
         var dataOk = false;
-        if (finNameTf.text.length > 0 &&
-            finGroupTf.text.length > 0 &&
+        if (currentLanguage == "en" && engNameTf.text.length > 0 &&
             abbrevTf.text.length > 0 )
         {
             dataOk = true;
         }
-        else if (sweNameTf.text.length > 0 &&
-            sweGroupTf.text.length > 0 &&
+        else if (currentLanguage == "sv" && sweNameTf.text.length > 0 &&
             abbrevTf.text.length > 0 )
         {
             dataOk = true;
         }
-        else if (engNameTf.text.length > 0 &&
-            engGroupTf.text.length > 0 &&
+        else if (finNameTf.text.length > 0 &&
             abbrevTf.text.length > 0 )
         {
             dataOk = true;
@@ -280,7 +277,7 @@ Page {
         }
         TextField {
             id: engGroupTf
-            placeholderText: qsTr("Group in english *")
+            placeholderText: qsTr("Group in english")
             text: birdModel.data(currentIndex, 49)
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -341,7 +338,7 @@ Page {
             anchors.top: categoryTf.bottom
             anchors.topMargin: 8
             width: parent.width
-    		    	visible: false
+            visible: false
             onTextChanged: {
                 birdEdited = true
             }

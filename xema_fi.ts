@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>Finnish name</source>
-        <translation>Suomenkielinen nimi *</translation>
+        <translation>Nimi *</translation>
     </message>
     <message>
         <source>Swedish name</source>
@@ -32,7 +32,7 @@
     </message>
     <message>
         <source>Group in finnish</source>
-        <translation>Ryhmä suomeksi *</translation>
+        <translation>Ryhmä</translation>
     </message>
     <message>
         <source>Group in swedish</source>
@@ -55,12 +55,12 @@
         <translation>Englanninkielinen nimi</translation>
     </message>
     <message>
-        <source>Group in english *</source>
-        <translation>Ryhmä englanniksi</translation>
-    </message>
-    <message>
         <source>Abbreviation *</source>
         <translation>Lyhenne *</translation>
+    </message>
+    <message>
+        <source>Group in english</source>
+        <translation>Ryhmä englanniksi</translation>
     </message>
 </context>
 <context>
@@ -392,6 +392,10 @@
         <source>Distance (m)</source>
         <translation>Etäisyys (m)</translation>
     </message>
+    <message>
+        <source>From place to bird</source>
+        <translation>Paikasta lintuun</translation>
+    </message>
 </context>
 <context>
     <name>PersonEditPage</name>
@@ -527,7 +531,7 @@
     </message>
     <message>
         <source>Finnish name</source>
-        <translation>Selite suomeksi</translation>
+        <translation>Selite</translation>
     </message>
     <message>
         <source>Swedish name</source>

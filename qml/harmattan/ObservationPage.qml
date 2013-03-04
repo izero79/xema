@@ -1420,7 +1420,7 @@ Page {
 
                 Item {
                     id: birdPlaceItem
-                    height: 110
+                    height: 140
                     anchors.top: birdPlaceLabel.bottom
                     anchors.topMargin: 8
                     anchors.right: parent.right
@@ -1444,13 +1444,28 @@ Page {
                         enabled: false;
                     }
 
+                    Label {
+                        id: fromPlaceToBirdLabel
+                        color: "#ffffff"
+                        text: qsTr("From place to bird")
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.top: birdCoordinatesTf.bottom
+                        anchors.topMargin: 8
+                        font.pixelSize: 18
+                        visible: detailLevel > 2
+                    }
+
                     TextField {
                         id: directionTf
                         property int headerHeight: 0
                         height: 50
                         placeholderText: qsTr("Direction")
                         text: ""
-                        anchors.top: birdCoordinatesTf.bottom
+                        anchors.top: fromPlaceToBirdLabel.bottom
                         anchors.topMargin: 8
                         anchors.left: parent.left
                         anchors.leftMargin: 0
@@ -1480,7 +1495,7 @@ Page {
                         anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
-                        anchors.top: birdCoordinatesTf.bottom
+                        anchors.top: fromPlaceToBirdLabel.bottom
                         anchors.topMargin: 8
                         inputMethodHints: Qt.ImhDigitsOnly
                         validator: IntValidator { bottom: 0 }
