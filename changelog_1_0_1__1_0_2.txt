@@ -1,6 +1,8 @@
 1.0.2
+Euroopan kattava lajilista.
 Korjauksia käyttöliittymään.
 Paikkalistan gps-suodatus korjattu.
 Paikkatiedoissa maa-kenttä.
 Linnun paikan syöttömahdollisuus.
 Tietojen tuontiin ja vientiin tehty korjauksia.
+Kompassi linnun paikan syötössä.
