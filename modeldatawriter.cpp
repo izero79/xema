@@ -914,6 +914,21 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
                 continue;
             }
             sectionMap = getHistorySectionNumbers(line, delimiter);
+            // Go through map and check if there's value -100 which means
+            // necessary field missing
+            QMap<int, int>::const_iterator i = sectionMap.constBegin();
+            while (i != sectionMap.constEnd()) {
+                if (i.value() == -100) {
+                    importError += XemaEnums::IMPORT_HISTORYERROR;
+                    //qDebug() << "loyty virhe";
+                    break;
+                }
+                ++i;
+            }
+            if (importError&XemaEnums::IMPORT_HISTORYERROR) {
+                //qDebug() << "virhe loytynyt continue";
+                continue;
+            }
         }
 //        qDebug() << Q_FUNC_INFO << sectionMap;
         QStringList prevLines;
@@ -1408,6 +1423,22 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
             sectionMap = getLocationSectionNumbers(line, delimiter);
+            // Go through map and check if there's value -100 which means
+            // necessary field missing
+            QMap<int, int>::const_iterator i = sectionMap.constBegin();
+            while (i != sectionMap.constEnd()) {
+                if (i.value() == -100) {
+                    importError += XemaEnums::IMPORT_LOCATIONERROR;
+                    //qDebug() << "loyty virhe";
+                    break;
+                }
+                ++i;
+            }
+            if (importError&XemaEnums::IMPORT_LOCATIONERROR) {
+                //qDebug() << "virhe loytynyt continue";
+                continue;
+            }
+
             importstream.seek(0);
         }
         while (importstream.atEnd() == false) {
@@ -1519,6 +1550,21 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             }
             importstream.seek(0);
             sectionMap = getPersonSectionNumbers(line, delimiter);
+            // Go through map and check if there's value -100 which means
+            // necessary field missing
+            QMap<int, int>::const_iterator i = sectionMap.constBegin();
+            while (i != sectionMap.constEnd()) {
+                if (i.value() == -100) {
+                    importError += XemaEnums::IMPORT_PERSONERROR;
+                    //qDebug() << "loyty virhe";
+                    break;
+                }
+                ++i;
+            }
+            if (importError&XemaEnums::IMPORT_PERSONERROR) {
+                //qDebug() << "virhe loytynyt continue";
+                continue;
+            }
 //            qDebug() << sectionMap;
         }
         while (importstream.atEnd() == false) {
@@ -1610,6 +1656,21 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             }
             importstream.seek(0);
             sectionMap = getBirdSectionNumbers(line, delimiter);
+            // Go through map and check if there's value -100 which means
+            // necessary field missing
+            QMap<int, int>::const_iterator i = sectionMap.constBegin();
+            while (i != sectionMap.constEnd()) {
+                if (i.value() == -100) {
+                    importError += XemaEnums::IMPORT_BIRDERROR;
+                    //qDebug() << "loyty virhe";
+                    break;
+                }
+                ++i;
+            }
+            if (importError&XemaEnums::IMPORT_BIRDERROR) {
+                //qDebug() << "virhe loytynyt continue";
+                continue;
+            }
 //            qDebug() << sectionMap;
         }
         while (importstream.atEnd() == false) {
@@ -1723,6 +1784,21 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             }
             importstream.seek(0);
             sectionMap = getStatusSectionNumbers(line, delimiter);
+            // Go through map and check if there's value -100 which means
+            // necessary field missing
+            QMap<int, int>::const_iterator i = sectionMap.constBegin();
+            while (i != sectionMap.constEnd()) {
+                if (i.value() == -100) {
+                    importError += XemaEnums::IMPORT_STATUSERROR;
+                    //qDebug() << "loyty virhe";
+                    break;
+                }
+                ++i;
+            }
+            if (importError&XemaEnums::IMPORT_STATUSERROR) {
+                //qDebug() << "virhe loytynyt continue";
+                continue;
+            }
         }
         while (importstream.atEnd() == false) {
             QString importLine;
@@ -1817,7 +1893,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
             case XemaEnums::TIIRA_SPECIES_ABBR: {
                 int index = headerSections.indexOf("laji");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::TIIRA_SPECIES_ABBR, index);
                 break;
@@ -1825,7 +1901,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
             case XemaEnums::TIIRA_DATE1: {
                 int index = headerSections.indexOf("pvm1");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::TIIRA_DATE1, index);
                 break;
@@ -1857,7 +1933,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
             case XemaEnums::TIIRA_TOWN: {
                 int index = headerSections.indexOf("kunta");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::TIIRA_TOWN, index);
                 break;
@@ -1865,7 +1941,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
             case XemaEnums::TIIRA_LOCATION: {
                 int index = headerSections.indexOf("paikka");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::TIIRA_LOCATION, index);
                 break;
@@ -1961,7 +2037,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
             case XemaEnums::TIIRA_PERSONS: {
                 int index = headerSections.indexOf("havainnoijat");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::TIIRA_PERSONS, index);
                 break;
@@ -1993,7 +2069,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
             case XemaEnums::TIIRA_BIRDCOUNT: {
                 int index = headerSections.indexOf("määrä");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::TIIRA_BIRDCOUNT, index);
                 break;
@@ -2195,7 +2271,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = headerSections.indexOf("abbrev");
                 }
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::BIRD_ABBREV, index);
                 break;
@@ -2359,7 +2435,7 @@ QMap<int, int> ModelDataWriter::getPersonSectionNumbers(const QString &headerLin
             case XemaEnums::PERSON_FIRSTNAME: {
                 int index = headerSections.indexOf("firstname");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::PERSON_FIRSTNAME, index);
                 break;
@@ -2407,7 +2483,7 @@ QMap<int, int> ModelDataWriter::getStatusSectionNumbers(const QString &headerLin
             case XemaEnums::STATUS_FINABBREV: {
                 int index = headerSections.indexOf("abbrev");
                 if (index < 0) {
-                    index = 100;
+                    index = -100;
                 }
                 sections.insert(XemaEnums::STATUS_FINABBREV, index);
                 break;
