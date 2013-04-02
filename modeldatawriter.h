@@ -52,6 +52,7 @@ private:
     QString importedDir();
     QString formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
     void checkAndCreateDirs();
+    QString fixEncoding(const QString line);
 
 signals:
 

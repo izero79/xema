@@ -105,7 +105,7 @@ QString CoordinateConverter::wgsToYkjString(const QString &wgsString) {
     QString y = wgsString.section(":", 1, 1);
     double dx = x.toDouble();
     double dy = y.toDouble();
-    if (dx < -90 || dx > 90 || dy < -180 || dy > 180) {
+    if (dx < 59.42 || dx > 71.22 || dy < 18.32 || dy > 32.16) {
         return QString();
     }
     double ykjx = 0;
@@ -146,7 +146,7 @@ QString CoordinateConverter::ykjToWgsString(const QString &ykjString) {
     QString y = ykjString.section(":", 1, 1);
     double dx = x.toDouble();
     double dy = y.toDouble();
-    if (dx < 0 || dy < 0) {
+    if (dx < 6600000 || dx > 7930000 || dy < 3005000 || dy > 3800000) {
         return QString();
     }
     double wgsx = 0;
