@@ -175,6 +175,72 @@ Page {
             }
         }
 
+        Label {
+            id: speciesListText
+            text: qsTr("Species list")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.topMargin: 30
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: row1.bottom
+            color: "#ffffff"
+        }
+
+        CheckableGroup { id: speciesGroup }
+        ButtonColumn {
+            id: row2
+            spacing: 10//platformStyle.paddingMedium
+            anchors.top: speciesListText.bottom
+            anchors.left: parent.left
+            RadioButton {
+                id: finnishButton
+                text: qsTr("Finnish")
+//                platformExclusiveGroup: speciesGroup
+                checked: window.wpSpecies == false
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if (pressed == true)
+                    {
+                        wasPressed = true
+                    }
+                }
+
+                onCheckedChanged: {
+                    if (checked == true && wasPressed == true)
+                    {
+                        wasPressed = false
+                        window.wpSpecies = false
+                        window.saveWPSpecies(!checked)
+                    }
+                }
+            }
+            RadioButton {
+                id: wpButton
+                text: qsTr("Western Palearctic")
+//                platformExclusiveGroup: speciesGroup
+                checked: window.wpSpecies == true
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if (pressed == true)
+                    {
+                        wasPressed = true
+                    }
+                }
+
+                onCheckedChanged: {
+                    if (checked == true && wasPressed == true)
+                    {
+                        wasPressed = false
+                        window.wpSpecies = true
+                        window.saveWPSpecies(checked)
+                    }
+                }
+            }
+        }
         CheckableGroup { id: group }
         Label {
             id: groupHeader
@@ -182,7 +248,7 @@ Page {
             anchors.leftMargin: 0
             anchors.rightMargin: 0
             anchors.left: parent.left
-            anchors.top: row1.bottom
+            anchors.top: row2.bottom
             anchors.topMargin: 30
             text: qsTr("Default amount of fields")
             font.pixelSize: 20
@@ -192,7 +258,7 @@ Page {
         }
 
         ButtonColumn {
-            id: row2
+            id: row3
             spacing: 10// platformStyle.paddingMedium
             anchors.top: groupHeader.bottom
             anchors.left: parent.left
@@ -264,6 +330,129 @@ Page {
             }
         }
         Label {
+            id: defaultCountyText
+            text: qsTr("Default country")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: row3.bottom
+            anchors.topMargin: 30
+            color: "#ffffff"
+        }
+        TextField {
+            id: defaultCountryTf
+            height: 50
+            placeholderText: qsTr("Default country")
+            text: window.defaultCountry
+            anchors.top: defaultCountyText.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            onTextChanged: {
+                defaultCountryTimer.start()
+            }
+
+            Timer {
+                id: defaultCountryTimer
+                interval: 1000
+                running: false
+                repeat: false
+                onTriggered: {
+                    window.saveDefaultCountry(defaultCountryTf.text)
+                    window.defaultCountry = defaultCountryTf.text
+                }
+            }
+        }
+        CheckBox {
+            id: defaultCountryCb
+            anchors.top: defaultCountryTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            checked: window.onlyDefaultCountry == true
+            text: qsTr("Use only default country")
+            onCheckedChanged: {
+                window.onlyDefaultCountry = checked
+                window.saveOnlyDefaultCountry(checked)
+            }
+        }
+
+        Label {
+            id: coordinateSystemText
+            text: qsTr("Coordinate system in export")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.topMargin: 30
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: defaultCountryCb.bottom
+            color: "#ffffff"
+        }
+
+        CheckableGroup { id: coordinateGroup }
+        ButtonColumn {
+            id: row4
+            spacing: 10//platformStyle.paddingMedium
+            anchors.top: coordinateSystemText.bottom
+            anchors.left: parent.left
+            RadioButton {
+                id: wgsButton
+                text: qsTr("WGS84")
+//                platformExclusiveGroup: coordinateGroup
+                checked: window.exportWgs == true
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if (pressed == true)
+                    {
+                        wasPressed = true
+                    }
+                }
+
+                onCheckedChanged: {
+                    if (checked == true && wasPressed == true)
+                    {
+                        wasPressed = false
+                        window.exportWgs = true
+                        window.saveExportWgs(checked)
+                    }
+                }
+            }
+            RadioButton {
+                id: ykjButton
+                text: qsTr("YKJ (only in Finland)")
+//                platformExclusiveGroup: coordinateGroup
+                checked: window.exportWgs == false
+                property bool wasPressed: false
+                onPressedChanged: {
+                    if (pressed == true)
+                    {
+                        wasPressed = true
+                    }
+                }
+
+                onCheckedChanged: {
+                    if (checked == true && wasPressed == true)
+                    {
+                        wasPressed = false
+                        window.exportWgs = false
+                        window.saveExportWgs(!checked)
+                    }
+                }
+            }
+        }
+
+        Label {
             id: editText
             text: qsTr("Manage lists")
             font.pixelSize: 20
@@ -273,7 +462,7 @@ Page {
             anchors.rightMargin: 0
             anchors.left: parent.left
             horizontalAlignment: Text.AlignLeft
-            anchors.top: row2.bottom
+            anchors.top: row4.bottom
             anchors.topMargin: 30
             color: "#ffffff"
         }

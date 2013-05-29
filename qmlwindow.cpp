@@ -167,6 +167,10 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(reloadHistory()),this,SIGNAL(reloadHistory()));
     connect(mRootObject,SIGNAL(saveSystematicSorting(bool)),this,SLOT(saveSystematicSorting(bool)));
     connect(mRootObject,SIGNAL(saveDetailLevel(int)),this,SLOT(saveDetailLevel(int)));
+    connect(mRootObject,SIGNAL(saveWPSpecies(bool)),this,SLOT(saveWPSpecies(bool)));
+    connect(mRootObject,SIGNAL(saveOnlyDefaultCountry(bool)),this,SLOT(saveOnlyDefaultCountry(bool)));
+    connect(mRootObject,SIGNAL(saveExportWgs(bool)),this,SLOT(saveExportWgs(bool)));
+    connect(mRootObject,SIGNAL(saveDefaultCountry(QString)),this,SLOT(saveDefaultCountry(QString)));
     connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
     connect(mRootObject,SIGNAL(loadHistoryWithDate(QString)),this,SIGNAL(loadHistoryWithDate(QString)));
     connect(mRootObject,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)),this,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)));
@@ -196,6 +200,14 @@ void QMLWindow::init()
              Q_ARG(QVariant, mSettings->systematicSorting()));
     QMetaObject::invokeMethod(mRootObject, "setDetailLevel",
              Q_ARG(QVariant, mSettings->detailLevel()));
+    QMetaObject::invokeMethod(mRootObject, "setWpSpecies",
+             Q_ARG(QVariant, mSettings->wpSpecies()));
+    QMetaObject::invokeMethod(mRootObject, "setOnlyDefaultCountry",
+             Q_ARG(QVariant, mSettings->onlyDefaultCountry()));
+    QMetaObject::invokeMethod(mRootObject, "setDefaultCountry",
+             Q_ARG(QVariant, mSettings->defaultCountry()));
+    QMetaObject::invokeMethod(mRootObject, "setExportWgs",
+             Q_ARG(QVariant, mSettings->exportWgs()));
 
 }
 
@@ -313,6 +325,26 @@ void QMLWindow::saveDetailLevel(int level)
 void QMLWindow::saveSystematicSorting(bool systematic)
 {
     mSettings->setSystematicSorting(systematic);
+}
+
+void QMLWindow::saveWPSpecies(bool wpspecies)
+{
+    mSettings->setWPSpecies(wpspecies);
+}
+
+void QMLWindow::saveOnlyDefaultCountry(bool onlydefault)
+{
+    mSettings->setOnlyDefaultCountry(onlydefault);
+}
+
+void QMLWindow::saveExportWgs(bool exportWgs)
+{
+    mSettings->setExportWgs(exportWgs);
+}
+
+void QMLWindow::saveDefaultCountry(const QString &defaultCountry)
+{
+    mSettings->setDefaultCountry(defaultCountry);
 }
 
 void QMLWindow::exportData(bool onlyNew, const QString &delimiter)

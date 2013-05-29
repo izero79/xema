@@ -8,6 +8,7 @@ PageStackWindow {
 
     property string listPageType: ""
     property bool useSystematicSort: false
+    property bool wpSpecies: true
     property int defaultDetailLevel: 1
     property int currentDetailLevel: 1
     property bool unsavedData: false
@@ -17,13 +18,20 @@ PageStackWindow {
     property string versionString: "0.0.0"
     property bool cppProcessing: true
     property bool needsHistoryReload: false
+    property bool onlyDefaultCountry: false
+    property string defaultCountry: ""
+    property bool exportWgs: true
 
     signal writeNew(string data)
     signal readObs(string id)
     signal deleteObs(string id, string date, string place)
     signal reloadHistory()
     signal saveSystematicSorting(bool systematic)
+    signal saveWPSpecies(bool wpspecies)
     signal saveDetailLevel(int level)
+    signal saveDefaultCountry(string defaultCountry)
+    signal saveOnlyDefaultCountry(bool onlyDefault)
+    signal saveExportWgs(bool exportWgs)
     signal quit()
     signal loadHistoryWithDate(string date)
     signal loadHistoryWithDateAndPlace(string date, string place)
@@ -49,6 +57,26 @@ PageStackWindow {
     {
         window.defaultDetailLevel = level
         window.currentDetailLevel = level
+    }
+
+    function setWpSpecies(wpspecies)
+    {
+        window.wpSpecies = wpspecies
+    }
+
+    function setOnlyDefaultCountry(onlyDefault)
+    {
+        window.onlyDefaultCountry = onlyDefault
+    }
+
+    function setDefaultCountry(defaultCountry)
+    {
+        window.defaultCountry = defaultCountry
+    }
+
+    function setExportWgs(exportWgs)
+    {
+        window.exportWgs = exportWgs
     }
 
     function showHistoryPage(type)

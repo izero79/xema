@@ -13,6 +13,10 @@ public:
     bool firstStart();
     bool systematicSorting();
     int detailLevel();
+    bool wpSpecies();
+    bool onlyDefaultCountry();
+    bool exportWgs();
+    QString defaultCountry();
     static int speciesVersion();
     static int locationsVersion();
     static int statusesVersion();
@@ -21,6 +25,10 @@ public:
     void setFirstStart(bool first);
     void setSystematicSorting(bool systematic);
     void setDetailLevel(int level);
+    void setWPSpecies(bool wpspecies);
+    void setOnlyDefaultCountry(bool onlyDefault);
+    void setDefaultCountry(const QString &country);
+    void setExportWgs(bool exportWgs);
     static void setSpeciesVersion(int ver);
     static void setLocationsVersion(int ver);
     static void setStatusesVersion(int ver);

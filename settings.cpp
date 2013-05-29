@@ -32,9 +32,37 @@ void Settings::resetSettings()
 
 void Settings::setSystematicSorting(bool systematic)
 {
-    qDebug() << "void Settings::setSorting()";
+    qDebug() << "void Settings::setSorting()" << systematic;
     QSettings settings("TeSi", "xema");
     settings.setValue("systematicSorting", systematic);
+}
+
+void Settings::setWPSpecies(bool wpspecies)
+{
+    qDebug() << "void Settings::setWPSpecies()" << wpspecies;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("wpSpecies", wpspecies);
+}
+
+void Settings::setOnlyDefaultCountry(bool onlyDefault)
+{
+    qDebug() << "void Settings::setOnlyDefaultCountry()" << onlyDefault;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("onlyDefaultCountry", onlyDefault);
+}
+
+void Settings::setDefaultCountry(const QString &country)
+{
+    qDebug() << "void Settings::setDefaultCountry()" << country;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("defaultCountry", country);
+}
+
+void Settings::setExportWgs(bool exportWgs)
+{
+    qDebug() << "void Settings::setExportWgs()" << exportWgs;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("exportWgs", exportWgs);
 }
 
 void Settings::setDetailLevel(int level)
@@ -54,6 +82,34 @@ int Settings::detailLevel()
 {
     QSettings settings("TeSi", "xema");
     int value = settings.value("detailLevel", 1).toInt();
+    return value;
+}
+
+bool Settings::wpSpecies()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("wpSpecies", true).toBool();
+    return value;
+}
+
+bool Settings::onlyDefaultCountry()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("onlyDefaultCountry", false).toBool();
+    return value;
+}
+
+bool Settings::exportWgs()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("exportWgs", true).toBool();
+    return value;
+}
+
+QString Settings::defaultCountry()
+{
+    QSettings settings("TeSi", "xema");
+    QString value = settings.value("defaultCountry", "").toString();
     return value;
 }
 

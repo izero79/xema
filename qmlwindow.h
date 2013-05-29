@@ -71,6 +71,10 @@ private slots:
     void deleteObservation(const QString &id, const QString &date, const QString &place);
     void saveDetailLevel(int level);
     void saveSystematicSorting(bool systematic);
+    void saveWPSpecies(bool wpspecies);
+    void saveOnlyDefaultCountry(bool onlydefault);
+    void saveExportWgs(bool exportWgs);
+    void saveDefaultCountry(const QString &defaultCountry);
     void exportData(bool onlyNew, const QString &delimiter);
     void exportOwnData();
     void importOwnData();
