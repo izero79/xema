@@ -10,9 +10,9 @@ Location::Location() :
 Location::Location(const QString &town, const QString &place, const QString &wgsCoordinate, const QString &ykjCoordinate) :
     mTown(town),
     mPlace(place),
-    mFinCountry("Suomi"),
-    mEngCountry("Finland"),
-    mSweCountry("Finland"),
+    mFinCountry(),
+    mEngCountry(),
+    mSweCountry(),
     mYKJCoordinate(ykjCoordinate),
     mWGSCoordinate(wgsCoordinate),
     mCustom(false)

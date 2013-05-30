@@ -430,7 +430,7 @@ Page {
             }
             RadioButton {
                 id: ykjButton
-                text: qsTr("YKJ (only in Finland)")
+                text: qsTr("YKJ (Used only in Finland)")
                 platformExclusiveGroup: coordinateGroup
                 checked: window.exportWgs == false
                 property bool wasPressed: false

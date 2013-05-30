@@ -15,8 +15,8 @@ public:
     int detailLevel();
     bool wpSpecies();
     bool onlyDefaultCountry();
-    bool exportWgs();
-    QString defaultCountry();
+    static bool exportWgs();
+    static QString defaultCountry();
     static int speciesVersion();
     static int locationsVersion();
     static int statusesVersion();

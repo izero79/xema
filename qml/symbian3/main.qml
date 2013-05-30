@@ -62,7 +62,6 @@ PageStackWindow {
 
     function setWpSpecies(wpspecies)
     {
-        console.log("setWpSpecies: " + wpspecies)
         window.wpSpecies = wpspecies
     }
 

@@ -309,12 +309,18 @@ Page {
             listView.model.setSorting(1, true)
             listView.editMode = false
             listView.delegate = locationDelegate
+            if (window.onlyDefaultCountry) {
+                listView.model.filter("^" + window.defaultCountry  + ",");
+            }
         }
         else if (listPageType == "editplaces")
         {
             listView.model.setSorting(1, true)
             listView.editMode = true
             listView.delegate = locationDelegate
+            if (window.onlyDefaultCountry) {
+                listView.model.filter("^" + window.defaultCountry  + ",");
+            }
         }
         else if (listPageType == "editstatuses")
         {
@@ -377,10 +383,16 @@ Page {
         else if (listPageType == "places")
         {
             listView.model = locationModel
+            if (window.onlyDefaultCountry) {
+                listView.model.filter("^" + window.defaultCountry  + ",");
+            }
         }
         else if (listPageType == "editplaces")
         {
             listView.model = locationModel
+            if (window.onlyDefaultCountry) {
+                listView.model.filter("^" + window.defaultCountry  + ",");
+            }
         }
         else if (listPageType == "status")
         {
@@ -553,7 +565,11 @@ Page {
             inputMethodHints: Qt.ImhNoPredictiveText
             onTextChanged: {
                 //console.log("teksti muuttuu: " + text)
-                listView.model.filter(text)
+                if (window.onlyDefaultCountry) {
+                    listView.model.filter("^" + window.defaultCountry  + "," + text);
+                } else {
+                    listView.model.filter(text)
+                }
             }
             Image {
                 anchors { top: parent.top; right: parent.right; margins: 1 }

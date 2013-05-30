@@ -174,6 +174,7 @@ Page {
         allData += delimiter
 
         if (birdCoordinatesTf.text != "") {
+/*
             var birdYKJ = CoordinateConverter.wgsToYkjString(birdCoordinatesTf.text)
             var birdYKJArray = birdYKJ.split(":",2);
 
@@ -182,6 +183,16 @@ Page {
             allData += delimiter
             // uusi, y-coord bird
             allData += birdYKJArray[0]
+            allData += delimiter
+            */
+            var birdWGS = birdCoordinatesTf.text
+            var birdWGSArray = birdWGS.split(":",2);
+
+            // uusi, x-coord bird
+            allData += birdWGSArray[1]
+            allData += delimiter
+            // uusi, y-coord bird
+            allData += birdWGSArray[0]
             allData += delimiter
         } else {
             // uusi, x-coord bird
@@ -489,8 +500,11 @@ Page {
         weatherTa.text = fields[currentField]
         var birdCoords = fields[XemaEnums.OBS_BIRD_YCOORD] + ":" + fields[XemaEnums.OBS_BIRD_XCOORD]
         console.log("bird-koordinaatit: " + birdCoords )
-        birdCoordinatesTf.text = CoordinateConverter.ykjToWgsString(birdCoords)
-
+        if (fields[XemaEnums.OBS_BIRD_YCOORD] < 400) {
+            birdCoordinatesTf.text = birdCoords
+        } else {
+            birdCoordinatesTf.text = CoordinateConverter.ykjToWgsString(birdCoords)
+        }
     }
 
     function setData(date, place, species)

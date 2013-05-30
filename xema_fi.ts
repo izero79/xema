@@ -522,6 +522,38 @@
         <source>Clear all history?</source>
         <translation>Poista kaikki havainnot?</translation>
     </message>
+    <message>
+        <source>Species list</source>
+        <translation>Lajilista</translation>
+    </message>
+    <message>
+        <source>Finnish</source>
+        <translation>Suomi</translation>
+    </message>
+    <message>
+        <source>Western Palearctic</source>
+        <translation>Läntinen palearktinen</translation>
+    </message>
+    <message>
+        <source>Default country</source>
+        <translation>Oletusmaa</translation>
+    </message>
+    <message>
+        <source>Use only default country</source>
+        <translation>Näytä vain oletusmaan paikat</translation>
+    </message>
+    <message>
+        <source>Coordinate system in export</source>
+        <translation>Koordinaattijärjestelmä viennissä</translation>
+    </message>
+    <message>
+        <source>WGS84</source>
+        <translation>WGS84</translation>
+    </message>
+    <message>
+        <source>YKJ (Used only in Finland)</source>
+        <translation>YKJ (vain suomi)</translation>
+    </message>
 </context>
 <context>
     <name>StatusEditPage</name>

@@ -109,7 +109,16 @@ bool Settings::exportWgs()
 QString Settings::defaultCountry()
 {
     QSettings settings("TeSi", "xema");
-    QString value = settings.value("defaultCountry", "").toString();
+    QString userlang = lang();
+    QString defaultSetting;
+    if (QString::compare(userlang, "fi", Qt::CaseInsensitive) == 0) {
+        defaultSetting = "Suomi";
+    } else if (QString::compare(userlang, "sv", Qt::CaseInsensitive) == 0) {
+        defaultSetting = "Finland";
+    } else if (QString::compare(userlang, "en", Qt::CaseInsensitive) == 0) {
+        defaultSetting = "Finland";
+    }
+    QString value = settings.value("defaultCountry", defaultSetting).toString();
     return value;
 }
 

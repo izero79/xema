@@ -18,6 +18,7 @@
 #include "coordinateconverter.h"
 #include "statusmodel.h"
 #include "status.h"
+#include "settings.h"
 
 ModelDataWriter* ModelDataWriter::mDataWriter = 0;
 
@@ -337,7 +338,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
     tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
-    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa\n");
+    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa#Koord_tyyppi#Species_en#Species_sv#Species_sc\n");
     if( delimiter != "#") {
         header.replace("#",";");
     }
@@ -681,15 +682,68 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     QString eka = id;
 //    qDebug() << "EXPORT, eka 2" << eka;
 
+    QString species_en;
+    QString species_sv;
+    QString species_sc;
     int rowCount = birds->rowCount();
-    for(int i = 0; i < rowCount; i++)
-    {
-        if(birds->getItem(i).finName() == species)
+    if (species.length() == 6) {
+        for(int i = 0; i < rowCount; i++)
         {
-            species = birds->getItem(i).abbreviation();
-            break;
+            if(birds->getItem(i).abbreviation() == species)
+            {
+                qDebug() << "loyty lajiosuma 1";
+                species_en = birds->getItem(i).engName(true);
+                species_sv = birds->getItem(i).sweName(true);
+                species_sc = birds->getItem(i).latinName();
+                break;
+            }
+        }
+    } else {
+        for(int i = 0; i < rowCount; i++)
+        {
+            if(birds->getItem(i).finName() == species)
+            {
+                qDebug() << "loyty lajiosuma 2";
+                species = birds->getItem(i).abbreviation();
+                species_en = birds->getItem(i).engName(true);
+                species_sv = birds->getItem(i).sweName(true);
+                species_sc = birds->getItem(i).latinName();
+                break;
+            }
         }
     }
+    bool exportWgs = Settings::exportWgs();
+
+    // convert bird coords if needed
+    if (exportWgs == true) {
+        QString x = birdX;
+        QString y = birdY;
+        double dx = x.toDouble();
+        double dy = y.toDouble();
+        if (dy < 400) {
+            qDebug() << "lintu wgs";
+        } else {
+            QString ykj = birdY + ":" + birdX;
+            QString wgs = mCoordinates->ykjToWgsString(ykj);
+            birdY = wgs.section(":", 0, 0);
+            birdX = wgs.section(":", 1, 1);
+        }
+    } else {
+        QString x = birdX;
+        QString y = birdY;
+        double dx = x.toDouble();
+        double dy = y.toDouble();
+        if (dy > 400) {
+            qDebug() << "lintu ykj";
+        } else {
+            qDebug() << "lintu wgs";
+            QString wgs = birdY + ":" + birdX;
+            QString ykj = mCoordinates->wgsToYkjString(wgs);
+            birdY = ykj.section(":", 0, 0);
+            birdX = ykj.section(":", 1, 1);
+        }
+    }
+
 
     eka += "#";
 //    qDebug() << "EXPORT, eka 3" << eka;
@@ -718,6 +772,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     // add location coordinates if found
     bool locationAdded = false;
     QString country = "";
+
     for(int i = 0; i < rowCount; i++)
     {
         if (locations->getItem(i).town() == town && locations->getItem(i).place() == place)
@@ -725,29 +780,37 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
             // save country
             country =  locations->getItem(i).finCountry();
             QString coordinate = locations->getItem(i).wgsCoordinate();
+
             //qDebug() << "export paikka" << coordinate;
             if (coordinate == "" || coordinate == "0:0" || coordinate == "0") {
                 break;
             }
-            QString x = coordinate.section(":", 0, 0);
-            QString y = coordinate.section(":", 1, 1);
-            double dx = x.toDouble();
-            double dy = y.toDouble();
-            double ykjx = 0;
-            double ykjy = 0;
-            QPair<double,double> newCoord;
-            newCoord = mCoordinates->wgsToykj(dx, dy);
-            ykjx = newCoord.first;
-            ykjy = newCoord.second;
-            long newX = ykjx;
-            long newY = ykjy;
-            QString ykjX;
-            ykjX.setNum(newX);
-            QString ykjY;
-            ykjY.setNum(newY);
+            if (exportWgs == false) {
+                QString x = coordinate.section(":", 0, 0);
+                QString y = coordinate.section(":", 1, 1);
+                double dx = x.toDouble();
+                double dy = y.toDouble();
+                double ykjx = 0;
+                double ykjy = 0;
+                QPair<double,double> newCoord;
+                newCoord = mCoordinates->wgsToykj(dx, dy);
+                ykjx = newCoord.first;
+                ykjy = newCoord.second;
+                long newX = ykjx;
+                long newY = ykjy;
+                QString ykjX;
+                ykjX.setNum(newX);
+                QString ykjY;
+                ykjY.setNum(newY);
+                // tiiraan koordinaatit toisinpäin
+                toka.append("#" + ykjY + "#" + ykjX);
+            } else {
+                QString x = coordinate.section(":", 0, 0);
+                QString y = coordinate.section(":", 1, 1);
+                // tiiraan koordinaatit toisinpäin
+                toka.append("#" + y + "#" + x);
+            }
 
-            // tiiraan koordinaatit toisinpäin
-            toka.append("#" + ykjY + "#" + ykjX);
             locationAdded = true;
             break;
         }
@@ -826,6 +889,17 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     loppu.prepend("#");
     loppu.append("#");
     loppu.append(country);
+    if (exportWgs) {
+        loppu.append("#WGS84");
+    } else {
+        loppu.append("#YKJ");
+    }
+    loppu.append("#");
+    loppu.append(species_en);
+    loppu.append("#");
+    loppu.append(species_sv);
+    loppu.append("#");
+    loppu.append(species_sc);
     //loppu.append("#");
 
     QString firstRow = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_INDIRECT);
@@ -843,7 +917,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
 //            qDebug() << "EXPORT, eka 22.1" << eka;
             eka += data.section("#", 0, 0);
 //            qDebug() << "EXPORT, eka 22.2" << eka;
-            eka += "#######################";
+            eka += "###########################";
 //            qDebug() << "EXPORT, eka 22.3" << eka;
             QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_INDIRECT+(i*XemaEnums::OBS_SUBFIELDCOUNT));
             rivi.replace("#koiras#", "#k#");
@@ -1116,6 +1190,18 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
             }
             if (country.isEmpty() == false) {
               tmp.setFinCountry(country);
+            } else {
+                QString lang = Settings::lang();
+                QString defaultCountry = Settings::defaultCountry();
+                if (defaultCountry.isEmpty() == false) {
+                    if (QString::compare(lang, "fi", Qt::CaseInsensitive) == 0) {
+                        tmp.setFinCountry(defaultCountry);
+                    } else if (QString::compare(lang, "sv", Qt::CaseInsensitive) == 0) {
+                        tmp.setSweCountry(defaultCountry);
+                    } else if (QString::compare(lang, "en", Qt::CaseInsensitive) == 0) {
+                        tmp.setEngCountry(defaultCountry);
+                    }
+                }
             }
             tmp.setCustom(true);
             locations->addItem(tmp);
@@ -1446,6 +1532,21 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                 continue;
             }
 
+            QString lang = Settings::lang();
+            QString defaultCountry = Settings::defaultCountry();
+            QString country_en = locationLine.section(';', location_engcountry, location_engcountry);
+            QString country_sv = locationLine.section(';', location_swecountry, location_swecountry);
+            QString country_fi = locationLine.section(';', location_country, location_country);
+            if (defaultCountry.isEmpty() == false && country_en.isEmpty() && country_sv.isEmpty() && country_fi.isEmpty()) {
+                if (QString::compare(lang, "fi", Qt::CaseInsensitive) == 0) {
+                    country_fi = defaultCountry;
+                } else if (QString::compare(lang, "sv", Qt::CaseInsensitive) == 0) {
+                    country_sv= defaultCountry;
+                } else if (QString::compare(lang, "en", Qt::CaseInsensitive) == 0) {
+                    country_en = defaultCountry;
+                }
+            }
+
             Location location(locationLine.section(';', location_town, location_town),
                               locationLine.section(';', location_place, location_place),
                               locationLine.section(';', location_wgs, location_wgs),
@@ -1454,9 +1555,9 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             location.setEngTown(locationLine.section(';', location_engtown, location_engtown));
             location.setSwePlace(locationLine.section(';', location_sweplace, location_sweplace));
             location.setEngPlace(locationLine.section(';', location_engplace, location_engplace));
-            location.setFinCountry(locationLine.section(';', location_country, location_country));
-            location.setSweCountry(locationLine.section(';', location_swecountry, location_swecountry));
-            location.setEngCountry(locationLine.section(';', location_engcountry, location_engcountry));
+            location.setFinCountry(country_fi);
+            location.setSweCountry(country_sv);
+            location.setEngCountry(country_en);
             location.setCustom(true);
 
             int rows = locations->rowCount();
