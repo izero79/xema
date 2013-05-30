@@ -16,6 +16,7 @@ class AgeModel;
 class SexModel;
 class DressModel;
 class DirectionModel;
+class Settings;
 
 class ApplicationController : public QObject
 {
@@ -49,7 +50,9 @@ private slots:
     void restoreStatuses();
     void saveLocations();
     void savePersons();
+    void saveBirds();
     void clearHistory();
+    void reloadBirds();
     //void importData();
 
 private:
@@ -68,6 +71,7 @@ private:
     DressModel *mDressModel;
     SexModel *mSexModel;
     DirectionModel *mDirectionModel;
+    Settings *mSettings;
 };
 
 #endif // APPLICATIONCONTROLLER_H

@@ -47,6 +47,8 @@ signals:
     void restoreObservers();
     void saveLocations();
     void savePersons();
+    void saveBirds();
+    void reloadBirds();
 
 public slots:
     void orientationChanged();

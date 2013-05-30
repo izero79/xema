@@ -48,7 +48,7 @@ ModelDataLoader::~ModelDataLoader() {
     delete mDataLoader;
 }
 
-void ModelDataLoader::loadInitialBirdData(BirdModel *model)
+void ModelDataLoader::loadInitialBirdData(BirdModel *model, bool finOnly)
 {
 //    qDebug() << Q_FUNC_INFO;
     int currentSpeciesVersion = Settings::speciesVersion();
@@ -68,22 +68,31 @@ void ModelDataLoader::loadInitialBirdData(BirdModel *model)
 //    qDebug() << "saved bird version" << savedVersion;
     if( savedVersion > currentSpeciesVersion ) {
         qDebug() << "There's new version of species list installed. Using it.";
-        loadOnlyModifiedBirdData( model );
-        loadDefaultBirdData( model );
+        loadOnlyModifiedBirdData( model, false );
+        loadDefaultBirdData( model, finOnly );
         Settings::setSpeciesVersion(savedVersion);
     }
     else {
-        loadBirdData( model, false );
+        loadBirdData( model, false, finOnly );
         return;
     }
 }
 
-void ModelDataLoader::loadDefaultBirdData(BirdModel *model)
+void ModelDataLoader::reloadInitialBirdData(BirdModel *model, bool finOnly)
 {
-    loadBirdData(model, true);
+//    qDebug() << Q_FUNC_INFO;
+//    qDebug() << "current bird version" << currentSpeciesVersion;
+
+    loadOnlyModifiedBirdData( model, finOnly );
+    loadDefaultBirdData( model, finOnly );
 }
 
-void ModelDataLoader::loadOnlyModifiedBirdData(BirdModel *model)
+void ModelDataLoader::loadDefaultBirdData(BirdModel *model, bool finOnly)
+{
+    loadBirdData(model, true, finOnly);
+}
+
+void ModelDataLoader::loadOnlyModifiedBirdData(BirdModel *model, bool finOnly)
 {
     mBirdModel = model;
     QFile tiedosto(dataFileDir() + "xemabirddata.txt");
@@ -119,11 +128,16 @@ void ModelDataLoader::loadOnlyModifiedBirdData(BirdModel *model)
         bird.setEngName(birdLine.section(';', XemaEnums::BIRD_ENG_NAME, XemaEnums::BIRD_ENG_NAME));
         bird.setEngGroup(birdLine.section(';', XemaEnums::BIRD_ENG_GROUP, XemaEnums::BIRD_ENG_GROUP));
         bird.setCustom(true);
-        model->addItem(bird);
+        QString category = birdLine.section(';', XemaEnums::BIRD_CATEGORY, XemaEnums::BIRD_CATEGORY);
+        if (finOnly == false) {
+            model->addItem(bird);
+        } else if(finOnly == true && QString::compare(category,"wp", Qt::CaseInsensitive) != 0) {
+            model->addItem(bird);
+        }
     }
 }
 
-void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly)
+void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly, bool finOnly)
 {
 #ifdef PERFTEST
     qDebug() << "Perftest, loadBirdData";
@@ -162,7 +176,12 @@ void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly)
         if(birdLine.section(';', XemaEnums::BIRD_CUSTOM, XemaEnums::BIRD_CUSTOM) == "true") {
             bird.setCustom(true);
         }
-        model->addItem(bird);
+        QString category = birdLine.section(';', XemaEnums::BIRD_CATEGORY, XemaEnums::BIRD_CATEGORY);
+        if (finOnly == false) {
+            model->addItem(bird);
+        } else if(finOnly == true && QString::compare(category,"wp", Qt::CaseInsensitive) != 0) {
+            model->addItem(bird);
+        }
     }
 #ifdef PERFTEST
     qDebug("loadBirdData Time elapsed: %d ms", t.elapsed());

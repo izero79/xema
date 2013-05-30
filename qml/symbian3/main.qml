@@ -47,6 +47,7 @@ PageStackWindow {
     signal importOwnData()
     signal openUrl(string url)
     signal clearHistory()
+    signal saveBirds()
 
     function setSystematicSort(use)
     {

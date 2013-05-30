@@ -17,6 +17,7 @@
 #include "sexmodel.h"
 #include "systeminfoprovider.h"
 #include "directionmodel.h"
+#include "settings.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
@@ -33,7 +34,8 @@ ApplicationController::ApplicationController(QObject *parent) :
     mAgeModel(0),
     mDressModel(0),
     mSexModel(0),
-    mDirectionModel(0)
+    mDirectionModel(0),
+    mSettings(0)
 {
     qDebug() << "\n\nSystem Info:" << SystemInfoProvider::versionInfo() << "\n\n";
     initGUI();
@@ -61,8 +63,10 @@ void ApplicationController::initObjects()
 
     mModelLoader = ModelDataLoader::instance();
 
+    mSettings = new Settings(this);
+    bool finOnly = !mSettings->wpSpecies();
     mBirdModel = new BirdModel(this);
-    mModelLoader->loadInitialBirdData(mBirdModel);
+    mModelLoader->loadInitialBirdData(mBirdModel, finOnly);
     mQMLWin->setBirdModel(mBirdModel);
 
     mPersonModel = new PersonModel(this);
@@ -116,7 +120,9 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(restoreStatuses()),this,SLOT(restoreStatuses()));
     connect(mQMLWin,SIGNAL(saveLocations()),this,SLOT(saveLocations()));
     connect(mQMLWin,SIGNAL(savePersons()),this,SLOT(savePersons()));
+    connect(mQMLWin,SIGNAL(saveBirds()),this,SLOT(saveBirds()));
     connect(mQMLWin,SIGNAL(clearHistory()),this,SLOT(clearHistory()));
+    connect(mQMLWin,SIGNAL(reloadBirds()),this,SLOT(reloadBirds()));
 
     mModelWriter = ModelDataWriter::instance();
     mQMLWin->setProcessing(false);
@@ -173,7 +179,8 @@ void ApplicationController::restoreSpecies()
     mQMLWin->setProcessing(true);
     mModelWriter->removeCustomSpecies();
     mBirdModel->clear();
-    mModelLoader->loadDefaultBirdData(mBirdModel);
+    bool finOnly = !mSettings->wpSpecies();
+    mModelLoader->loadDefaultBirdData(mBirdModel, finOnly);
     mQMLWin->setProcessing(false);
 }
 
@@ -219,6 +226,16 @@ void ApplicationController::clearHistory()
     mQMLWin->setProcessing(false);
 }
 
+void ApplicationController::reloadBirds()
+{
+    qDebug() << "void ApplicationController::reloadBirds()";
+    mQMLWin->setProcessing(true);
+    mBirdModel->clear();
+    bool finOnly = !mSettings->wpSpecies();
+    mModelLoader->reloadInitialBirdData(mBirdModel, finOnly);
+    mQMLWin->setProcessing(false);
+}
+
 void ApplicationController::saveLocations()
 {
     qDebug() << "void ApplicationController::saveLocations()";
@@ -234,5 +251,15 @@ void ApplicationController::savePersons()
     mModelWriter->writePersonData(mPersonModel);
     mPersonModel->clear();
     mModelLoader->loadPersonData(mPersonModel);
+
+}
+
+void ApplicationController::saveBirds()
+{
+    qDebug() << "void ApplicationController::saveBirds()";
+    mModelWriter->writeBirdData(mBirdModel);
+    mBirdModel->clear();
+    bool finOnly = !mSettings->wpSpecies();
+    mModelLoader->loadInitialBirdData(mBirdModel, finOnly);
 
 }

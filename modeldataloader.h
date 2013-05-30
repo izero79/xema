@@ -20,8 +20,9 @@ class ModelDataLoader : public QObject
 public:
     static ModelDataLoader* instance();
 
-    void loadInitialBirdData(BirdModel *model);
-    void loadDefaultBirdData(BirdModel *model);
+    void loadInitialBirdData(BirdModel *model, bool finOnly=false);
+    void reloadInitialBirdData(BirdModel *model, bool finOnly=false);
+    void loadDefaultBirdData(BirdModel *model, bool finOnly=false);
 
     void loadPersonData(PersonModel *model);
 
@@ -45,12 +46,12 @@ signals:
 public slots:
 
 private:
-    void loadBirdData(BirdModel *model, bool defaultOnly);
-    void loadOnlyModifiedBirdData(BirdModel *model);
+    void loadOnlyModifiedBirdData(BirdModel *model, bool finOnly);
     void loadLocationData(LocationModel *model, bool defaultOnly);
     void loadOnlyModifiedLocationData(LocationModel *model);
     void loadStatusData(StatusModel *model, bool defaultOnly);
     void loadOnlyModifiedStatusData(StatusModel *model);
+    void loadBirdData(BirdModel *model, bool defaultOnly, bool finOnly);
 
     explicit ModelDataLoader(QObject *parent = 0);
     ~ModelDataLoader();

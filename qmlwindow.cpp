@@ -182,6 +182,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(clearHistory()),this,SIGNAL(clearHistory()));
     connect(mRootObject,SIGNAL(saveLocations()),this,SIGNAL(saveLocations()));
     connect(mRootObject,SIGNAL(savePersons()),this,SIGNAL(savePersons()));
+    connect(mRootObject,SIGNAL(saveBirds()),this,SIGNAL(saveBirds()));
     connect(mRootObject,SIGNAL(importData()),this,SLOT(importData()));
     connect(mRootObject,SIGNAL(exportOwnData()),this,SLOT(exportOwnData()));
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
@@ -330,6 +331,7 @@ void QMLWindow::saveSystematicSorting(bool systematic)
 void QMLWindow::saveWPSpecies(bool wpspecies)
 {
     mSettings->setWPSpecies(wpspecies);
+    emit reloadBirds();
 }
 
 void QMLWindow::saveOnlyDefaultCountry(bool onlydefault)

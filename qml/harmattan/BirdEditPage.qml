@@ -63,6 +63,7 @@ Page {
                     else {
                         window.newBirdCreated( finNameTf.text + ", " + latinNameTf.text )
                     }
+                    window.saveBirds()
                 }
                 pageStack.pop()
             }
