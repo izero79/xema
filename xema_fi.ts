@@ -273,6 +273,18 @@
         <source>Row</source>
         <translation>Rivi</translation>
     </message>
+    <message>
+        <source>Select Time</source>
+        <translation>Valitse aika</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
 </context>
 <context>
     <name>ObservationPage</name>
@@ -395,6 +407,18 @@
     <message>
         <source>From place to bird</source>
         <translation>Paikasta lintuun</translation>
+    </message>
+    <message>
+        <source>Select Date</source>
+        <translation>Valitse päivä</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Select Time</source>
+        <translation>Valitse aika</translation>
     </message>
 </context>
 <context>

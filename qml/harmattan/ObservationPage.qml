@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.nokia.extras 1.1
 import "myjs.js" as MyScript
 import XemaEnums 1.0
 
@@ -581,6 +582,82 @@ Page {
         currentId = 0
     }
 
+    function dateSelected(object, d, m, y) {
+        console.log('parametrit: ' +y +", "+m+", "+d)
+        d = d + ""
+        m = m + ""
+        if (d.length < 2) {
+            d = "0" + d
+        }
+        if (m.length < 2) {
+            m = "0" + m
+        }
+
+        object.text = d + "." + m + "." + y
+    }
+
+    function dateRejected(object) {
+        object.text = ""
+    }
+
+    function timeRejected(object) {
+        object.text = ""
+    }
+
+    function timeSelected(object, h, m) {
+        console.log('parametrit: ' +h +", "+m)
+        h = h + ""
+        m = m + ""
+        if (h.length < 2) {
+            h = "0" + h
+        }
+        if (m.length < 2) {
+            m = "0" + m
+        }
+
+        object.text = h + ":" + m
+    }
+
+    function setDateToPicker(text) {
+        var fields = text.split(".")
+        datePickerDialog.year = fields[2]
+        datePickerDialog.month = fields[1]
+        datePickerDialog.day = fields[0]
+    }
+
+    function setTimeToPicker(text) {
+        var fields = text.split(":")
+        timePickerDialog.hour = fields[0]
+        timePickerDialog.minute = fields[1]
+    }
+
+    DatePickerDialog{
+        id: datePickerDialog
+
+        property variant targetObject: null
+        minimumYear: 1950
+
+        titleText: qsTr("Select Date")
+        acceptButtonText: qsTr("Ok")
+        rejectButtonText: qsTr("Cancel")
+        onAccepted: {dateSelected(targetObject, datePickerDialog.day, datePickerDialog.month, datePickerDialog.year)}
+        onRejected: {dateRejected(targetObject)}
+    }
+
+    TimePickerDialog{
+        id: timePickerDialog
+
+        property variant targetObject: null
+
+        fields: DateTime.Hours | DateTime.Minutes;
+        titleText: qsTr("Select Time")
+        acceptButtonText: qsTr("Ok")
+        rejectButtonText: qsTr("Cancel")
+        onAccepted: {timeSelected(targetObject, timePickerDialog.hour, timePickerDialog.minute)}
+        onRejected: {timeRejected(targetObject)}
+    }
+
+
     Dialog {
         id: saveErrorDialog
 
@@ -820,16 +897,21 @@ Page {
                         anchors.topMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        validator: RegExpValidator {
-                            regExp: /[0-2]{0,1}[0-9]{1}[\.]{1}[0-2]{0,1}[0-9]{1}[\.]{1}[0-9]{4}/
-                        }
-                        onActiveFocusChanged: {
-                            if (activeFocus == true && text == "")
-                            {
-                                text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
+                        onTextChanged: obsPage.edited = true
+                        MouseArea {
+                            id: startDateMouse
+                            anchors.fill: parent
+                            z: startDateTf.z + 1
+                            onClicked: {
+                                if (startDateTf.text == "")
+                                {
+                                    startDateTf.text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
+                                }
+                                setDateToPicker(startDateTf.text);
+                                datePickerDialog.targetObject = startDateTf
+                                datePickerDialog.open()
                             }
                         }
-                        onTextChanged: obsPage.edited = true
                     }
 
                     Label {
@@ -861,20 +943,23 @@ Page {
                         anchors.top: parent.top
                         anchors.topMargin: 0
                         visible: detailLevel > 2
-                        validator: RegExpValidator {
-                            regExp: /[0-2]{0,1}[0-9]{1}[\.]{1}[0-2]{0,1}[0-9]{1}[\.]{1}[0-9]{4}/
-                        }
-                        onActiveFocusChanged: {
-                            if (activeFocus == true && text == "")
-                            {
-                                if (startDateTf.text != "")
+                        MouseArea {
+                            id: stopDateMouse
+                            anchors.fill: parent
+                            z: stopDateMouse.z + 1
+                            onClicked: {
+                                if (stopDateTf.text == "")
                                 {
-                                    text = startDateTf.text
+                                    if (startDateTf.text != "")
+                                    {
+                                        stopDateTf.text = startDateTf.text
+                                    } else {
+                                        stopDateTf.text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
+                                    }
                                 }
-                                else
-                                {
-                                    text = Qt.formatDateTime(new Date(), "dd.MM.yyyy")
-                                }
+                                setDateToPicker(stopDateTf.text);
+                                datePickerDialog.targetObject = stopDateTf
+                                datePickerDialog.open()
                             }
                         }
                         onTextChanged: obsPage.edited = true
@@ -1177,16 +1262,21 @@ Page {
                         anchors.topMargin: 0
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        validator: RegExpValidator {
-                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
-                        }
-                        onActiveFocusChanged: {
-                            if (activeFocus == true && text == "")
-                            {
-                                text = Qt.formatDateTime(new Date(), "hh:mm")
+                        onTextChanged: obsPage.edited = true
+                        MouseArea {
+                            id: startTimeMouse
+                            anchors.fill: parent
+                            z: startTimeTf.z + 1
+                            onClicked: {
+                                if (startTimeTf.text == "")
+                                {
+                                    startTimeTf.text = Qt.formatDateTime(new Date(), "hh:mm")
+                                }
+                                setTimeToPicker(startTimeTf.text);
+                                timePickerDialog.targetObject = startTimeTf
+                                timePickerDialog.open()
                             }
                         }
-                        onTextChanged: obsPage.edited = true
                     }
 
                     Label {
@@ -1219,9 +1309,6 @@ Page {
                         anchors.rightMargin: 0
                         anchors.top: parent.top
                         anchors.topMargin: 0
-                        validator: RegExpValidator {
-                            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
-                        }
                         onActiveFocusChanged: {
                             if (activeFocus == true && text == "")
                             {
@@ -1236,6 +1323,24 @@ Page {
                             }
                         }
                         onTextChanged: obsPage.edited = true
+                        MouseArea {
+                            id: endTimeMouse
+                            anchors.fill: parent
+                            z: endTimeTf.z + 1
+                            onClicked: {
+                                if (endTimeTf.text == "")
+                                {
+                                    if (startTimeTf.text != "") {
+                                        endTimeTf.text = startTimeTf.text
+                                    } else {
+                                        endTimeTf.text = Qt.formatDateTime(new Date(), "hh:mm")
+                                    }
+                                }
+                                setTimeToPicker(endTimeTf.text);
+                                timePickerDialog.targetObject = endTimeTf
+                                timePickerDialog.open()
+                            }
+                        }
                     }
                 }
             }

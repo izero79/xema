@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import com.nokia.extras 1.1
 
 Item {
     id: item1
@@ -98,12 +99,51 @@ Item {
         return name
     }
 
+    function timeRejected(object) {
+        object.text = ""
+    }
+
+    function timeSelected(object, h, m) {
+        console.log('parametrit: ' +h +", "+m)
+        h = h + ""
+        m = m + ""
+        if (h.length < 2) {
+            h = "0" + h
+        }
+        if (m.length < 2) {
+            m = "0" + m
+        }
+
+        object.text = h + ":" + m
+    }
+
+    function setTimeToPicker(text) {
+        var fields = text.split(":")
+        timePickerDialog.hour = fields[0]
+        timePickerDialog.minute = fields[1]
+    }
+
     anchors.right: parent.right
     anchors.rightMargin: 0
     anchors.left: parent.left
     anchors.leftMargin: 0
     height: delegateHeight
     width: parent.width
+
+    TimePickerDialog{
+        id: timePickerDialog
+
+        property variant targetObject: null
+
+        fields: DateTime.Hours | DateTime.Minutes;
+        titleText: qsTr("Select Time")
+        acceptButtonText: qsTr("Ok")
+        rejectButtonText: qsTr("Cancel")
+        onAccepted: {timeSelected(targetObject, timePickerDialog.hour, timePickerDialog.minute)}
+        onRejected: {timeRejected(targetObject)}
+    }
+
+
     Label {
         id: rowLabel
         property int headerHeight: 0
@@ -228,17 +268,21 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 0
         visible: detailLevel > 2
-        validator: RegExpValidator {
-            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
-        }
-        onActiveFocusChanged: {
-            if (activeFocus == true && text == "")
-            {
-                text = Qt.formatDateTime(new Date(), "hh:mm")
+        onTextChanged: item1.edited = true
+        MouseArea {
+            id: startTimeMouse
+            anchors.fill: parent
+            z: startTimeTf.z + 1
+            onClicked: {
+                if (startTimeTf.text == "")
+                {
+                    startTimeTf.text = Qt.formatDateTime(new Date(), "hh:mm")
+                }
+                setTimeToPicker(startTimeTf.text);
+                timePickerDialog.targetObject = startTimeTf
+                timePickerDialog.open()
             }
         }
-        onTextChanged: item1.edited = true
-
     }
 
     Label {
@@ -272,20 +316,22 @@ Item {
         anchors.rightMargin: 0
         y: startTimeTf.y
         visible: detailLevel > 2
-        validator: RegExpValidator {
-            regExp: /[0-2]{0,1}[0-9]{1}[\:\.]{1}[0-9]{2}/
-        }
-        onActiveFocusChanged: {
-            if (activeFocus == true && text == "")
-            {
-                if (startTimeTf.text != "")
+        MouseArea {
+            id: endTimeMouse
+            anchors.fill: parent
+            z: endTimeTf.z + 1
+            onClicked: {
+                if (endTimeTf.text == "")
                 {
-                    text = startTimeTf.text
+                    if (startTimeTf.text != "") {
+                        endTimeTf.text = startTimeTf.text
+                    } else {
+                        endTimeTf.text = Qt.formatDateTime(new Date(), "hh:mm")
+                    }
                 }
-                else
-                {
-                    text = Qt.formatDateTime(new Date(), "hh:mm")
-                }
+                setTimeToPicker(endTimeTf.text);
+                timePickerDialog.targetObject = endTimeTf
+                timePickerDialog.open()
             }
         }
         onTextChanged: item1.edited = true
