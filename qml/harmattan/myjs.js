@@ -9,6 +9,8 @@ var historyPageComponent;
 var historyObject;
 var settingsPageComponent;
 var settingsObject;
+var mapPageComponent;
+var mapObject;
 var currentStatusBox;
 
 function createObjects() {
@@ -204,6 +206,44 @@ function showHistoryPage(type)
         settingsPageComponent = null
     }*/
     pageStack.push(historyObject)
+}
+
+function showMapPage()
+{
+    if (mapObject)
+    {
+        console.log("map exists, push")/*
+        if(obsPageComponent) {
+            obsObject.destroy()
+            obsPageComponent.destroy()
+            obsObject = null
+            obsPageComponent = null
+        }
+        if(historyPageComponent) {
+            historyObject.destroy()
+            historyPageComponent.destroy()
+            historyObject = null
+            historyPageComponent = null
+        }*/
+        pageStack.push(mapObject)
+        return
+    }
+    mapPageComponent = Qt.createComponent(Qt.resolvedUrl("MapPage.qml"))
+    mapObject = mapPageComponent.createObject(window)/*
+    if(obsPageComponent) {
+        obsObject.destroy()
+        obsPageComponent.destroy()
+        obsObject = null
+        obsPageComponent = null
+    }
+    if(historyPageComponent) {
+        historyObject.destroy()
+        historyPageComponent.destroy()
+        historyObject = null
+        historyPageComponent = null
+    }*/
+
+    pageStack.push(mapObject)
 }
 
 function fillRegPersonBox()
@@ -512,5 +552,11 @@ function clearListPage() {
     if( listObject ) {
         listObject.selectModel()
         listObject.selectDelegate()
+    }
+}
+
+function mapPan(deltaX,deltaY) {
+    if (mapObject) {
+        mapObject.pan(deltaX,deltaY);
     }
 }

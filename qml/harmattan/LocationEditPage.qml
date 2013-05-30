@@ -142,6 +142,10 @@ Page {
         engCountryTf.text = locationModel.data(currentIndex, 57)
     }
 
+    function openMap() {
+        window.showMap()
+    }
+
     Flickable {
         id: flickable1
         contentWidth: width
@@ -364,8 +368,8 @@ Page {
             property bool settingValue: false
             placeholderText: qsTr("YKJ coordinates")
             text: locationModel.data(currentIndex, 38)
-            anchors.left: parent.left
-            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
             anchors.top: engCountryTf.bottom
             anchors.topMargin: 8
             width: parent.width / 2
@@ -388,7 +392,7 @@ Page {
             text: locationModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: ykjTf.bottom
+            anchors.top: engCountryTf.bottom
             anchors.topMargin: 8
             width: parent.width / 2
             onTextChanged: {
@@ -402,12 +406,21 @@ Page {
                 }
             }
         }
-
+        Button {
+            id: mapButton
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: wgsTf.bottom
+            anchors.topMargin: 8
+            width: 200
+            text: qsTr("Map")
+            onClicked: locationEditPage.openMap()
+        }
         Button {
             id: gpsButton
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: wgsTf.bottom
+            anchors.top: mapButton.bottom
             anchors.topMargin: 8
             width: 200
             text: qsTr("Start GPS")
@@ -437,8 +450,8 @@ Page {
             ]
         }
         Label {
-            anchors.left: wgsTf.right
-            anchors.bottom: wgsTf.bottom
+            anchors.left: busyIndicator.right
+            anchors.top: gpsButton.top
             height: wgsTf.height
             visible: positionSource.active && positionSource.coordinatesValid
             text: qsTr("Accuracy: %1 m").arg(positionSource.accuracy)
@@ -447,6 +460,7 @@ Page {
         }
 
         BusyIndicator {
+            id: busyIndicator
             anchors.left: gpsButton.right
             anchors.top: gpsButton.top
             height: gpsButton.height

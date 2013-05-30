@@ -27,6 +27,7 @@
 #include "directionmodel.h"
 #include "coordinateconverter.h"
 #include "systeminfoprovider.h"
+#include "kineticscroller.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -55,7 +56,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mSettings(0),
     mDataWriter(0),
     mDataLoader(0),
-    mCoordinateConverter(0)
+    mCoordinateConverter(0),
+    mKineticScroller(0)
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView = new QDeclarativeView(this);
@@ -160,6 +162,13 @@ void QMLWindow::init()
     patchVersion.setNum( PATCHVERSION );
     QString version( majorVersion + "." + minorVersion + "." + patchVersion );
     mRootObject->setProperty( "versionString", version );
+
+    mKineticScroller = new KineticScroller();
+
+    QObject::connect(mRootObject, SIGNAL(mousePressedNow()), mKineticScroller, SLOT(mousePressed()));
+    QObject::connect(mRootObject, SIGNAL(mouseReleasedNow()), mKineticScroller, SLOT(mouseReleased()));
+    QObject::connect(mRootObject, SIGNAL(mouseMovedNow(QVariant,QVariant)), mKineticScroller, SLOT(mouseMoved(QVariant,QVariant)));
+    QObject::connect(mKineticScroller, SIGNAL(kineticPan(QVariant,QVariant)), mRootObject, SLOT(doPanMap(QVariant,QVariant)));
 
     connect(mRootObject,SIGNAL(writeNew(QString)),this,SLOT(writeNewObservation(QString)));
     connect(mRootObject,SIGNAL(readObs(QString)),this,SLOT(loadObservation(QString)));

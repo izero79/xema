@@ -19,6 +19,7 @@ class SexModel;
 class DressModel;
 class DirectionModel;
 class CoordinateConverter;
+class KineticScroller;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -109,6 +110,7 @@ private:
     ModelDataWriter *mDataWriter;
     ModelDataLoader *mDataLoader;
     CoordinateConverter *mCoordinateConverter;
+    KineticScroller *mKineticScroller;
 };
 
 #endif // QMLWINDOW_H

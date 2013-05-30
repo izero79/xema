@@ -49,6 +49,16 @@ PageStackWindow {
     signal clearHistory()
     signal saveBirds()
 
+    signal mousePressedNow;
+    signal mouseReleasedNow;
+    signal mouseMovedNow(variant deltax, variant deltay);
+
+    // slots
+    function doPanMap(deltaX,deltaY)
+    {
+        MyScript.mapPan(deltaX,deltaY);
+    }
+
     function setSystematicSort(use)
     {
         window.useSystematicSort = use
@@ -239,6 +249,11 @@ PageStackWindow {
 
         MyScript.obsObject.setData(date, place, species)
     }
+
+    function showMap() {
+        MyScript.showMapPage()
+    }
+
     initialPage: Qt.resolvedUrl("MainPage.qml")
 
     function importError(errorNo)

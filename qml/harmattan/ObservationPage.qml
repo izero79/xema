@@ -109,6 +109,10 @@ Page {
 //        otherPeopleTa.text = name
     }
 
+    function openMap() {
+        window.showMap()
+    }
+
     function readAllData()
     {
         var missingData = new Array();
@@ -1556,11 +1560,22 @@ Page {
                         anchors.topMargin: 8
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        anchors.right: mapButton.left
+                        anchors.rightMargin: 8
                         height: 50
                         onTextChanged: obsPage.edited = true
                         enabled: false;
+                    }
+
+                    Button {
+                        id: mapButton
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.top: parent.top
+                        anchors.topMargin: 8
+                        width: 150
+                        text: qsTr("Map")
+                        onClicked: obsPage.openMap()
                     }
 
                     Label {

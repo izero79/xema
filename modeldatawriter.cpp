@@ -718,7 +718,6 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     if (exportWgs == true) {
         QString x = birdX;
         QString y = birdY;
-        double dx = x.toDouble();
         double dy = y.toDouble();
         if (dy < 400) {
             qDebug() << "lintu wgs";
@@ -731,7 +730,6 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     } else {
         QString x = birdX;
         QString y = birdY;
-        double dx = x.toDouble();
         double dy = y.toDouble();
         if (dy > 400) {
             qDebug() << "lintu ykj";

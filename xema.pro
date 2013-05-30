@@ -193,7 +193,8 @@ SOURCES += main.cpp \
     systeminfoprovider.cpp \
     direction.cpp \
     directionmodel.cpp \
-    modeldatawriter.cpp
+    modeldatawriter.cpp \
+    kineticscroller.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -207,7 +208,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog \
-    qmldir
+    qmldir \
+    qml/harmattan/MapPage.qml
 
 HEADERS += \
     person.h \
@@ -241,7 +243,8 @@ HEADERS += \
     sexmodel.h \
     systeminfoprovider.h \
     direction.h \
-    directionmodel.h
+    directionmodel.h \
+    kineticscroller.h
 
 RESOURCES += \
     commonresources.qrc
