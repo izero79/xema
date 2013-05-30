@@ -109,6 +109,15 @@ Page {
     {
         console.log("adding newjoo")
         addingNew = true
+        if ( currentLanguage == "sv") {
+            sweCountryTf.text = window.defaultCountry
+        }
+        else if ( currentLanguage == "en") {
+            engCountryTf.text = window.defaultCountry
+        }
+        else {
+            countryTf.text = window.defaultCountry
+        }
     }
 
     function selectedIndex(index)

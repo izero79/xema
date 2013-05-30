@@ -563,6 +563,7 @@ Page {
             anchors.left: parent.left
             anchors.leftMargin: 0
             inputMethodHints: Qt.ImhNoPredictiveText
+            focus: ( listPageType == "places" || listPageType == "birds" )
             onTextChanged: {
                 //console.log("teksti muuttuu: " + text)
                 if (window.onlyDefaultCountry) {

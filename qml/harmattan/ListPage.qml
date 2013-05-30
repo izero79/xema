@@ -69,7 +69,11 @@ Page {
         console.log("listpage init")
         selectModel()
         selectDelegate()
-        listView.model.filter("")
+        if (window.onlyDefaultCountry) {
+            listView.model.filter("^" + window.defaultCountry  + ",");
+        } else {
+            listView.model.filter("")
+        }
         filterTf.text = ""
         console.log("listpage init - done")
     }
@@ -536,8 +540,6 @@ Page {
         onRejected: {
             compass.stop()
         }
-
-        //onClickedOutside: calibrateDialog.close()
     }
 
     Item {
@@ -563,6 +565,7 @@ Page {
             anchors.left: parent.left
             anchors.leftMargin: 0
             inputMethodHints: Qt.ImhNoPredictiveText
+            focus: ( listPageType == "places" || listPageType == "birds" )
             onTextChanged: {
                 //console.log("teksti muuttuu: " + text)
                 if (window.onlyDefaultCountry) {
