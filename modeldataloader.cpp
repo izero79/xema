@@ -546,8 +546,10 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
                              readPlace,
                              line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
-            QString bird = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+            QString birdAbbr = line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES);
+            QString bird = readBird(birdAbbr);
             item.setSpecies(bird);
+            item.setSpeciesAbbr(birdAbbr);
             item.addSpeciesCount(bird, readCount.toInt());
             item.setTime(readTime);
 
@@ -558,8 +560,10 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
         {
             HistoryItem item(line.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(),
                              readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
-            QString bird = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+            QString birdAbbr = line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES);
+            QString bird = readBird(birdAbbr);
             item.setSpecies(bird);
+            item.setSpeciesAbbr(birdAbbr);
             item.addSpeciesCount(bird, readCount.toInt());
             item.setTime(readTime);
             model->addItemAtBeginning(item);
@@ -608,8 +612,8 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 #endif
         QString date = line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
         QString readTime = line.section('#', XemaEnums::OBS_TIME1, XemaEnums::OBS_TIME1);
-        QString species = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
-//        QString species = (line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+        QString birdAbbr = line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES);
+        QString species = readBird(birdAbbr);
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << "Riveja" << rowCount;
         QString readCount = 0;
@@ -651,6 +655,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
                 HistoryItem tmp = model->getItem(i);
                 tmp.increaseDateCount();
                 tmp.addSpecies(species);
+                tmp.addSpeciesAbbr(birdAbbr);
 #ifdef PERFTEST
     qDebug("loadHistoryDateData loopissa 3 elapsed: %d ms", t.elapsed());
 #endif
@@ -680,6 +685,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 #endif
 
             item.setSpecies(species);
+            item.setSpeciesAbbr(birdAbbr);
 #ifdef PERFTEST
     qDebug("loadHistoryDateData ifissa 4 elapsed: %d ms", t.elapsed());
 #endif
@@ -739,7 +745,8 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
         QString readPlace = line.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
         readPlace.replace("#", ", ");
         readPlace = readLocation(readPlace);
-        QString species = readBird(line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES));
+        QString birdAbbr = line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES);
+        QString species = readBird(birdAbbr);
 
         int rowCount = line.section('#', XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
 //        qDebug() << "Riveja" << rowCount;
@@ -785,6 +792,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
                 tmp.increasePlaceCount();
                 tmp.increaseDateCount();
                 tmp.addSpecies(species);
+                tmp.addSpeciesAbbr(birdAbbr);
                 tmp.addSpeciesCount(species, readCount.toInt());
                 model->replaceItem(i, tmp);
                 samePlaceFound = true;
@@ -800,6 +808,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
                                  readPlace,
                                  line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
                 item.setSpecies(species);
+                item.setSpeciesAbbr(birdAbbr);
                 item.addSpeciesCount(species, readCount.toInt());
                 model->addItemAtBeginning(item);
             }

@@ -8,6 +8,7 @@ HistoryModel::HistoryModel(QObject *parent) :
     roles[PlaceRole] = "place";
     roles[DateRole] = "date";
     roles[SpeciesRole] = "species";
+    roles[SpeciesAbbrRole] = "speciesAbbr";
     roles[DateCountRole] = "dateCount";
     roles[PlaceCountRole] = "placeCount";
     roles[SpeciesCountRole] = "specieCount";
@@ -43,7 +44,8 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
     {
         return QString(item.place() + ", " +
                         item.date() + ", " +
-                        item.species());
+                       item.species() + ", " +
+                       item.speciesAbbr());
     }
     else if (role == IdRole)
     {
@@ -60,6 +62,10 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
     else if (role == SpeciesRole)
     {
         return item.species();
+    }
+    else if (role == SpeciesAbbrRole)
+    {
+        return item.speciesAbbr();
     }
     else if (role == DateCountRole)
     {

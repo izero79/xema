@@ -23,7 +23,8 @@ public:
         SpeciesCountRole, // 40
         SortableDateRole,
         SortableTimeRole,
-        SectionRole // 43
+        SectionRole, // 43
+        SpeciesAbbrRole
     };
 
 signals:

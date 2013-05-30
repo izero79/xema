@@ -7,6 +7,7 @@ HistoryItem::HistoryItem() :
     mPlace(),
     mDate(),
     mSpecies(),
+    mSpeciesAbbr(),
     mDateCount(1),
     mPlaceCount(1),
     mTime()
@@ -18,6 +19,7 @@ HistoryItem::HistoryItem(qlonglong id, const QString &place, const QString &date
     mPlace(place),
     mDate(date),
     mSpecies(),
+    mSpeciesAbbr(),
     mDateCount(1),
     mPlaceCount(1),
     mTime()
@@ -39,6 +41,17 @@ void HistoryItem::setSpecies(const QString &name)
 {
     mSpecies.clear();
     mSpecies.insert(name, 0);
+}
+
+void HistoryItem::setSpeciesAbbr(const QString &abbrev)
+{
+    mSpeciesAbbr = abbrev;
+}
+
+void HistoryItem::addSpeciesAbbr(const QString &abbrev)
+{
+    mSpeciesAbbr += " ";
+    mSpeciesAbbr += abbrev;
 }
 
 void HistoryItem::addSpecies(const QString &name)
@@ -118,6 +131,11 @@ QString HistoryItem::species() const
         species.remove(species.length() - 2, 2);
     }
     return species;
+}
+
+QString HistoryItem::speciesAbbr() const
+{
+    return mSpeciesAbbr;
 }
 
 int HistoryItem::dateCount() const

@@ -15,7 +15,9 @@ public:
     void setPlace(const QString &name);
     void setDate(const QString &date);
     void setSpecies(const QString &name);
+    void setSpeciesAbbr(const QString &abbrev);
     void addSpecies(const QString &name);
+    void addSpeciesAbbr(const QString &abbrev);
     void increaseDateCount();
     void increasePlaceCount();
     void addSpeciesCount(const QString &name, int count);
@@ -25,6 +27,7 @@ public:
     QString place() const;
     QString date() const;
     QString species() const;
+    QString speciesAbbr() const;
     int dateCount() const;
     int placeCount() const;
     int specieCount(const QString &name = QString()) const;
@@ -37,6 +40,7 @@ private:
     QString mPlace;
     QString mDate;
     QMap<QString,int> mSpecies;
+    QString mSpeciesAbbr;
     int mDateCount;
     int mPlaceCount;
     QString mTime;
