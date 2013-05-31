@@ -151,7 +151,7 @@ Page {
             y = coords[1]
         }
 
-        window.showPlaceMap(x, y)
+        window.showPlaceMap(wgsTf, x, y)
     }
 
     Flickable {

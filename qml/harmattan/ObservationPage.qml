@@ -130,7 +130,7 @@ Page {
             y = coords[1]
         }
 
-        window.showBirdMap(place_x, place_y, x, y)
+        window.showBirdMap(birdCoordinatesTf, place_x, place_y, x, y)
     }
 
     function readAllData()
@@ -1225,7 +1225,7 @@ Page {
                         onTextChanged: {
                             obsPage.edited = true
                             var locationCoords = getLocationCoords()
-                            if (locationCoords != "") {
+                            if (locationCoords != "" && distanceTf.text != "" && directionTf.text != "") {
                                 var coordinates = CoordinateConverter.countCoordinates(locationCoords, distanceTf.text, directionTf.text)
                                 birdCoordinatesTf.text = coordinates
                             }
@@ -1559,7 +1559,7 @@ Page {
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    visible: detailLevel > 2
+                    visible: detailLevel > 1
 
                     TextField {
                         id: birdCoordinatesTf
@@ -1612,6 +1612,7 @@ Page {
                         anchors.topMargin: 8
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        visible: detailLevel > 2
                         width: 200
                         MouseArea {
                             id: directionMouse
@@ -1642,6 +1643,7 @@ Page {
                         anchors.topMargin: 8
                         inputMethodHints: Qt.ImhDigitsOnly
                         validator: IntValidator { bottom: 0 }
+                        visible: detailLevel > 2
                         onTextChanged: {
                             obsPage.edited = true
                             console.log("distanceTf: " + distanceTf.text)

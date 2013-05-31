@@ -203,6 +203,10 @@
         <source>Country in english</source>
         <translation>Maa englanniksi</translation>
     </message>
+    <message>
+        <source>Map</source>
+        <translation>Kartta</translation>
+    </message>
 </context>
 <context>
     <name>MainPage</name>
@@ -419,6 +423,10 @@
     <message>
         <source>Select Time</source>
         <translation>Valitse aika</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Kartta</translation>
     </message>
 </context>
 <context>

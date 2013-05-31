@@ -208,8 +208,9 @@ function showHistoryPage(type)
     pageStack.push(historyObject)
 }
 
-function showMapPage(mode, place_x, place_y, bird_x, bird_y)
+function showMapPage(itemi, mode, place_x, place_y, bird_x, bird_y)
 {
+    currentStatusBox = itemi
     if (mapObject)
     {
         console.log("map exists, push")/*
@@ -577,4 +578,12 @@ function mapPan(deltaX,deltaY) {
     if (mapObject) {
         mapObject.pan(deltaX,deltaY);
     }
+}
+
+function fillBirdCoords(coords) {
+    currentStatusBox.text = coords
+}
+
+function fillLocationCoords(coords) {
+    currentStatusBox.text = coords
 }

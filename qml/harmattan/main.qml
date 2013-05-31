@@ -250,12 +250,24 @@ PageStackWindow {
         MyScript.obsObject.setData(date, place, species)
     }
 
-    function showBirdMap(place_x, place_y, x, y) {
-        MyScript.showMapPage("bird", place_x, place_y, x, y)
+    function showBirdMap(itemi, place_x, place_y, x, y) {
+        cppProcessing = true
+        MyScript.showMapPage(itemi, "bird", place_x, place_y, x, y)
+        cppProcessing = false
     }
 
-    function showPlaceMap(x, y) {
-        MyScript.showMapPage("place", x, y, null, null)
+    function showPlaceMap(itemi, x, y) {
+        cppProcessing = true
+        MyScript.showMapPage(itemi, "place", x, y, null, null)
+        cppProcessing = false
+    }
+
+    function setBirdCoords(coords) {
+        MyScript.fillBirdCoords(coords)
+    }
+
+    function setPlaceCoords(coords) {
+        MyScript.fillLocationCoords(coords)
     }
 
     initialPage: Qt.resolvedUrl("MainPage.qml")
