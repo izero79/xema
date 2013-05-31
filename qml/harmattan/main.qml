@@ -250,8 +250,12 @@ PageStackWindow {
         MyScript.obsObject.setData(date, place, species)
     }
 
-    function showMap() {
-        MyScript.showMapPage()
+    function showBirdMap(place_x, place_y, x, y) {
+        MyScript.showMapPage("bird", place_x, place_y, x, y)
+    }
+
+    function showPlaceMap(x, y) {
+        MyScript.showMapPage("place", x, y, null, null)
     }
 
     initialPage: Qt.resolvedUrl("MainPage.qml")

@@ -208,7 +208,7 @@ function showHistoryPage(type)
     pageStack.push(historyObject)
 }
 
-function showMapPage()
+function showMapPage(mode, place_x, place_y, bird_x, bird_y)
 {
     if (mapObject)
     {
@@ -225,11 +225,29 @@ function showMapPage()
             historyObject = null
             historyPageComponent = null
         }*/
-        pageStack.push(mapObject)
-        return
+    } else {
+        mapPageComponent = Qt.createComponent(Qt.resolvedUrl("MapPage.qml"))
+        mapObject = mapPageComponent.createObject(window)
     }
-    mapPageComponent = Qt.createComponent(Qt.resolvedUrl("MapPage.qml"))
-    mapObject = mapPageComponent.createObject(window)/*
+    mapObject.setType(mode)
+    if (mode == "place") {
+        mapObject.setBirdPos(null, null)
+        mapObject.setPlacePos(place_x, place_y)
+        if (place_x != null && place_y != null) {
+            mapObject.setPos(place_x, place_y)
+        }
+    } else {
+        mapObject.setPlacePos(place_x, place_y)
+        mapObject.setBirdPos(bird_x, bird_y)
+        if (bird_x != null && bird_y != null) {
+            mapObject.setPos(bird_x, bird_y)
+        }
+        else if (place_x != null && place_y != null) {
+            mapObject.setPos(place_x, place_y)
+        }
+    }
+
+    /*
     if(obsPageComponent) {
         obsObject.destroy()
         obsPageComponent.destroy()

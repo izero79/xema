@@ -143,7 +143,15 @@ Page {
     }
 
     function openMap() {
-        window.showMap()
+        var x;
+        var y;
+        if (wgsTf.text != "") {
+            var coords = wgsTf.text.split(":")
+            x = coords[0]
+            y = coords[1]
+        }
+
+        window.showPlaceMap(x, y)
     }
 
     Flickable {

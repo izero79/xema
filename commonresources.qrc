@@ -20,5 +20,7 @@
         <file>atlasindexes.version</file>
         <file>dresses.version</file>
         <file>sexes.version</file>
+        <file>qml/common_icons/bird.png</file>
+        <file>qml/common_icons/place.png</file>
     </qresource>
 </RCC>

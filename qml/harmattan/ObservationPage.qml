@@ -110,7 +110,27 @@ Page {
     }
 
     function openMap() {
-        window.showMap()
+        var x = null;
+        var y = null;
+        var place_x = null;
+        var place_y = null;
+        var locationCoords = getLocationCoords()
+        if (locationCoords != "") {
+            var place_coords = locationCoords.split(":")
+            place_x = place_coords[0]
+            place_y = place_coords[1]
+
+        }
+
+        console.log('loc coords: '+ locationCoords)
+
+        if (birdCoordinatesTf.text != "") {
+            var coords = birdCoordinatesTf.text.split(":")
+            x = coords[0]
+            y = coords[1]
+        }
+
+        window.showBirdMap(place_x, place_y, x, y)
     }
 
     function readAllData()
@@ -179,17 +199,6 @@ Page {
         allData += delimiter
 
         if (birdCoordinatesTf.text != "") {
-/*
-            var birdYKJ = CoordinateConverter.wgsToYkjString(birdCoordinatesTf.text)
-            var birdYKJArray = birdYKJ.split(":",2);
-
-            // uusi, x-coord bird
-            allData += birdYKJArray[1]
-            allData += delimiter
-            // uusi, y-coord bird
-            allData += birdYKJArray[0]
-            allData += delimiter
-            */
             var birdWGS = birdCoordinatesTf.text
             var birdWGSArray = birdWGS.split(":",2);
 
