@@ -247,6 +247,7 @@ function showMapPage(itemi, mode, place_x, place_y, bird_x, bird_y)
             mapObject.setPos(place_x, place_y)
         }
     }
+    mapObject.startGps()
 
     /*
     if(obsPageComponent) {

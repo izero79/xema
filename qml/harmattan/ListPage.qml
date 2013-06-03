@@ -582,7 +582,7 @@ Page {
                 source: ":../harmattan_icons/icon-m-input-clear.png"
                 height: 48 //parent.height - 8 * 2
                 width: 48 //parent.height - 8 * 2
-                visible: !busyIndicator.visible && filterTf.text
+                visible: filterTf.text && busyIndicator.visible == false
 
                 MouseArea {
                     id: clear

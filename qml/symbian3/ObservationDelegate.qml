@@ -130,6 +130,12 @@ Item {
     height: delegateHeight
     width: parent.width
 
+    IntValidator {
+        id: biggerThanOne
+        bottom: 1
+        top: item1.rows
+    }
+
     TimePickerDialog{
         id: timePickerDialog
 
@@ -350,10 +356,7 @@ Item {
         anchors.rightMargin: 0
         y: startTimeTf.y
         visible: detailLevel > 2
-        validator: IntValidator {
-            bottom: 1
-            top: item1.rows
-        }
+        validator: text != "" ? biggerThanOne : null
         inputMethodHints: Qt.ImhDigitsOnly
         onTextChanged: item1.edited = true
 

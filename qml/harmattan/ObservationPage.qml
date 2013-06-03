@@ -644,6 +644,11 @@ Page {
         timePickerDialog.minute = fields[1]
     }
 
+    IntValidator {
+        id: notZero
+        bottom: 0
+    }
+
     DatePickerDialog{
         id: datePickerDialog
 
@@ -1642,7 +1647,7 @@ Page {
                         anchors.top: fromPlaceToBirdLabel.bottom
                         anchors.topMargin: 8
                         inputMethodHints: Qt.ImhDigitsOnly
-                        validator: IntValidator { bottom: 0 }
+                        validator: text != "" ? notZero : null
                         visible: detailLevel > 2
                         onTextChanged: {
                             obsPage.edited = true
@@ -1653,14 +1658,13 @@ Page {
                                 birdCoordinatesTf.text = coordinates
                             }
                         }
-
                     }
                 }
 
                 Item {
                     id: obsDelegateItem
                     objectName: "obsDelegateItem"
-                    anchors.top: detailLevel > 2 ? birdPlaceItem.bottom : birdNameItem.bottom;
+                    anchors.top: detailLevel > 2 ? birdPlaceItem.bottom : detailLevel > 1 ? birdCoordinatesTf :birdNameItem.bottom;
                     anchors.topMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -1749,7 +1753,7 @@ Page {
                         anchors.leftMargin: 0
                         width: 175
                         visible: detailLevel > 2
-                        validator: IntValidator { bottom: 0 }
+                        validator: text != "" ? notZero : null
                         inputMethodHints: Qt.ImhDigitsOnly
                         MouseArea {
                             id: atlastfmouse

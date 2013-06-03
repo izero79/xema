@@ -74,6 +74,12 @@ Page {
         }
     }
 
+    function startGps() {
+        if (mapItem.item) {
+            mapItem.item.startGps()
+        }
+    }
+
     Rectangle {
         id: mapBase
         anchors.top: parent.top
@@ -96,10 +102,10 @@ Page {
                     mapItem.item.setPos(pos_x, pos_y)
                 }
                 if (mapPage.place_x != -1 && mapPage.place_y != -1) {
-                    mapItem.item.setPlace(place_x, place_y)
+                    mapItem.item.setPlacePos(place_x, place_y)
                 }
                 if (mapPage.bird_x != -1 && mapPage.bird_y != -1) {
-                    mapItem.item.setBird(bird_x, bird_y)
+                    mapItem.item.setBirdPos(bird_x, bird_y)
                 }
                 mapItem.item.startGps()
             }
@@ -116,7 +122,7 @@ Page {
     Timer {
         id: mapLoaderTimer
         repeat: false
-        interval: 200
+        interval: 300
         onTriggered: {
             mapItem.source = Qt.resolvedUrl( "MapItem.qml" )
         }
