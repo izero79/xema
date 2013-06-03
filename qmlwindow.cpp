@@ -363,6 +363,7 @@ void QMLWindow::exportData(bool onlyNew, const QString &delimiter)
     setProcessing(true);
     mDataWriter->exportHistory(onlyNew,mLocationModel,mPersonModel,mBirdModel,delimiter);
     setProcessing(false);
+    QMetaObject::invokeMethod(mRootObject, "exportDone");
 }
 
 void QMLWindow::exportOwnData()
@@ -370,15 +371,16 @@ void QMLWindow::exportOwnData()
     setProcessing(true);
     mDataWriter->exportOwnData(mLocationModel, mBirdModel, mStatusModel, mPersonModel);
     setProcessing(false);
+    QMetaObject::invokeMethod(mRootObject, "exportDone");
 }
 
 void QMLWindow::importOwnData()
 {
     setProcessing(true);
     int err = mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel,mStatusModel);
+    setProcessing(false);
     QMetaObject::invokeMethod(mRootObject, "importError",
              Q_ARG(QVariant,err));
-    setProcessing(false);
 }
 
 void QMLWindow::importData()

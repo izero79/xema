@@ -324,6 +324,15 @@ PageStackWindow {
         errorDialog.open()
     }
 
+    function exportDone()
+    {
+        errorDialog.dialogText = ""
+        console.log("exportDone")
+        errorDialog.titleText = qsTr("Export complete")
+        errorDialog.dialogText = qsTr("Export is complete.")
+        errorDialog.open()
+    }
+
     Rectangle {
         id: processingRec
         visible: cppProcessing
