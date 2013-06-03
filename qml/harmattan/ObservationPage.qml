@@ -959,7 +959,7 @@ Page {
                         MouseArea {
                             id: stopDateMouse
                             anchors.fill: parent
-                            z: stopDateMouse.z + 1
+                            z: stopDateTf.z + 1
                             onClicked: {
                                 if (stopDateTf.text == "")
                                 {

@@ -22,7 +22,7 @@
         <file>sexes.version</file>
         <file>qml/common_icons/bird.png</file>
         <file>qml/common_icons/place.png</file>
-        <file>qml/common_icons/area.png</file>
-        <file>qml/common_icons/position.png</file>
+        <file>qml/common_icons/invalidposition.png</file>
+        <file>qml/common_icons/validposition.png</file>
     </qresource>
 </RCC>

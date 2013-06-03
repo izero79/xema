@@ -1,13 +1,13 @@
 #CONFIG +=debug
 #CONFIG -=release
 CONFIG -=liteVersion
-CONFIG +=forOvi
+CONFIG -=forOvi
 CONFIG -=forUnsigned
 CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-#DEFINES +=DEBUGONLYTOFILE
+DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location systeminfo
 
@@ -208,8 +208,7 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog \
-    qmldir \
-    qml/harmattan/MapPage.qml
+    qmldir
 
 HEADERS += \
     person.h \

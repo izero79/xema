@@ -9,6 +9,8 @@ var historyPageComponent;
 var historyObject;
 var settingsPageComponent;
 var settingsObject;
+var mapPageComponent;
+var mapObject;
 var currentStatusBox;
 
 function createObjects() {
@@ -204,6 +206,63 @@ function showHistoryPage(type)
         settingsPageComponent = null
     }*/
     pageStack.push(historyObject)
+}
+
+function showMapPage(itemi, mode, place_x, place_y, bird_x, bird_y)
+{
+    currentStatusBox = itemi
+    if (mapObject)
+    {
+        console.log("map exists, push")/*
+        if(obsPageComponent) {
+            obsObject.destroy()
+            obsPageComponent.destroy()
+            obsObject = null
+            obsPageComponent = null
+        }
+        if(historyPageComponent) {
+            historyObject.destroy()
+            historyPageComponent.destroy()
+            historyObject = null
+            historyPageComponent = null
+        }*/
+    } else {
+        mapPageComponent = Qt.createComponent(Qt.resolvedUrl("MapPage.qml"))
+        mapObject = mapPageComponent.createObject(window)
+    }
+    mapObject.setType(mode)
+    if (mode == "place") {
+        mapObject.setBirdPos(null, null)
+        mapObject.setPlacePos(place_x, place_y)
+        if (place_x != null && place_y != null) {
+            mapObject.setPos(place_x, place_y)
+        }
+    } else {
+        mapObject.setPlacePos(place_x, place_y)
+        mapObject.setBirdPos(bird_x, bird_y)
+        if (bird_x != null && bird_y != null) {
+            mapObject.setPos(bird_x, bird_y)
+        }
+        else if (place_x != null && place_y != null) {
+            mapObject.setPos(place_x, place_y)
+        }
+    }
+
+    /*
+    if(obsPageComponent) {
+        obsObject.destroy()
+        obsPageComponent.destroy()
+        obsObject = null
+        obsPageComponent = null
+    }
+    if(historyPageComponent) {
+        historyObject.destroy()
+        historyPageComponent.destroy()
+        historyObject = null
+        historyPageComponent = null
+    }*/
+
+    pageStack.push(mapObject)
 }
 
 function fillRegPersonBox()
@@ -513,4 +572,18 @@ function clearListPage() {
         listObject.selectModel()
         listObject.selectDelegate()
     }
+}
+
+function mapPan(deltaX,deltaY) {
+    if (mapObject) {
+        mapObject.pan(deltaX,deltaY);
+    }
+}
+
+function fillBirdCoords(coords) {
+    currentStatusBox.text = coords
+}
+
+function fillLocationCoords(coords) {
+    currentStatusBox.text = coords
 }

@@ -49,6 +49,16 @@ PageStackWindow {
     signal clearHistory()
     signal saveBirds()
 
+    signal mousePressedNow;
+    signal mouseReleasedNow;
+    signal mouseMovedNow(variant deltax, variant deltay);
+
+    // slots
+    function doPanMap(deltaX,deltaY)
+    {
+        MyScript.mapPan(deltaX,deltaY);
+    }
+
     function setSystematicSort(use)
     {
         window.useSystematicSort = use
@@ -239,7 +249,28 @@ PageStackWindow {
 
         MyScript.obsObject.setData(date, place, species)
     }
-//    initialPage: Qt.resolvedUrl("MainPage.qml")
+
+    function showBirdMap(itemi, place_x, place_y, x, y) {
+        cppProcessing = true
+        MyScript.showMapPage(itemi, "bird", place_x, place_y, x, y)
+        cppProcessing = false
+    }
+
+    function showPlaceMap(itemi, x, y) {
+        cppProcessing = true
+        MyScript.showMapPage(itemi, "place", x, y, null, null)
+        cppProcessing = false
+    }
+
+    function setBirdCoords(coords) {
+        MyScript.fillBirdCoords(coords)
+    }
+
+    function setPlaceCoords(coords) {
+        MyScript.fillLocationCoords(coords)
+    }
+
+    //initialPage: Qt.resolvedUrl("MainPage.qml")
 
     function importError(errorNo)
     {

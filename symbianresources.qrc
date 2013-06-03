@@ -26,5 +26,7 @@
         <file>qml/splash_240x200.png</file>
         <file>qml/symbian3_icons/undo.svg</file>
         <file>qml/symbian3_icons/icon-m-input-clear.png</file>
+        <file>qml/symbian3/MapItem.qml</file>
+        <file>qml/symbian3/MapPage.qml</file>
     </qresource>
 </RCC>

@@ -109,6 +109,30 @@ Page {
 //        otherPeopleTa.text = name
     }
 
+    function openMap() {
+        var x = null;
+        var y = null;
+        var place_x = null;
+        var place_y = null;
+        var locationCoords = getLocationCoords()
+        if (locationCoords != "") {
+            var place_coords = locationCoords.split(":")
+            place_x = place_coords[0]
+            place_y = place_coords[1]
+
+        }
+
+        console.log('loc coords: '+ locationCoords)
+
+        if (birdCoordinatesTf.text != "") {
+            var coords = birdCoordinatesTf.text.split(":")
+            x = coords[0]
+            y = coords[1]
+        }
+
+        window.showBirdMap(birdCoordinatesTf, place_x, place_y, x, y)
+    }
+
     function readAllData()
     {
         var missingData = new Array();
@@ -175,17 +199,6 @@ Page {
         allData += delimiter
 
         if (birdCoordinatesTf.text != "") {
-/*
-            var birdYKJ = CoordinateConverter.wgsToYkjString(birdCoordinatesTf.text)
-            var birdYKJArray = birdYKJ.split(":",2);
-
-            // uusi, x-coord bird
-            allData += birdYKJArray[1]
-            allData += delimiter
-            // uusi, y-coord bird
-            allData += birdYKJArray[0]
-            allData += delimiter
-            */
             var birdWGS = birdCoordinatesTf.text
             var birdWGSArray = birdWGS.split(":",2);
 
@@ -1089,7 +1102,7 @@ Page {
                         onTextChanged: {
                             obsPage.edited = true
                             var locationCoords = getLocationCoords()
-                            if (locationCoords != "") {
+                            if (locationCoords != "" && distanceTf.text != "" && directionTf.text != "") {
                                 var coordinates = CoordinateConverter.countCoordinates(locationCoords, distanceTf.text, directionTf.text)
                                 birdCoordinatesTf.text = coordinates
                             }
@@ -1368,7 +1381,7 @@ Page {
                     anchors.rightMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    visible: detailLevel > 2
+                    visible: detailLevel > 1
 
                     TextField {
                         id: birdCoordinatesTf
@@ -1378,11 +1391,22 @@ Page {
                         anchors.topMargin: 8
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        anchors.right: mapButton.left
+                        anchors.rightMargin: 8
                         height: 50
                         onTextChanged: obsPage.edited = true
                         enabled: false;
+                    }
+
+                    Button {
+                        id: mapButton
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.top: parent.top
+                        anchors.topMargin: 8
+                        width: 150
+                        text: qsTr("Map")
+                        onClicked: obsPage.openMap()
                     }
 
                     Label {
@@ -1410,6 +1434,7 @@ Page {
                         anchors.topMargin: 8
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        visible: detailLevel > 2
                         width: 200
                         MouseArea {
                             id: directionMouse
@@ -1441,6 +1466,7 @@ Page {
                         anchors.topMargin: 8
                         inputMethodHints: Qt.ImhDigitsOnly
                         validator: IntValidator { bottom: 0 }
+                        visible: detailLevel > 2
                         onTextChanged: {
                             obsPage.edited = true
                             console.log("distanceTf: " + distanceTf.text)

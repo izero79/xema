@@ -414,6 +414,7 @@ Page {
                 }
             }
         }
+
         Button {
             id: mapButton
             anchors.left: parent.left

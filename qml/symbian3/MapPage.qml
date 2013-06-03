@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import com.nokia.meego 1.0
+import com.nokia.symbian 1.1
 import QtMobility.location 1.2
 
 Page {
@@ -17,10 +17,10 @@ Page {
     ToolBarLayout {
         id: mapToolBarLayout
         visible: true
-        ToolIcon {
-            //flat: true
+        ToolButton {
+            flat: true
             visible: true
-            iconId: "icon-m-toolbar-back-white"
+            iconSource: "toolbar-back"
             onClicked: {
                 mapItem.item.stopGps()
                 if (mapItem.item.mode == "place" && mapItem.item.place_x != -1 && mapItem.item.place_y != -1) {
