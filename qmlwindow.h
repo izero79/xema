@@ -78,7 +78,7 @@ private slots:
     void saveOnlyDefaultCountry(bool onlydefault);
     void saveExportWgs(bool exportWgs);
     void saveDefaultCountry(const QString &defaultCountry);
-    void exportData(bool onlyNew, const QString &delimiter);
+    void exportData(bool onlyNew, bool allCountries, const QString &delimiter);
     void exportOwnData();
     void importOwnData();
     void openBrowser( const QString &url );

@@ -315,7 +315,7 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
     tiedosto.close();
 }
 
-void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter)
+void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter)
 {
     QDateTime date;
     date = QDateTime::currentDateTime();
@@ -376,11 +376,17 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
         }
         while (pos>0);
 
+        bool markAsExported = true;
         if (onlyNew == false || exported == "false")
         {
 //            qDebug() << "VALMIS EXPORT RIVI" << formatToTiira(obsLine,locations,persons,birds);
-            export_stream << formatToTiira(obsLine,locations,persons,birds,delimiter);
-            export_stream << "\n";
+            QString formatted = formatToTiira(obsLine,locations,persons,birds,delimiter,allCountries);
+            if (formatted.isEmpty() == false) {
+                export_stream << formatToTiira(obsLine,locations,persons,birds,delimiter,allCountries);
+                export_stream << "\n";
+            } else {
+                markAsExported = false;
+            }
         }
         if (obsLine.length() > 20)
         {
@@ -391,7 +397,11 @@ void ModelDataWriter::exportHistory(bool onlyNew, LocationModel *locations, Pers
             QString start = newLine.mid(0, pos);
 //            qDebug() << "start" << start;
 
-            start.append("#true#\n");
+            if (markAsExported == true) {
+                start.append("#true#\n");
+            } else {
+                start.append("#false#\n");
+            }
 //            qDebug() << "uus rivi datassa export setin jalkeen" << start;
             tmp_stream << start;
         }
@@ -657,7 +667,7 @@ void ModelDataWriter::removeHistory()
     tiedosto.remove();
 }
 
-QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter)
+QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter, bool allCountries)
 {
 
 //    for(int i = 0; i < data.count("#"); i++)
@@ -770,13 +780,19 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     // add location coordinates if found
     bool locationAdded = false;
     QString country = "";
+    QString defaultCountry = Settings::defaultCountry();
 
     for(int i = 0; i < rowCount; i++)
     {
         if (locations->getItem(i).town() == town && locations->getItem(i).place() == place)
         {
             // save country
-            country =  locations->getItem(i).finCountry();
+            country =  locations->getItem(i).localizedCountry();
+            if (allCountries == false && defaultCountry.isEmpty() == false) {
+                if (QString::compare(defaultCountry, country, Qt::CaseInsensitive) != 0) {
+                    return QString();
+                }
+            }
             QString coordinate = locations->getItem(i).wgsCoordinate();
 
             //qDebug() << "export paikka" << coordinate;

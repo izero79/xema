@@ -116,6 +116,32 @@ Page {
         property int selectedIndex: -1
         MenuLayout {
             MenuItem {
+                text: qsTr("Edit")
+                visible: (listPageType == "birds") || (listPageType == "places") || (listPageType == "regpeople") || (listPageType == "people") || (listPageType == "status")
+                onClicked: {
+                    console.log("EDIT " + contextMenu.selectedIndex)
+                    if (listPageType == "birds")
+                    {
+                        window.editBird(contextMenu.selectedIndex)
+                    }
+
+                    if (listPageType == "places")
+                    {
+                        window.editLocation(contextMenu.selectedIndex)
+                    }
+
+                    if (listPageType == "people" || listPageType == "regpeople")
+                    {
+                        window.editPeople(contextMenu.selectedIndex)
+                    }
+
+                    if (listPageType == "status")
+                    {
+                        window.editStatus(contextMenu.selectedIndex)
+                    }
+                }
+            }
+            MenuItem {
                 text: qsTr("Remove")
                 onClicked: {
                     console.log("REMOVE " + contextMenu.selectedIndex)
@@ -147,6 +173,12 @@ Page {
     {
         if (listPageType == "editbirds" || listPageType == "editplaces" || listPageType == "editallpeople"
                 || listPageType == "editstatuses" )
+        {
+            contextMenu.selectedIndex = index
+            contextMenu.open()
+        }
+        else if (listPageType == "birds" || listPageType == "places" || listPageType == "regpeople" || listPageType == "people"
+                || listPageType == "status" )
         {
             contextMenu.selectedIndex = index
             contextMenu.open()

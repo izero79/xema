@@ -588,3 +588,36 @@ function fillBirdCoords(coords) {
 function fillLocationCoords(coords) {
     currentStatusBox.text = coords
 }
+
+function editPeople(indexi)
+{
+    var editorCompnent = Qt.createComponent(Qt.resolvedUrl("PersonEditPage.qml"))
+    var editorObject = editorCompnent.createObject(window)
+    pageStack.push(editorObject)
+    editorObject.selectedIndex(indexi)
+}
+
+function editBird(indexi)
+{
+    var editorCompnent = Qt.createComponent(Qt.resolvedUrl("BirdEditPage.qml"))
+    var editorObject = editorCompnent.createObject(window)
+    pageStack.push(editorObject)
+    editorObject.selectedIndex(indexi)
+}
+
+function editStatus(indexi)
+{
+    var editorCompnent = Qt.createComponent(Qt.resolvedUrl("StatusEditPage.qml"))
+    var editorObject = editorCompnent.createObject(window)
+    pageStack.push(editorObject)
+    editorObject.selectedIndex(indexi)
+}
+
+function editLocation(indexi)
+{
+    var editorCompnent = Qt.createComponent(Qt.resolvedUrl("LocationEditPage.qml"))
+    var editorObject = editorCompnent.createObject(window)
+    pageStack.push(editorObject)
+    editorObject.selectedIndex(indexi)
+}
+

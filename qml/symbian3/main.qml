@@ -35,7 +35,7 @@ PageStackWindow {
     signal quit()
     signal loadHistoryWithDate(string date)
     signal loadHistoryWithDateAndPlace(string date, string place)
-    signal exportData(bool onlyNew, string delimiter)
+    signal exportData(bool onlyNew, bool allCountries, string delimiter)
     signal restoreSpecies()
     signal restoreStatuses()
     signal restoreLocations()

@@ -93,7 +93,7 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    setSource(QUrl("qrc:qml/symbian3/main.qml"));
+    setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
 
@@ -183,7 +183,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
     connect(mRootObject,SIGNAL(loadHistoryWithDate(QString)),this,SIGNAL(loadHistoryWithDate(QString)));
     connect(mRootObject,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)),this,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)));
-    connect(mRootObject,SIGNAL(exportData(bool,QString)),this,SLOT(exportData(bool,QString)));
+    connect(mRootObject,SIGNAL(exportData(bool,bool,QString)),this,SLOT(exportData(bool,bool,QString)));
     connect(mRootObject,SIGNAL(restoreObservers()),this,SIGNAL(restoreObservers()));
     connect(mRootObject,SIGNAL(restoreLocations()),this,SIGNAL(restoreLocations()));
     connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
@@ -358,10 +358,10 @@ void QMLWindow::saveDefaultCountry(const QString &defaultCountry)
     mSettings->setDefaultCountry(defaultCountry);
 }
 
-void QMLWindow::exportData(bool onlyNew, const QString &delimiter)
+void QMLWindow::exportData(bool onlyNew, bool allCountries, const QString &delimiter)
 {
     setProcessing(true);
-    mDataWriter->exportHistory(onlyNew,mLocationModel,mPersonModel,mBirdModel,delimiter);
+    mDataWriter->exportHistory(onlyNew,allCountries,mLocationModel,mPersonModel,mBirdModel,delimiter);
     setProcessing(false);
     QMetaObject::invokeMethod(mRootObject, "exportDone");
 }

@@ -152,6 +152,7 @@ Page {
 
         property int step: 1
         property bool onlyNew: false
+        property bool allCountries: true
 
         title: Label {
             height: 30
@@ -173,7 +174,15 @@ Page {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: exportDialog.step == 1 ? qsTr("Do you want to export all data, or just new data?") : qsTr("Choose delimiter to be used")
+                text: {
+                    if (exportDialog.step == 1) {
+                        return qsTr("Do you want to export all data, or just new data?")
+                    } else if (exportDialog.step == 2) {
+                        return qsTr("Records from all countries, or only from default country (") + window.defaultCountry + (")?")
+                    } else if (exportDialog.step == 3) {
+                        return qsTr("Choose delimiter to be used")
+                    }
+                }
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 font.pixelSize: 20
             }
@@ -186,15 +195,28 @@ Page {
                 anchors.left: parent.left
                 anchors.margins: 5
                 width: parent.width / 2
-                text: exportDialog.step == 1 ? qsTr("All") : ("#")
+                text: {
+                    if (exportDialog.step == 1) {
+                        return qsTr("All")
+                    } else if (exportDialog.step == 2) {
+                        return qsTr("All")
+                    } else if (exportDialog.step == 3) {
+                        return qsTr("#")
+                    }
+                }
                 onClicked: {
                     if( exportDialog.step == 1 ) {
                         exportDialog.onlyNew = false
                         exportDialog.step = 2
                         return
+                    } else if( exportDialog.step == 2 ) {
+                        exportDialog.allCountries = true
+                        exportDialog.step = 3
+                        return
                     }
+
                     console.log("all")
-                    window.exportData(exportDialog.onlyNew,"#")
+                    window.exportData(exportDialog.onlyNew, exportDialog.allCountries, "#")
                     exportDialog.close()
                     exportDialog.step = 1
                 }
@@ -205,23 +227,35 @@ Page {
                 anchors.left: exportDialogAllButton.right
                 anchors.margins: 5
                 width: parent.width / 2
-                text: exportDialog.step == 1 ? qsTr("New") : (";")
+                text: {
+                    if (exportDialog.step == 1) {
+                        return qsTr("New")
+                    } else if (exportDialog.step == 2) {
+                        return qsTr("Default")
+                    } else if (exportDialog.step == 3) {
+                        return qsTr(";")
+                    }
+                }
                 onClicked: {
                     if( exportDialog.step == 1 ) {
                         exportDialog.onlyNew = true
                         exportDialog.step = 2
                         return
+                    } else if( exportDialog.step == 2 ) {
+                        exportDialog.allCountries = false
+                        exportDialog.step = 3
+                        return
                     }
 
                     console.log("new")
-                    window.exportData(exportDialog.onlyNew,";")
+                    window.exportData(exportDialog.onlyNew, exportDialog.allCountries, ";")
                     exportDialog.close()
                     exportDialog.step = 1
                 }
             }
         }
 //        onClickedOutside: exportDialog.close()
-
+        onRejected: exportDialog.step = 1
     }
 
     ListModel {

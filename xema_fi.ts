@@ -97,6 +97,22 @@
         <source>Search</source>
         <translation>Etsi</translation>
     </message>
+    <message>
+        <source>#</source>
+        <translation>#</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Oletus</translation>
+    </message>
+    <message>
+        <source>;</source>
+        <translation>;</translation>
+    </message>
+    <message>
+        <source>Records from all countries, or only from default country (</source>
+        <translation>Havainnot kaikista maista, vai vain oletusmaasta (</translation>
+    </message>
 </context>
 <context>
     <name>ListPage</name>
@@ -139,6 +155,10 @@
     <message>
         <source>Calibration</source>
         <translation>Kalibrointi</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Muokkaa</translation>
     </message>
 </context>
 <context>
@@ -679,6 +699,14 @@
     <message>
         <source>Imported statuses</source>
         <translation>Tuotiin tilat</translation>
+    </message>
+    <message>
+        <source>Export complete</source>
+        <translation>Vienti valmis</translation>
+    </message>
+    <message>
+        <source>Export is complete.</source>
+        <translation>Vienti on valmis.</translation>
     </message>
 </context>
 </TS>

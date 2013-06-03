@@ -35,7 +35,7 @@ PageStackWindow {
     signal quit()
     signal loadHistoryWithDate(string date)
     signal loadHistoryWithDateAndPlace(string date, string place)
-    signal exportData(bool onlyNew, string delimiter)
+    signal exportData(bool onlyNew, bool allCountries, string delimiter)
     signal restoreSpecies()
     signal restoreStatuses()
     signal restoreLocations()
@@ -119,22 +119,22 @@ PageStackWindow {
 
     function editPeople(index)
     {
-        MyScript.settingsObject.editPeople(index)
+        MyScript.editPeople(index)
     }
 
     function editBird(index)
     {
-        MyScript.settingsObject.editBird(index)
+        MyScript.editBird(index)
     }
 
     function editStatus(index)
     {
-        MyScript.settingsObject.editStatus(index)
+        MyScript.editStatus(index)
     }
 
     function editLocation(index)
     {
-        MyScript.settingsObject.editLocation(index)
+        MyScript.editLocation(index)
     }
 
     function regpeopleChanged(name)

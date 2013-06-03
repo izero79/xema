@@ -25,7 +25,7 @@ public:
     void writeLocationData(LocationModel *model);
     void writeStatusData(StatusModel *model);
     void writeBirdData(BirdModel *model);
-    void exportHistory(bool onlyNew, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
+    void exportHistory(bool onlyNew, bool allCountries, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
     void exportOwnData(LocationModel *lModel, BirdModel *bModel, StatusModel *sModel, PersonModel *pModel);
 
     void removeCustomSpecies();
@@ -50,7 +50,7 @@ private:
     QString exportDir();
     QString importDir();
     QString importedDir();
-    QString formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
+    QString formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter, bool allCountries);
     void checkAndCreateDirs();
     QString fixEncoding(const QString line);
 
