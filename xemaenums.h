@@ -49,7 +49,8 @@ public:
         PERSON_FIRSTNAME = 0,
         PERSON_SURNAME,
         PERSON_REGISTERED,
-        PERSON_DEFAULT
+        PERSON_DEFAULT,
+        PERSON_SAVER
     };
     enum statusFields {
         STATUS_FINABBREV = 0,

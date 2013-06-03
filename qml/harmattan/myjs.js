@@ -519,19 +519,19 @@ function clearObsDataSelections()
     }
 }
 
-function checkAndSetDefaultPerson(index)
+function checkAndSetDefaultSaver(index)
 {
     for(var i = 0; i < personModel.rowCount(); i++)
     {
         if (i == index)
         {
             console.log("person match - default")
-            personModel.setData(i, true, 37)
+            personModel.setData(i, true, 40)
         }
         else
         {
             console.log("person match - nondefault")
-            personModel.setData(i, false, 37)
+            personModel.setData(i, false, 40)
         }
     }
 }

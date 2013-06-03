@@ -31,19 +31,21 @@ Page {
                         personModel.setData(rows, registeredChkBox.checked, 36)
                         personModel.setData(rows, firstName.text, 38)
                         personModel.setData(rows, lastName.text, 39)
-                        if (defaultChkBox.checked == true || rows == 0)
+                        personModel.setData(rows, defaultChkBox.checked, 37)
+                        if (saverChkBox.checked == true || rows == 0)
                         {
-                            MyScript.checkAndSetDefaultPerson(rows)
+                            MyScript.checkAndSetDefaultSaver(rows)
                         }
                     }
                     else
                     {
-                        if (defaultChkBox.checked == true)
+                        if (saverChkBox.checked == true)
                         {
                             console.log("asetetaan defaultiksi: " + personModel.data(currentIndex, 35))
-                            MyScript.checkAndSetDefaultPerson(currentIndex)
+                            MyScript.checkAndSetDefaultSaver(currentIndex)
                         }
                         personModel.setData(currentIndex, registeredChkBox.checked, 36)
+                        personModel.setData(currentIndex, defaultChkBox.checked, 37)
                         personModel.setData(currentIndex, firstName.text, 38)
                         personModel.setData(currentIndex, lastName.text, 39)
                     }
@@ -171,10 +173,23 @@ Page {
         CheckBox {
             id: defaultChkBox
             text: qsTr("Default")
-            checked: personModel.data(currentIndex, 37) || personModel.rowCount() == 0
+            checked: personModel.data(currentIndex, 37)
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: registeredChkBox.bottom
+            anchors.topMargin: 8
+            onCheckedChanged: {
+                personEdited = true
+            }
+        }
+
+        CheckBox {
+            id: saverChkBox
+            text: qsTr("Saver")
+            checked: personModel.data(currentIndex, 40) || personModel.rowCount() == 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: defaultChkBox.bottom
             anchors.topMargin: 8
             enabled: personModel.rowCount() !== 0
             onCheckedChanged: {

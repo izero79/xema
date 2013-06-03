@@ -13,6 +13,7 @@ PersonModel::PersonModel(QObject *parent) :
     roles[FirstNameRole] = "firstname";
     roles[SurNameRole] = "surname";
     roles[SelectedRole] = "selected";
+    roles[SaverRole] = "saver";
     setRoleNames(roles);
 }
 
@@ -69,6 +70,10 @@ QVariant PersonModel::data(const QModelIndex &index, int role) const
     else if (role == SelectedRole)
     {
         return item.selected();
+    }
+    else if (role == SaverRole)
+    {
+        return item.saver();
     }
     else if (role == SortingNameRole)
     {
@@ -168,6 +173,9 @@ bool PersonModel::setData(const QModelIndex &index, const QVariant &value, int r
         break;
     case SelectedRole:
         tmp.setSelected(value.toBool());
+        break;
+    case SaverRole:
+        tmp.setSaver(value.toBool());
         break;
     default:
         break;

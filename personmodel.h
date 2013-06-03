@@ -20,6 +20,7 @@ public:
         DefaultRole,
         FirstNameRole, // 38
         SurNameRole,
+        SaverRole, // 40
         SelectedRole = Qt::EditRole,
         SortingNameRole = Qt::UserRole + 100
     };

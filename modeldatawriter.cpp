@@ -172,6 +172,8 @@ void ModelDataWriter::writePersonData(PersonModel *model)
         line.append(model->data(model->index(i), PersonModel::RegisteredRole).toString());
         line.append(";");
         line.append(model->data(model->index(i), PersonModel::DefaultRole).toString());
+        line.append(";");
+        line.append(model->data(model->index(i), PersonModel::SaverRole).toString());
         line.append(";\n");
 //        qDebug() << "line" << line;
         striimi << line;
@@ -454,7 +456,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int pRowCount = pModel->rowCount();
 
-    outstriimi2 << "firstname;lastname;registered;default\n";
+    outstriimi2 << "firstname;lastname;registered;default;saver\n";
 
     for( int i = 0; i < pRowCount; i++ ) {
         outstriimi2 << pModel->getItem(i).firstName() << ";";
@@ -466,6 +468,12 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
             outstriimi2 << "false;";
         }
         if( pModel->getItem(i).defaultName() ) {
+            outstriimi2 << "true;";
+        }
+        else {
+            outstriimi2 << "false;";
+        }
+        if( pModel->getItem(i).saver() ) {
             outstriimi2 << "true\n";
         }
         else {
@@ -850,21 +858,18 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
 
     // add data saver (default name if found)
     rowCount = persons->rowCount();
-    QString defaultName;
+    QString saver;
     for(int i = 0; i < rowCount; i++)
     {
-        if (persons->getItem(i).defaultName() == true)
+        if (persons->getItem(i).saver() == true)
         {
-            defaultName = persons->getItem(i).firstName() + " " + persons->getItem(i).surName();
+            saver = persons->getItem(i).firstName() + " " + persons->getItem(i).surName();
             break;
         }
     }
 
-    if (nimet.contains(defaultName) == true)
-    {
-        eka += defaultName;
+    eka += saver;
 //        qDebug() << "EXPORT, eka 11" << eka;
-    }
     eka += "#";
 //    qDebug() << "EXPORT, eka 12" << eka;
     // tiira saving time
@@ -1296,7 +1301,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
                 QString firstName = observerList.at(i).trimmed().section(" ",0,0);
                 QString lastName = observerList.at(i).trimmed().section(" ",1);
                 if( firstName.trimmed().isEmpty() == false && lastName.trimmed().isEmpty() == false) {
-                    Person tmp(firstName.trimmed(), lastName.trimmed(), false );
+                    Person tmp(firstName.trimmed(), lastName.trimmed(), false, false, false );
                     persons->addItem(tmp);
                 }
             }
@@ -1666,6 +1671,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             int person_default = sectionMap.value(XemaEnums::PERSON_DEFAULT);
             int person_firstname = sectionMap.value(XemaEnums::PERSON_FIRSTNAME);
             int person_surname = sectionMap.value(XemaEnums::PERSON_SURNAME);
+            int person_saver = sectionMap.value(XemaEnums::PERSON_SAVER);
             if(importLine.section(';', person_firstname, person_firstname) == "firstname") {
                 continue;
             }
@@ -1677,9 +1683,13 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             if (QString::compare(importLine.section(';', person_default, person_default), "true", Qt::CaseInsensitive) == 0) {
                 defaultName = true;
             }
+            bool saver = false;
+            if (QString::compare(importLine.section(';', person_saver, person_saver), "true", Qt::CaseInsensitive) == 0) {
+                saver = true;
+            }
             Person person(importLine.section(';', person_firstname, person_firstname),
                               importLine.section(';', person_surname, person_surname),
-                              registered, defaultName );
+                              registered, defaultName, saver );
             int rows = persons->rowCount();
             bool matchFound = false;
             for (int i = 0; i < rows; i++) {
@@ -2534,7 +2544,7 @@ QMap<int, int> ModelDataWriter::getPersonSectionNumbers(const QString &headerLin
     //qDebug() << Q_FUNC_INFO << "header" << headerLine;
     QStringList headerSections = headerLine.toLower().split(delimiter);
     //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
-    for (int i = XemaEnums::PERSON_FIRSTNAME; i <= XemaEnums::PERSON_DEFAULT; i++) {
+    for (int i = XemaEnums::PERSON_FIRSTNAME; i <= XemaEnums::PERSON_SAVER; i++) {
         switch (i) {
             case XemaEnums::PERSON_FIRSTNAME: {
                 int index = headerSections.indexOf("firstname");
@@ -2571,6 +2581,15 @@ QMap<int, int> ModelDataWriter::getPersonSectionNumbers(const QString &headerLin
                 sections.insert(XemaEnums::PERSON_DEFAULT, index);
                 break;
             }
+            case XemaEnums::PERSON_SAVER: {
+                int index = headerSections.indexOf("saver");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::PERSON_SAVER, index);
+                break;
+            }
+
         }
     }
 

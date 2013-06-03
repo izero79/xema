@@ -119,22 +119,22 @@ PageStackWindow {
 
     function editPeople(index)
     {
-        MyScript.settingsObject.editPeople(index)
+        MyScript.editPeople(index)
     }
 
     function editBird(index)
     {
-        MyScript.settingsObject.editBird(index)
+        MyScript.editBird(index)
     }
 
     function editStatus(index)
     {
-        MyScript.settingsObject.editStatus(index)
+        MyScript.editStatus(index)
     }
 
     function editLocation(index)
     {
-        MyScript.settingsObject.editLocation(index)
+        MyScript.editLocation(index)
     }
 
     function regpeopleChanged(name)

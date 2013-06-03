@@ -14,6 +14,7 @@ Page {
     property int delegateHeight: detailLevel == 3 ? 330 : detailLevel == 2 ? 180 : 145
     property variant missingInfo: null
     property bool edited: false
+    property string saver: ""
 
     height: parent.height
     width: parent.width
@@ -66,7 +67,15 @@ Page {
         {
             if (personModel.data(i, 37) == true)
             {
-                regPeopleTa.text = personModel.data(i, 35)
+                if (regPeopleTa.text == "") {
+                    regPeopleTa.text = personModel.data(i, 35)
+                } else {
+                    regPeopleTa.text += ", " + personModel.data(i, 35)
+                }
+            }
+            if (personModel.data(i,40) == true)
+            {
+                saver = personModel.data(i, 40)
             }
         }
 
@@ -224,7 +233,7 @@ Page {
         var atlas_abbrev = findAtlas(atlasTf.text)
         allData += atlas_abbrev + delimiter
         // uusi, saver
-        allData += delimiter
+        allData += saver + delimiter
         // uusi, save time
         allData += delimiter
         allData += regPeopleTa.text + delimiter

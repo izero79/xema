@@ -1,20 +1,23 @@
 #include "person.h"
+#include <QDebug>
 
 Person::Person() :
     mFirstName(),
     mSurName(),
     mRegistered(false),
     mDefault(false),
-    mSelected(false)
+    mSelected(false),
+    mSaver(false)
 {
 }
 
-Person::Person(const QString &firstName, const QString &surName, bool registered, bool defaultName) :
+Person::Person(const QString &firstName, const QString &surName, bool registered, bool defaultName, bool saver) :
     mFirstName(firstName),
     mSurName(surName),
     mRegistered(registered),
     mDefault(defaultName),
-    mSelected(false)
+    mSelected(false),
+    mSaver(saver)
 {
 
 }
@@ -45,6 +48,11 @@ void Person::setSelected(bool selected)
     mSelected = selected;
 }
 
+void Person::setSaver(bool saver)
+{
+    mSaver = saver;
+}
+
 QString Person::firstName() const
 {
     return mFirstName;
@@ -73,4 +81,10 @@ bool Person::defaultName() const
 bool Person::selected() const
 {
     return mSelected;
+}
+
+bool Person::saver() const
+{
+    qDebug() << "henkilo" << name() << "saver:" << mSaver;
+    return mSaver;
 }

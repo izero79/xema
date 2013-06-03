@@ -261,15 +261,15 @@ Page {
         console.log("names: " + names)
 
         selNames = names.split(",")
-        console.log("name[0]: " + selNames[0])
 
         for(var i = 0; i < selNames.length; i++)
         {
             for(var j = 0; j < personModel.rowCount(); j++)
             {
-                if (personModel.data(j, 35) == selNames[i])
+                if (personModel.data(j, 35).trim() == selNames[i].trim())
                 {
                     personModel.setData(j, true, 2)
+                    break;
                 }
             }
         }

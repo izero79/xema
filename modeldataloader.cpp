@@ -358,11 +358,16 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
         {
             defaultName = true;
         }
+        bool saver = false;
+        if (personLine.section(';', XemaEnums::PERSON_SAVER, XemaEnums::PERSON_SAVER) == "true")
+        {
+            saver = true;
+        }
         if (personLine.isEmpty() == false && personLine.contains(";"))
         {
             Person person(personLine.section(';', XemaEnums::PERSON_FIRSTNAME, XemaEnums::PERSON_FIRSTNAME),
                           personLine.section(';', XemaEnums::PERSON_SURNAME, XemaEnums::PERSON_SURNAME),
-                          registered, defaultName);
+                          registered, defaultName, saver);
             model->addItem(person);
         }
     }
