@@ -230,6 +230,7 @@ Page {
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "fi"
             onTextChanged: {
                 locationEdited = true
             }
@@ -247,6 +248,7 @@ Page {
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "fi"
             onTextChanged: {
                 locationEdited = true
             }
@@ -264,6 +266,7 @@ Page {
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "fi"
             onTextChanged: {
                 locationEdited = true
             }
@@ -277,10 +280,11 @@ Page {
             text: locationModel.data(currentIndex, 44)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: countryTf.bottom
+            anchors.top: editText.bottom
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "sv"
             onTextChanged: {
                 locationEdited = true
             }
@@ -298,6 +302,7 @@ Page {
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "sv"
             onTextChanged: {
                 locationEdited = true
             }
@@ -315,6 +320,7 @@ Page {
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "sv"
             onTextChanged: {
                 locationEdited = true
             }
@@ -328,10 +334,11 @@ Page {
             text: locationModel.data(currentIndex, 46)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: sweCountryTf.bottom
+            anchors.top: editText.bottom
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "en"
             onTextChanged: {
                 locationEdited = true
             }
@@ -349,6 +356,7 @@ Page {
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "en"
             onTextChanged: {
                 locationEdited = true
             }
@@ -366,6 +374,7 @@ Page {
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: window.currentLanguage == "en"
             onTextChanged: {
                 locationEdited = true
             }

@@ -174,6 +174,7 @@ Page {
             anchors.top: editText.bottom
             anchors.topMargin: 8
             width: parent.width
+            visible: window.currentLanguage == "fi"
             onTextChanged: {
                 statusEdited = true
             }
@@ -187,8 +188,9 @@ Page {
             text: statusModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: finNameTf.bottom
+            anchors.top: editText.bottom
             anchors.topMargin: 8
+            visible: window.currentLanguage == "sv"
             onTextChanged: {
                 statusEdited = true
             }
@@ -200,9 +202,10 @@ Page {
             text: statusModel.data(currentIndex, 40)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: sweNameTf.bottom
+            anchors.top: editText.bottom
             anchors.topMargin: 8
             width: parent.width
+            visible: window.currentLanguage == "en"
             onTextChanged: {
                 statusEdited = true
             }

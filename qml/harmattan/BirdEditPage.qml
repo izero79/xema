@@ -199,6 +199,7 @@ Page {
             anchors.leftMargin: 0
             anchors.top: editText.bottom
             anchors.topMargin: 8
+            visible: window.currentLanguage == "fi"
             onTextChanged: {
                 birdEdited = true
             }
@@ -212,8 +213,9 @@ Page {
             text: birdModel.data(currentIndex, 46)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: finNameTf.bottom
+            anchors.top: editText.bottom
             anchors.topMargin: 8
+            visible: window.currentLanguage == "sv"
             onTextChanged: {
                 birdEdited = true
             }
@@ -227,8 +229,9 @@ Page {
             text: birdModel.data(currentIndex, 48)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: sweNameTf.bottom
+            anchors.top: editText.bottom
             anchors.topMargin: 8
+            visible: window.currentLanguage == "en"
             onTextChanged: {
                 birdEdited = true
             }
@@ -257,6 +260,7 @@ Page {
             anchors.top: latinNameTf.bottom
             anchors.topMargin: 8
             width: parent.width
+            visible: window.currentLanguage == "fi"
             onTextChanged: {
                 birdEdited = true
             }
@@ -267,9 +271,10 @@ Page {
             text: birdModel.data(currentIndex, 47)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: finGroupTf.bottom
+            anchors.top: latinNameTf.bottom
             anchors.topMargin: 8
             width: parent.width
+            visible: window.currentLanguage == "sv"
             onTextChanged: {
                 birdEdited = true
             }
@@ -280,9 +285,10 @@ Page {
             text: birdModel.data(currentIndex, 49)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: sweGroupTf.bottom
+            anchors.top: latinNameTf.bottom
             anchors.topMargin: 8
             width: parent.width
+            visible: window.currentLanguage == "en"
             onTextChanged: {
                 birdEdited = true
             }
