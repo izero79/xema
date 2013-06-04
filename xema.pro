@@ -194,7 +194,9 @@ SOURCES += main.cpp \
     direction.cpp \
     directionmodel.cpp \
     modeldatawriter.cpp \
-    kineticscroller.cpp
+    kineticscroller.cpp \
+    dataloader.cpp \
+    dataexporter.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -243,7 +245,9 @@ HEADERS += \
     systeminfoprovider.h \
     direction.h \
     directionmodel.h \
-    kineticscroller.h
+    kineticscroller.h \
+    dataloader.h \
+    dataexporter.h
 
 RESOURCES += \
     commonresources.qrc

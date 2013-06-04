@@ -24,7 +24,6 @@ int FilterModel::rowCount()
 void FilterModel::setSorting(int type, bool ascending)
 {
 //    qDebug() << "SORT type" << type;
-    Q_UNUSED(type)
     if (type == 0)
     {
         setSortRole(Qt::UserRole + 3);

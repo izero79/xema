@@ -1,5 +1,7 @@
 #include <QTimer>
 #include <QDebug>
+#include <QThreadPool>
+#include <QRunnable>
 
 #include <QCoreApplication>
 #include "applicationcontroller.h"
@@ -18,6 +20,8 @@
 #include "systeminfoprovider.h"
 #include "directionmodel.h"
 #include "settings.h"
+#include "dataloader.h"
+#include "xemaenums.h"
 
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
@@ -97,11 +101,19 @@ void ApplicationController::initObjects()
     mModelLoader->loadDressData(mDressModel);
     mQMLWin->setDressModel(mDressModel);
 
+
     mHistoryPlaceModel = new HistoryModel(this);
     mQMLWin->setHistoryPlaceModel(mHistoryPlaceModel);
 
+
+    qRegisterMetaType<QModelIndex>("QModelIndex");
+
+
     mHistoryDateModel = new HistoryModel(this);
-    mModelLoader->loadHistoryDateData(mHistoryDateModel);
+    DataLoader* tLoad = new DataLoader(XemaEnums::LOAD_HISTORY_DATE);
+    connect(tLoad,SIGNAL(historyLoaded()),mQMLWin,SLOT(setProcessingFalse()));
+    tLoad->setHistoryModel(mHistoryDateModel);
+    QThreadPool::globalInstance()->start(tLoad);
     mQMLWin->setHistoryDateModel(mHistoryDateModel);
 
     mHistoryModel = new HistoryModel(this);
@@ -125,7 +137,7 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(reloadBirds()),this,SLOT(reloadBirds()));
 
     mModelWriter = ModelDataWriter::instance();
-    mQMLWin->setProcessing(false);
+    //mQMLWin->setProcessing(false);
 }
 
 ApplicationController::~ApplicationController()

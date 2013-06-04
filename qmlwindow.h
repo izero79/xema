@@ -67,6 +67,7 @@ public slots:
     void setDressModel(DressModel *model);
     void setAgeModel(AgeModel *model);
     void setProcessing(bool processing);
+    void setProcessingFalse();
 
 private slots:
     void writeNewObservation(const QString &data);

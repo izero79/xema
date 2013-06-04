@@ -323,7 +323,7 @@ void QMLWindow::deleteObservation(const QString &id, const QString &date, const 
     mDataWriter->deleteObservation(idNum);
     loadHistoryWithDateAndPlace(date, place);
     loadHistoryWithDate(date);
-    reloadHistory();
+    emit reloadHistory();
     setProcessing(false);
 }
 
@@ -404,4 +404,8 @@ void QMLWindow::openBrowser( const QString &url )
 
 void QMLWindow::setProcessing(bool processing) {
     mRootObject->setProperty( "cppProcessing", processing );
+}
+
+void QMLWindow::setProcessingFalse() {
+    setProcessing(false);
 }

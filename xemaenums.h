@@ -197,6 +197,10 @@ public:
         IMPORT_HISTORY_OK = 512
     };
 
+    enum loadTypes {
+        LOAD_HISTORY_DATE = 1
+    };
+
 };
 
 #endif // XEMAENUMS_H
