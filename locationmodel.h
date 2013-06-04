@@ -38,6 +38,8 @@ public:
         LocalizedCountryRole, // 55
         SweCountryOnlyRole,
         EngCountryOnlyRole,
+        OrganizationRole,
+        OrgAbbrevRole, // 59
         SortingNameRole = Qt::UserRole + 100
     };
 

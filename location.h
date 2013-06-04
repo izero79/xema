@@ -22,6 +22,8 @@ public:
     void setYKJCoordinate(const QString &ykj);
     void setWGSCoordinate(const QString &wgs);
     void setCustom(bool custom);
+    void setOrganization(const QString &org);
+    void setOrgAbbrev(const QString &org);
 
     QString localizedTown() const;
     QString localizedPlace() const;
@@ -40,6 +42,8 @@ public:
     QString wgsCoordinateForFilter() const;
     QString coordinate() const;
     bool custom() const;
+    QString organization() const;
+    QString orgAbbrev() const;
 
 private:
     QString mTown;
@@ -54,6 +58,8 @@ private:
     QString mYKJCoordinate;
     QString mWGSCoordinate;
     bool mCustom;
+    QString mOrganization;
+    QString mOrgAbbrev;
 };
 
 #endif // LOCATION_H

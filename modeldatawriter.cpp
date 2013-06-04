@@ -190,7 +190,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;maa;maa_swe;maa_eng;muokattu\n");
+    striimi << QString("Kunta;Paikka;wgs;ykj;kunta_swe;paikka_swe;kunta_eng;paikka_eng;maa;maa_swe;maa_eng;muokattu;organisaatio;org_abbrev\n");
     for(int i = 0; i < rows; i++)
     {
         QString wgs = model->data(model->index(i), LocationModel::WgsCoordinateRole).toString();
@@ -234,6 +234,10 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         else {
             line.append("false");
         }
+        line.append(";");
+        line.append(model->getItem(i).organization());
+        line.append(";");
+        line.append(model->getItem(i).orgAbbrev());
         line.append(";\n");
         striimi << line;
     }
@@ -429,7 +433,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
     int lRowCount = lModel->rowCount();
 
-    outstriimi << "town_fi;place_fi;wgs;ykj;town_sv;place_sv;town_en;place_en;country_fi;country_sv;country_en\n";
+    outstriimi << "town_fi;place_fi;wgs;ykj;town_sv;place_sv;town_en;place_en;country_fi;country_sv;country_en;organization;org_abbrev\n";
 
     for( int i = 0; i < lRowCount; i++ ) {
         if( lModel->getItem(i).custom() == true ) {
@@ -443,7 +447,9 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
             outstriimi << lModel->getItem(i).engPlace(true) << ";";
             outstriimi << lModel->getItem(i).finCountry() << ";";
             outstriimi << lModel->getItem(i).sweCountry(true) << ";";
-            outstriimi << lModel->getItem(i).engCountry(true) << "\n";
+            outstriimi << lModel->getItem(i).engCountry(true) << ";";
+            outstriimi << lModel->getItem(i).organization() << ";";
+            outstriimi << lModel->getItem(i).orgAbbrev() << "\n";
         }
     }
 
@@ -1545,6 +1551,8 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             int location_country = sectionMap.value(XemaEnums::LOCATION_COUNTRY);
             int location_swecountry = sectionMap.value(XemaEnums::LOCATION_SWECOUNTRY);
             int location_engcountry = sectionMap.value(XemaEnums::LOCATION_ENGCOUNTRY);
+            int location_organization = sectionMap.value(XemaEnums::LOCATION_ORGANIZATION);
+            int location_orgabbrev = sectionMap.value(XemaEnums::LOCATION_ORGABBREV);
 
             QString firstSection = locationLine.section(';', location_town, location_town);
             if (firstSection == "kunta" || firstSection == "town_fi" ) {
@@ -1577,6 +1585,8 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
             location.setFinCountry(country_fi);
             location.setSweCountry(country_sv);
             location.setEngCountry(country_en);
+            location.setOrganization(locationLine.section(';', location_organization, location_organization));
+            location.setOrgAbbrev(locationLine.section(';', location_orgabbrev, location_orgabbrev));
             location.setCustom(true);
 
             int rows = locations->rowCount();
@@ -2531,6 +2541,22 @@ QMap<int, int> ModelDataWriter::getLocationSectionNumbers(const QString &headerL
                     index = 100;
                 }
                 sections.insert(XemaEnums::LOCATION_ENGCOUNTRY, index);
+                break;
+            }
+            case XemaEnums::LOCATION_ORGANIZATION: {
+                int index = headerSections.indexOf("organization");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::LOCATION_ORGANIZATION, index);
+                break;
+            }
+            case XemaEnums::LOCATION_ORGABBREV: {
+                int index = headerSections.indexOf("org_abbrev");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::LOCATION_ORGABBREV, index);
                 break;
             }
         }

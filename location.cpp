@@ -10,9 +10,6 @@ Location::Location() :
 Location::Location(const QString &town, const QString &place, const QString &wgsCoordinate, const QString &ykjCoordinate) :
     mTown(town),
     mPlace(place),
-    mFinCountry(),
-    mEngCountry(),
-    mSweCountry(),
     mYKJCoordinate(ykjCoordinate),
     mWGSCoordinate(wgsCoordinate),
     mCustom(false)
@@ -78,6 +75,16 @@ void Location::setWGSCoordinate(const QString &wgs)
 void Location::setCustom(bool custom)
 {
     mCustom = custom;
+}
+
+void Location::setOrganization(const QString &org)
+{
+    mOrganization = org;
+}
+
+void Location::setOrgAbbrev(const QString &org)
+{
+    mOrgAbbrev = org;
 }
 
 QString Location::localizedTown() const
@@ -235,6 +242,16 @@ QString Location::coordinate() const
         }
     }
     return mYKJCoordinate;
+}
+
+QString Location::organization() const
+{
+    return mOrganization;
+}
+
+QString Location::orgAbbrev() const
+{
+    return mOrgAbbrev;
 }
 
 bool Location::custom() const

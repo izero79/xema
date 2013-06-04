@@ -43,6 +43,8 @@ Page {
                         locationModel.setData(rows, countryTf.text, 52)
                         locationModel.setData(rows, sweCountryTf.text, 56)
                         locationModel.setData(rows, engCountryTf.text, 57)
+                        locationModel.setData(rows, organizationTf.text, 58)
+                        locationModel.setData(rows, orgAbbrevTf.text, 59)
                     }
                     else
                     {
@@ -58,6 +60,8 @@ Page {
                         locationModel.setData(currentIndex, countryTf.text, 52)
                         locationModel.setData(currentIndex, sweCountryTf.text, 56)
                         locationModel.setData(currentIndex, engCountryTf.text, 57)
+                        locationModel.setData(currentIndex, organizationTf.text, 58)
+                        locationModel.setData(currentIndex, orgAbbrevTf.text, 59)
                     }
                     window.saveLocations()
                     if ( currentLanguage == "sv") {
@@ -142,6 +146,8 @@ Page {
         countryTf.text = locationModel.data(currentIndex, 52)
         sweCountryTf.text = locationModel.data(currentIndex, 56)
         engCountryTf.text = locationModel.data(currentIndex, 57)
+        organizationTf.text = locationModel.data(currentIndex, 58)
+        orgAbbrevTf.text = locationModel.data(currentIndex, 59)
     }
 
     function openMap() {
@@ -383,13 +389,47 @@ Page {
         }
 
         TextField {
+            id: organizationTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Organization")
+            text: locationModel.data(currentIndex, 58)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: engCountryTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+        TextField {
+            id: orgAbbrevTf
+            width: 240
+            height: 50
+            placeholderText: qsTr("Org abbreviation")
+            text: locationModel.data(currentIndex, 59)
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: organizationTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            onTextChanged: {
+                locationEdited = true
+            }
+        }
+
+        TextField {
             id: ykjTf
             property bool settingValue: false
             placeholderText: qsTr("YKJ coordinates")
             text: locationModel.data(currentIndex, 38)
             anchors.right: parent.right
             anchors.rightMargin: 0
-            anchors.top: engCountryTf.bottom
+            anchors.top: orgAbbrevTf.bottom
             anchors.topMargin: 8
             width: parent.width / 2
             onTextChanged: {
@@ -411,7 +451,7 @@ Page {
             text: locationModel.data(currentIndex, 39)
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: engCountryTf.bottom
+            anchors.top: orgAbbrevTf.bottom
             anchors.topMargin: 8
             width: parent.width / 2
             onTextChanged: {

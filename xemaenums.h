@@ -43,7 +43,9 @@ public:
         LOCATION_COUNTRY,
         LOCATION_SWECOUNTRY,
         LOCATION_ENGCOUNTRY,
-        LOCATION_CUSTOM
+        LOCATION_CUSTOM,
+        LOCATION_ORGANIZATION,
+        LOCATION_ORGABBREV
     };
     enum personFields {
         PERSON_FIRSTNAME = 0,

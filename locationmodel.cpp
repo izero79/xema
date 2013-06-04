@@ -29,6 +29,8 @@ LocationModel::LocationModel(QObject *parent) :
     roles[LocalizedCountryRole] = "localizedCountry";
     roles[EngCountryOnlyRole] = "engonlycountry";
     roles[SweCountryOnlyRole] = "sweonlycountry";
+    roles[OrganizationRole] = "organization";
+    roles[OrgAbbrevRole] = "orgabbrev";
     setRoleNames(roles);
 }
 
@@ -56,8 +58,12 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
-        return QString( item.localizedCountry() + ", " + item.localizedPlace() + ", " +
-                        item.localizedTown() + ", " + item.wgsCoordinateForFilter());
+        return QString( item.localizedCountry() + ", " +
+                        item.localizedPlace() + ", " +
+                        item.localizedTown() + ", " +
+                        item.organization() + ", " +
+                        item.orgAbbrev() + ", " +
+                        item.wgsCoordinateForFilter());
     }
     else if (role == IndexRole)
     {
@@ -167,6 +173,14 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
         else {
             return item.finCountry() + ", " + item.town() + ", " + item.place();
         }
+    }
+    else if (role == OrganizationRole)
+    {
+        return item.organization();
+    }
+    else if (role == OrgAbbrevRole)
+    {
+        return item.orgAbbrev();
     }
     return QVariant();
 }
@@ -288,6 +302,12 @@ bool LocationModel::setData(const QModelIndex &index, const QVariant &value, int
         break;
     case IsCustomRole:
         tmp.setCustom(value.toBool());
+        break;
+    case OrganizationRole:
+        tmp.setOrganization(value.toString());
+        break;
+    case OrgAbbrevRole:
+        tmp.setOrgAbbrev(value.toString());
         break;
     default:
         break;
