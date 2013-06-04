@@ -1127,6 +1127,8 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     int tiira_date2 = sectionMap.value(XemaEnums::TIIRA_DATE2);
     QString date1 = readLine.section(delimiter, tiira_date1, tiira_date1);
     QString date2 = readLine.section(delimiter, tiira_date2, tiira_date2);
+    date1 = formatDate(date1);
+    date2 = formatDate(date2);
 
     int faultyLine = 0;
     readyLine.append("#");
@@ -1146,10 +1148,14 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     }
     readyLine.append("#");
     int tiira_time1 = sectionMap.value(XemaEnums::TIIRA_TIME1);
-    readyLine += readLine.section(delimiter, tiira_time1, tiira_time1);
+    QString time1 = readLine.section(delimiter, tiira_time1, tiira_time1);
+    time1 = formatTime(time1);
+    readyLine += time1;
     readyLine.append("#");
     int tiira_time2 = sectionMap.value(XemaEnums::TIIRA_TIME2);
-    readyLine += readLine.section(delimiter, tiira_time2, tiira_time2);
+    QString time2 = readLine.section(delimiter, tiira_time2, tiira_time2);
+    time2 = formatTime(time2);
+    readyLine += time2;
     readyLine.append("#");
 
     int tiira_town = sectionMap.value(XemaEnums::TIIRA_TOWN);
@@ -1371,9 +1377,13 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
         //qDebug() << "alarivi" << i << "data" << row;
         readyLine += row.section(delimiter,tiira_birdcount-offset,tiira_birdcount-offset);
         readyLine.append("#");
-        readyLine += row.section(delimiter,tiira_birdtime1-offset,tiira_birdtime1-offset);
+        QString birdTime1 = row.section(delimiter,tiira_birdtime1-offset,tiira_birdtime1-offset);
+        readyLine += birdTime1;
+        birdTime1 = formatTime(birdTime1);
         readyLine.append("#");
-        readyLine += row.section(delimiter,tiira_birdtime2-offset,tiira_birdtime2-offset);
+        QString birdTime2 = row.section(delimiter,tiira_birdtime2-offset,tiira_birdtime2-offset);
+        birdTime2 = formatTime(birdTime2);
+        readyLine += birdTime2;
         if (row.section(delimiter,tiira_sex-offset,tiira_sex-offset) == "k")
         {
             readyLine.append("#koiras#");
@@ -2670,7 +2680,7 @@ QMap<int, int> ModelDataWriter::getStatusSectionNumbers(const QString &headerLin
     return sections;
 }
 
-QString ModelDataWriter::fixEncoding(const QString line) {
+QString ModelDataWriter::fixEncoding(const QString &line) {
     QString newText = line;
     qDebug() << "QString ModelDataWriter::fixEncoding(const QString line)" << "ennen korjausta" << newText;
     if (newText.contains("ร?") || newText.contains("รฅ") || newText.contains("ร?") || newText.contains("รถ") ||
@@ -2680,4 +2690,62 @@ QString ModelDataWriter::fixEncoding(const QString line) {
     }
     qDebug() << "QString ModelDataWriter::fixEncoding(const QString line)" << "korjauksen jalkeen" << newText;
     return newText;
+}
+
+QString ModelDataWriter::formatTime(const QString &time) {
+    QString newTime = time;
+    if (newTime.length() == 5 && newTime.indexOf(":") == 2) {
+        return newTime;
+    }
+    if (newTime.contains(".") == true) {
+        newTime.replace(".", ":");
+    }
+
+    if (newTime.length() > 5 && newTime.count(":") > 1) {
+        int indexOf = newTime.indexOf(":");
+        newTime = newTime.left(newTime.indexOf(":", indexOf + 1));
+    }
+    if (newTime.length() < 5 && newTime.indexOf(":") == 1) {
+        newTime = newTime.prepend("0");
+    }
+
+    return newTime;
+}
+
+QString ModelDataWriter::formatDate(const QString &date) {
+    QString newDate = date;
+    if (newDate.length() == 10 && newDate.indexOf(".") == 2) {
+        return newDate;
+    }
+    if (newDate.contains(":") == true) {
+        newDate.replace(":", ".");
+    }
+    if (newDate.contains("/") == true) {
+        newDate.replace("/", ".");
+    }
+    int indexOfFirst = newDate.indexOf(".");
+    int indexOfSecond = newDate.indexOf(".", indexOfFirst+1);
+    QString first = newDate.mid(0, indexOfFirst);
+    QString second = newDate.mid(indexOfFirst+1, indexOfSecond-indexOfFirst-1);
+    QString third = newDate.mid(indexOfSecond+1);
+
+    if (first.length() == 1) {
+        first = first.prepend("0");
+    }
+    if (second.length() == 1) {
+        second = second.prepend("0");
+    }
+    if (third.length() == 1) {
+        third = third.prepend("0");
+    }
+
+    if (first.length() == 4) {
+        newDate = third + "." + second + "." + first;
+    }
+
+    if (third.length() == 4) {
+        newDate = first + "." + second + "." + third;
+    }
+
+    return newDate;
 }
