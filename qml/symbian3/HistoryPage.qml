@@ -370,7 +370,7 @@ Page {
             id: filterTf
             height: 50
             placeholderText: qsTr("Search")
-            text: listPageType
+            text: ""
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.right: parent.right

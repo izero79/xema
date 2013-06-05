@@ -140,6 +140,6 @@ void FilterModel::removeRow(int index)
 
 HistoryItem* FilterModel::get(int index)
 {
-    qDebug() << Q_FUNC_INFO;
+    //qDebug() << Q_FUNC_INFO;
     return ((HistoryModel*)sourceModel())->get(index);
 }

@@ -92,7 +92,7 @@ QString CoordinateConverter::wgsToYkjString(const QString &wgsString) {
         return QString();
     }
 
-    qDebug() << Q_FUNC_INFO << wgsString;
+    //qDebug() << Q_FUNC_INFO << wgsString;
     QString tmpString = wgsString;
     tmpString.remove(":");
     tmpString = tmpString.remove(".");
@@ -134,7 +134,7 @@ QString CoordinateConverter::ykjToWgsString(const QString &ykjString) {
     if (ykjString.contains(":") == false || ykjString.length() < 3) {
         return QString();
     }
-    qDebug() << Q_FUNC_INFO << ykjString;
+    //qDebug() << Q_FUNC_INFO << ykjString;
     QString tmpString = ykjString;
     tmpString.remove(":");
     QRegExp re("\\d*");  // a digit (\d), zero or more times (*)

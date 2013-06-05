@@ -699,8 +699,8 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     QString place = data.section("#", XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION);
     QString birdX = data.section("#", XemaEnums::OBS_BIRD_XCOORD, XemaEnums::OBS_BIRD_XCOORD);
     QString birdY = data.section("#", XemaEnums::OBS_BIRD_YCOORD, XemaEnums::OBS_BIRD_YCOORD);
-    qDebug() << "EXPORT, birdX " << birdX;
-    qDebug() << "EXPORT, birdY " << birdY;
+//    qDebug() << "EXPORT, birdX " << birdX;
+//    qDebug() << "EXPORT, birdY " << birdY;
 
     QString toka = "#" + town + "#" + place;
     QString eka = id;
@@ -715,7 +715,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
         {
             if(birds->getItem(i).abbreviation() == species)
             {
-                qDebug() << "loyty lajiosuma 1";
+//                qDebug() << "loyty lajiosuma 1";
                 species_en = birds->getItem(i).engName(true);
                 species_sv = birds->getItem(i).sweName(true);
                 species_sc = birds->getItem(i).latinName();
@@ -727,7 +727,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
         {
             if(birds->getItem(i).finName() == species)
             {
-                qDebug() << "loyty lajiosuma 2";
+//                qDebug() << "loyty lajiosuma 2";
                 species = birds->getItem(i).abbreviation();
                 species_en = birds->getItem(i).engName(true);
                 species_sv = birds->getItem(i).sweName(true);
@@ -744,7 +744,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
         QString y = birdY;
         double dy = y.toDouble();
         if (dy < 400) {
-            qDebug() << "lintu wgs";
+//            qDebug() << "lintu wgs";
         } else {
             QString ykj = birdY + ":" + birdX;
             QString wgs = mCoordinates->ykjToWgsString(ykj);
@@ -756,9 +756,9 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
         QString y = birdY;
         double dy = y.toDouble();
         if (dy > 400) {
-            qDebug() << "lintu ykj";
+//            qDebug() << "lintu ykj";
         } else {
-            qDebug() << "lintu wgs";
+//            qDebug() << "lintu wgs";
             QString wgs = birdY + ":" + birdX;
             QString ykj = mCoordinates->wgsToYkjString(wgs);
             birdY = ykj.section(":", 0, 0);
@@ -2682,13 +2682,13 @@ QMap<int, int> ModelDataWriter::getStatusSectionNumbers(const QString &headerLin
 
 QString ModelDataWriter::fixEncoding(const QString &line) {
     QString newText = line;
-    qDebug() << "QString ModelDataWriter::fixEncoding(const QString line)" << "ennen korjausta" << newText;
+    //qDebug() << "QString ModelDataWriter::fixEncoding(const QString line)" << "ennen korjausta" << newText;
     if (newText.contains("Ã?") || newText.contains("Ã¥") || newText.contains("Ã?") || newText.contains("Ã¶") ||
         newText.contains("Ã?") || newText.contains("Ã¤")) {
 
         newText = QString::fromUtf8(newText.toLatin1());
     }
-    qDebug() << "QString ModelDataWriter::fixEncoding(const QString line)" << "korjauksen jalkeen" << newText;
+    //qDebug() << "QString ModelDataWriter::fixEncoding(const QString line)" << "korjauksen jalkeen" << newText;
     return newText;
 }
 

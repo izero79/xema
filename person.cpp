@@ -85,6 +85,5 @@ bool Person::selected() const
 
 bool Person::saver() const
 {
-    qDebug() << "henkilo" << name() << "saver:" << mSaver;
     return mSaver;
 }
