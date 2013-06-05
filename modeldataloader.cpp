@@ -226,10 +226,14 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
             if(defaultOnly == false && locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
                 location.setCustom(true);
             }
-            if (delimCount == 13) {
+            if (delimCount == 12) {
+                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM));
+                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
+            } else if (delimCount == 13) {
                 location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
                 location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
             }
+
         } else {
             if(defaultOnly == false && locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
                 location.setCustom(true);
@@ -260,11 +264,11 @@ void ModelDataLoader::loadInitialLocationData(LocationModel *model)
     }
     qDebug() << "saved location version" << savedVersion;
     if( savedVersion > currentLocationVersion ) {
-        //qDebug() << "There's new version of location list installed. Using it. Model has now" << model->rowCount() << "rows";
+        qDebug() << "There's new version of location list installed. Using it. Model has now" << model->rowCount() << "rows";
         loadOnlyModifiedLocationData( model );
-        //qDebug() << "Only modified rows loaded. Model has now" << model->rowCount() << "rows";
+        qDebug() << "Only modified rows loaded. Model has now" << model->rowCount() << "rows";
         loadDefaultLocationData( model );
-        //qDebug() << "All rows laoded. Model has now" << model->rowCount() << "rows";
+        qDebug() << "All rows laoded. Model has now" << model->rowCount() << "rows";
         Settings::setLocationsVersion(savedVersion);
     }
     else {
@@ -326,7 +330,10 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
             location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
             location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
             location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
-            if (delimCount == 13) {
+            if (delimCount == 12) {
+                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM));
+                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
+            } else if (delimCount == 13) {
                 location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
                 location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
             }
