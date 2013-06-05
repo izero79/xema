@@ -223,10 +223,12 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
             location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
             location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
             location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
-            location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
-            location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
             if(defaultOnly == false && locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "true") {
                 location.setCustom(true);
+            }
+            if (delimCount == 13) {
+                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
+                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
             }
         } else {
             if(defaultOnly == false && locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY) == "true") {
@@ -324,8 +326,10 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
             location.setFinCountry(locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY));
             location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
             location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
-            location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
-            location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
+            if (delimCount == 13) {
+                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
+                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
+            }
         }
         location.setCustom(true);
 
@@ -980,7 +984,7 @@ QString ModelDataLoader::loadObservation(qlonglong id)
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-    QString obsLine; 
+    QString obsLine;
     while (striimi.atEnd() == false)
     {
         obsLine = striimi.readLine();

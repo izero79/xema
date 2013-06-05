@@ -238,7 +238,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
         line.append(model->getItem(i).organization());
         line.append(";");
         line.append(model->getItem(i).orgAbbrev());
-        line.append(";\n");
+        line.append("\n");
         striimi << line;
     }
     tiedosto.close();
@@ -2451,7 +2451,7 @@ QMap<int, int> ModelDataWriter::getLocationSectionNumbers(const QString &headerL
     //qDebug() << Q_FUNC_INFO << "header" << headerLine;
     QStringList headerSections = headerLine.toLower().split(delimiter);
     //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
-    for (int i = XemaEnums::LOCATION_TOWN; i <= XemaEnums::LOCATION_ENGCOUNTRY; i++) {
+    for (int i = XemaEnums::LOCATION_TOWN; i <= XemaEnums::LOCATION_ORGABBREV; i++) {
         switch (i) {
             case XemaEnums::LOCATION_TOWN: {
                 int index = headerSections.indexOf("town_fi");
