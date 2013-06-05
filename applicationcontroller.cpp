@@ -110,10 +110,13 @@ void ApplicationController::initObjects()
 
 
     mHistoryDateModel = new HistoryModel(this);
+/*
     DataLoader* tLoad = new DataLoader(XemaEnums::LOAD_HISTORY_DATE);
     connect(tLoad,SIGNAL(historyLoaded()),mQMLWin,SLOT(setProcessingFalse()));
     tLoad->setHistoryModel(mHistoryDateModel);
     QThreadPool::globalInstance()->start(tLoad);
+*/
+    mModelLoader->loadHistoryDateData(mHistoryDateModel);
     mQMLWin->setHistoryDateModel(mHistoryDateModel);
 
     mHistoryModel = new HistoryModel(this);
@@ -137,7 +140,7 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(reloadBirds()),this,SLOT(reloadBirds()));
 
     mModelWriter = ModelDataWriter::instance();
-    //mQMLWin->setProcessing(false);
+    mQMLWin->setProcessing(false);
 }
 
 ApplicationController::~ApplicationController()

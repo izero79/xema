@@ -604,13 +604,13 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
         striimi.readLine();
     }
     while (striimi.atEnd() == false)
-    {/*
+    {
         static int loopCount = 0;
         loopCount++;
         if( !( loopCount % 30 ) )
         {
             QCoreApplication::processEvents();
-        }*/
+        }
         QString line;
 #ifdef PERFTEST
     qDebug("loadHistoryDateData Ennen lukemista elapsed: %d ms", t.elapsed());
