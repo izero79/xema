@@ -13,7 +13,7 @@ Page {
     ToolBarLayout {
         id: editToolBar
         ToolIcon {
-            iconId: "icon-m-toolbar-back-white"
+            platformIconId: "toolbar-back"
             onClicked: {
 //                console.log("bird edit page back clicked")
                 if (birdEdited == true)
@@ -69,7 +69,7 @@ Page {
             }
         }
         ToolIcon {
-            iconId: "icon-m-toolbar-undo-white"
+            platformIconId: "toolbar-undo"
             visible: !addingNew
             onClicked: {
                 console.log("bird edit page undo clicked")

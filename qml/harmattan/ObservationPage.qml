@@ -751,7 +751,7 @@ Page {
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
         ToolIcon {
             //flat: true
-            iconId: "icon-m-toolbar-back-white" //"toolbar-back"
+            platformIconId: "toolbar-back" //"toolbar-back"
             onClicked: {
                 window.backFromObs()
             }
@@ -831,7 +831,7 @@ Page {
                 }
                 ToolIcon {
                     //flat: true
-                    iconId: "icon-m-toolbar-delete-white"
+                    platformIconId: "toolbar-delete"
                     anchors.right: parent.right
                     onClicked: {
                         window.clearTab()/*
@@ -1136,7 +1136,7 @@ Page {
                 }
                 ToolIcon {
                     //flat: true
-                    iconId: "icon-m-toolbar-delete-white"
+                    platformIconId: "toolbar-delete"
                     anchors.right: parent.right
                     onClicked: {
                         window.clearTab()/*
@@ -1426,7 +1426,7 @@ Page {
                 }
                 ToolIcon {
                     //flat: true
-                    iconId: "icon-m-toolbar-delete-white"
+                    platformIconId: "toolbar-delete"
                     anchors.right: parent.right
                     onClicked: {
                         window.clearTab()/*
@@ -1651,6 +1651,7 @@ Page {
                     }
                     TextField {
                         id: distanceTf
+
                         height: 50
                         placeholderText: qsTr("Distance (m)")
                         text: ""

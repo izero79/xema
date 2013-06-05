@@ -10,7 +10,6 @@
         <file>qml/symbian3/LocationEditPage.qml</file>
         <file>qml/symbian3/LocationListDelegate.qml</file>
         <file>qml/symbian3/main.qml</file>
-        <file>qml/symbian3/MainPage.qml</file>
         <file>qml/symbian3/ObservationDelegate.qml</file>
         <file>qml/symbian3/ObservationPage.qml</file>
         <file>qml/symbian3/PersonEditPage.qml</file>

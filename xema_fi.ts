@@ -113,6 +113,14 @@
         <source>Records from all countries, or only from default country (</source>
         <translation>Havainnot kaikista maista, vai vain oletusmaasta (</translation>
     </message>
+    <message>
+        <source>Settings</source>
+        <translation>Asetukset</translation>
+    </message>
+    <message>
+        <source>About Xema</source>
+        <translation>Tietoja Xemasta</translation>
+    </message>
 </context>
 <context>
     <name>ListPage</name>
@@ -227,24 +235,13 @@
         <source>Map</source>
         <translation>Kartta</translation>
     </message>
-</context>
-<context>
-    <name>MainPage</name>
     <message>
-        <source>Settings</source>
-        <translation>Asetukset</translation>
+        <source>Organization</source>
+        <translation>Yhdistys</translation>
     </message>
     <message>
-        <source>Observations</source>
-        <translation>Havainnot</translation>
-    </message>
-    <message>
-        <source>New observation</source>
-        <translation>Uusi havainto</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Jatka</translation>
+        <source>Org abbreviation</source>
+        <translation>Yhdistys lyhenne</translation>
     </message>
 </context>
 <context>
@@ -470,6 +467,10 @@
     <message>
         <source>First name *</source>
         <translation>Etunimi *</translation>
+    </message>
+    <message>
+        <source>Saver</source>
+        <translation>Tallentaja</translation>
     </message>
 </context>
 <context>
@@ -707,6 +708,26 @@
     <message>
         <source>Export is complete.</source>
         <translation>Vienti on valmis.</translation>
+    </message>
+    <message>
+        <source>Connection needed</source>
+        <translation>Tarvitaan Internet-yhteys</translation>
+    </message>
+    <message>
+        <source>Internet connection is needed for map usage, connect now?</source>
+        <translation>Internet-yhteys tarvitaan kartan käyttöön. Yhdistetäänkö nyt?</translation>
+    </message>
+    <message>
+        <source>Connect automatically when needed</source>
+        <translation>Yhdistä automaattisesti tarvittaessa</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Ei</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Kyllä</translation>
     </message>
 </context>
 </TS>

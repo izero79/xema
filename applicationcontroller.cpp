@@ -23,6 +23,7 @@
 #include "dataloader.h"
 #include "xemaenums.h"
 
+
 ApplicationController::ApplicationController(QObject *parent) :
     QObject(parent),
     mBirdModel(0),

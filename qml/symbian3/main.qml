@@ -103,7 +103,6 @@ PageStackWindow {
 
     function showSettingsPage()
     {
-        //pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
         MyScript.showSettingsPage()
     }
 
@@ -179,7 +178,6 @@ PageStackWindow {
 
     function dataLoaded(data)
     {
-        console.log("dataLoaded")
         MyScript.obsObject.dataLoaded(data)
     }
 
@@ -251,12 +249,20 @@ PageStackWindow {
     }
 
     function showBirdMap(itemi, place_x, place_y, x, y) {
+        if (hasInternetConnection() == false) {
+            openInternetConnection()
+            return
+        }
         cppProcessing = true
         MyScript.showMapPage(itemi, "bird", place_x, place_y, x, y)
         cppProcessing = false
     }
 
     function showPlaceMap(itemi, x, y) {
+        if (hasInternetConnection() == false) {
+            openInternetConnection()
+            return
+        }
         cppProcessing = true
         MyScript.showMapPage(itemi, "place", x, y, null, null)
         cppProcessing = false
@@ -269,8 +275,6 @@ PageStackWindow {
     function setPlaceCoords(coords) {
         MyScript.fillLocationCoords(coords)
     }
-
-    //initialPage: Qt.resolvedUrl("MainPage.qml")
 
     function importError(errorNo)
     {
@@ -333,6 +337,22 @@ PageStackWindow {
         errorDialog.open()
     }
 
+    function hasInternetConnection() {
+        var connected = NetworkController.isConnected()
+        console.log('connected: ' + connected)
+        return connected
+    }
+
+    function openInternetConnection() {
+        var ask = XemaSettings.askForConnection()
+        if (ask) {
+            connectionDialog.open()
+        } else {
+            NetworkController.openAnyConnection()
+        }
+
+    }
+
     Rectangle {
         id: processingRec
         visible: cppProcessing
@@ -363,11 +383,9 @@ PageStackWindow {
 
     function clearTab() {
         MyScript.obsObject.clearTab()
-//        unsavedData = false
     }
 
     function save() {
-        console.log("taala")
         var success = false
         success = MyScript.readAndSaveData()
         if (success)
@@ -451,6 +469,82 @@ PageStackWindow {
     }
 
     Dialog {
+        id: connectionDialog
+
+        title: Label {
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr("Connection needed")
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        content:Item {
+            height: 100
+            width: parent.width
+            anchors.margins: 10
+            Label {
+                id: connectionDialogText
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: qsTr("Internet connection is needed for map usage, connect now?")
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Item { height: connectionDialogNoButton.height + connectionDialogDoNotAsk.height + 40; width: parent.width - 20
+            CheckBox {
+                id: connectionDialogDoNotAsk
+                anchors.bottom: connectionDialogNoButton.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.margins: 10
+                text: qsTr("Connect automatically when needed")
+                checked: false
+
+            }
+
+            Button {
+                id: connectionDialogNoButton
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("No")
+                onClicked: {
+                    connectionDialog.close()
+                }
+            }
+            Button {
+                id: connectionDialogYesButton
+                anchors.bottom: parent.bottom
+                anchors.left: connectionDialogNoButton.right
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("Yes")
+                onClicked: {
+                    if (connectionDialogDoNotAsk.checked) {
+                        XemaSettings.askForConnection(false);
+                    }
+
+                    NetworkController.openAnyConnection()
+                    connectionDialog.close()
+                }
+            }
+        }
+        onClickedOutside: {
+            connectionDialogDoNotAsk = false
+            connectionDialog.close()
+        }
+        onRejected: { connectionDialogDoNotAsk = false }
+    }
+
+    Dialog {
         id: errorDialog
         property alias titleText: titleTextField.text
         property alias dialogText: dialogTextField.text
@@ -500,6 +594,6 @@ PageStackWindow {
     }
 
     Component.onCompleted: {
-        pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+        pageStack.push(Qt.resolvedUrl("HistoryPage.qml"))
     }
 }

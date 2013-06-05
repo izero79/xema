@@ -15,7 +15,7 @@ Page {
     ToolBarLayout {
         id: listToolBarLayout
         ToolIcon {
-            iconId: "icon-m-toolbar-back-white"
+            platformIconId: "toolbar-back"
             onClicked: {
                 window.backFromList()
                 positionSource.stop()
@@ -54,7 +54,7 @@ Page {
         }
         ToolIcon {
             //flat: true
-            iconId: "icon-m-toolbar-add-white"
+            platformIconId: "toolbar-add"
             visible: listView.model == personModel || listView.model == locationModel || listView.model == birdModel || listView.model == statusModel
             onClicked: {
                 console.log("Add new")

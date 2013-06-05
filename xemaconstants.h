@@ -11,6 +11,19 @@ static const QString filePath("C:/");
 #endif
 */
 //static const int OBS_SUBFIELDCOUNT = 12;
+enum NetworkConnectionState
+{
+    CONNECTING = 0,
+    CONNECTING_CANCELED,
+    NO_AVAILABLE_WLANS,
+    NO_AVAILABLE_CONNECTIONS
+};
 
+enum NetworkConnectionType
+{
+    ANY = 0,
+    WLAN,
+    CELLULAR
+};
 
 #endif // XEMACONSTANTS_H

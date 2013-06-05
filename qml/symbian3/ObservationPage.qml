@@ -523,6 +523,11 @@ Page {
         weatherTa.text = fields[currentField]
         var birdCoords = fields[XemaEnums.OBS_BIRD_YCOORD] + ":" + fields[XemaEnums.OBS_BIRD_XCOORD]
         console.log("bird-koordinaatit: " + birdCoords )
+        if (birdCoords.trim().length < 3) {
+            birdCoordinatesTf.text = ""
+            return
+        }
+
         if (fields[XemaEnums.OBS_BIRD_YCOORD] < 400) {
             birdCoordinatesTf.text = birdCoords
         } else {

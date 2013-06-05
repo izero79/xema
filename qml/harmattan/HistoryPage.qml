@@ -12,12 +12,14 @@ Page {
     ToolBarLayout {
         id: historyToolBarLayout
         ToolIcon {
-            iconId: "icon-m-toolbar-back-white"
+
+            platformIconId: "toolbar-back"
+            visible: dateListVisible != true
             onClicked: {
                 if (dateListVisible == true)
                 {
                     window.backFromList()
-                    pageStack.pop()
+                    pageStack.depth <= 1 ? quit() : pageStack.pop()
                 }
                 else if (placeListVisible == true)
                 {
@@ -31,22 +33,52 @@ Page {
                 }
             }
         }
-        ToolButton {
-            flat: true
-//            iconSource: "toolbar-share" //qml/symbian3_icons/save.svg"
-            text: qsTr("Export")
-            visible: historyListView.model == historyDateModel
+        ToolIcon {
+
+            platformIconId: "toolbar-add"
             onClicked: {
-                exportDialog.open()
+                window.showObsPage(false)
             }
         }
         ToolButton {
             flat: true
-//            iconSource: "toolbar-filter"
-            text: qsTr("Import")
-            visible: historyListView.model == historyDateModel
+            text: qsTr("Export")
             onClicked: {
-                window.importData()
+                exportDialog.open()
+            }
+        }
+        ToolIcon {
+
+            platformIconId: "toolbar-view-menu"
+            anchors.right: (parent === undefined) ? undefined : parent.right
+            onClicked: (viewMenu.status === DialogStatus.Closed) ? viewMenu.open() : viewMenu.close()
+        }
+    }
+
+    Menu {
+        id: viewMenu
+        visualParent: pageStack
+        MenuLayout {
+            MenuItem {
+                text: qsTr("Import")
+                visible: true
+                onClicked: {
+                    window.importData()
+                }
+            }
+            MenuItem {
+                text: qsTr("Settings")
+                visible: true
+                onClicked: {
+                    window.showSettingsPage()
+                }
+            }
+            MenuItem {
+                text: qsTr("About Xema")
+                visible: true
+                onClicked: {
+                    aboutDialog.open()
+                }
             }
         }
     }
@@ -84,14 +116,12 @@ Page {
     function clicked(name)
     {
         console.log("clicked")
-        //pageStack.pop()
         window.showObsPage(false)
         window.readObs(name)
     }
 
     function newObsWithData(date, place, species)
     {
-        //pageStack.pop()
         window.showObsPage(false)
         window.newObsWithData(date, place, species)
     }
@@ -99,8 +129,6 @@ Page {
     function showDate(pvm)
     {
         window.loadHistoryWithDate(pvm)
-        //filterTf.text = ""
-        console.log("showDate " + pvm)
         historyListView.model = historyPlaceModel
         historyPlaceModel.filter(filterTf.text)
     }
@@ -108,11 +136,8 @@ Page {
     function showPlace(place, pvm)
     {
         window.loadHistoryWithDateAndPlace(pvm, place)
-        //filterTf.text = ""
-        console.log("showDate " + place + " pvm " +pvm)
         historyListView.model = historyModel
 
-//        var filterString = place + ", " + pvm
         historyModel.filter(filterTf.text)
     }
 
@@ -126,7 +151,6 @@ Page {
     {
         console.log("findBirdFromAbbrev: " + name)
         for(var i=0;i<birdModel.rowCount();i++) {
-            // TODO localized names
             if (currentLanguage == "en") {
                 if(name === birdModel.data(i, 38)) {
                     return birdModel.data(i, 44)
@@ -145,6 +169,65 @@ Page {
         }
 
         return name
+    }
+
+
+    Loader {
+        id: aboutDialog
+
+        function open()
+        {
+            source = Qt.resolvedUrl( "AboutDialog.qml" )
+            if( item != null )
+            {
+                item.screenX = -x
+                item.screenY = -y
+                item.open()
+            }
+        }
+
+        function close()
+        {
+            if( item != null )
+            {
+                item.close()
+            }
+            source = ""
+        }
+
+        function isVisible()
+        {
+            if( item != null )
+            {
+                return item.isVisible
+            }
+            return false
+        }
+
+        anchors.centerIn: parent
+        width: window.inPortrait ? parent.width / 3 * 2: parent.width / 5 * 2
+        height: window.inPortrait ? parent.height / 6 * 2 : parent.height / 5 * 3
+        source: ""
+        z: 100
+        onYChanged: {
+            if( item != null )
+            {
+                item.screenX = -x
+                item.screenY = -y
+            }
+        }
+    }
+    Connections {
+        target: aboutDialog.item
+        onButton1Clicked: {
+            aboutDialog.close()
+        }
+        onCanceled: {
+            aboutDialog.close()
+        }
+        onOpenHomepage: {
+            window.openUrl( "http://www.iki.fi/z7/xema" )
+        }
     }
 
     Dialog {
@@ -254,8 +337,10 @@ Page {
                 }
             }
         }
-//        onClickedOutside: exportDialog.close()
-        onRejected: exportDialog.step = 1
+        onRejected: { 
+            exportDialog.step = 1
+
+        }
     }
 
     ListModel {

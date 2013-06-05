@@ -28,6 +28,7 @@
 #include "coordinateconverter.h"
 #include "systeminfoprovider.h"
 #include "kineticscroller.h"
+#include "networkcontroller.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -57,7 +58,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mDataWriter(0),
     mDataLoader(0),
     mCoordinateConverter(0),
-    mKineticScroller(0)
+    mKineticScroller(0),
+    mNetworkController(0)
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView = new QDeclarativeView(this);
@@ -93,12 +95,14 @@ QMLWindow::QMLWindow(QWidget *parent) :
     setSource(QUrl("qrc:qml/harmattan/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #else
-    setSource(QUrl("qrc:qml/harmattan/main.qml"));
+    setSource(QUrl("qrc:qml/symbian3/main.qml"));
     mRootObject = dynamic_cast<QObject*>(rootObject());
 #endif
 
     mCoordinateConverter = new CoordinateConverter(this);
     mRootContext->setContextProperty("CoordinateConverter", mCoordinateConverter);
+    mNetworkController = new NetworkController(this);
+    mRootContext->setContextProperty( "NetworkController", mNetworkController );
 
 }
 
@@ -205,6 +209,8 @@ void QMLWindow::init()
     mSettings = new Settings(this);
     mDataWriter = ModelDataWriter::instance();
     mDataLoader = ModelDataLoader::instance();
+
+    mRootContext->setContextProperty( "XemaSettings", mSettings );
 
     QMetaObject::invokeMethod(mRootObject, "setSystematicSort",
              Q_ARG(QVariant, mSettings->systematicSorting()));

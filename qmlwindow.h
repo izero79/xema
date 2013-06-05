@@ -20,6 +20,7 @@ class DressModel;
 class DirectionModel;
 class CoordinateConverter;
 class KineticScroller;
+class NetworkController;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -112,6 +113,8 @@ private:
     ModelDataLoader *mDataLoader;
     CoordinateConverter *mCoordinateConverter;
     KineticScroller *mKineticScroller;
+    NetworkController *mNetworkController;
+
 };
 
 #endif // QMLWINDOW_H

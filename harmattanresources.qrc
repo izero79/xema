@@ -10,7 +10,6 @@
         <file>qml/harmattan/LocationEditPage.qml</file>
         <file>qml/harmattan/LocationListDelegate.qml</file>
         <file>qml/harmattan/main.qml</file>
-        <file>qml/harmattan/MainPage.qml</file>
         <file>qml/harmattan/myjs.js</file>
         <file>qml/harmattan/ObservationDelegate.qml</file>
         <file>qml/harmattan/ObservationPage.qml</file>

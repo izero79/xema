@@ -7,7 +7,7 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-DEFINES +=DEBUGONLYTOFILE
+#DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location systeminfo
 
@@ -196,7 +196,8 @@ SOURCES += main.cpp \
     modeldatawriter.cpp \
     kineticscroller.cpp \
     dataloader.cpp \
-    dataexporter.cpp
+    dataexporter.cpp \
+    networkcontroller.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -247,7 +248,8 @@ HEADERS += \
     directionmodel.h \
     kineticscroller.h \
     dataloader.h \
-    dataexporter.h
+    dataexporter.h \
+    networkcontroller.h
 
 RESOURCES += \
     commonresources.qrc

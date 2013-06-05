@@ -20,7 +20,7 @@ Page {
         ToolIcon {
             //flat: true
             visible: true
-            iconId: "icon-m-toolbar-back-white"
+            platformIconId: "toolbar-back"
             onClicked: {
                 mapItem.item.stopGps()
                 if (mapItem.item.mode == "place" && mapItem.item.place_x != -1 && mapItem.item.place_y != -1) {

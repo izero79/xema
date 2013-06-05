@@ -13,7 +13,7 @@ Page {
     ToolBarLayout {
         id: editToolBar
         ToolIcon {
-            iconId: "icon-m-toolbar-back-white"
+            platformIconId: "toolbar-back"
             onClicked: {
                 console.log("status edit page back clicked")
                 if (statusEdited == true)
@@ -57,7 +57,7 @@ Page {
             }
         }
         ToolIcon {
-            iconId: "icon-m-toolbar-undo-white"
+            platformIconId: "toolbar-undo"
             visible: !addingNew
             onClicked: {
                 console.log("status edit page undo clicked")

@@ -13,7 +13,7 @@ Page {
     ToolBarLayout {
         id: editToolBar
         ToolIcon {
-            iconId: "icon-m-toolbar-back-white"
+            platformIconId: "toolbar-back"
             onClicked: {
                 console.log("pep sivu back clicked")
                 if (personEdited == true)
@@ -55,7 +55,7 @@ Page {
             }
         }
         ToolIcon {
-            iconId: "icon-m-toolbar-undo-white"
+            platformIconId: "toolbar-undo"
             visible: !addingNew
             onClicked: {
                 console.log("person edit page undo clicked")

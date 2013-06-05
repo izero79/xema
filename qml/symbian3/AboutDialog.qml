@@ -63,7 +63,7 @@ FocusScope {
         y: screenY
         x: screenX
         width: screenWidth
-        height: screenHeight
+        height: screenHeight *2
         z: 1
         visible: backgroundMouseArea.enabled
         color: "#c8000000"

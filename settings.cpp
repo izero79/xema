@@ -99,6 +99,13 @@ bool Settings::onlyDefaultCountry()
     return value;
 }
 
+bool Settings::askForConnection()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("askForConnection", true).toBool();
+    return value;
+}
+
 bool Settings::exportWgs()
 {
     QSettings settings("TeSi", "xema");
@@ -141,6 +148,13 @@ int Settings::statusesVersion()
     QSettings settings("TeSi", "xema");
     int value = settings.value("statusesVersion", 0).toInt();
     return value;
+}
+
+void Settings::askForConnection(bool ask)
+{
+    qDebug() << "void Settings::askForConnection()" << ask;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("askForConnection", ask);
 }
 
 QString Settings::lang()

@@ -10,11 +10,13 @@ class Settings : public QObject
 public:
     explicit Settings(QObject *parent = 0);
 
+public slots:
     bool firstStart();
     bool systematicSorting();
     int detailLevel();
     bool wpSpecies();
     bool onlyDefaultCountry();
+    bool askForConnection();
     static bool exportWgs();
     static QString defaultCountry();
     static int speciesVersion();
@@ -32,12 +34,11 @@ public:
     static void setSpeciesVersion(int ver);
     static void setLocationsVersion(int ver);
     static void setStatusesVersion(int ver);
+    void askForConnection(bool ask);
 
     void resetSettings();
 
 signals:
-
-public slots:
 
 };
 

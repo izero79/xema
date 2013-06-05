@@ -182,6 +182,6 @@ QString HistoryItem::sectionString() const
     QDate date = QDate::fromString(mDate, QString("dd.MM.yyyy"));
     //QString year
 //    QString text = date.longMonthName(date.month()) + date.year();
-    QString text = date.toString( QString("MMMM yyyy"));
+    QString text = date.toString( QString("MMM yyyy"));
     return text;
 }
