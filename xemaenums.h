@@ -140,7 +140,12 @@ public:
         TIIRA_NEST,
         TIIRA_INDIRECT, // 34
         TIIRA_EXTRA_WEATHER, // 35 weather
-        TIIRA_EXTRA_COUNTRY // 36 country
+        TIIRA_EXTRA_COUNTRY, // 36 country
+        TIIRA_COORD_TYPE,
+        TIIRA_SPECIES_EN,
+        TIIRA_SPECIES_SV,
+        TIIRA_SPECIES_SC, // 40
+        TIIRA_SPECIES_FI // 40
     };
 
     enum atlasIndexFields {

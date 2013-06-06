@@ -1,0 +1,11 @@
+1.1.0
+Karttatoiminnot
+Lajilistan valinta suomi/wp
+Oletusmaan valinta ja paikkalistan karsinta sen perusteella
+CSV:ssä on lajinimet myös muilla kielillä
+WGS84/YKJ valinta viennissä
+Parannuksia käyttöliittymään
+Mahdollista asettaa useampi oletusnimi
+Vieraskieliset kentät piilotettu
+Paikoissa yhdistyskentät
+Korjauksia tuontiin ja vientiin

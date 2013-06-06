@@ -344,7 +344,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, LocationMod
     tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
-    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa#Koord_tyyppi#Species_en#Species_sv#Species_sc\n");
+    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa#Koord_tyyppi#Species_en#Species_sv#Species_sc#Species_fi\n");
     if( delimiter != "#") {
         header.replace("#",";");
     }
@@ -709,29 +709,33 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     QString species_en;
     QString species_sv;
     QString species_sc;
+    QString species_fi;
     int rowCount = birds->rowCount();
     if (species.length() == 6) {
         for(int i = 0; i < rowCount; i++)
         {
             if(birds->getItem(i).abbreviation() == species)
             {
-//                qDebug() << "loyty lajiosuma 1";
+                qDebug() << "loyty lajiosuma 1";
                 species_en = birds->getItem(i).engName(true);
                 species_sv = birds->getItem(i).sweName(true);
                 species_sc = birds->getItem(i).latinName();
+                species_fi = birds->getItem(i).finName();
                 break;
             }
         }
     } else {
         for(int i = 0; i < rowCount; i++)
         {
+            qDebug() << "etsitaan" << species;
             if(birds->getItem(i).finName() == species)
             {
-//                qDebug() << "loyty lajiosuma 2";
+                qDebug() << "loyty lajiosuma 2";
                 species = birds->getItem(i).abbreviation();
                 species_en = birds->getItem(i).engName(true);
                 species_sv = birds->getItem(i).sweName(true);
                 species_sc = birds->getItem(i).latinName();
+                species_fi = birds->getItem(i).finName();
                 break;
             }
         }
@@ -925,6 +929,8 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     loppu.append(species_sv);
     loppu.append("#");
     loppu.append(species_sc);
+    loppu.append("#");
+    loppu.append(species_fi);
     //loppu.append("#");
 
     QString firstRow = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_INDIRECT);
@@ -942,7 +948,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
 //            qDebug() << "EXPORT, eka 22.1" << eka;
             eka += data.section("#", 0, 0);
 //            qDebug() << "EXPORT, eka 22.2" << eka;
-            eka += "###########################";
+            eka += "#######################";
 //            qDebug() << "EXPORT, eka 22.3" << eka;
             QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_INDIRECT+(i*XemaEnums::OBS_SUBFIELDCOUNT));
             rivi.replace("#koiras#", "#k#");
@@ -1099,7 +1105,15 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     readyLine.append("0#");
     QString readLine = lines.at(0);
     int tiira_abbr = sectionMap.value(XemaEnums::TIIRA_SPECIES_ABBR);
+    int tiira_species_en = sectionMap.value(XemaEnums::TIIRA_SPECIES_EN);
+    int tiira_species_sv = sectionMap.value(XemaEnums::TIIRA_SPECIES_SV);
+    int tiira_species_sc = sectionMap.value(XemaEnums::TIIRA_SPECIES_SC);
+    int tiira_species_fi = sectionMap.value(XemaEnums::TIIRA_SPECIES_FI);
     QString speciesAbbrev = readLine.section(delimiter,tiira_abbr,tiira_abbr);
+    QString species_en = readLine.section(delimiter,tiira_species_en,tiira_species_en);
+    QString species_sv = readLine.section(delimiter,tiira_species_sv,tiira_species_sv);
+    QString species_sc = readLine.section(delimiter,tiira_species_sc,tiira_species_sc);
+    QString species_fi = readLine.section(delimiter,tiira_species_fi,tiira_species_fi);
     readyLine.append(speciesAbbrev);
 
     if (birds && speciesAbbrev.trimmed().isEmpty() == false ) {
@@ -1113,10 +1127,10 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
         if (birdExists == false && speciesAbbrev.trimmed().isEmpty() == false) {
             Bird tmp;
             tmp.setAbbreviation(speciesAbbrev);
-            tmp.setFinName(speciesAbbrev);
-            tmp.setSweName(speciesAbbrev);
-            tmp.setEngName(speciesAbbrev);
-            tmp.setLatinName(speciesAbbrev);
+            tmp.setFinName(species_fi);
+            tmp.setSweName(species_sv);
+            tmp.setEngName(species_en);
+            tmp.setLatinName(species_sc);
             tmp.setCustom(true);
             birds->addItem(tmp);
         }
@@ -1984,7 +1998,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
     QStringList headerSections = header.split(delimiter);
 
 //    qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
-    for (int i = XemaEnums::TIIRA_ID; i <= XemaEnums::TIIRA_EXTRA_COUNTRY; i++) {
+    for (int i = XemaEnums::TIIRA_ID; i <= XemaEnums::TIIRA_SPECIES_FI; i++) {
         switch (i) {
             case XemaEnums::TIIRA_ID: {
                 int index = headerSections.indexOf("rivi-id");
@@ -2310,6 +2324,46 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                     index = 100;
                 }
                 sections.insert(XemaEnums::TIIRA_EXTRA_COUNTRY, index);
+                break;
+            }
+            case XemaEnums::TIIRA_COORD_TYPE: {
+                int index = headerSections.indexOf("koord_tyyppi");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_COORD_TYPE, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SPECIES_EN: {
+                int index = headerSections.indexOf("species_en");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_SPECIES_EN, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SPECIES_SV: {
+                int index = headerSections.indexOf("species_sv");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_SPECIES_SV, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SPECIES_SC: {
+                int index = headerSections.indexOf("species_sc");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_SPECIES_SC, index);
+                break;
+            }
+            case XemaEnums::TIIRA_SPECIES_FI: {
+                int index = headerSections.indexOf("species_fi");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_SPECIES_FI, index);
                 break;
             }
         }

@@ -70,7 +70,7 @@ Page {
         selectModel()
         selectDelegate()
         if (window.onlyDefaultCountry) {
-            listView.model.filter("^" + window.defaultCountry  + ",");
+            listView.model.filter("^" + window.defaultCountry  + ", ");
         } else {
             listView.model.filter("")
         }
@@ -346,7 +346,7 @@ Page {
             listView.editMode = false
             listView.delegate = locationDelegate
             if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ",");
+                listView.model.filter("^" + window.defaultCountry  + ", ");
             }
         }
         else if (listPageType == "editplaces")
@@ -355,7 +355,7 @@ Page {
             listView.editMode = true
             listView.delegate = locationDelegate
             if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ",");
+                listView.model.filter("^" + window.defaultCountry  + ", ");
             }
         }
         else if (listPageType == "editstatuses")
@@ -420,14 +420,14 @@ Page {
         {
             listView.model = locationModel
             if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ",");
+                listView.model.filter("^" + window.defaultCountry  + ", ");
             }
         }
         else if (listPageType == "editplaces")
         {
             listView.model = locationModel
             if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ",");
+                listView.model.filter("^" + window.defaultCountry  + ", ");
             }
         }
         else if (listPageType == "status")
@@ -601,7 +601,7 @@ Page {
             onTextChanged: {
                 //console.log("teksti muuttuu: " + text)
                 if (window.onlyDefaultCountry) {
-                    listView.model.filter("^" + window.defaultCountry  + "," + text);
+                    listView.model.filter("(^" + window.defaultCountry  + ", )(.*" + text + ".*)");
                 } else {
                     listView.model.filter(text)
                 }

@@ -315,7 +315,7 @@ Page {
             anchors.top: latinGroupTf.bottom
             anchors.topMargin: 8
             width: parent.width
-            validator: RegExpValidator{ regExp: /.{1,}/ }
+            validator: RegExpValidator{ regExp: /.{1,6}/ }
             onTextChanged: {
                 birdEdited = true
             }
