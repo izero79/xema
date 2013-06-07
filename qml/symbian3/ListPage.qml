@@ -70,11 +70,7 @@ Page {
         console.log("listpage init")
         selectModel()
         selectDelegate()
-        if (window.onlyDefaultCountry) {
-            listView.model.filter("^" + window.defaultCountry  + ", ");
-        } else {
-            listView.model.filter("")
-        }
+        listView.model.filter("")
         filterTf.text = ""
         console.log("listpage init - done")
     }
