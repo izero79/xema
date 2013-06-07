@@ -212,32 +212,32 @@
         <translation>Use compass</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="118"/>
-        <location filename="qml/symbian3/ListPage.qml" line="119"/>
+        <location filename="qml/harmattan/ListPage.qml" line="114"/>
+        <location filename="qml/symbian3/ListPage.qml" line="115"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="144"/>
-        <location filename="qml/symbian3/ListPage.qml" line="145"/>
+        <location filename="qml/harmattan/ListPage.qml" line="140"/>
+        <location filename="qml/symbian3/ListPage.qml" line="141"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="592"/>
-        <location filename="qml/symbian3/ListPage.qml" line="590"/>
+        <location filename="qml/harmattan/ListPage.qml" line="588"/>
+        <location filename="qml/symbian3/ListPage.qml" line="586"/>
         <source>Search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="491"/>
-        <location filename="qml/symbian3/ListPage.qml" line="492"/>
+        <location filename="qml/harmattan/ListPage.qml" line="487"/>
+        <location filename="qml/symbian3/ListPage.qml" line="488"/>
         <source>Calibrate compass by moving the device in a figure eight pattern.</source>
         <translation>Calibrate compass by moving the device in a figure eight pattern.</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="492"/>
-        <location filename="qml/symbian3/ListPage.qml" line="493"/>
+        <location filename="qml/harmattan/ListPage.qml" line="488"/>
+        <location filename="qml/symbian3/ListPage.qml" line="489"/>
         <source>Calibration</source>
         <oldsource>Calibration needed</oldsource>
         <translation>Calibration</translation>
@@ -248,8 +248,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="qml/harmattan/ListPage.qml" line="565"/>
-        <location filename="qml/symbian3/ListPage.qml" line="562"/>
+        <location filename="qml/harmattan/ListPage.qml" line="561"/>
+        <location filename="qml/symbian3/ListPage.qml" line="558"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
@@ -1106,7 +1106,7 @@
         <location filename="qml/harmattan/main.qml" line="457"/>
         <location filename="qml/symbian3/main.qml" line="480"/>
         <source>Connection needed</source>
-        <translation>Internet  connection needed</translation>
+        <translation>Internet connection</translation>
     </message>
     <message>
         <location filename="qml/harmattan/main.qml" line="471"/>
@@ -1118,7 +1118,7 @@
         <location filename="qml/harmattan/main.qml" line="484"/>
         <location filename="qml/symbian3/main.qml" line="507"/>
         <source>Connect automatically when needed</source>
-        <translation>Connect automatically when needed</translation>
+        <translation>Connect automatically</translation>
     </message>
     <message>
         <location filename="qml/harmattan/main.qml" line="495"/>

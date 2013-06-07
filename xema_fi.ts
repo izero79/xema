@@ -711,7 +711,7 @@
     </message>
     <message>
         <source>Connection needed</source>
-        <translation>Tarvitaan Internet-yhteys</translation>
+        <translation>Internet-yhteys</translation>
     </message>
     <message>
         <source>Internet connection is needed for map usage, connect now?</source>
@@ -719,7 +719,7 @@
     </message>
     <message>
         <source>Connect automatically when needed</source>
-        <translation>Yhdistä automaattisesti tarvittaessa</translation>
+        <translation>Yhdistä automaattisesti</translation>
     </message>
     <message>
         <source>No</source>
