@@ -1094,7 +1094,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     {
         return;
     }
-//    qDebug() << "IMPORT lines" << lines;
+    qDebug() << "IMPORT lines" << lines;
 
     QString rowCount;
     rowCount.setNum(lines.size());
@@ -1191,7 +1191,8 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     readyLine.append("#");
     int tiira_xcoord = sectionMap.value(XemaEnums::TIIRA_XCOORD);
     int tiira_ycoord = sectionMap.value(XemaEnums::TIIRA_YCOORD);
-
+    QString x = "";
+    QString y = "";
     if (locations && town.trimmed().isEmpty() == false && location.trimmed().isEmpty() == false) {
         bool locationExists = false;
         for (int i = 0; i < locations->rowCount(); i++) {
@@ -1204,33 +1205,68 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
         }
         if (locationExists == false && town.trimmed().isEmpty() == false && location.trimmed().isEmpty() == false) {
             Location tmp( town, location );
-            QString x;
-            QString y;
+            QString tmp_x;
+            QString tmp_y;
             QString ykj;
             QString wgs;
-            x = readLine.section(delimiter, tiira_ycoord, tiira_ycoord); // tiira has x-y switched
-            y = readLine.section(delimiter, tiira_xcoord, tiira_xcoord);
-            ykj.append(x);
-            ykj.append(":");
-            ykj.append(y);
-            if (x.isEmpty() == false && y.isEmpty() == false && x != "0" && y != "0")
+            tmp_x = readLine.section(delimiter, tiira_ycoord, tiira_ycoord); // tiira has x-y switched
+            tmp_y = readLine.section(delimiter, tiira_xcoord, tiira_xcoord);
+            qDebug() << "luettu paikan X:" << tmp_x;
+            qDebug() << "luettu paikan Y:" << tmp_y;
+            if (tmp_x.isEmpty() == false && tmp_y.isEmpty() == false && tmp_x != "0" && tmp_y != "0")
             {
-                double dx = x.toDouble();
-                double dy = y.toDouble();
+                double dx = tmp_x.toDouble();
+                double dy = tmp_y.toDouble();
                 double wgsx = 0;
                 double wgsy = 0;
+                double ykjx = 0;
+                double ykjy = 0;
                 QPair<double,double> newCoord;
-                newCoord = mCoordinates->ykjTowgs(dx, dy);
-                wgsx = newCoord.first;
-                wgsy = newCoord.second;
-                QString wgsX;
-                wgsX.setNum(wgsx,'g',6);
-                QString wgsY;
-                wgsY.setNum(wgsy,'g',6);
-                wgs = wgsX;
-                wgs.append(":");
-                wgs.append(wgsY);
+                // coords are ykj
+                bool importWgs = true;
+                if (dx > 360 || dy > 360) {
+                    qDebug() << "luettu paikka ykj:nä";
+                    newCoord = mCoordinates->ykjTowgs(dx, dy);
+                    ykjx = dx;
+                    ykjy = dy;
+                    wgsx = newCoord.first;
+                    wgsy = newCoord.second;
+                    importWgs = false;
+                    QString wgsX;
+                    wgsX.setNum(wgsx,'g',6);
+                    QString wgsY;
+                    wgsY.setNum(wgsy,'g',6);
+                    wgs = wgsX;
+                    wgs.append(":");
+                    wgs.append(wgsY);
+                    ykj = tmp_x;
+                    ykj.append(":");
+                    ykj.append(tmp_y);
+                    x = tmp_x;
+                    y = tmp_y;
+                } else {
+                    qDebug() << "luettu paikka wgs:nä";
+                    newCoord = mCoordinates->wgsToykj(dx, dy);
+                    wgsx = dx;
+                    wgsy = dy;
+                    wgs = tmp_x;
+                    wgs.append(":");
+                    wgs.append(tmp_y);
+                    ykjx = newCoord.first;
+                    ykjy = newCoord.second;
+                    QString ykjX;
+                    ykjX.setNum(ykjx, 'f', 0);
+                    QString ykjY;
+                    ykjY.setNum(ykjy, 'f', 0);
+                    ykj = ykjX;
+                    ykj.append(":");
+                    ykj.append(ykjY);
+                    x = ykjX;
+                    y = ykjY;
+                }
+                qDebug() << "lisätään paikkaan ykj" << ykj;
                 tmp.setYKJCoordinate(ykj);
+                qDebug() << "lisätään paikkaan wgs" << wgs;
                 tmp.setWGSCoordinate(wgs);
             }
             if (country.isEmpty() == false) {
@@ -1252,18 +1288,18 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
             locations->addItem(tmp);
         }
     }
-
+/*
     QString x = readLine.section(delimiter, tiira_xcoord, tiira_xcoord);
     QString y = readLine.section(delimiter, tiira_ycoord, tiira_ycoord);
 
-    if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {
-        readyLine += x;
-    }
+    if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {*/
+        readyLine += y;
+    //}
     readyLine.append("#");
 
-    if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {
-        readyLine += y;
-    }
+    /*if (x.isEmpty() == false && x != "0" && y.isEmpty() == false && y != "0") {*/
+        readyLine += x;
+    //}
     readyLine.append("#");
 
     int tiira_accuracy = sectionMap.value(XemaEnums::TIIRA_ACCURACY);
@@ -1271,11 +1307,41 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     readyLine.append("#");
 
     int tiira_bird_xcoord = sectionMap.value(XemaEnums::TIIRA_BIRD_XCOORD);
-    readyLine += readLine.section(delimiter, tiira_bird_xcoord, tiira_bird_xcoord);
-    readyLine.append("#");
-
     int tiira_bird_ycoord = sectionMap.value(XemaEnums::TIIRA_BIRD_YCOORD);
-    readyLine += readLine.section(delimiter, tiira_bird_ycoord, tiira_bird_ycoord);
+    QString birdX = "";
+    QString birdY = "";
+
+    QString bird_x;
+    QString bird_y;
+    QString wgs;
+    bird_x = readLine.section(delimiter, tiira_bird_ycoord, tiira_bird_ycoord);
+    bird_y = readLine.section(delimiter, tiira_bird_xcoord, tiira_bird_xcoord);
+    if (bird_x.isEmpty() == false && bird_y.isEmpty() == false && bird_x != "0" && bird_y != "0")
+    {
+        double dx = bird_x.toDouble();
+        double dy = bird_y.toDouble();
+        double wgsx = 0;
+        double wgsy = 0;
+        QPair<double,double> newCoord;
+        // coords are ykj
+        if (dx > 360 || dy > 360) {
+            newCoord = mCoordinates->ykjTowgs(dx, dy);
+            wgsx = newCoord.first;
+            wgsy = newCoord.second;
+            QString wgsX;
+            wgsX.setNum(wgsx,'g',6);
+            QString wgsY;
+            wgsY.setNum(wgsy,'g',6);
+            birdX = wgsX;
+            birdY = wgsY;
+        } else {
+            birdX = bird_x;
+            birdY = bird_y;
+        }
+    }
+    readyLine += birdY;
+    readyLine.append("#");
+    readyLine += birdX;
     readyLine.append("#");
 
     int tiira_bird_accuracy = sectionMap.value(XemaEnums::TIIRA_BIRD_ACCURACY);
