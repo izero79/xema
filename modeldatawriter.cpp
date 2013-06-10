@@ -702,9 +702,9 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
 //    qDebug() << "EXPORT, birdX " << birdX;
 //    qDebug() << "EXPORT, birdY " << birdY;
 
-    QString toka = "#" + town + "#" + place;
-    QString eka = id;
-//    qDebug() << "EXPORT, eka 2" << eka;
+    QString exportLine = id;
+    QString locationString = "#" + town + "#" + place;
+//    qDebug() << "EXPORT, exportLine 2" << exportLine;
 
     QString species_en;
     QString species_sv;
@@ -771,27 +771,27 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     }
 
 
-    eka += "#";
-//    qDebug() << "EXPORT, eka 3" << eka;
-    eka += species;
-//    qDebug() << "EXPORT, eka 4" << eka;
-    eka += "#";
-//    qDebug() << "EXPORT, eka 5" << eka;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 3" << exportLine;
+    exportLine += species;
+//    qDebug() << "EXPORT, exportLine 4" << exportLine;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 5" << exportLine;
 //    qDebug() << "EXPORT, datetime" << datetime;
     if (datetime.section("#",3,3).isEmpty() == true)
     {
-//        qDebug() << "EXPORT, eka 5.1" << eka;
-        eka += datetime.section("#",0,2);
-//        qDebug() << "EXPORT, eka 5.2" << eka;
-        eka += "#";
-//        qDebug() << "EXPORT, eka 5.3" << eka;
-        eka += datetime.section("#",2,2);
-//        qDebug() << "EXPORT, eka 5.4" << eka;
+//        qDebug() << "EXPORT, exportLine 5.1" << exportLine;
+        exportLine += datetime.section("#",0,2);
+//        qDebug() << "EXPORT, exportLine 5.2" << exportLine;
+        exportLine += "#";
+//        qDebug() << "EXPORT, exportLine 5.3" << exportLine;
+        exportLine += datetime.section("#",2,2);
+//        qDebug() << "EXPORT, exportLine 5.4" << exportLine;
     }
     else
     {
-        eka += datetime;
-//        qDebug() << "EXPORT, eka 6" << eka;
+        exportLine += datetime;
+//        qDebug() << "EXPORT, exportLine 6" << exportLine;
     }
     rowCount = locations->rowCount();
 
@@ -835,12 +835,12 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
                 QString ykjY;
                 ykjY.setNum(newY);
                 // tiiraan koordinaatit toisinpäin
-                toka.append("#" + ykjY + "#" + ykjX);
+                locationString.append("#" + ykjY + "#" + ykjX);
             } else {
                 QString x = coordinate.section(":", 0, 0);
                 QString y = coordinate.section(":", 1, 1);
                 // tiiraan koordinaatit toisinpäin
-                toka.append("#" + y + "#" + x);
+                locationString.append("#" + y + "#" + x);
             }
 
             locationAdded = true;
@@ -849,22 +849,22 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     }
     if (locationAdded == false)
     {
-        toka.append("##");
+        locationString.append("##");
     }
 
-    eka += toka;
-//    qDebug() << "EXPORT, eka 7" << eka;
-    eka += QString("##");
-    eka += birdX;
-    eka += "#";
-    eka += birdY;
-    eka += "#";
-    eka += QString ("##");
-//    qDebug() << "EXPORT, eka 8" << eka;
-    eka += vali;
-//    qDebug() << "EXPORT, eka 9" << eka;
-    eka += "#";
-//    qDebug() << "EXPORT, eka 10" << eka;
+    exportLine += locationString;
+//    qDebug() << "EXPORT, exportLine 7" << exportLine;
+    exportLine += QString("##");
+    exportLine += birdX;
+    exportLine += "#";
+    exportLine += birdY;
+    exportLine += "#";
+    exportLine += QString ("##");
+//    qDebug() << "EXPORT, exportLine 8" << exportLine;
+    exportLine += vali;
+//    qDebug() << "EXPORT, exportLine 9" << exportLine;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 10" << exportLine;
 
     // add data saver (default name if found)
     rowCount = persons->rowCount();
@@ -878,13 +878,13 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
         }
     }
 
-    eka += saver;
-//        qDebug() << "EXPORT, eka 11" << eka;
-    eka += "#";
-//    qDebug() << "EXPORT, eka 12" << eka;
+    exportLine += saver;
+//        qDebug() << "EXPORT, exportLine 11" << exportLine;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 12" << exportLine;
     // tiira saving time
-    eka += "#";
-//    qDebug() << "EXPORT, eka 13" << eka;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 13" << exportLine;
 
 //    qDebug() << "NIMET ennen muutosta" << nimet;
     if (nimet.length() > 1 && nimet.endsWith('#') == false) {
@@ -896,20 +896,20 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     if (nimet.endsWith(", ")) {
         nimet = nimet.mid(0, nimet.length() - 2);
     }
-    eka += nimet;
-//    qDebug() << "EXPORT, eka 14" << eka;
-    eka += "#";
-//    qDebug() << "EXPORT, eka 15" << eka;
-    eka += hidden;
-//    qDebug() << "EXPORT, eka 16" << eka;
-    eka += "#";
-//    qDebug() << "EXPORT, eka 17" << eka;
+    exportLine += nimet;
+//    qDebug() << "EXPORT, exportLine 14" << exportLine;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 15" << exportLine;
+    exportLine += hidden;
+//    qDebug() << "EXPORT, exportLine 16" << exportLine;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 17" << exportLine;
 
     // koontihavainto ja kuuluu havaintoon
-    eka += "#";
-//    qDebug() << "EXPORT, eka 18" << eka;
-    eka += "#";
-//    qDebug() << "EXPORT, eka 19" << eka;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 18" << exportLine;
+    exportLine += "#";
+//    qDebug() << "EXPORT, exportLine 19" << exportLine;
 
     // include exported or not (24 vs 25)
     QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
@@ -936,44 +936,45 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
     QString firstRow = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_INDIRECT);
     firstRow.replace("#koiras#", "#k#");
     firstRow.replace("#naaras#", "#n#");
-    eka += firstRow;
-//    qDebug() << "EXPORT, eka 20" << eka;
-    eka += loppu;
-//    qDebug() << "EXPORT, eka 21" << eka;
+    exportLine += firstRow;
+//    qDebug() << "EXPORT, exportLine 20" << exportLine;
+    exportLine += loppu;
+//    qDebug() << "EXPORT, exportLine 21" << exportLine;
 
     if (xemaRows > 1) {
         for(int i = 1; i < xemaRows; i++)
         {
-            eka += "\n";
-//            qDebug() << "EXPORT, eka 22.1" << eka;
-            eka += data.section("#", 0, 0);
-//            qDebug() << "EXPORT, eka 22.2" << eka;
-            eka += "#######################";
-//            qDebug() << "EXPORT, eka 22.3" << eka;
+            exportLine += "\n";
+//            qDebug() << "EXPORT, exportLine 22.1" << exportLine;
+            exportLine += data.section("#", 0, 0);
+            qDebug() << "EXPORT, loppu 22.2" << loppu;
+            exportLine += "#######################";
+            qDebug() << "EXPORT, exportLine 22.3" << exportLine;
             QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_INDIRECT+(i*XemaEnums::OBS_SUBFIELDCOUNT));
             rivi.replace("#koiras#", "#k#");
             rivi.replace("#naaras#", "#n#");
-            eka += rivi;
-//            qDebug() << "EXPORT, eka 22.4" << eka;
-            eka += loppu;
-//            qDebug() << "EXPORT, eka 22.5" << eka;
+            exportLine += rivi;
+//            qDebug() << "EXPORT, exportLine 22.4" << exportLine;
+            exportLine += "#######";
+            //exportLine += loppu;
+//            qDebug() << "EXPORT, exportLine 22.5" << exportLine;
         }
     }
 
-//    qDebug() << "EKA ENNEN MUUTOSTA" << eka;
-    eka.replace("#true","#X", Qt::CaseSensitive);
-//    qDebug() << "EXPORT, eka 23" << eka;
-    eka.replace("#false","#", Qt::CaseSensitive);
-//    qDebug() << "EXPORT, eka 24" << eka;
-//    qDebug() << "EKA MUUTOKSEN JALKEEN" << eka;
-    if( eka.endsWith( "#") == true ) {
-        eka.remove(eka.size()-1,1);
+//    qDebug() << "exportLine ENNEN MUUTOSTA" << exportLine;
+    exportLine.replace("#true","#X", Qt::CaseSensitive);
+//    qDebug() << "EXPORT, exportLine 23" << exportLine;
+    exportLine.replace("#false","#", Qt::CaseSensitive);
+//    qDebug() << "EXPORT, exportLine 24" << exportLine;
+//    qDebug() << "exportLine MUUTOKSEN JALKEEN" << exportLine;
+    if( exportLine.endsWith( "#") == true ) {
+        exportLine.remove(exportLine.size()-1,1);
     }
     if( delimiter != "#" ) {
-        eka.replace("#", delimiter);
+        exportLine.replace("#", delimiter);
     }
-    qDebug() << "FORMAT TO TIIRA JALKEEN" << eka;
-    return eka;
+    qDebug() << "FORMAT TO TIIRA JALKEEN" << exportLine;
+    return exportLine;
 }
 
 int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *persons, StatusModel *statuses, BirdModel *birds)
