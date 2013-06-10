@@ -159,6 +159,7 @@ Kokkola;Hopeakivenlahti, jätevedenpuhdistamo;63.8718:23.0582;7091685:3306502;Kar
 Kokkola;Isokari;63.8307:23.0335;7087180:3305004;Karleby;Stora Enskär;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
 Kokkola;Laajalahti, Hietanokan torni;63.7967:23.0134;7083453:3303781;Karleby;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
 Kokkola;Laajalahti, lintutorni;63.7887:23.028;7082521:3304445;Karleby;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
+Kokkola;Lillgrund;63.9595:22.8577;7102067:3297297;Karleby;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
 Kokkola;Lohtaja, Erkkiperä, pellot;64.0382:23.473;7109017:3327890;Karleby;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
 Kokkola;Lohtaja, Kalaranta;64.0561:23.5041;7110923:3329517;Karleby;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
 Kokkola;Lohtaja, Kalsonnokka;64.082:23.3986;7114096:3324536;Karleby;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
@@ -249,6 +250,467 @@ Ylivieska;Niemelänkylä, Mertunojan suu;64.1176:24.4654;7115554:3376695;;;;;Suomi
 Ylivieska;Niemelänkylä, ravirata;64.1159:24.5074;7115281:3378731;;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
 Ylivieska;Raudaskylä, Ängeslevä;64.0325:24.7238;7105593:3388939;;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
 Ylivieska;Teikkoperä;64.15:24.6143;7118880:3384083;;;;;Suomi;Finland;Finland;Keski-Pohjanmaan Lintutieteellinen Yhdistys ry;KPLY
+Ilomantsi;Ertonniemi;63.0564:30.8313;7000579:3693857;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Hattuvaara;62.9322:31.2816;6988198:3717516;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Ilajansuo, Pikku-Aunus;62.9186:31.2348;6986523:3715242;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Ilomantsinjärvi, uimaranta;62.6773:30.9113;6958624:3700466;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Kesonsuo, lintutorni;62.7935:30.8200;6971278:3695023;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;kirkonkylä;62.6716:30.9327;6958058:3701595;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Koivusuon luonnonpuisto;62.9611:31.3538;6991652:3720960;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Mekrijärvi;62.7721:30.9750;6969373:3703069;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Möhkö Möhkönvaara;62.6294:31.2879;6954516:3720082;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Patvinsuo Teretinniemen lintutorni;63.0916:30.7475;7004245:3689392;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Petkeljärven kansallispuisto;62.5789:31.1747;6948516:3714647;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Ilomantsi;Sonkajanrannanjärvi;62.6440:30.6845;6954231:3689072;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Ahveninen, silta;62.9464:30.1068;6986354:3657845;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno Jakojärvi;62.7443:30.1997;6964070:3663675;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Kaltimo;62.8028:30.1533;6970470:3660987;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Kaltimon voimalaitos;62.7701:30.1318;6966773:3660070;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, kirkonkylä;62.7990:30.1557;6970061:3661133;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Koidanlampi;62.8715:30.2585;6978393:3665963;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Kolvananuuro;62.8550:29.9844;6975875:3652109;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Paukkaja;62.8640:30.2113;6977437:3663602;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Paukkaja, Syväsalmi;62.8598:30.2302;6977017:3664587;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Uimaharju;62.9139:30.2517;6983095:3665377;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eno, Uimaharju, Laiskanvirta;62.9072:30.2269;6982285:3664158;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Eteläkatu;62.5939:29.7441;6946250:3641118;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Ev.lut. hautausmaa;62.6098:29.7699;6948082:3642366;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Hasanniemi, kesäteatteri;62.5934:29.7389;6946182:3640854;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Hasanniemi, Koivuniemi;62.5919:29.7461;6946030:3641233;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Hasanniemi, Pielisjokisuu;62.5911:29.7385;6945923:3640847;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Honkaniemi;62.6070:29.7183;6947650:3639732;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Hukanhauta;62.5815:29.7972;6944985:3643907;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Höytiäisen kanavan Suisto, Erakon ruokinta;62.6174:29.6824;6948733:3637845;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Höytiäisen kanavan suisto, koivikko;62.6160:29.6792;6948574:3637688;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Höytiäisen kanavan suisto Kolosseumi;62.6157:29.6708;6948518:3637258;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Höytiäisen kanavan suisto lintuasema;62.6144:29.6794;6948391:3637706;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Höytiäisen kanavan suiston parkkipaikka;62.6163:29.6859;6948623:3638028;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Iiksenniitty;62.5858:29.9056;6945710:3649451;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Iiksenvaara;62.5885:29.8607;6945910:3647131;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Ilosaari;62.5990:29.7710;6946872:3642476;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kanervala;62.6124:29.7523;6948330:3641454;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Karhumäki;62.5743:29.8020;6944200:3644188;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Karsikko Ahtolankadun laituri;62.6060:29.8189;6947762:3644902;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Karsikko, Iiksenjokisuu;62.6057:29.8283;6947750:3645387;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;keskusta, Itäsilta;62.5999:29.7727;6946982:3642559;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;keskusta, Kaupungintalo;62.5993:29.7658;6946894:3642211;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;keskusta, Länsisilta;62.6001:29.7693;6946991:3642384;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;keskusta, Suvantosilta;62.5971:29.7657;6946655:3642215;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;keskusta, tori;62.6006:29.7619;6947040:3642001;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Ketunpesät;62.5609:29.8891;6942894:3648727;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kiihtelysvaara, Heinävaara;62.5659:30.1692;6944129:3663097;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kiihtelysvaara, Keskijärvi;62.5679:30.2838;6944645:3668973;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kiihtelysvaara, Kirkonkylä;62.4932:30.2512;6936248:3667717;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kontiosuon kaatopaikan vedenpuhdistusaltaat;62.5893:29.8333;6945933:3645724;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kontiosuon kaatopaikka;62.5796:29.8412;6944877:3646174;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Koukkujoki, lintutorni;62.8857:30.2685;6980002:3666392;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kuhasalo, Kukkosensaari;62.5810:29.7337;6944790:3640649;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kuhasalo, puhdistamo;62.5871:29.7344;6945474:3640653;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kuhasalo, Saarela;62.5842:29.7333;6945142:3640613;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Kukkola;62.5620:29.8147;6942848:3644900;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Leveälahti;62.6052:29.8534;6947750:3646675;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Leveälahti, Utran kanava;62.6127:29.8721;6948630:3647599;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Linnunlahti, Botania;62.6018:29.7240;6947082:3640050;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Linnunlahti, Laulurinne;62.5952:29.7349;6946372:3640642;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Linnunlahti, Linnunniemen veneranta;62.6013:29.7198;6947023:3639837;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Linnunlahti, Linnunniemi;62.5995:29.7222;6946828:3639971;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Linnunlahti, ravirata;62.5983:29.7303;6946706:3640391;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Linnunlahti, Siirtolapuutarha;62.6014:29.7276;6947050:3640237;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Linnunlahti, venesataman aallonmurtaja;62.5956:29.7258;6946399:3640171;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Marjala, Höytiäisen kanava;62.6265:29.6706;6949726:3637196;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Marjala, Kuunvirran suu;62.6273:29.6470;6949767:3635981;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Marjala, uittokanavan suu;62.6197:29.6523;6948921:3636291;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Mutala;62.6231:29.7923;6949610:3643454;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Nepenmäki;62.5874:29.7846;6945614:3643229;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Niinivaara;62.5917:29.7910;6946106:3643537;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Niinivaara, koulu;62.5950:29.7921;6946473:3643579;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Niinivaara, Pielisensuun kirkko;62.5935:29.7819;6946294:3643065;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Niinivaara, Tikkamäki;62.5927:29.7769;6946186:3642809;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Noljakka, Aavaranta;62.6138:29.6961;6948367:3638564;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Noljakka, Aavaranta, Siilaisenlahti;62.6119:29.7093;6948179:3639247;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Noljakka, Koivuvaara;62.6167:29.6908;6948672:3638276;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Noljakka, Kuhilaskujan laituri;62.6286:29.6779;6949972:3637559;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Noljakka, Sinkkola;62.6241:29.6913;6949504:3638271;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Papinkatu, Joensuun kirkko;62.5945:29.7539;6946338:3641620;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Paritsanlahti;62.6170:29.8923;6949158:3648611;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pekkalan silta;62.6087:29.7912;6948006:3643467;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Penttilä;62.5882:29.7706;6945674:3642509;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pilkko, maankaatopaikka;62.6265:29.7262;6949838:3640046;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pilkko, Pilkonniityt;62.6297:29.7124;6950170:3639326;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Hammaslahti;62.4325:29.9690;6928791:3653494;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Hopealahti, vanhametsä;62.4806:29.8422;6933844:3646713;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Mulo, kivinavetta;62.5422:29.8171;6940650:3645118;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Mulon mäki;62.5278:29.8509;6939123:3646928;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Mulon pellot;62.5368:29.8171;6940057:3645145;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Mulon pellot, eteläpuoli;62.5318:29.8264;6939515:3645647;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Mulon pellot, SW-reunan tie;62.5349:29.8094;6939825:3644759;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Niemennokka, Pukinlahti;62.4333:29.8564;6928609:3647679;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Niittylahti;62.5194:29.8687;6938235:3647884;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Niittylahti, aallonmurtaja;62.5042:29.8170;6936420:3645299;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Niva;62.4160:29.8664;6926715:3648279;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Niva, Karjakumpu;62.4210:29.8958;6927337:3649772;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Niva, venesatama;62.4103:29.8467;6926026:3647292;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Pieni-Onkamo, Sammakkolahden uimaranta;62.3910:29.9459;6924109:3652514;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Rauanvaara;62.3933:29.8879;6924233:3649500;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Reijola;62.5432:29.8427;6940820:3646430;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Reijolan pellot;62.5470:29.8554;6941269:3647064;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Reijolan pellot, Mansikka-ahontie;62.5399:29.8632;6940498:3647504;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Pyhäselkä, Suhmura;62.4749:29.8958;6933337:3649504;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Rantakatu, Valtion virastotalo;62.6054:29.7696;6947582:3642374;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Rantakylä;62.6160:29.8191;6948878:3644862;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Rantakylä Hanhentien ranta;62.6096:29.8313;6948191:3645521;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Repokallio;62.5888:29.8125;6945837:3644656;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Siihtala;62.6089:29.7838;6948013:3643086;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Siilainen;62.6165:29.7231;6948718:3639937;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Sirkkala;62.6016:29.7836;6947194:3643113;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Sulkuniemi;62.5758:29.7818;6944318:3643141;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Tuupovaara Herajärven metsä;62.5681:30.6815;6945777:3689398;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Tuupovaara, keskusta;62.4859:30.6172;6936432:3686612;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Ukonlahti;62.5865:29.7475;6945438:3641329;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Ukonlahti, satama;62.5798:29.7563;6944706:3641813;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Utra;62.6199:29.8677;6949426:3647335;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Vainoniemi;62.6043:29.7192;6947350:3639793;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Varaslampi;62.6001:29.7903;6947038:3643464;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Vehkalahti;62.5808:29.7709;6944854:3642557;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;Vehkaniemi;62.5782:29.7656;6944546:3642297;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Joensuu;yliopiston campus;62.6052:29.7407;6947497:3640894;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;E-Vuokko Retulampi;63.3552:29.2002;7030000:3610290;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Kannas Hiirenlahti;63.2813:29.2676;7021882:3613953;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Kannas, Hirvisalmen lossi;63.2774:29.3174;7021538:3616468;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Kannas Kaajanlampi;63.2995:29.2892;7023954:3614965;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Kannas Likolahti;63.2828:29.2772;7022066:3614429;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Kannas Marjosalmi;63.3020:29.2908;7024226:3615037;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Kannas Siltalahti;63.2776:29.2628;7021466:3613725;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Keski-Vuokko;63.3733:29.1579;7031947:3608104;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;kk, huoltoaseman pellot;63.2485:29.2633;7018219:3613868;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;kk Juukaniitty;63.2528:29.2266;7018634:3612005;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;kk Jätevesipuhdistamo;63.2378:29.2786;7017058:3614675;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;kk Lehtolampi;63.2351:29.2903;7016777:3615278;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;kk Pohja- ja Välilampi;63.2499:29.2698;7018385:3614185;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;kk Retulahti;63.2476:29.2772;7018148:3614570;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Kuhnusta Ahvenlahti;63.0805:29.4742;6999896:3625181;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;L-Vuokko Ruottilansaari;63.4009:29.0900;7034908:3604612;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;L-Vuokko Ruottilans.th;63.3966:29.0755;7034404:3603900;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Paalasmaa näkötorni;63.3043:29.4454;7024768:3622776;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Pielinen Harakkamäki;63.2256:29.3193;7015775:3616771;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Pielinen Piitteri;63.2273:29.3420;7016006:3617905;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Pielinen Tiiliniemi;63.2313:29.3170;7016404:3616631;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Räksiinalava;63.2198:29.2942;7015077:3615531;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Räksiinalava,Huuhtala;63.2087:29.3117;7013877:3616458;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Räksiinalava Vasikkakorpi;63.2179:29.2843;7014849:3615043;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Tuopanjoki jokisuu;63.0386:29.5475;6995376:3629064;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vihtasuo Kopsalampi;63.3247:29.2383;7026663:3612313;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vihtasuo Kuusela;63.3210:29.2084;7026203:3610829;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokko Lehtoniemi kanava;63.3564:29.1552;7030055:3608036;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokko Lehtoniemi lehmiranta;63.3616:29.1504;7030631:3607776;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokko Lehtoranta;63.3604:29.1613;7030507:3608324;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokko Pielinen Vuokonjoki;63.3699:29.1684;7031583:3608644;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokko Pikkarainen;63.3475:29.1743;7029099:3609021;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokonjärvi Amerikanniemi;63.3655:29.1367;7031043:3607076;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokonjärvi Lehtilahti;63.3619:29.1454;7030647:3607524;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokonjärvi N-pää;63.4228:29.0581;7037296:3602940;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Juuka;Vuokonjärvi Pöyhösenlahti;63.3637:29.1459;7030859:3607540;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Asikko, Salmensuu;62.1651:29.6450;6898281:3637985;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Asikko, silta;62.1590:29.6710;6897657:3639369;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Haarajärvi, kylä;62.1765:30.1879;6900821:3666199;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Hatunvaara;62.0568:30.4144;6888088:3678688;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Hovinlampi, Kyöpelinvuoren lintutorni;62.1773:29.9445;6900309:3653523;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Hovinlampi, silta;62.1702:29.9615;6899553:3654445;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Hukkalansoppi;62.1466:30.1973;6897514:3666848;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Hyypii;62.0762:30.2025;6889693:3667510;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Juurikka;61.9933:30.0877;6880164:3661953;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Juurikkajärvi, kylä;61.9889:30.0439;6879569:3659680;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Juurikkajärvi, Liete;61.9907:30.0633;6879812:3660687;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Juurikkasalmi;61.9987:30.0089;6880567:3657799;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Keskusta;62.0982:30.1386;6891972:3664053;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Hanelinlampi;61.9399:29.8675;6873690:3650682;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Hummovaara;62.0780:29.6506;6888584:3638674;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Kereli;61.8872:29.7706;6867594:3645851;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Kirkonkylä;61.8919:29.8257;6868242:3648723;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Kousa;61.9520:29.8743;6875054:3650979;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Kuolemalammen suo, levike;61.7984:29.7315;6857617:3644211;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Kuolemalampi, lintutorni;61.7968:29.7245;6857430:3643852;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Leveäkivi;61.8403:29.7588;6862344:3645452;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Mehtolanlahti;61.8395:29.6926;6862110:3641971;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Mäntyniemi, pellot;61.8887:29.8506;6867949:3650050;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Mäntyniemi, Tukholmantie;61.8807:29.8377;6867029:3649407;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Pellavasniemi;61.8552:29.6799;6863829:3641230;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Pienivaara, Hunonmäen lintutorni;61.9274:29.8169;6872184:3648090;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Piikkeensalmi;61.8759:29.9196;6866688:3653738;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Pöllälänniemi;61.8311:29.9040;6861662:3653139;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Rasti, pudotuspaikka;61.9809:29.7170;6877919:3642599;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Ristilahti;61.8432:29.7333;6862616:3644094;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Ruokkee;61.9001:29.6714;6868812:3640576;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Salmela;61.8299:29.7003;6861058:3642419;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Sarvisalo;61.8491:29.9661;6863807:3656321;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Sarvisalo, Suitsan satama;61.8608:29.9684;6865115:3656382;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Suurenkylänlahti;61.8529:29.7211;6863668:3643411;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Särkivaara;61.8686:29.8070;6865605:3647856;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Taipaleenselkä;61.8780:29.8451;6866742:3649811;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Totkunniemi;61.8510:29.8594;6863773:3650696;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Totkunniemi, Hovinmäen torni;61.8456:29.8652;6863177:3651026;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Varmo;61.9196:29.9926;6871726:3657351;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Villala;62.0477:29.5703;6885042:3634615;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Villala, Ketolanlahti;62.0307:29.5860;6883179:3635513;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kesälahti, Ylä-Kousa;61.9700:29.8720;6877046:3650770;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kirkonmäki;62.0961:30.1508;6891774:3664700;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenjärvi;62.0975:30.1949;6892038:3666997;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenjärvi, Hapetin;62.1015:30.1681;6892416:3665574;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenjärvi-Hyypii;62.0965:30.2003;6891939:3667282;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenjärvi, Rantatie;62.0951:30.1608;6891690:3665229;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenjärvi, Selkueen mäki;62.0824:30.1744;6890311:3666005;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenlahti;62.0683:30.2620;6888959:3670658;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenlahti, Hiidensaarentien pellot;62.0747:30.2323;6889600:3669071;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenlahti, Joentauksen pellot;62.0647:30.2705;6888584:3671126;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kiteenlahti, vesialue;62.0769:30.2169;6889804:3668256;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kunonniemi;62.1220:30.2024;6894787:3667250;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kunonniemi, kuivatusalue;62.1104:30.2104;6893516:3667732;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kunonniemi, kylä;62.1199:30.1975;6894539:3667006;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kytänniemi;62.1099:30.1519;6893306:3664685;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Kyyrönniemi;62.1959:29.4431;6901289:3627339;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Maljakivi;62.1135:30.1130;6893609:3662636;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Muholankoski;62.0462:30.2514;6886475:3670229;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Muljula, pudotuspaikka;62.1612:29.9673;6898570:3654791;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Niinikumpu;62.0866:30.0103;6890362:3657419;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Närsäkkälä;61.9178:30.1388;6871882:3665035;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Partiissuo;62.1884:29.9821;6901629:3655425;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Pitkäjärvi;62.0484:30.2369;6886682:3669459;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Potoskanlahti;62.1067:30.2354;6893172:3669056;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Potoskavaara;62.1063:30.2758;6893231:3671165;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Puhoslahti;62.0881:29.8978;6890265:3651538;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Puhos, lehtikuusimetsä;62.0820:29.9324;6889669:3653372;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Puhos, pellot;62.0796:29.9437;6889424:3653975;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Puhos, tasoristeys;62.0803:29.9630;6889552:3654979;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Päätye;62.1369:30.0978;6896178:3661719;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Päätyeenlahti;62.1203:30.1242;6894399:3663182;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Päätyeenlahti-Kiteenjärvi;62.1059:30.1485;6892862:3664527;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Päätyeenlahti-Kiteenjärvi-Hyypii;62.1067:30.1475;6892938:3664471;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Päätyeenlahti, Kytänniemen silta;62.1067:30.1449;6892933:3664336;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Päätyeenlahti, Perukan lintutorni;62.1369:30.1157;6896226:3662650;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Päätyeenlahti, Sepänniemen lintutorni;62.1107:30.1287;6893343:3663470;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Ruppovaara;62.1480:30.1628;6897579:3665047;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Sepänniemi;62.1064:30.1250;6892848:3663299;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Sepänniemi, luontopolku;62.1060:30.1361;6892834:3663883;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Sopensuo, Kaatopaikka;62.0982:30.0960;6891872:3661832;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Suontaus;62.0546:30.2484;6887406:3670024;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Suontausta;62.1510:30.1334;6897845:3663497;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Suuri Heinäjärvi;62.0924:30.3083;6891766:3672941;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Syrjäsalmi;62.0339:29.8975;6884225:3651789;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Tasapää;61.9973:29.8851;6880118:3651321;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Tolosenmäki;62.1399:30.0414;6896372:3658765;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Tunturinmäki;61.8931:30.0937;6869020:3662802;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Vanha Puhos;62.0949:29.8758;6890972:3650354;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kitee;Ätäskö, lintutorni;62.0755:29.9646;6889021:3655087;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Häikänniemi;62.6890:29.6695;6956680:3636852;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Iiksenniitty;62.5893:29.9324;6946164:3650809;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Iso-Suopoli, lintutorni;62.9912:29.7276;6990466:3638398;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Jakokoski keskusta;62.7394:29.9800;6962987:3652484;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Jakokoski Terttulanvaara Tähtikallio;62.7279:29.9935;6961738:3653231;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Kotalahden pellot;62.6437:29.9088;6952170:3649325;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Kulho;62.6186:29.9163;6949386:3649836;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Kuurnan voimalaitos;62.7053:29.8746;6958945:3647269;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Kyyrönsuo;62.6552:29.7405;6953067:3640647;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Mönnin silta;62.7240:30.0438;6961431:3655820;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Paihola;62.6874:29.9301;6957079:3650197;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Pitkäranta lintutorni;62.6707:30.0096;6955406:3654353;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Pöllönvaaran pellot;62.6743:29.8954;6955548:3648488;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Satamalahti, lintutorni;62.7486:29.8386;6963685:3645213;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Sipri;62.6569:29.9698;6953778:3652384;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Kontiolahti;Soikkelin vanhametsä;62.6738:29.6367;6954920:3635241;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Jamali;63.3453:29.8762;7030238:3644155;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Jamalinlahti;63.3392:29.9091;7029626:3645836;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Kaupunginniemi;63.3092:30.0118;7026526:3651133;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Keljanvaara, lintutorni;63.0596:30.2646;6999355:3665207;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Kevätlahti;63.3160:30.0102;7027278:3651016;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Kevätniemi;63.3242:29.9754;7028117:3649230;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Kirkko;63.3130:30.0302;7026995:3652031;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Koli, Ipatti;63.1014:29.8030;7002904:3641684;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Koli, Mäkrä;63.0760:29.8380;7000151:3643572;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Koli, Ukko-Koli;63.0944:29.8088;7002136:3642010;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Kotalahti;63.1857:29.9901;7012716:3650687;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Kylänlahti Halinsilta;63.3615:29.7712;7031814:3638827;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Kylänlahti Mikkilän pellot;63.3755:29.7135;7033247:3635874;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Lampela;63.3208:30.0460;7027904:3652782;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Lieksanjokisuu;63.3083:30.0079;7026419:3650938;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Majalampi;63.1318:30.1272;7007050:3657877;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Mäntypuro;63.2910:30.0861;7024674:3654953;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Märäjälahti Pajaniemi;63.2589:30.0572;7021031:3653672;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Mönninselkä;63.3101:29.9852;7026565:3649796;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Niitty-Jamali;63.3580:29.9248;7031762:3646524;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Niitty-Jamali Kerttula;63.3562:29.9210;7031550:3646344;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Niitty-Jamali Tervakangas;63.3512:29.9243;7031002:3646532;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Niitty-Jamali Tupanen;63.3549:29.9386;7031450:3647228;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Pankajärvi Putaansalmi;63.3470:30.2642;7031356:3663558;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Pankakoski Reposuo, lintutorni;63.3365:30.2442;7030132:3662616;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Pappilanluhta, lintutorni;63.3048:30.0420;7026112:3652667;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Patvinsuo Suomu;63.1309:30.7293;7008567:3688220;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Pokronlammen eteläpään pellot;63.2847:30.0497;7023883:3653160;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Pokronlampi;63.2975:30.0452;7025307:3652865;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Puhdistamo;63.3088:30.0367;7026536:3652382;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Rantakylä;63.3186:30.0043;7027561:3650704;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Riikolanlampi;63.3247:30.0445;7028331:3652689;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Simananvaara lintutorni;63.1210:30.1317;7005855:3658162;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Sittalampi;63.3077:30.0446;7026439:3652782;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Sorsalan (Riikolan) pellot;63.3208:30.0603;7027939:3653501;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Tiensuu Pudotuspaikka;63.2569:30.0961;7020902:3655636;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Timitranniemi;63.3068:30.0032;7026234:3650713;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Lieksa;Vuonisjärvi Alapäänlahti;63.1464:30.0881;7008574:3655826;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Ahonkylän pellot;62.6504:29.1537;6951397:3610594;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Ahonkylän pellot, Ristonkankaantie;62.6426:29.1674;6950547:3611326;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Arvinsalmi;62.3958:29.5731;6923822:3633220;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Heponiemi, levähdysalue;62.6189:29.2923;6948129:3617823;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Härkinlampi, lintutorni;62.5458:29.4235;6940228:3624861;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Kaatamo;62.5524:29.1702;6940499:3611806;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Kiiessalo;62.6158:29.3629;6947914:3621456;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Kirkonkylä;62.5300:29.3863;6938398:3623012;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Kontkala, Varkaudentien risteys;62.6345:29.3091;6949898:3618620;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Kuorinka;62.6137:29.4019;6947753:3623466;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Kuorinka, uimaranta;62.6298:29.4093;6949567:3623782;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Käsämä;62.6483:29.3529;6951515:3620814;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Lamminniemi, Reilampi;62.5138:29.4487;6936717:3626292;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Mattisenlahti, pellot;62.6041:29.5747;6947023:3632378;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Mattisenlahti, puhdistamo;62.6110:29.5733;6947791:3632274;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Mattisenlahti, ruovikko;62.6070:29.5848;6947375:3632882;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Onkisalmi;62.4804:29.3352;6932778:3620580;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Papelonsaari;62.5610:29.3829;6941850:3622708;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Papelonsaari, Kokonlampi, itäpuoli;62.5537:29.3906;6941052:3623134;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Papelonsaari, Kokonlampi, länsipuoli;62.5462:29.3679;6940174:3621999;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Riihilahti, Riihilampi;62.5392:29.4106;6939476:3624223;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Roukalahti;62.4878:29.5323;6933982:3630708;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Roukalahti, Tutjunlampi lintutorni;62.4798:29.5246;6933083:3630349;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Siikakoski, kosket;62.6154:29.2457;6947657:3615446;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Siikakoski, pellot;62.6239:29.2516;6948610:3615714;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Siikasaari;62.5011:29.3636;6935134:3621960;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Siikoniemi;62.6237:29.1991;6948494:3613024;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Sulkama;62.5915:29.1525;6944833:3610753;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Särkijärvi lintutorni;62.6421:29.3007;6950731:3618161;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Venepohja;62.6566:29.4001;6952535:3623196;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Viinijärvi, pellot;62.6333:29.2391;6949638:3615036;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Viinijärvi, taajama;62.6452:29.2311;6950950:3614580;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Viinijärvi, Taipaleenjoki;62.6485:29.2216;6951296:3614080;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Viinijärvi, uimaranta;62.6534:29.2226;6951851:3614112;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Ylämylly;62.6143:29.5462;6948110:3630868;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Ylämylly, Koivulan ranta;62.6274:29.6179;6949715:3634490;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Liperi;Ylämylly, Lautasuon ranta;62.6202:29.5898;6948851:3633082;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Akkosalmi;63.5581:29.1374;7052501:3606393;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Aronsalmi;63.4857:29.0461;7044285:3602117;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Aronsalmi Juusolanlampi;63.4794:29.0401;7043573:3601837;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Kohtavaara asema;63.5142:29.2882;7047872:3614060;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Kopras;63.4901:29.3455;7045284:3617008;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Saramo Suojärvi lintutorni;63.6901:29.2569;7067409:3611812;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Suojärvi;63.6894:29.2485;7067315:3611398;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Särkikorpi;63.4518:29.0495;7040516:3602404;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Vinkerlahti;63.5503:29.1137;7051597:3605245;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Ylikylä koulu;63.6309:29.0657;7060497:3602569;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Ylikylä Kurkilahti;63.6404:29.0428;7061521:3601401;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Ylikylä Niemi;63.6355:29.0661;7061005:3602573;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Ylikylä Sulkujärvi;63.6480:29.0605;7062397:3602249;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Nurmes;Ylikylä yht;63.6357:29.0585;7061021:3602194;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Alavin pellot;62.7037:29.0318;6957127:3604156;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Jokipohja, jätevedenpuhdistamo;62.7121:29.0491;6958095:3605016;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;kaatopaikka;62.7172:28.9462;6958494:3599732;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Laikanlahti lintutorni;62.6998:29.2110;6957002:3613344;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Mustajoki;62.7336:29.1066;6960579:3607876;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Suvisranta;62.6710:29.0371;6953491:3604544;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Sysmäjärvi;62.6869:29.0551;6955301:3605410;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Sysmäjärvi Jakaranlahden lintutorni;62.6850:29.0869;6955133:3607046;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Sysmäjärvi, Jakaranniemi;62.6810:29.0877;6954697:3607098;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Sysmäjärvi Lahdenjoensuun lintutorni;62.7013:29.0576;6956904:3605487;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Sätös;62.7151:29.1229;6958547:3608780;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Viurusuo;62.6751:28.8763;6953707:3596292;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Outokumpu;Vuonos;62.7576:29.0733;6963204:3606087;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Hirvisuo;62.9226:29.4834;6982321:3626321;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Huutokoski, Kiskonlahden pellot;62.9021:29.3582;6979806:3620048;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Martonvaara, Kuljunlahden pellot;63.0504:29.4724;6996541:3625219;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Martonvaara, Kuljunlahti;63.0335:29.4892;6994690:3626141;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Nisäjärvi;62.9623:29.3403;6986474:3618896;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Rauanlahti Niittylahti;62.9101:29.4427;6980854:3624307;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Ruvaslahti;62.9525:29.5345;6985756:3628788;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Solanlampi, lintutorni;62.7515:29.3452;6963004:3620000;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Tiaissuo;62.9594:29.4213;6986302:3623014;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Polvijärvi;Viklinsuo;62.9307:29.4936;6983246:3626808;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Hautalampi;62.3184:29.8389;6915773:3647335;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Jaamankangas;62.2161:29.8520;6904409:3648518;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Joki- ja Hautalampi, Suetsin kanava;62.3150:29.8407;6915403:3647445;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Jokilampi;62.3118:29.8383;6915041:3647335;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Jouhtenuslampi;62.3047:29.7580;6914070:3643208;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Jouhtenuslampi, lintutorni;62.3061:29.7653;6914242:3643582;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Jouhtenus, SE-osan tulvapelto;62.2978:29.7801;6913348:3644386;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Kiesjärvi;62.2874:29.8497;6912344:3648047;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Kiesjärvi, lintutorni;62.2838:29.8707;6911991:3649153;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;kirkonkylä;62.3134:29.6263;6914753:3636342;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Kivisalmi;62.3148:29.5140;6914677:3630516;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Kk, jätevedenpuhdistamo;62.3076:29.6250;6914105:3636303;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Kylmäpohja;62.3627:29.8340;6920695:3646867;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Oravilahti, kaakkoisosa;62.2687:29.6926;6909920:3639985;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Oravilahti, luoteisosa;62.2906:29.6206;6912208:3636152;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Oravilahti, luoteisosa eteläinen penkkatie;62.2849:29.6150;6911556:3635886;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Paksuniemi, venesatama;62.3324:29.6301;6916880:3636454;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Pieni-Onkamo, silta;62.3593:29.9408;6920564:3652408;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Rasivaara;62.2708:29.7521;6910282:3643064;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Ruokosalmi, lintutorni;62.3087:29.5305;6914036:3631397;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Sintsi;62.3580:29.9119;6920356:3650921;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Suuri-Onkamo, Allinsalmi;62.2874:30.0294;6912768:3657367;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Suuri-Onkamo, Murtoniemi;62.3469:29.9455;6919193:3652714;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Suuri-Onkamo, Pihjalaniemi;62.3060:30.0144;6914808:3656492;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Suuri-Onkamo, silta;62.3592:29.9407;6920558:3652406;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Suuri-Onkamo, Särkilahti;62.3593:29.9900;6920682:3654956;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Täitimenjärvi;62.2184:29.8258;6904604:3647143;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Vahalahti;62.3726:29.8416;6921820:3647213;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Vuoniemi;62.3954:29.7626;6924183:3643017;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Rääkkylä;Vänskänsalmi;62.3093:29.5875;6914219:3634349;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Akkala;62.1993:30.2652;6903553:3670092;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Asema;62.2464:30.3602;6909050:3674759;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Hirvisuo;62.2415:30.2096;6908112:3666967;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Holmansuo;62.3518:30.2359;6920459:3667719;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Jouhkola, Hiidensuon pellot;62.1901:30.2866;6902588:3671255;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Jylmä;62.3166:30.2592;6916600:3669123;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Järventaus, Korven pellot;62.1344:30.3914;6896668:3677032;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Kankaankylä;62.2688:30.5198;6911989:3682912;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Kaurila;62.1864:30.5288;6902838:3683879;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Keltasuo;62.2898:30.4984;6914268:3681672;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Kemie;62.2241:30.3335;6906501:3673501;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Kirkkoniemi;62.1913:30.3843;6902988:3676332;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Lahdenperä;62.1977:30.4295;6903823:3678648;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Murtoi;62.2920:30.3166;6914018:3672235;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Niemelä, Kullerinlahti;62.1986:30.3400;6903679:3673988;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Onkamo;62.3112:30.1236;6915658:3662123;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Peijonniemenlahti, lintutorni;62.1999:30.3936;6903970:3676768;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Perä-Musko;62.1428:30.5311;6897997:3684262;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Rantakylä;62.1596:30.3717;6899421:3675863;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Ristee;62.2121:30.3728;6905270:3675612;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Saario;62.2520:30.4864;6910027:3681281;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Suuri-Onkamo, veneranta;62.3381:30.0197;6918396:3656603;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Tammalahti;62.1576:30.3863;6899236:3676631;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Tikkala;62.3511:30.1087;6920062:3661139;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Uusi-Värtsilä;62.1899:30.4460;6902995:3679552;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Valkeasuo;62.3493:30.2468;6920212:3668295;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Valkeasuo, emolehmänavetan pellot;62.3345:30.2283;6918515:3667419;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Valkeasuo-Holmansuo;62.3501:30.2475;6920306:3668327;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Valkeasuo, Välitie;62.3264:30.2294;6917619:3667523;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Kaustajärvi;62.2498:30.7311;6910487:3693993;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Kenraalinkylä;62.2963:30.7045;6915590:3692315;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Kukkovaara;62.2387:30.6159;6908909:3688083;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Niirala;62.1798:30.6166;6902357:3688486;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Patsola;62.2192:30.5863;6906652:3686670;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Pykälävaara;62.2415:30.5323;6908982:3683727;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Savikko;62.2234:30.6178;6907214:3688276;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Selkäkylä;62.2031:30.5525;6904763:3685010;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Sääperi;62.2136:30.6320;6906165:3689076;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Sääperi, Haponoja;62.2083:30.6219;6905546:3688585;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Sääperi, Hiidenvaara;62.2067:30.6396;6905419:3689517;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Sääperi, lintutorni;62.2125:30.6124;6905987:3688066;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Sääperi, Noidanniemi;62.2112:30.6161;6905856:3688266;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Sääperi, Sääperinranta;62.2187:30.6402;6906756:3689470;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Uudenkylänlampi, länsipuolen tie;62.1937:30.6015;6903861:3687614;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Uudenkylänlampi, pumppuamo;62.1947:30.6129;6904009:3688202;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Uusikylä, Hopeakallion lintutorni;62.2027:30.6214;6904925:3688592;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Uusikylä, Jänisjoen silta;62.1992:30.6142;6904508:3688243;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Tohmajärvi;Värtsilä Uusikylä, pellot;62.2004:30.6227;6904665:3688677;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Valtimo;Kalliojärvi;63.6172:28.8139;7058591:3590135;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Valtimo;Kalliojärvi lintutorni;63.6189:28.8211;7058786:3590482;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Valtimo;Patojärvi lintutorni;63.6209:28.8079;7058998:3589821;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
+Valtimo;Polvijärvi;63.7022:28.7681;7068001:3587599;;;;;Suomi;Finland;Finland;Pohjois-Karjalan Lintutieteellinen Yhdistys ry;PKLY
 Haapavesi;Ainalijärvi;64.2177:25.3799;7125255:3421520;;;;;Suomi;Finland;Finland;Pohjois-Pohjanmaan Lintutieteellinen Yhdistys ry;PPLY
 Haapavesi;Ainali, lintutorni;64.2288:25.3895;7126484:3422021;;;;;Suomi;Finland;Finland;Pohjois-Pohjanmaan Lintutieteellinen Yhdistys ry;PPLY
 Haapavesi;Ainali, Mannintörmä;64.2075:25.4144;7124074:3423166;;;;;Suomi;Finland;Finland;Pohjois-Pohjanmaan Lintutieteellinen Yhdistys ry;PPLY
@@ -1358,3 +1820,207 @@ Vieremä;Nissilä, Rahajärvi-Kontteroinen;63.9909:26.8109;7098981:3490915;;;;;Suom
 Vieremä;Saarisuo-Kurkisuo;63.9407:26.6279;7093433:3481927;;;;;Suomi;Finland;Finland;Pohjois-Savon – Lintuyhdistys Kuikka;PSLY
 Vieremä;Talaskangas, Pikku-Talaksen laavu;63.9898:27.1192;7098851:3506007;;;;;Suomi;Finland;Finland;Pohjois-Savon – Lintuyhdistys Kuikka;PSLY
 Vieremä;Ylä-Haajainen;63.6569:26.9554;7061737:3497961;;;;;Suomi;Finland;Finland;Pohjois-Savon – Lintuyhdistys Kuikka;PSLY
+Hyrynsalmi;Hyrynjärvi;64.6760:28.5008;7176200:3571825;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Hyrynsalmi;Karpinvaara;64.5987:28.3289;7167400:3563800;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Hyrynsalmi;Komulanköngäs;64.7443:28.1927;7183500:3556975;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Hyrynsalmi;Kuivajärvi;64.6203:28.8986;7170500:3591000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Hyrynsalmi;Lietekylä;64.6821:28.2298;7176600:3558875;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Hyrynsalmi;Peuravaara;64.6559:28.1957;7173650:3557300;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Hyrynsalmi;Pieni Tuomivaara;64.7232:28.2725;7181222:3560821;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Hyrynsalmi;Väisälä;64.7600:28.3027;7185350:3562175;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;A. Partasen puutarha;64.2901:27.5411;7132438:3526372;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Arppen muistometsä;64.1720:27.6010;7119300:3529400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Auralan komposti;64.2418:27.6599;7127109:3532185;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Halla-aho, Kylä;63.9641:27.5910;7096124:3529128;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Hevossuo;64.1951:27.6561;7121900:3532050;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Joutensuo;64.0282:27.2477;7103150:3512280;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Juuttaanniemi;64.2837:27.4667;7131700:3522775;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kajaaninjoki;64.2465:27.6585;7127630:3532110;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kalkkisilta;64.2311:27.7255;7125951:3535377;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Karjalanniemi;64.1408:27.2060;7115700:3510200;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Karolineburg;64.2306:27.7301;7125900:3535600;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Karppisen-, Salin- ja Joutensuo;64.1592:27.4070;7117800:3519975;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kirjaston ranta;64.2307:27.7239;7125900:3535300;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Koivukoski;64.2270:27.7348;7125502:3535835;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Koutalahti kalasatama;64.2648:27.5161;7129605:3525188;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Koutalampi;64.2732:27.5123;7130544:3524994;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Koutaniemi;64.2672:27.5804;7129900:3528300;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kuluntajärvi lintutorni;64.2944:27.8735;7133100:3542464;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kuluntalahti satama;64.2716:27.8896;7130568:3543277;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kuusiranta;64.2048:27.0870;7122825:3504400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kuusiranta kalasatama;64.2051:27.1085;7122860:3505443;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kylmä;64.1990:27.7776;7122400:3537950;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Kyynäspääniemi;64.2284:27.7365;7125661:3535918;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Käkilahti satama;64.2324:26.9559;7125895:3498030;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Käkilahti silta;64.2468:26.9431;7127504:3497411;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Käkisaari;64.2307:26.9985;7125700:3500100;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Lahnasjärvi;63.9643:27.7869;7096250:3538725;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Lahnasjärvi, Kylä;63.9665:27.8533;7096534:3541977;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Lehtovaara;64.0784:27.6830;7108900:3533500;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Leihu;64.2564:27.9329;7128900:3545400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Lukkarinnurmi;64.2588:27.6432;7128998:3531352;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Maaston kaatopaikka;64.2238:27.6536;7125100:3531900;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Mainuanniemi;64.1146:27.4638;7112850:3522775;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Majasaarenkangas;64.1566:27.6325;7117600:3530950;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Mantereenlahti;64.2649:27.5762;7129643:3528098;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Murtomäki as.;64.0654:27.5762;7107400:3528300;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Ojanperä;64.2681:26.8873;7129882:3494711;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Otanmäen lintuvesiallas;64.1391:27.1053;7115500:3505300;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Otanmäen lintuvesiallas Isosirri -lintutorni;64.1404:27.0926;7115642:3504682;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Otanmäen lintuvesiallas korkea valli;64.1323:27.1064;7114739:3505352;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Otanmäen lintuvesiallas kuivapuoli;64.1260:27.1047;7114032:3505274;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Otanmäen lintuvesiallas Pikkusirri -lintutorni;64.1354:27.1005;7115090:3505066;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Otanmäen lintuvesiallas Pulmussirri-lintutorni;64.1315:27.1167;7114657:3505857;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltaniemen, Hämeentie;64.2855:27.6449;7131973:3531407;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltaniemi, Kirkkoniemi;64.2889:27.6157;7132339:3529990;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltaniemi, kylä;64.2929:27.6579;7132809:3532025;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltaniemi, lentokenttä;64.2830:27.6620;7131704:3532237;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltaniemi, Porolan pellot;64.2891:27.6323;7132366:3530794;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltaniemi, Satasen tie;64.2822:27.6498;7131609:3531645;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltaniemi venesatama;64.2965:27.6543;7133200:3531850;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltasalmi;64.2890:27.6130;7132351:3529857;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Paltasalmi, itäranta;64.2832:27.6003;7131700:3529250;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Pappilanniemen pellot;64.2862:27.6202;7132042:3530208;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Parkinniemi;64.2593:27.6329;7129041:3530854;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Patjamäki;64.1422:26.8095;7115850:3490900;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Pentipuro;64.1984:26.9553;7122100:3498000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Petäisenniska;64.2247:27.7769;7125269:3537879;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Petäisenniskan läjitysalue;64.2225:27.7890;7125026:3538471;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Pöntönsuo;64.1345:26.8055;7115000:3490700;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Rimpineva;64.2332:26.8151;7126000:3491200;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Saarijärvi;64.1797:27.5873;7120150:3528725;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Savisaari;64.2617:27.6129;7129307:3529883;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Siikalahti;64.2145:27.7870;7124133:3538384;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Sivolanniemi;64.2855:27.4837;7131900:3523600;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Sokajärvi;64.2274:27.6022;7125475:3529400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Särämä;64.2655:27.8449;7129851:3541120;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Talaskangas;64.0081:27.1202;7100900:3506050;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Tamppisaari;64.2264:27.7588;7125450:3537000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Teerisuo;64.2084:27.6399;7123375:3531250;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Torvelan luhta;64.3362:27.8621;7137750:3541850;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Ukonsuo;64.1610:26.8012;7117950:3490500;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;UPM-kaatopaikka;64.2272:27.6424;7125475:3531350;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;UPM -sula;64.2391:27.6922;7126828:3533755;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Valtalanniemi;64.1579:27.1814;7117600:3509000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Varissuo;63.9884:27.5225;7098800:3525750;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Voimalaitokset;64.2277:27.7338;7125575:3535787;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Vuoresjoki;64.2205:27.4744;7124650:3523200;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Vuoreslahti;64.2350:27.4787;7126275:3523400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Vuottolahti lintutorni;64.1178:27.2788;7113144:3513756;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Vuottolahti satama;64.1290:27.2315;7114385:3511450;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kajaani;Ämmänkoski;64.2300:27.7299;7125833:3535595;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Elimyssalo;64.1966:30.3811;7126271:3664394;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Heinäjärvi;64.1421:29.8119;7118847:3637030;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Jauhovaara;64.0436:29.1213;7106571:3603794;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Kanninlampi;64.1183:29.5657;7115696:3625161;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Kuhmonniemi;64.1272:29.5778;7116708:3625710;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Pajakkakoski;64.1276:29.5018;7116603:3622010;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Rytilampi lintutorni;64.1192:29.6905;7116040:3631234;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Kuhmo;Suolampi;64.1095:29.4674;7114528:3620413;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Joutensuo;64.5483:27.4169;7161175:3520171;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Kiehimänvaara;64.4211:27.8031;7147181:3538875;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Kontiomäki;64.3362:28.0983;7137921:3553265;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Matalansuo;64.4481:27.6553;7150107:3531723;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Melalahti;64.4061:27.6763;7145431:3532785;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Mieslahti lintutorni;64.3821:27.9820;7142954:3547567;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Mieslahti satama;64.3797:27.9834;7142678:3547636;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Neuvosenniemi;64.3106:27.4400;7134691:3521465;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Paltamo;Paltaselkä;64.3806:27.7594;7142631:3536825;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Hepököngäs;64.8201:27.8765;7191700:3541800;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Holstinvaara;64.7152:28.0011;7180100:3547900;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Iso-Korpinen;64.6925:27.5413;7177300:3526000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Iso-Nuotivaara;65.0674:27.9144;7219300:3543200;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Kuirivaara;64.8794:27.8616;7198300:3541000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Kuorejärvi;64.9556:27.6988;7206700:3533194;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Mustakumpu;64.6484:28.0593;7172700:3550800;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Mätäsjärvi;64.9485:28.1600;7206230:3555000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Paljakka;64.6933:28.0652;7177700:3551000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Puokio;64.7478:27.3429;7183400:3516500;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Puolankajärvi;64.8614:27.6881;7196200:3532800;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Ristijärvi;64.8553:27.6626;7195500:3531600;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Siikavaara;65.1246:27.9441;7225700:3544500;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Suovaara;64.8376:28.0710;7193800:3551000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Särkijärvi;64.9563:28.1345;7207085:3553778;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Törmänmäki;64.5670:27.7349;7163400:3535400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Puolanka;Väyrylä;64.7435:27.7775;7183100:3537200;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Ristijärvi;Heikkisenjärvi;64.4514:28.1696;7150825:3556475;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Ristijärvi;Jokikylä;64.5505:28.3052;7162000:3562775;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Ristijärvi;Karhulankylä;64.5207:28.1028;7158500:3553125;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Ristijärvi;Tenämä;64.5267:28.2535;7159300:3560350;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Ristijärvi;Torvenjoki;64.5610:27.9933;7162900:3547800;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Ristijärvi;Uva;64.5775:28.0430;7164775:3550150;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Haapalan pellot;64.1299:28.3138;7115130:3564159;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Hiidenportti;63.8948:29.0012;7089800:3598450;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Hiidenvaara;63.8135:28.2492;7079800:3561700;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Huuskonniemi;64.1738:28.1827;7119900:3557680;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Juholankylä;64.1277:28.4729;7115050:3571911;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Jäätiönlampi;64.1417:28.2549;7116381:3561263;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Korvanniemi;64.2002:27.9752;7122670:3547550;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Kuolasalmi;64.0968:28.3852;7111510:3567715;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Losonvaara, E-rinne;64.0750:27.9295;7108680:3545529;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Losonvaara, hiihtomaja;64.0481:27.9141;7105671:3544822;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Losonvaara, Lakialue;64.0701:27.9143;7108123:3544798;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Losonvaara, Pökkelöperä;64.0618:27.9498;7107219:3546542;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Losonvaara, S-rinne;64.0782:27.9195;7109027:3545036;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Losonvaara, W-rinne;64.0664:27.8891;7107695:3543574;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Määttälänmäki;64.1159:28.1355;7113400:3555500;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Naapurinvaara;64.1865:28.2315;7121359:3560028;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Naapurinvaaran lintutorni;64.1696:28.2091;7119450:3558975;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Rannankylä;64.1740:28.2014;7119940:3558593;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Rimpilänniemi;64.1886:28.0076;7121400:3549140;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Ruokojärvi;64.1240:28.7682;7115004:3586300;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Ruuhijärvi;64.2584:28.0845;7129242:3552746;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Räätäkangas;64.0327:28.7112;7104750:3583800;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Saijanlahti;64.1183:28.4781;7114014:3572188;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Sotkamojärvi;64.1319:28.4134;7115450:3569000;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Suojärvi;64.1374:28.7865;7116528:3587150;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Suolampi;64.0571:28.6274;7107364:3579637;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Talvivaara;63.9291:28.1562;7092600:3556890;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Tipasjoki;64.0750:28.6537;7109390:3580866;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Vedenpuhdistamo;64.1479:28.3203;7117137:3564432;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Viltovaara;63.8556:28.2409;7084480:3561200;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Sotkamo;Vuokatti;64.1220:28.2630;7114200:3561700;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Haapolampi;65.2824:29.0163;7244460:3594273;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Hirvasjärvi lintutorni;64.9720:29.4134;7210522:3614125;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Hossa;65.4646:29.5027;7265583:3616162;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Joutenjärvi lintutorni;64.9402:28.5841;7205742:3575064;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Juntusranta;65.2168:29.4834;7237930:3616354;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Juntusranta kanavat;65.2030:29.5801;7236571:3620942;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Juntusranta satama;65.2174:29.4609;7237953:3615302;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Korpijärvi;64.7501:28.9482;7185034:3592926;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Murhinsalo;64.7053:30.0063;7182020:3643517;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Pyykkölänvaara;64.7617:28.8515;7186194:3588288;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Saarijärven aarnialue;64.8103:28.5761;7191257:3575046;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Saarijärvi;64.6560:29.9660;7176432:3641851;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Suomussalmi;Säynäjäsuo;64.8117:29.0710;7192092:3598547;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Alassalmi;64.3407:26.8977;7137971:3495228;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Askolanniemi;64.5793:26.6771;7164610:3484700;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Happy Beach;64.4546:26.8048;7150681:3490775;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Jaalanganlahti;64.5499:27.1587;7161297:3507787;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Jylhämä;64.5711:26.7769;7163670:3489480;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Jylhämä, Alakanava;64.5855:26.7612;7165282:3488732;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Jylhämä, Jyrkänlampi;64.5770:26.7791;7164334:3489588;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Jylhämä, Raappananlampi;64.5780:26.7875;7164442:3489988;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Jylhämä, Yläkanava;64.5700:26.7869;7163546:3489960;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Kiloniemi;64.4286:27.1302;7147777:3506447;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Kivijärvi;64.3111:26.8919;7134676:3494940;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Kuvajan lintutorni;64.3243:26.7305;7136171:3487137;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Nimisjärvi;64.5186:26.7877;7157821:3489977;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Nuojuanlampi;64.5747:26.6924;7164090:3485432;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Nuojua, Nokkalanranta;64.5714:26.7036;7163726:3485968;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Painuanlahti;64.4392:26.7853;7148968:3489831;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Pelson pellot;64.4926:26.4517;7155014:3473818;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Poukamonranta;64.5601:26.8100;7162438:3491060;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Pyteränlampi;64.5817:26.7296;7164862:3487216;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Rokuanjärvi;64.5443:26.5436;7160747:3478277;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Rumala;64.3713:26.6785;7141423:3484649;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Syrjävaara;64.6128:26.7160;7168330:3486580;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Säräisniemi;64.4427:26.7918;7149358:3490146;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Säräisniemi Painuanlahden lintutorni;64.4420:26.7788;7149283:3489519;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Törmäkylä;64.5997:26.6435;7166886:3483104;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Törmäkylä, Kotisuo;64.6108:26.6641;7168122:3484096;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Vaalankurkku;64.5494:26.8287;7161242:3491956;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Vaalanlampi;64.5591:26.8238;7162330:3491724;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;vedenpuhdistamo;64.5629:26.8170;7162750:3491400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;Veneheiton pellot;64.4432:26.5288;7149479:3477482;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
+Vaala;venesatama;64.5512:26.8380;7161450:3492400;;;;;Suomi;Finland;Finland;Kainuun Lintutieteellinen Yhdistys ry;KLY
