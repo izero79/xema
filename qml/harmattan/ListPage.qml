@@ -596,7 +596,7 @@ Page {
             focus: ( listPageType == "places" || listPageType == "birds" )
             onTextChanged: {
                 //console.log("teksti muuttuu: " + text)
-                if (window.onlyDefaultCountry) {
+                if (window.onlyDefaultCountry && ( listPageType == "places" || listPageType == "editplaces" )) {
                     listView.model.filter("(^" + window.defaultCountry  + ", )(.*" + text + ".*)");
                 } else {
                     listView.model.filter(text)
