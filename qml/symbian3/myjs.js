@@ -71,7 +71,8 @@ function showListPage(type, selectedItems, itemi)
         currentStatusBox = itemi
         listObject.selectStatus(selectedItems)
     }
-    else if (type == "sex" || type == "age" || type == "dress" || type == "atlas" || type == "direction")
+    else if (type == "sex" || type == "age" || type == "dress" || type == "atlas" || type == "direction"
+             || type == "locationaccuracy" || type == "birdaccuracy")
     {
         currentStatusBox = itemi
     }

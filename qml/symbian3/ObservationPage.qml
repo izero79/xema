@@ -1093,7 +1093,7 @@ Page {
                 Item {
                     id: locationItem
                     width: parent.width
-                    height: 50
+                    height: detailLevel > 1 ? 140 : 50
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -1128,6 +1128,45 @@ Page {
                         }
                         validator: RegExpValidator{ regExp: /.{1,}/ }
                     }
+
+                    Label {
+                        id: locationAccuracyLabel
+                        color: "#ffffff"
+                        text: qsTr("Accuracy")
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.top: locationTf.bottom
+                        anchors.topMargin: 8
+                        font.pixelSize: 18
+                        visible: detailLevel > 1
+                    }
+
+                    TextField {
+                        id: locationAccuracyTf
+                        property int headerHeight: 0
+                        height: 50
+                        placeholderText: qsTr("Accuracy")
+                        text: ""
+                        anchors.top: locationAccuracyLabel.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        visible: detailLevel > 1
+                        width: 200
+                        MouseArea {
+                            id: locationAccuracyMouse
+                            anchors.fill: parent
+                            onClicked: window.showListPage("locationaccuracy", locationAccuracyTf.text, locationAccuracyTf);
+                            z: directionTf.z + 1
+                        }
+                        onTextChanged: {
+                            obsPage.edited = true
+                        }
+                    }
+
                 }
 
                 Label {
@@ -1388,12 +1427,12 @@ Page {
                     anchors.top: birdNameItem.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
-                    visible: detailLevel > 2
+                    visible: detailLevel > 1
                 }
 
                 Item {
                     id: birdPlaceItem
-                    height: 140
+                    height: detailLevel > 2 ? 220 : 140
                     anchors.top: birdPlaceLabel.bottom
                     anchors.topMargin: 8
                     anchors.right: parent.right
@@ -1429,6 +1468,44 @@ Page {
                     }
 
                     Label {
+                        id: birdAccuracyLabel
+                        color: "#ffffff"
+                        text: qsTr("Accuracy")
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.top: birdCoordinatesTf.bottom
+                        anchors.topMargin: 8
+                        font.pixelSize: 18
+                        visible: detailLevel > 1
+                    }
+
+                    TextField {
+                        id: birdAccuracyTf
+                        property int headerHeight: 0
+                        height: 50
+                        placeholderText: qsTr("Accuracy")
+                        text: ""
+                        anchors.top: birdAccuracyLabel.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        visible: detailLevel > 1
+                        width: 200
+                        MouseArea {
+                            id: birdAccuracyMouse
+                            anchors.fill: parent
+                            onClicked: window.showListPage("birdaccuracy", birdAccuracyTf.text, birdAccuracyTf);
+                            z: directionTf.z + 1
+                        }
+                        onTextChanged: {
+                            obsPage.edited = true
+                        }
+                    }
+
+                    Label {
                         id: fromPlaceToBirdLabel
                         color: "#ffffff"
                         text: qsTr("From place to bird")
@@ -1437,7 +1514,7 @@ Page {
                         anchors.left: parent.left
                         anchors.leftMargin: 0
                         verticalAlignment: Text.AlignVCenter
-                        anchors.top: birdCoordinatesTf.bottom
+                        anchors.top: birdAccuracyTf.bottom
                         anchors.topMargin: 8
                         font.pixelSize: 18
                         visible: detailLevel > 2
@@ -1501,7 +1578,7 @@ Page {
                 Item {
                     id: obsDelegateItem
                     objectName: "obsDelegateItem"
-                    anchors.top: detailLevel > 2 ? birdPlaceItem.bottom : detailLevel > 1 ? birdCoordinatesTf :birdNameItem.bottom;
+                    anchors.top: detailLevel > 2 ? birdPlaceItem.bottom : detailLevel > 1 ? birdPlaceItem.bottom : birdNameItem.bottom;
                     anchors.topMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 0

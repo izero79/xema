@@ -388,6 +388,11 @@ Page {
             listView.editMode = false
             listView.delegate = simpleDelegate
         }
+        else if (listPageType == "birdaccuracy" || listPageType == "locationaccuracy")
+        {
+            listView.editMode = false
+            listView.delegate = simpleDelegate
+        }
         else
         {
             listView.model.setSorting(1, true)
@@ -462,6 +467,14 @@ Page {
         else if (listPageType == "direction")
         {
             listView.model = directionModel
+        }
+        else if (listPageType == "birdaccuracy")
+        {
+            listView.model = birdAccuracyModel
+        }
+        else if (listPageType == "locationaccuracy")
+        {
+            listView.model = locationAccuracyModel
         }
         else
         {
