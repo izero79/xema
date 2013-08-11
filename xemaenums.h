@@ -183,6 +183,13 @@ public:
         DIRECTION_ENG
     };
 
+    enum accuracyFields {
+        ACCURACY_VALUE = 0,
+        ACCURACY_FIN,
+        ACCURACY_SWE,
+        ACCURACY_ENG
+    };
+
     static const int OBS_SUBFIELDCOUNT = 12;
 
     enum importErrors {

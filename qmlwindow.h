@@ -21,6 +21,7 @@ class DirectionModel;
 class CoordinateConverter;
 class KineticScroller;
 class NetworkController;
+class AccuracyModel;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -69,6 +70,8 @@ public slots:
     void setAgeModel(AgeModel *model);
     void setProcessing(bool processing);
     void setProcessingFalse();
+    void setAccuracyModel(AccuracyModel *model);
+    void setBirdAccuracyModel(AccuracyModel *model);
 
 private slots:
     void writeNewObservation(const QString &data);
@@ -114,7 +117,8 @@ private:
     CoordinateConverter *mCoordinateConverter;
     KineticScroller *mKineticScroller;
     NetworkController *mNetworkController;
-
+    FilterModel *mFilteredAccuracyModel;
+    FilterModel *mFilteredBirdAccuracyModel;
 };
 
 #endif // QMLWINDOW_H

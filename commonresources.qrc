@@ -24,5 +24,9 @@
         <file>qml/common_icons/place.png</file>
         <file>qml/common_icons/invalidposition.png</file>
         <file>qml/common_icons/validposition.png</file>
+        <file>birdaccuracies.csv</file>
+        <file>birdaccuracies.version</file>
+        <file>locationaccuracies.csv</file>
+        <file>locationaccuracies.version</file>
     </qresource>
 </RCC>

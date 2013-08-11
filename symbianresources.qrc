@@ -27,5 +27,6 @@
         <file>qml/symbian3_icons/icon-m-input-clear.png</file>
         <file>qml/symbian3/MapItem.qml</file>
         <file>qml/symbian3/MapPage.qml</file>
+        <file>qml/symbian3/AccuracyDelegate.qml</file>
     </qresource>
 </RCC>

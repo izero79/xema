@@ -17,6 +17,7 @@ class SexModel;
 class DressModel;
 class DirectionModel;
 class Settings;
+class AccuracyModel;
 
 class ApplicationController : public QObject
 {
@@ -72,6 +73,8 @@ private:
     SexModel *mSexModel;
     DirectionModel *mDirectionModel;
     Settings *mSettings;
+    AccuracyModel *mAccuracyModel;
+    AccuracyModel *mBirdAccuracyModel;
 };
 
 #endif // APPLICATIONCONTROLLER_H

@@ -197,7 +197,9 @@ SOURCES += main.cpp \
     kineticscroller.cpp \
     dataloader.cpp \
     dataexporter.cpp \
-    networkcontroller.cpp
+    networkcontroller.cpp \
+    accuracy.cpp \
+    accuracymodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -211,7 +213,9 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog \
-    qmldir
+    qmldir \
+    qml/symbian3/AccuracyDelegate.qml \
+    qml/harmattan/AccuracyDelegate.qml
 
 HEADERS += \
     person.h \
@@ -249,7 +253,9 @@ HEADERS += \
     kineticscroller.h \
     dataloader.h \
     dataexporter.h \
-    networkcontroller.h
+    networkcontroller.h \
+    accuracy.h \
+    accuracymodel.h
 
 RESOURCES += \
     commonresources.qrc

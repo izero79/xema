@@ -29,6 +29,7 @@
 #include "systeminfoprovider.h"
 #include "kineticscroller.h"
 #include "networkcontroller.h"
+#include "accuracymodel.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -59,7 +60,9 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mDataLoader(0),
     mCoordinateConverter(0),
     mKineticScroller(0),
-    mNetworkController(0)
+    mNetworkController(0),
+    mFilteredAccuracyModel(0),
+    mFilteredBirdAccuracyModel(0)
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView = new QDeclarativeView(this);
@@ -144,6 +147,8 @@ void QMLWindow::init()
     mFilteredDressModel = new FilterModel(this);
     mFilteredAgeModel = new FilterModel(this);
     mFilteredDirectionModel = new FilterModel(this);
+    mFilteredAccuracyModel = new FilterModel(this);
+    mFilteredBirdAccuracyModel = new FilterModel(this);
 
     mRootContext->setContextProperty("birdModel", mFilteredBirdModel);
     mRootContext->setContextProperty("personModel", mFilteredPersonModel);
@@ -157,6 +162,8 @@ void QMLWindow::init()
     mRootContext->setContextProperty("dressModel", mFilteredDressModel);
     mRootContext->setContextProperty("ageModel", mFilteredAgeModel);
     mRootContext->setContextProperty("directionModel", mFilteredDirectionModel);
+    mRootContext->setContextProperty("locationAccuracyModel", mFilteredAccuracyModel);
+    mRootContext->setContextProperty("birdAccuracyModel", mFilteredBirdAccuracyModel);
 
     QString majorVersion;
     majorVersion.setNum( MAJORVERSION );
@@ -276,6 +283,16 @@ void QMLWindow::setSexModel(SexModel *model)
 void QMLWindow::setDirectionModel(DirectionModel *model)
 {
     mFilteredDirectionModel->setSourceModel(model);
+}
+
+void QMLWindow::setAccuracyModel(AccuracyModel *model)
+{
+    mFilteredAccuracyModel->setSourceModel(model);
+}
+
+void QMLWindow::setBirdAccuracyModel(AccuracyModel *model)
+{
+    mFilteredBirdAccuracyModel->setSourceModel(model);
 }
 
 void QMLWindow::setHistoryModel(HistoryModel *model)

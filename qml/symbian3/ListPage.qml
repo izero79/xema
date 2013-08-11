@@ -391,7 +391,7 @@ Page {
         else if (listPageType == "birdaccuracy" || listPageType == "locationaccuracy")
         {
             listView.editMode = false
-            listView.delegate = simpleDelegate
+            listView.delegate = accuracyDelegate
         }
         else
         {
@@ -807,7 +807,9 @@ Page {
     }
     SimpleDelegate {
         id: simpleDelegate
-
+    }
+    AccuracyDelegate {
+        id: accuracyDelegate
     }
 
     Component {

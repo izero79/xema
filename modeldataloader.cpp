@@ -24,6 +24,7 @@
 #include "directionmodel.h"
 #include <QLocale>
 #include "settings.h"
+#include "accuracymodel.h"
 
 #ifdef PERFTEST
 #include <QTime>
@@ -1105,6 +1106,56 @@ void ModelDataLoader::loadDirectionData(DirectionModel *model)
                        line.section(';', XemaEnums::DIRECTION_FIN, XemaEnums::DIRECTION_FIN),
                        line.section(';', XemaEnums::DIRECTION_SWE, XemaEnums::DIRECTION_SWE),
                        line.section(';', XemaEnums::DIRECTION_ENG, XemaEnums::DIRECTION_ENG));
+            model->addItem(item);
+        }
+    }
+}
+
+void ModelDataLoader::loadAccuracyData(AccuracyModel *model) {
+    QFile tiedosto(":locationaccuracies.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString line;
+        line = striimi.readLine();
+        if (line.isEmpty() == false)
+        {
+            //qDebug() << "loadAccuracyData" << line;
+            Accuracy item(line.section(';', XemaEnums::ACCURACY_VALUE, XemaEnums::ACCURACY_VALUE),
+                       line.section(';', XemaEnums::ACCURACY_FIN, XemaEnums::ACCURACY_FIN),
+                       line.section(';', XemaEnums::ACCURACY_SWE, XemaEnums::ACCURACY_SWE),
+                       line.section(';', XemaEnums::ACCURACY_ENG, XemaEnums::ACCURACY_ENG));
+            model->addItem(item);
+        }
+    }
+}
+
+void ModelDataLoader::loadBirdAccuracyData(AccuracyModel *model) {
+    QFile tiedosto(":birdaccuracies.csv");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }
+    while (striimi.atEnd() == false)
+    {
+        QString line;
+        line = striimi.readLine();
+        if (line.isEmpty() == false)
+        {
+            //qDebug() << "loadBirdAccuracyData" << line;
+            Accuracy item(line.section(';', XemaEnums::ACCURACY_VALUE, XemaEnums::ACCURACY_VALUE),
+                       line.section(';', XemaEnums::ACCURACY_FIN, XemaEnums::ACCURACY_FIN),
+                       line.section(';', XemaEnums::ACCURACY_SWE, XemaEnums::ACCURACY_SWE),
+                       line.section(';', XemaEnums::ACCURACY_ENG, XemaEnums::ACCURACY_ENG));
             model->addItem(item);
         }
     }

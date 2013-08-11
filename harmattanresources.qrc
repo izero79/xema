@@ -25,5 +25,6 @@
         <file>qml/harmattan_icons/icon-m-input-clear.png</file>
         <file>qml/harmattan/MapPage.qml</file>
         <file>qml/harmattan/MapItem.qml</file>
+        <file>qml/harmattan/AccuracyDelegate.qml</file>
     </qresource>
 </RCC>
