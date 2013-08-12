@@ -247,6 +247,14 @@ Page {
         {
             window.directionChanged(name)
         }
+        else if (listPageType == "locationaccuracy")
+        {
+            window.locationAccuracyChanged(name)
+        }
+        else if (listPageType == "birdaccuracy")
+        {
+            window.birdAccuracyChanged(name)
+        }
         pageStack.pop()
     }
 
@@ -387,6 +395,11 @@ Page {
             listView.editMode = false
             listView.delegate = simpleDelegate
         }
+        else if (listPageType == "birdaccuracy" || listPageType == "locationaccuracy")
+        {
+            listView.editMode = false
+            listView.delegate = accuracyDelegate
+        }
         else
         {
             listView.model.setSorting(1, true)
@@ -461,6 +474,14 @@ Page {
         else if (listPageType == "direction")
         {
             listView.model = directionModel
+        }
+        else if (listPageType == "birdaccuracy")
+        {
+            listView.model = birdAccuracyModel
+        }
+        else if (listPageType == "locationaccuracy")
+        {
+            listView.model = locationAccuracyModel
         }
         else
         {
@@ -796,7 +817,9 @@ Page {
     }
     SimpleDelegate {
         id: simpleDelegate
-
+    }
+    AccuracyDelegate {
+        id: accuracyDelegate
     }
 
     Component {

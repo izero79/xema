@@ -121,6 +121,14 @@
         <source>About Xema</source>
         <translation>Tietoja Xemasta</translation>
     </message>
+    <message>
+        <source>Exporting records from place %1 with date %2. Do you want to export all data, or just new data?</source>
+        <translation>Viedään havainnot päivämäärällä %1 paikasta %2. Haluatko viedä kaikki valitun päivän ja paikan havainnot vai vain uudet?</translation>
+    </message>
+    <message>
+        <source>Exporting records with date %1. Do you want to export all data, or just new data?</source>
+        <translation>Viedään havainnot päivämäärällä %1. Haluatko viedä kaikki valitun päivän havainnot vai vain uudet?</translation>
+    </message>
 </context>
 <context>
     <name>ListPage</name>
@@ -444,6 +452,10 @@
     <message>
         <source>Map</source>
         <translation>Kartta</translation>
+    </message>
+    <message>
+        <source>Accuracy</source>
+        <translation>Tarkkuus</translation>
     </message>
 </context>
 <context>

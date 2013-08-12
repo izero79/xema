@@ -248,6 +248,14 @@ Page {
         {
             window.directionChanged(name)
         }
+        else if (listPageType == "locationaccuracy")
+        {
+            window.locationAccuracyChanged(name)
+        }
+        else if (listPageType == "birdaccuracy")
+        {
+            window.birdAccuracyChanged(name)
+        }
         pageStack.pop()
     }
 

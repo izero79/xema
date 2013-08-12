@@ -169,9 +169,18 @@ Page {
         var bird_abbrev = findBirdAbbrev(birdNameTf.text)
         allData += bird_abbrev + delimiter
         allData += startDateTf.text + delimiter
-        allData += stopDateTf.text + delimiter
+        if (stopDateTf.text != startDateTf.text) {
+            allData += stopDateTf.text + delimiter
+        } else {
+            allData += delimiter
+        }
+
         allData += startTimeTf.text + delimiter
-        allData += endTimeTf.text + delimiter
+        if (startTimeTf.text == endTimeTf.text && (stopDateTf.text == startDateTf.text || stopDateTf.text == "")) {
+            allData += delimiter
+        } else {
+            allData += endTimeTf.text + delimiter
+        }
 
         var locationIndex = findLocationIndex(locationTf.text)
         if (locationIndex < 0) {
@@ -204,7 +213,13 @@ Page {
 
         allData += locationCoordinantesByIndex(locationIndex)
         allData += delimiter
-        // uusi, accuracy
+        // accuracy
+        var locationAccuracy = findLocationAccuracyValue(locationAccuracyTf.text)
+
+        if (locationAccuracy != -1) {
+            allData += locationAccuracy
+        }
+
         allData += delimiter
 
         if (birdCoordinatesTf.text != "") {
@@ -225,8 +240,15 @@ Page {
 
         }
 
-        // uusi, accuracy bird
+        // accuracy
+        var birdAccuracy = findBirdAccuracyValue(birdAccuracyTf.text)
+
+        if (birdAccuracy != -1) {
+            allData += birdAccuracy
+        }
+
         allData += delimiter
+
         // uusi, paikannettu
         allData += delimiter
         allData += moreInfoTa.text + delimiter
@@ -234,7 +256,9 @@ Page {
         allData += atlas_abbrev + delimiter
         // uusi, saver
         allData += saver + delimiter
+
         // uusi, save time
+        allData += Qt.formatDateTime(new Date(), "dd.MM.yyyy hh:mm")
         allData += delimiter
         allData += regPeopleTa.text + delimiter
         allData += delimiter // paikka other peoplelle, ei kaytossa nyt
@@ -417,6 +441,60 @@ Page {
         return j
     }
 
+    function findLocationAccuracyValue(name)
+    {
+        var j = -1
+        console.log("findLocationAccuracyValue(name)" + name)
+        for(var i=0;i<locationAccuracyModel.rowCount();i++) {
+            if(name === locationAccuracyModel.data(i, 36)) {
+                j = locationAccuracyModel.data(i, 35);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
+    function findBirdAccuracyValue(name)
+    {
+        var j = -1
+        console.log("findBirdAccuracyValue(name)" + name)
+        for(var i=0;i<birdAccuracyModel.rowCount();i++) {
+            if(name === birdAccuracyModel.data(i, 36)) {
+                j = birdAccuracyModel.data(i, 35);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
+    function findLocationAccuracy(value) {
+        var j = ""
+        console.log("findLocationAccuracy(value)" + value)
+        for(var i=0;i<locationAccuracyModel.rowCount();i++) {
+            if(value === locationAccuracyModel.data(i, 35)) {
+                j = locationAccuracyModel.data(i, 36);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
+    function findBirdAccuracy(value) {
+        var j = ""
+        console.log("findBirdAccuracy(value)" + value)
+        for(var i=0;i<birdAccuracyModel.rowCount();i++) {
+            if(value === birdAccuracyModel.data(i, 35)) {
+                j = birdAccuracyModel.data(i, 36);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
     function locationNameByIndex(index)
     {
         if( !locationModel.data(index, 35) || !locationModel.data(index, 36) )
@@ -500,6 +578,8 @@ Page {
         regPeopleTa.text = fields[XemaEnums.OBS_REGPERSON]
 //        otherPeopleTa.text = fields[XemaEnums.OBS_OTHERPERSON]
         hideChkBox.checked = fields[XemaEnums.OBS_HIDDEN]
+        locationAccuracyTf.text = findLocationAccuracy(fields[XemaEnums.OBS_ACCURACY])
+        birdAccuracyTf.text = findBirdAccuracy(fields[XemaEnums.OBS_BIRD_ACCURACY])
 
         var rows = fields[XemaEnums.OBS_ROWCOUNT]
         console.log("rows: " + rows)
@@ -558,6 +638,7 @@ Page {
         {
             birdNameTf.text = ""
             birdCoordinatesTf.text = ""
+            birdAccuracyTf.text = ""
             directionTf.text = ""
             distanceTf.text = ""
             moreInfoTa.text = ""
@@ -574,6 +655,7 @@ Page {
             locationTf.text = ""
             startTimeTf.text = ""
             endTimeTf.text = ""
+            locationAccuracyTf.text = ""
         }
         if (currentTab <= 1)
         {
@@ -816,17 +898,7 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     iconSource: "/qml/harmattan_icons/save.png"
                     onClicked: {
-                        window.save()/*
-                        var success = false
-                        success = MyScript.readAndSaveData()
-                        if (success)
-                        {
-                            MyScript.obsObject.clearTab()
-                            MyScript.dataSaved()
-                            unsavedData = false
-                            needsHistoryReload = true
-                        }
-*/
+                        window.save()
                     }
                 }
                 ToolIcon {
@@ -834,9 +906,7 @@ Page {
                     platformIconId: "toolbar-delete"
                     anchors.right: parent.right
                     onClicked: {
-                        window.clearTab()/*
-                        MyScript.obsObject.clearTab()
-                        unsavedData = false*/
+                        window.clearTab()
                     }
                 }
             }
@@ -1121,17 +1191,7 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     iconSource: "/qml/harmattan_icons/save.png"
                     onClicked: {
-                        window.save()/*
-                        var success = false
-                        success = MyScript.readAndSaveData()
-                        if (success)
-                        {
-                            MyScript.obsObject.clearTab()
-                            MyScript.dataSaved()
-                            unsavedData = false
-                            needsHistoryReload = true
-                        }*/
-
+                        window.save()
                     }
                 }
                 ToolIcon {
@@ -1139,9 +1199,7 @@ Page {
                     platformIconId: "toolbar-delete"
                     anchors.right: parent.right
                     onClicked: {
-                        window.clearTab()/*
-                        MyScript.obsObject.clearTab()
-                        unsavedData = false*/
+                        window.clearTab()
                     }
                 }
             }
@@ -1216,7 +1274,7 @@ Page {
                 Item {
                     id: locationItem
                     width: parent.width
-                    height: 50
+                    height: detailLevel > 1 ? 140 : 50
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.left: parent.left
@@ -1251,6 +1309,45 @@ Page {
                         }
                         validator: RegExpValidator{ regExp: /.{1,}/ }
                     }
+
+                    Label {
+                        id: locationAccuracyLabel
+                        color: "#ffffff"
+                        text: qsTr("Accuracy")
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.top: locationTf.bottom
+                        anchors.topMargin: 8
+                        font.pixelSize: 18
+                        visible: detailLevel > 1
+                    }
+
+                    TextField {
+                        id: locationAccuracyTf
+                        property int headerHeight: 0
+                        height: 50
+                        placeholderText: qsTr("Accuracy")
+                        text: ""
+                        anchors.top: locationAccuracyLabel.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        visible: detailLevel > 1
+                        width: 200
+                        MouseArea {
+                            id: locationAccuracyMouse
+                            anchors.fill: parent
+                            onClicked: window.showListPage("locationaccuracy", locationAccuracyTf.text, locationAccuracyTf);
+                            z: directionTf.z + 1
+                        }
+                        onTextChanged: {
+                            obsPage.edited = true
+                        }
+                    }
+
                 }
 
                 Label {
@@ -1411,17 +1508,7 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     iconSource: "/qml/harmattan_icons/save.png"
                     onClicked: {
-                        window.save()/*
-                        var success = false
-                        success = MyScript.readAndSaveData()
-                        if (success)
-                        {
-                            MyScript.obsObject.clearTab()
-                            MyScript.dataSaved()
-                            unsavedData = false
-                            needsHistoryReload = true
-                        }*/
-
+                        window.save()
                     }
                 }
                 ToolIcon {
@@ -1429,9 +1516,7 @@ Page {
                     platformIconId: "toolbar-delete"
                     anchors.right: parent.right
                     onClicked: {
-                        window.clearTab()/*
-                        MyScript.obsObject.clearTab()
-                        unsavedData = false*/
+                        window.clearTab()
                     }
                 }
             }
@@ -1443,10 +1528,9 @@ Page {
                 anchors.top: parent.top
                 anchors.right: parent.right
                 anchors.bottom: tab3Tools.top
-//                anchors.fill: parent
                 anchors.margins: 5
                 contentWidth: width
-                contentHeight: detailLevel > 2 ? item8.y + item8.height : plus.y + plus.height
+                contentHeight: detailLevel > 2 ? obsExtraInfoItem.y + obsExtraInfoItem.height : plus.y + plus.height
 
                 Timer {
                   id: adjuster3
@@ -1483,12 +1567,11 @@ Page {
                         return
                     }
 
+                    var delegate = false;
                     var focusChildY = focusChild.parent["y"]
                     console.log("parent: " + focusChild.parent.parent["objectName"])
-                    if (focusChildY == 0)
-                    {
-                        console.log("focusChildY 0")
-                        focusChildY = focusChild.parent.parent["y"]
+                    if ( focusChild.parent.parent["objectName"] == "obsDelegateItem" ) {
+                        delegate = true;
                     }
 
                     var focusChildHeight = focusChild["height"]
@@ -1498,12 +1581,12 @@ Page {
                         focusChildHeaderHeight = 0
                     }
 
-                    if (focusChildY >= 300)
-                    {
-                        focusChildY = focusChildY + 97
+                    if (delegate) {
+                        focusChildY += focusChild.parent.parent["y"]
+                        console.log("delegaatti, focusChildY: " + focusChildY)
                     }
 
-                    console.log("fcY: " + focusChildY +", fch: " +focusChildHeight +", fchh: " +focusChildHeaderHeight)
+                    console.log("focusChildY: " + focusChildY +", focusChildHeight: " +focusChildHeight +", focusChildHeaderHeight: " +focusChildHeaderHeight)
                     console.log("new contentY: " + (focusChildY - focusChildHeaderHeight))
                     flickable3.contentY = focusChildY - focusChildHeaderHeight
                 }
@@ -1566,12 +1649,12 @@ Page {
                     anchors.top: birdNameItem.bottom
                     anchors.topMargin: 8
                     font.pixelSize: 18
-                    visible: detailLevel > 2
+                    visible: detailLevel > 1
                 }
 
                 Item {
                     id: birdPlaceItem
-                    height: 140
+                    height: detailLevel > 2 ? 220 : 140
                     anchors.top: birdPlaceLabel.bottom
                     anchors.topMargin: 8
                     anchors.right: parent.right
@@ -1607,9 +1690,9 @@ Page {
                     }
 
                     Label {
-                        id: fromPlaceToBirdLabel
+                        id: birdAccuracyLabel
                         color: "#ffffff"
-                        text: qsTr("From place to bird")
+                        text: qsTr("Accuracy")
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.left: parent.left
@@ -1618,12 +1701,50 @@ Page {
                         anchors.top: birdCoordinatesTf.bottom
                         anchors.topMargin: 8
                         font.pixelSize: 18
+                        visible: detailLevel > 1
+                    }
+
+                    TextField {
+                        id: birdAccuracyTf
+                        property int headerHeight: 0
+                        height: 50
+                        placeholderText: qsTr("Accuracy")
+                        text: ""
+                        anchors.top: birdAccuracyLabel.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        visible: detailLevel > 1
+                        width: 200
+                        MouseArea {
+                            id: birdAccuracyMouse
+                            anchors.fill: parent
+                            onClicked: window.showListPage("birdaccuracy", birdAccuracyTf.text, birdAccuracyTf);
+                            z: directionTf.z + 1
+                        }
+                        onTextChanged: {
+                            obsPage.edited = true
+                        }
+                    }
+
+                    Label {
+                        id: fromPlaceToBirdLabel
+                        color: "#ffffff"
+                        text: qsTr("From place to bird")
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.top: birdAccuracyTf.bottom
+                        anchors.topMargin: 8
+                        font.pixelSize: 18
                         visible: detailLevel > 2
                     }
 
                     TextField {
                         id: directionTf
-                        property int headerHeight: 0
+                        property int headerHeight: -y
                         height: 50
                         placeholderText: qsTr("Direction")
                         text: ""
@@ -1651,7 +1772,7 @@ Page {
                     }
                     TextField {
                         id: distanceTf
-
+                        property int headerHeight: -y
                         height: 50
                         placeholderText: qsTr("Distance (m)")
                         text: ""
@@ -1679,7 +1800,7 @@ Page {
                 Item {
                     id: obsDelegateItem
                     objectName: "obsDelegateItem"
-                    anchors.top: detailLevel > 2 ? birdPlaceItem.bottom : detailLevel > 1 ? birdCoordinatesTf :birdNameItem.bottom;
+                    anchors.top: detailLevel > 2 ? birdPlaceItem.bottom : detailLevel > 1 ? birdPlaceItem.bottom : birdNameItem.bottom;
                     anchors.topMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -1729,7 +1850,7 @@ Page {
 
                 }
                 Item {
-                    id: item8
+                    id: obsExtraInfoItem
                     height: 200
                     anchors.top: text8.bottom
                     anchors.topMargin: 8
@@ -1742,7 +1863,7 @@ Page {
 
                     TextArea {
                         id: moreInfoTa
-                        property int headerHeight: text8.height + 8
+                        property int headerHeight: 0
                         height: 150
                         placeholderText: qsTr("More information")
                         text: ""

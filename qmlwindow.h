@@ -83,7 +83,7 @@ private slots:
     void saveOnlyDefaultCountry(bool onlydefault);
     void saveExportWgs(bool exportWgs);
     void saveDefaultCountry(const QString &defaultCountry);
-    void exportData(bool onlyNew, bool allCountries, const QString &delimiter);
+    void exportData(bool onlyNew, bool allCountries, const QString &date, const QString &place, const QString &delimiter);
     void exportOwnData();
     void importOwnData();
     void openBrowser( const QString &url );
@@ -119,6 +119,8 @@ private:
     NetworkController *mNetworkController;
     FilterModel *mFilteredAccuracyModel;
     FilterModel *mFilteredBirdAccuracyModel;
+    AccuracyModel *mLocationAccuracyModel;
+    AccuracyModel *mBirdAccuracyModel;
 };
 
 #endif // QMLWINDOW_H

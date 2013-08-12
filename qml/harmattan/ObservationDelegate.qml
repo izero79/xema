@@ -29,7 +29,12 @@ Item {
 
         allData += countTf.text + delimiter
         allData += startTimeTf.text + delimiter
-        allData += endTimeTf.text + delimiter
+        if (startTimeTf.text != endTimeTf.text) {
+            allData += endTimeTf.text + delimiter
+        } else {
+            allData += delimiter
+        }
+
         allData += findSex(sexTf.text) + delimiter
         allData += dressTf.text + delimiter
         allData += ageTf.text + delimiter
@@ -167,7 +172,7 @@ Item {
 
     TextField {
         id: countTf
-        property int headerHeight: 0
+        property int headerHeight: -y
         height: 50
         placeholderText: qsTr("Individuals *")
         text: ""

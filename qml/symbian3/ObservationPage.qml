@@ -169,9 +169,18 @@ Page {
         var bird_abbrev = findBirdAbbrev(birdNameTf.text)
         allData += bird_abbrev + delimiter
         allData += startDateTf.text + delimiter
-        allData += stopDateTf.text + delimiter
+        if (stopDateTf.text != startDateTf.text) {
+            allData += stopDateTf.text + delimiter
+        } else {
+            allData += delimiter
+        }
+
         allData += startTimeTf.text + delimiter
-        allData += endTimeTf.text + delimiter
+        if (startTimeTf.text == endTimeTf.text && (stopDateTf.text == startDateTf.text || stopDateTf.text == "")) {
+            allData += delimiter
+        } else {
+            allData += endTimeTf.text + delimiter
+        }
 
         var locationIndex = findLocationIndex(locationTf.text)
         if (locationIndex < 0) {
@@ -204,7 +213,13 @@ Page {
 
         allData += locationCoordinantesByIndex(locationIndex)
         allData += delimiter
-        // uusi, accuracy
+        // accuracy
+        var locationAccuracy = findLocationAccuracyValue(locationAccuracyTf.text)
+
+        if (locationAccuracy != -1) {
+            allData += locationAccuracy
+        }
+
         allData += delimiter
 
         if (birdCoordinatesTf.text != "") {
@@ -225,8 +240,15 @@ Page {
 
         }
 
-        // uusi, accuracy bird
+        // accuracy
+        var birdAccuracy = findBirdAccuracyValue(birdAccuracyTf.text)
+
+        if (birdAccuracy != -1) {
+            allData += birdAccuracy
+        }
+
         allData += delimiter
+
         // uusi, paikannettu
         allData += delimiter
         allData += moreInfoTa.text + delimiter
@@ -234,7 +256,9 @@ Page {
         allData += atlas_abbrev + delimiter
         // uusi, saver
         allData += saver + delimiter
+
         // uusi, save time
+        allData += Qt.formatDateTime(new Date(), "dd.MM.yyyy hh:mm")
         allData += delimiter
         allData += regPeopleTa.text + delimiter
         allData += delimiter // paikka other peoplelle, ei kaytossa nyt
@@ -417,6 +441,60 @@ Page {
         return j
     }
 
+    function findLocationAccuracyValue(name)
+    {
+        var j = -1
+        console.log("findLocationAccuracyValue(name)" + name)
+        for(var i=0;i<locationAccuracyModel.rowCount();i++) {
+            if(name === locationAccuracyModel.data(i, 36)) {
+                j = locationAccuracyModel.data(i, 35);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
+    function findBirdAccuracyValue(name)
+    {
+        var j = -1
+        console.log("findBirdAccuracyValue(name)" + name)
+        for(var i=0;i<birdAccuracyModel.rowCount();i++) {
+            if(name === birdAccuracyModel.data(i, 36)) {
+                j = birdAccuracyModel.data(i, 35);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
+    function findLocationAccuracy(value) {
+        var j = ""
+        console.log("findLocationAccuracy(value)" + value)
+        for(var i=0;i<locationAccuracyModel.rowCount();i++) {
+            if(value === locationAccuracyModel.data(i, 35)) {
+                j = locationAccuracyModel.data(i, 36);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
+    function findBirdAccuracy(value) {
+        var j = ""
+        console.log("findBirdAccuracy(value)" + value)
+        for(var i=0;i<birdAccuracyModel.rowCount();i++) {
+            if(value === birdAccuracyModel.data(i, 35)) {
+                j = birdAccuracyModel.data(i, 36);
+                break;
+            }
+        }
+        console.log("palautetaan: " + j)
+        return j
+    }
+
     function locationNameByIndex(index)
     {
         if( !locationModel.data(index, 35) || !locationModel.data(index, 36) )
@@ -500,6 +578,8 @@ Page {
         regPeopleTa.text = fields[XemaEnums.OBS_REGPERSON]
 //        otherPeopleTa.text = fields[XemaEnums.OBS_OTHERPERSON]
         hideChkBox.checked = fields[XemaEnums.OBS_HIDDEN]
+        locationAccuracyTf.text = findLocationAccuracy(fields[XemaEnums.OBS_ACCURACY])
+        birdAccuracyTf.text = findBirdAccuracy(fields[XemaEnums.OBS_BIRD_ACCURACY])
 
         var rows = fields[XemaEnums.OBS_ROWCOUNT]
         console.log("rows: " + rows)
@@ -558,6 +638,7 @@ Page {
         {
             birdNameTf.text = ""
             birdCoordinatesTf.text = ""
+            birdAccuracyTf.text = ""
             directionTf.text = ""
             distanceTf.text = ""
             moreInfoTa.text = ""
@@ -574,6 +655,7 @@ Page {
             locationTf.text = ""
             startTimeTf.text = ""
             endTimeTf.text = ""
+            locationAccuracyTf.text = ""
         }
         if (currentTab <= 1)
         {
@@ -1305,7 +1387,7 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 5
                 contentWidth: width
-                contentHeight: detailLevel > 2 ? item8.y + item8.height : plus.y + plus.height
+                contentHeight: detailLevel > 2 ? obsExtraInfoItem.y + obsExtraInfoItem.height : plus.y + plus.height
 
                 Timer {
                   id: adjuster3
@@ -1342,12 +1424,11 @@ Page {
                         return
                     }
 
+                    var delegate = false;
                     var focusChildY = focusChild.parent["y"]
                     console.log("parent: " + focusChild.parent.parent["objectName"])
-                    if (focusChildY == 0)
-                    {
-                        console.log("focusChildY 0")
-                        focusChildY = focusChild.parent.parent["y"]
+                    if ( focusChild.parent.parent["objectName"] == "obsDelegateItem" ) {
+                        delegate = true;
                     }
 
                     var focusChildHeight = focusChild["height"]
@@ -1357,11 +1438,9 @@ Page {
                         focusChildHeaderHeight = 0
                     }
 
-                    if (focusChildY >= 300)
-                    {
-                        console.log("focusChildY >= 300: " + focusChildY)
-
-                        focusChildY = focusChildY + 255
+                    if (delegate) {
+                        focusChildY += focusChild.parent.parent["y"]
+                        console.log("delegaatti, focusChildY: " + focusChildY)
                     }
 
                     console.log("focusChildY: " + focusChildY +", focusChildHeight: " +focusChildHeight +", focusChildHeaderHeight: " +focusChildHeaderHeight)
@@ -1522,7 +1601,7 @@ Page {
 
                     TextField {
                         id: directionTf
-                        property int headerHeight: 0
+                        property int headerHeight: -y
                         height: 50
                         placeholderText: qsTr("Direction")
                         text: ""
@@ -1628,7 +1707,7 @@ Page {
 
                 }
                 Item {
-                    id: item8
+                    id: obsExtraInfoItem
                     height: 200
                     anchors.top: text8.bottom
                     anchors.topMargin: 8
@@ -1641,7 +1720,7 @@ Page {
 
                     TextArea {
                         id: moreInfoTa
-                        property int headerHeight: 300 - text8.height
+                        property int headerHeight: 0
                         height: 150
                         placeholderText: qsTr("More information")
                         text: ""

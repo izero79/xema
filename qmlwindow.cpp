@@ -62,7 +62,9 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mKineticScroller(0),
     mNetworkController(0),
     mFilteredAccuracyModel(0),
-    mFilteredBirdAccuracyModel(0)
+    mFilteredBirdAccuracyModel(0),
+    mLocationAccuracyModel(0),
+    mBirdAccuracyModel(0)
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView = new QDeclarativeView(this);
@@ -194,7 +196,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(quit()),this,SIGNAL(quit()));
     connect(mRootObject,SIGNAL(loadHistoryWithDate(QString)),this,SIGNAL(loadHistoryWithDate(QString)));
     connect(mRootObject,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)),this,SIGNAL(loadHistoryWithDateAndPlace(QString,QString)));
-    connect(mRootObject,SIGNAL(exportData(bool,bool,QString)),this,SLOT(exportData(bool,bool,QString)));
+    connect(mRootObject,SIGNAL(exportData(bool,bool,QString,QString,QString)),this,SLOT(exportData(bool,bool,QString,QString,QString)));
     connect(mRootObject,SIGNAL(restoreObservers()),this,SIGNAL(restoreObservers()));
     connect(mRootObject,SIGNAL(restoreLocations()),this,SIGNAL(restoreLocations()));
     connect(mRootObject,SIGNAL(restoreSpecies()),this,SIGNAL(restoreSpecies()));
@@ -287,11 +289,13 @@ void QMLWindow::setDirectionModel(DirectionModel *model)
 
 void QMLWindow::setAccuracyModel(AccuracyModel *model)
 {
+    mLocationAccuracyModel = model;
     mFilteredAccuracyModel->setSourceModel(model);
 }
 
 void QMLWindow::setBirdAccuracyModel(AccuracyModel *model)
 {
+    mBirdAccuracyModel = model;
     mFilteredBirdAccuracyModel->setSourceModel(model);
 }
 
@@ -381,10 +385,10 @@ void QMLWindow::saveDefaultCountry(const QString &defaultCountry)
     mSettings->setDefaultCountry(defaultCountry);
 }
 
-void QMLWindow::exportData(bool onlyNew, bool allCountries, const QString &delimiter)
+void QMLWindow::exportData(bool onlyNew, bool allCountries, const QString &date, const QString &place, const QString &delimiter)
 {
     setProcessing(true);
-    mDataWriter->exportHistory(onlyNew,allCountries,mLocationModel,mPersonModel,mBirdModel,delimiter);
+    mDataWriter->exportHistory(onlyNew,allCountries,date,place,mLocationModel,mPersonModel,mBirdModel,delimiter);
     setProcessing(false);
     QMetaObject::invokeMethod(mRootObject, "exportDone");
 }
@@ -409,7 +413,7 @@ void QMLWindow::importOwnData()
 void QMLWindow::importData()
 {
     setProcessing(true);
-    int err = mDataWriter->importHistory(mLocationModel, mPersonModel, mStatusModel, mBirdModel);
+    int err = mDataWriter->importHistory(mLocationModel, mPersonModel, mStatusModel, mBirdModel, mLocationAccuracyModel, mBirdAccuracyModel);
     if (err&XemaEnums::IMPORT_HISTORY_OK) {
         reloadHistory();
     }

@@ -6,6 +6,8 @@ Page {
     id: historyPage
     property bool dateListVisible: historyListView.model == historyDateModel ? true : false
     property bool placeListVisible: historyListView.model == historyPlaceModel ? true : false
+    property string currentDate: ""
+    property string currentPlace: ""
 
     tools: historyToolBarLayout
 
@@ -18,6 +20,8 @@ Page {
             onClicked: {
                 if (dateListVisible == true)
                 {
+                    currentPlace = ""
+                    currentDate = ""
                     window.backFromList()
                     pageStack.depth <= 1 ? quit() : pageStack.pop()
                 }
@@ -129,12 +133,15 @@ Page {
     function showDate(pvm)
     {
         window.loadHistoryWithDate(pvm)
+        currentDate = pvm
         historyListView.model = historyPlaceModel
         historyPlaceModel.filter(filterTf.text)
     }
 
     function showPlace(place, pvm)
     {
+        currentDate = pvm
+        currentPlace = place
         window.loadHistoryWithDateAndPlace(pvm, place)
         historyListView.model = historyModel
 
@@ -248,7 +255,7 @@ Page {
             verticalAlignment: Text.AlignVCenter
         }
         content:Item {
-            height: 100
+            height: 150
             width: parent.width
             anchors.margins: 10
             Label {
@@ -259,7 +266,13 @@ Page {
                 color: "white"
                 text: {
                     if (exportDialog.step == 1) {
-                        return qsTr("Do you want to export all data, or just new data?")
+                        if ( currentDate !== "" && currentPlace !== "") {
+                            return qsTr("Exporting records from place %1 with date %2. Do you want to export all data, or just new data?").arg(currentPlace).arg(currentDate)
+                        } else if ( currentDate !== "" && currentPlace === "") {
+                            return qsTr("Exporting records with date %1. Do you want to export all data, or just new data?").arg(currentDate)
+                        } else {
+                            return qsTr("Do you want to export all data, or just new data?")
+                        }
                     } else if (exportDialog.step == 2) {
                         return qsTr("Records from all countries, or only from default country (") + window.defaultCountry + (")?")
                     } else if (exportDialog.step == 3) {
@@ -299,7 +312,7 @@ Page {
                     }
 
                     console.log("all")
-                    window.exportData(exportDialog.onlyNew, exportDialog.allCountries, "#")
+                    window.exportData(exportDialog.onlyNew, exportDialog.allCountries, currentDate, currentPlace, "#")
                     exportDialog.close()
                     exportDialog.step = 1
                 }
@@ -331,7 +344,7 @@ Page {
                     }
 
                     console.log("new")
-                    window.exportData(exportDialog.onlyNew, exportDialog.allCountries, ";")
+                    window.exportData(exportDialog.onlyNew, exportDialog.allCountries, currentDate, currentPlace, ";")
                     exportDialog.close()
                     exportDialog.step = 1
                 }

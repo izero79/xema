@@ -35,7 +35,7 @@ PageStackWindow {
     signal quit()
     signal loadHistoryWithDate(string date)
     signal loadHistoryWithDateAndPlace(string date, string place)
-    signal exportData(bool onlyNew, bool allCountries, string delimiter)
+    signal exportData(bool onlyNew, bool allCountries, string date, string place, string delimiter)
     signal restoreSpecies()
     signal restoreStatuses()
     signal restoreLocations()
@@ -164,6 +164,16 @@ PageStackWindow {
     function directionChanged(name)
     {
         MyScript.fillDirectionBox(name)
+    }
+
+    function locationAccuracyChanged(name)
+    {
+        MyScript.fillLocationAccuracyBox(name)
+    }
+
+    function birdAccuracyChanged(name)
+    {
+        MyScript.fillBirdAccuracyBox(name)
     }
 
     function ageChanged(name)

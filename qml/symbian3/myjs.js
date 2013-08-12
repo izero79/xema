@@ -383,6 +383,34 @@ function fillDirectionBox(index)
     }
 }
 
+function fillLocationAccuracyBox(index)
+{
+    console.log('fillLocationAccuracyBox')
+    if (currentLanguage == "en") {
+        currentStatusBox.text = locationAccuracyModel.data(index, 36)
+    }
+    else if (currentLanguage == "sv") {
+        currentStatusBox.text = locationAccuracyModel.data(index, 36)
+    }
+    else {
+        currentStatusBox.text = locationAccuracyModel.data(index, 36)
+    }
+}
+
+function fillBirdAccuracyBox(index)
+{
+    console.log('fillBirdAccuracyBox')
+    if (currentLanguage == "en") {
+        currentStatusBox.text = birdAccuracyModel.data(index, 36)
+    }
+    else if (currentLanguage == "sv") {
+        currentStatusBox.text = birdAccuracyModel.data(index, 36)
+    }
+    else {
+        currentStatusBox.text = birdAccuracyModel.data(index, 36)
+    }
+}
+
 function fillAgeBox(index)
 {
     if (currentLanguage == "en") {

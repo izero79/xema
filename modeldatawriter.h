@@ -10,6 +10,7 @@ class LocationModel;
 class StatusModel;
 class HistoryModel;
 class CoordinateConverter;
+class AccuracyModel;
 
 class ModelDataWriter : public QObject
 {
@@ -25,7 +26,7 @@ public:
     void writeLocationData(LocationModel *model);
     void writeStatusData(StatusModel *model);
     void writeBirdData(BirdModel *model);
-    void exportHistory(bool onlyNew, bool allCountries, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
+    void exportHistory(bool onlyNew, bool allCountries, const QString &date, const QString &place, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter);
     void exportOwnData(LocationModel *lModel, BirdModel *bModel, StatusModel *sModel, PersonModel *pModel);
 
     void removeCustomSpecies();
@@ -33,8 +34,8 @@ public:
     void removeCustomStatuses();
     void removeCustomObservers();
     void removeHistory();
-    int importHistory(LocationModel *locations, PersonModel *persons, StatusModel *statuses, BirdModel *birds);
-    void importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter, StatusModel *statuses, BirdModel *birds);
+    int importHistory(LocationModel *locations, PersonModel *persons, StatusModel *statuses, BirdModel *birds, AccuracyModel *locationAccuracies, AccuracyModel *birdAccuracies);
+    void importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter, StatusModel *statuses, BirdModel *birds, AccuracyModel *locationAccuracies, AccuracyModel *birdAccuracies);
     int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
 
 private:

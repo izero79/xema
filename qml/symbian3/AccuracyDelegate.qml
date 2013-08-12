@@ -39,7 +39,7 @@ Component {
             id: ma
             anchors.fill: parent
             onClicked: {
-                console.log("simple click, ri: " + realindex)
+                console.log("accuracy click, ri: " + realindex)
                 listPage.clicked(realindex)
             }
             onPressAndHold: {
