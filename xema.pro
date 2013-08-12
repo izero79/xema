@@ -1,7 +1,7 @@
 #CONFIG +=debug
 #CONFIG -=release
 CONFIG -=liteVersion
-CONFIG -=forOvi
+CONFIG +=forOvi
 CONFIG -=forUnsigned
 CONFIG -=S603x
 CONFIG -=Symbian1
