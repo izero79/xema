@@ -215,8 +215,8 @@ Page {
         }
 
         anchors.centerIn: parent
-        width: window.inPortrait ? parent.width / 3 * 2: parent.width / 5 * 2
-        height: window.inPortrait ? parent.height / 6 * 2 : parent.height / 5 * 3
+        width: window.inPortrait ? parent.width / 8 * 7 : parent.width / 5 * 3
+        height: window.inPortrait ? parent.height / 5 * 2 : parent.height / 5 * 4
         source: ""
         z: 100
         onYChanged: {
