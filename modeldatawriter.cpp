@@ -1239,6 +1239,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
             if (QString::compare(town,locations->getItem(i).town(), Qt::CaseInsensitive) == 0 ) {
                 if (QString::compare(location,locations->getItem(i).place(), Qt::CaseInsensitive) == 0 ) {
                     locationExists = true;
+                    QString coordinate = locations->getItem(i).ykjCoordinate();
+                    x = coordinate.section(";",0,0);
+                    y = coordinate.section(";",1,1);
                     break;
                 }
             }
@@ -2519,16 +2522,17 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
 QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine, const QString &delimiter) {
     QMap<int, int> sections;
     QString header = headerLine;
-//    qDebug() << Q_FUNC_INFO << "header" << header;
-//    header.replace(QRegExp("ryhmä"), "group_fi");
-//    qDebug() << Q_FUNC_INFO << "header nyt" << header;
+    //qDebug() << Q_FUNC_INFO << "header" << header;
+    header.replace(QRegExp("ryhmä"), "group_fi");
+    //qDebug() << Q_FUNC_INFO << "header nyt" << header;
     QStringList headerSections = header.toLower().split(delimiter);
-//    qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
+    //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
     for (int i = XemaEnums::BIRD_ID; i <= XemaEnums::BIRD_SWE_GROUP; i++) {
         switch (i) {
             case XemaEnums::BIRD_ID: {
                 int index = headerSections.indexOf("id");
                 sections.insert(XemaEnums::BIRD_ID, index);
+                //qDebug() << "id" << index;
                 break;
             }
             case XemaEnums::BIRD_FIN_GROUP: {
@@ -2546,6 +2550,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_FIN_GROUP, index);
+                //qDebug() << "fin_group" << index;
                 break;
             }
             case XemaEnums::BIRD_ENG_GROUP: {
@@ -2554,6 +2559,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_ENG_GROUP, index);
+                //qDebug() << "en_group" << index;
                 break;
             }
             case XemaEnums::BIRD_LATIN_GROUP: {
@@ -2562,6 +2568,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_LATIN_GROUP, index);
+                //qDebug() << "latin_group" << index;
                 break;
             }
             case XemaEnums::BIRD_FIN_NAME: {
@@ -2573,6 +2580,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_FIN_NAME, index);
+                //qDebug() << "fin_name" << index;
                 break;
             }
             case XemaEnums::BIRD_SWE_NAME: {
@@ -2584,6 +2592,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_SWE_NAME, index);
+                //qDebug() << "swe_name" << index;
                 break;
             }
             case XemaEnums::BIRD_LATIN_NAME: {
@@ -2595,6 +2604,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_LATIN_NAME, index);
+                //qDebug() << "latin_name" << index;
                 break;
             }
             case XemaEnums::BIRD_ABBREV: {
@@ -2606,6 +2616,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = -100;
                 }
                 sections.insert(XemaEnums::BIRD_ABBREV, index);
+                //qDebug() << "abbrev" << index;
                 break;
             }
             case XemaEnums::BIRD_CATEGORY: {
@@ -2614,6 +2625,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_CATEGORY, index);
+                //qDebug() << "category" << index;
                 break;
             }
             case XemaEnums::BIRD_ENG_NAME: {
@@ -2625,6 +2637,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_ENG_NAME, index);
+                //qDebug() << "eng_name" << index;
                 break;
             }
             case XemaEnums::BIRD_SWE_GROUP: {
@@ -2636,6 +2649,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
                     index = 100;
                 }
                 sections.insert(XemaEnums::BIRD_SWE_GROUP, index);
+                //qDebug() << "swe_group" << index;
                 break;
             }
         }

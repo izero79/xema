@@ -7,7 +7,7 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-DEFINES +=DEBUGONLYTOFILE
+DEFINES -=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location systeminfo
 
