@@ -446,5 +446,18 @@ void QMLWindow::setProcessingFalse() {
 void QMLWindow::tiiraExport() {
     qDebug() << Q_FUNC_INFO;
     mTiiraExporter->init(mNetworkController->currentConfiguration());
-    mTiiraExporter->login();
+    QMap<QString,QString> map;
+    long id = 1;
+    map.insert("laji", "parmaj");
+    map.insert("maara", "1");
+    map.insert("pvm1", "29.05.2013");
+    map.insert("kunta", "Alavieska");
+    map.insert("paikka", "Akanneva");
+    map.insert("x", "3373527");
+    map.insert("y", "7120078");
+    map.insert("havainnoijat", "Tero Siironen");
+    map.insert("tallentaja", "Tero Siironen");
+    map.insert("havaintoriveja", "2");
+    map.insert("koord_tyyppi", "YKJ");
+    mTiiraExporter->uploadRecord(map, id);
 }

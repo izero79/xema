@@ -2,6 +2,7 @@
 #define TIIRAEXPORTER_H
 
 #include <QObject>
+#include <QMap>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -24,18 +25,23 @@ public slots:
     void testRequest();
     void login();
     void testUpload();
-    void uploadRecord();
-    void uploadRecordRow();
+    void uploadRecord(const QMap<QString,QString> &map, long recordId);
+    void uploadRecordRow(const QMap<QString,QString> &map, long recordId, int row);
 
 private slots:
     void requestFinished(QNetworkReply *reply);
     void loginRequestFinished(QNetworkReply *reply);
     void testUploadRequestFinished(QNetworkReply *reply);
     void provideAuthenication(QNetworkReply *reply, QAuthenticator *ator);
+    void uploadRequestFinished(QNetworkReply *reply);
+    void uploadRowRequestFinished(QNetworkReply *reply);
 
     QString envelopBodyStart() const;
     QString envelopBodyEnd() const;
     QString readName(const QString &data) const;
+    QString recordRowNodes(const QMap<QString,QString> &map) const;
+    QString readCsvId(const QString &data) const;
+    QString readRowCount(const QString &data) const;
 
 private:
 
