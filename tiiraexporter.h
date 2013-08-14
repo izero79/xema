@@ -16,17 +16,21 @@ public:
     
 signals:
     void wrongCredientals();
+    void noUploadRights();
+    void loginOk(const QString &name);
     
 public slots:
     void init(const QNetworkConfiguration &config);
     void testRequest();
     void login();
+    void testUpload();
     void uploadRecord();
     void uploadRecordRow();
 
 private slots:
     void requestFinished(QNetworkReply *reply);
     void loginRequestFinished(QNetworkReply *reply);
+    void testUploadRequestFinished(QNetworkReply *reply);
     void provideAuthenication(QNetworkReply *reply, QAuthenticator *ator);
 
     QString envelopBodyStart() const;
@@ -42,6 +46,7 @@ private:
     QByteArray mServerAddress;
     QString mUsername;
     QString mPwdhash;
+    QString mUsersName;
     
 };
 

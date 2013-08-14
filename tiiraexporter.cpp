@@ -101,6 +101,7 @@ void TiiraExporter::login() {
 }
 
 void TiiraExporter::loginRequestFinished(QNetworkReply *reply) {
+    disconnect(mNetAccessMgr,SIGNAL(finished(QNetworkReply*)),this,SLOT(loginRequestFinished(QNetworkReply*)));
     qDebug() << Q_FUNC_INFO << reply;
     QString data = reply->readAll();
     qDebug() << Q_FUNC_INFO << data;
@@ -108,11 +109,57 @@ void TiiraExporter::loginRequestFinished(QNetworkReply *reply) {
         qDebug() << Q_FUNC_INFO << "wrong credientals";
         emit wrongCredientals();
     } else if (data.contains("<ns1:kukaOlenResponse>")) {
-        qDebug() << Q_FUNC_INFO << "login ok" << readName(data);
-
-
+        mUsersName = readName(data);
+        qDebug() << Q_FUNC_INFO << "login ok" << mUsersName;
+        testUpload();
     }
 }
+
+void TiiraExporter::testUpload() {
+    qDebug() << Q_FUNC_INFO;
+    connect(mNetAccessMgr,SIGNAL(finished(QNetworkReply*)),this,SLOT(testUploadRequestFinished(QNetworkReply*)));
+    QMap<QString,QString> map;
+
+    QNetworkRequest request;
+    QUrl urli;
+    urli.setEncodedUrl( mServerAddress, QUrl::StrictMode );
+    request.setUrl( urli );
+    QString xml = envelopBodyStart();
+    xml.append("<ws:lataaHavainto>");
+    xml.append("<ws:tunnus>");
+    xml.append(mUsername);
+    xml.append("</ws:tunnus>");
+    xml.append("<ws:varmenne>");
+    xml.append(TiiraChecksumCalculator::getChecksum(mPwdhash, map));
+    xml.append("</ws:varmenne>");
+    xml.append("</ws:lataaHavainto>");
+    xml.append(envelopBodyEnd());
+    QByteArray postdata;
+    postdata.append(xml);
+    request.setHeader( QNetworkRequest::ContentTypeHeader,
+                           QVariant( QString("text/xml;charset=utf-8")));
+    request.setHeader(QNetworkRequest::ContentLengthHeader,
+                          QVariant( qulonglong(postdata.size()) ));
+    request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
+                         QVariant( int(QNetworkRequest::AlwaysNetwork) ));
+
+    mNetAccessMgr->post(request, postdata);
+}
+
+void TiiraExporter::testUploadRequestFinished(QNetworkReply *reply) {
+    qDebug() << Q_FUNC_INFO << reply;
+    disconnect(mNetAccessMgr,SIGNAL(finished(QNetworkReply*)),this,SLOT(testUploadRequestFinished(QNetworkReply*)));
+    QString data = reply->readAll();
+    qDebug() << Q_FUNC_INFO << data;
+    if (data.contains("ei ole oikeutta ladata havaintoja")) {
+        qDebug() << Q_FUNC_INFO << "no csv rights";
+        emit noUploadRights();
+    } else if (data.contains("CSV-tiedoston rivin tallennus ei onnistunut")) {
+        qDebug() << Q_FUNC_INFO << "login ok";
+        emit loginOk(mUsersName);
+    }
+}
+
 
 void TiiraExporter::requestFinished(QNetworkReply *reply) {
     qDebug() << Q_FUNC_INFO << reply;
