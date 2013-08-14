@@ -112,7 +112,6 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mNetworkController = new NetworkController(this);
     mRootContext->setContextProperty( "NetworkController", mNetworkController );
     mNetworkController->openAnyConnection();
-    mTiiraExporter = new TiiraExporter("iZero", "37e0a47e842a33948d804f26ece2aa8f", this);
 
 }
 
@@ -445,19 +444,7 @@ void QMLWindow::setProcessingFalse() {
 
 void QMLWindow::tiiraExport() {
     qDebug() << Q_FUNC_INFO;
-    mTiiraExporter->init(mNetworkController->currentConfiguration());
-    QMap<QString,QString> map;
     long id = 1;
-    map.insert("laji", "parmaj");
-    map.insert("maara", "1");
-    map.insert("pvm1", "29.05.2013");
-    map.insert("kunta", "Alavieska");
-    map.insert("paikka", "Akanneva");
-    map.insert("x", "3373527");
-    map.insert("y", "7120078");
-    map.insert("havainnoijat", "Tero Siironen");
-    map.insert("tallentaja", "Tero Siironen");
-    map.insert("havaintoriveja", "2");
-    map.insert("koord_tyyppi", "YKJ");
-    mTiiraExporter->uploadRecord(map, id);
+    mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), this);
+    mTiiraExporter->exportRecord(id);
 }

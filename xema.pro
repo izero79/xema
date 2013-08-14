@@ -200,8 +200,9 @@ SOURCES += main.cpp \
     networkcontroller.cpp \
     accuracy.cpp \
     accuracymodel.cpp \
-    tiiraexporter.cpp \
-    tiirachecksumcalculator.cpp
+    tiirachecksumcalculator.cpp \
+    tiiraservicehelper.cpp \
+    tiiraexporter.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -258,8 +259,9 @@ HEADERS += \
     networkcontroller.h \
     accuracy.h \
     accuracymodel.h \
-    tiiraexporter.h \
-    tiirachecksumcalculator.h
+    tiirachecksumcalculator.h \
+    tiiraservicehelper.h \
+    tiiraexporter.h
 
 RESOURCES += \
     commonresources.qrc
