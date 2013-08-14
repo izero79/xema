@@ -22,6 +22,7 @@ class CoordinateConverter;
 class KineticScroller;
 class NetworkController;
 class AccuracyModel;
+class TiiraExporter;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -88,6 +89,7 @@ private slots:
     void importOwnData();
     void openBrowser( const QString &url );
     void importData();
+    void tiiraExport();
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -121,6 +123,7 @@ private:
     FilterModel *mFilteredBirdAccuracyModel;
     AccuracyModel *mLocationAccuracyModel;
     AccuracyModel *mBirdAccuracyModel;
+    TiiraExporter *mTiiraExporter;
 };
 
 #endif // QMLWINDOW_H

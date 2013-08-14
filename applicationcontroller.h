@@ -18,6 +18,7 @@ class DressModel;
 class DirectionModel;
 class Settings;
 class AccuracyModel;
+class TiiraExporter;
 
 class ApplicationController : public QObject
 {

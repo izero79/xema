@@ -30,6 +30,7 @@
 #include "kineticscroller.h"
 #include "networkcontroller.h"
 #include "accuracymodel.h"
+#include "tiiraexporter.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -64,7 +65,9 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mFilteredAccuracyModel(0),
     mFilteredBirdAccuracyModel(0),
     mLocationAccuracyModel(0),
-    mBirdAccuracyModel(0)
+    mBirdAccuracyModel(0),
+    mTiiraExporter(0)
+
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     mView = new QDeclarativeView(this);
@@ -108,6 +111,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mRootContext->setContextProperty("CoordinateConverter", mCoordinateConverter);
     mNetworkController = new NetworkController(this);
     mRootContext->setContextProperty( "NetworkController", mNetworkController );
+    mNetworkController->openAnyConnection();
+    mTiiraExporter = new TiiraExporter("iZero", "37e0a47e842a33948d804f26ece2aa8f", this);
 
 }
 
@@ -209,6 +214,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(exportOwnData()),this,SLOT(exportOwnData()));
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
     connect(mRootObject,SIGNAL(openUrl(QString)),this,SLOT(openBrowser(QString)));
+    connect(mRootObject,SIGNAL(tiiraExport()),this,SLOT(tiiraExport()));
 
     QString lang = Settings::lang();
     bool compassSupported = SystemInfoProvider::compassSupported();
@@ -435,4 +441,10 @@ void QMLWindow::setProcessing(bool processing) {
 
 void QMLWindow::setProcessingFalse() {
     setProcessing(false);
+}
+
+void QMLWindow::tiiraExport() {
+    qDebug() << Q_FUNC_INFO;
+    mTiiraExporter->init(mNetworkController->currentConfiguration());
+    mTiiraExporter->login();
 }

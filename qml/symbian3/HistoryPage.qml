@@ -84,7 +84,7 @@ Page {
                 text: qsTr("About Xema")
                 visible: true
                 onClicked: {
-                    aboutDialog.open()
+                    window.tiiraExport() //aboutDialog.open()
                 }
             }
         }

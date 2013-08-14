@@ -1,7 +1,7 @@
 #CONFIG +=debug
 #CONFIG -=release
 CONFIG -=liteVersion
-CONFIG +=forOvi
+CONFIG -=forOvi
 CONFIG -=forUnsigned
 CONFIG -=S603x
 CONFIG -=Symbian1
@@ -18,11 +18,11 @@ DEFINES += USE_MOBILITY
 #DEFINES += ONLYFORIMEI=357923041627788
 DEFINES += ONLYFORIMEI=0
 
-VERSION = 1.1.1
+VERSION = 1.2.0
 
 DEFINES += MAJORVERSION=1
-DEFINES += MINORVERSION=1
-DEFINES += PATCHVERSION=1
+DEFINES += MINORVERSION=2
+DEFINES += PATCHVERSION=0
 
 TARGET = xema
 DEPLOYMENT.display_name = "Xema"
@@ -199,7 +199,9 @@ SOURCES += main.cpp \
     dataexporter.cpp \
     networkcontroller.cpp \
     accuracy.cpp \
-    accuracymodel.cpp
+    accuracymodel.cpp \
+    tiiraexporter.cpp \
+    tiirachecksumcalculator.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -255,7 +257,9 @@ HEADERS += \
     dataexporter.h \
     networkcontroller.h \
     accuracy.h \
-    accuracymodel.h
+    accuracymodel.h \
+    tiiraexporter.h \
+    tiirachecksumcalculator.h
 
 RESOURCES += \
     commonresources.qrc
