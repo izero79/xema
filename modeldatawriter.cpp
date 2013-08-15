@@ -43,15 +43,16 @@ ModelDataWriter::~ModelDataWriter() {
 }
 
 
-void ModelDataWriter::writeNewObservation(const QString &data)
+long ModelDataWriter::writeNewObservation(const QString &data)
 {
-    if (data.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID) != "0")
+    long dataId = data.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong();
+    if (dataId != 0)
     {
 //        qDebug() << "ON JO TALLENNETTU, KORVATAAN";
-        replaceObservation(data.section('#', XemaEnums::OBS_ID, XemaEnums::OBS_ID).toLongLong(), data);
-        return;
+        replaceObservation(dataId, data);
+        return dataId;
     }
-    qlonglong newId = getNewId();
+    long newId = getNewId();
 
     QString newData = data;
     int pos = newData.indexOf("#");
@@ -78,6 +79,7 @@ void ModelDataWriter::writeNewObservation(const QString &data)
     striimi << newData;
     striimi << "\n";
     tiedosto.close();
+    return newId;
 }
 
 void ModelDataWriter::replaceObservation(qlonglong id, const QString &data)

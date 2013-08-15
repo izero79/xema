@@ -359,7 +359,12 @@ void QMLWindow::setAtlasModel(AtlasIndexModel *model)
 void QMLWindow::writeNewObservation(const QString &data)
 {
     setProcessing(true);
-    mDataWriter->writeNewObservation(data);//, *mLocationModel, *mPersonModel);
+    long id = mDataWriter->writeNewObservation(data);//, *mLocationModel, *mPersonModel);
+    if (mSettings->tiiraAutosave()) {
+        QString idNum;
+        idNum.setNum(id);
+        exportObsToTiira(idNum);
+    }
     setProcessing(false);
 }
 

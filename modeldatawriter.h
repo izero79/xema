@@ -19,7 +19,7 @@ public:
     static ModelDataWriter* instance();
 
 
-    void writeNewObservation(const QString &data);
+    long writeNewObservation(const QString &data);
     void replaceObservation(qlonglong id, const QString &data);
     void deleteObservation(qlonglong id);
     void writePersonData(PersonModel *model);

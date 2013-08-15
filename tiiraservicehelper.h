@@ -41,6 +41,7 @@ private slots:
     void uploadRowRequestFinished(QNetworkReply *reply);
 
     QString envelopBodyStart() const;
+    QString envelopAuth() const;
     QString envelopBodyEnd() const;
     QString readName(const QString &data) const;
     QString recordRowNodes(const QMap<QString,QString> &map) const;
@@ -62,6 +63,7 @@ private:
     QMap<long, QNetworkRequest> mRequests;
     QMap<long, QNetworkRequest> mRowRequests;
     bool mAuthSent;
+    QString mTiiraAppKey;
 };
 
 #endif // TIIRASERVICEHELPER_H

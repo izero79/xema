@@ -65,11 +65,33 @@ bool TiiraExporter::exportRecord(long id) {
             int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
             qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
             int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
-            QString exported = obsLine.section('#', exportPos, exportPos);
-            QString exported_to_tiira = obsLine.section('#', exportPos+1, exportPos+1);
             QString notiiraexp = obsLine.section('#', exportPos+2, exportPos+2);
-            QString tiira_uploadid = obsLine.section('#', exportPos+3, exportPos+3);
+            QString town = obsLine.section("#", XemaEnums::OBS_TOWN, XemaEnums::OBS_TOWN);
+            QString place = obsLine.section("#", XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION);
+
+
+            int locationRowCount = mLocations->rowCount();
+
+            // add location coordinates if found
+            QString country = "";
+
+            for(int i = 0; i < locationRowCount; i++)
+            {
+                if (mLocations->getItem(i).town() == town && mLocations->getItem(i).place() == place)
+                {
+                    country =  mLocations->getItem(i).localizedCountry();
+                    break;
+                }
+            }
             bool doNotExport = false;
+
+            if ((QString::compare(country, "suomi", Qt::CaseInsensitive) != 0 &&
+                QString::compare(country, "finland", Qt::CaseInsensitive) != 0) &&
+                !country.isEmpty()) {
+                doNotExport = true;
+            }
+
+
             if (QString::compare(notiiraexp, "true", Qt::CaseInsensitive) == 0) {
                 doNotExport = true;
             }
@@ -92,12 +114,6 @@ bool TiiraExporter::exportRecord(long id) {
                     doNotExport = true;
                 }
             }*/
-/*
-            if (onlyNew && QString::compare(exported, "true", Qt::CaseInsensitive) == 0) {
-                doNotExport = true;
-            }
-*/
-            qDebug() << Q_FUNC_INFO << "EXPORTED" << exported;
             int pos = -1;
             int i = 0;
             do
@@ -118,17 +134,8 @@ bool TiiraExporter::exportRecord(long id) {
             {
                 map = getFirstRowMap(obsLine);
                 qDebug() << "MAP" << map;
-                mTiiraServiceHelper->uploadRecord(map, id);
                 mSentRecords.insert(id, obsLine);
-
-                //qDebug() << "VALMIS EXPORT RIVI" << formatToTiira(obsLine,locations,persons,birds,delimiter,allCountries);
-                /*
-                QString formatted = formatToTiira(obsLine,locations,persons,birds,delimiter,allCountries);
-                if (formatted.isEmpty() == false) {
-                    export_stream << formatted;
-                    export_stream << "\n";
-                    markAsExported = true;
-                }*/
+                mTiiraServiceHelper->uploadRecord(map, id);
             }
 
         } else {
@@ -479,8 +486,7 @@ void TiiraExporter::addCsvIdsToRecords() {
                 start.append("\n");
 
                 qDebug() << "uus rivi datassa tiira export setin jalkeen" << start;
-                tmp_stream << obsLine;
-                tmp_stream << "\n";
+                tmp_stream << start;
                 mUploadedRecords.remove(id);
             }
         } else {
