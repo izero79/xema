@@ -71,8 +71,8 @@ void ModelDataWriter::writeNewObservation(const QString &data)
     striimi.setCodec("ISO 8859-1");
     if (headerExists == false)
     {
-        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Havainnoijat2#Salattu#Koontihavainto#Kuuluu havaintoon#Rivejä#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Exported#\n");
-//        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Paikka#Lisätietoja#Atlaskoodi#Havainnoijat#Havainnoijat2#Salattu#Rivejä#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Sää#Exported#\n");
+        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Havainnoijat2#Salattu#Koontihavainto#Kuuluu havaintoon#Rivejä#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Exported#exported_to_tiira#notiiraexp#tiira_uploadid#\n");
+//        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Paikka#Lisätietoja#Atlaskoodi#Havainnoijat#Havainnoijat2#Salattu#Rivejä#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Sää#Exported#exported_to_tiira#notiiraexp#tiira_uploadid#\n");
         striimi << header;
     }
     striimi << newData;
@@ -366,6 +366,9 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
         qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
         int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
         QString exported = obsLine.section('#', exportPos, exportPos);
+        QString exported_to_tiira = obsLine.section('#', exportPos+1, exportPos+1);
+        QString notiiraexp = obsLine.section('#', exportPos+2, exportPos+2);
+        QString tiira_uploadid = obsLine.section('#', exportPos+3, exportPos+3);
         bool doNotExport = false;
         if (date.isEmpty() == false) {
             qDebug() << Q_FUNC_INFO << "vain pvm" << date;
@@ -427,10 +430,14 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
             qDebug() << "start" << start;
 
             if (markAsExported == true) {
-                start.append("#true#\n");
+                start.append("#true#");
             } else {
-                start.append("#" + exported + "#\n");
+                start.append("#" + exported + "#");
             }
+            start.append(exported_to_tiira + "#");
+            start.append(notiiraexp + "#");
+            start.append(tiira_uploadid + "#");
+            start.append("\n");
             qDebug() << "uus rivi datassa export setin jalkeen" << start;
             tmp_stream << start;
         }

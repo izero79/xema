@@ -9,6 +9,7 @@
 #include "locationmodel.h"
 #include "personmodel.h"
 #include "coordinateconverter.h"
+#include "settings.h"
 
 TiiraExporter::TiiraExporter(const QNetworkConfiguration &config, LocationModel *locations, PersonModel *persons, BirdModel *birds, QObject *parent) :
     QObject(parent),
@@ -16,27 +17,39 @@ TiiraExporter::TiiraExporter(const QNetworkConfiguration &config, LocationModel 
     mLocations(locations),
     mPersons(persons),
     mSpecies(birds),
-    mCoordinates(0)
+    mCoordinates(0),
+    mExportInProgress(false)
 {
     mCoordinates = new CoordinateConverter(this);
-    mTiiraServiceHelper = new TiiraServiceHelper("iZero", "37e0a47e842a33948d804f26ece2aa8f", this);
+    QString userName = Settings::tiiraUsername();
+    QString pwdHash = Settings::tiiraPwdHash();
+    mTiiraServiceHelper = new TiiraServiceHelper(userName, pwdHash, this);
     mTiiraServiceHelper->init(config);
     connect(mTiiraServiceHelper,SIGNAL(uploadOk(long,QString)),this,SLOT(uploadOk(long,QString)));
     connect(mTiiraServiceHelper,SIGNAL(rowUploadOk(long,int)),this,SLOT(rowUploadOk(long,int)));
+}
+
+void TiiraExporter::resetServer() {
+    QString userName = Settings::tiiraUsername();
+    QString pwdHash = Settings::tiiraPwdHash();
+    mTiiraServiceHelper->resetServer(userName, pwdHash);
+}
+
+bool TiiraExporter::exportOneRecord(long id) {
+    mExportInProgress = true;
+    exportRecord(id);
+    mExportInProgress = false;
+    return true;
 }
 
 bool TiiraExporter::exportRecord(long id) {
     QMap<QString,QString> map;
 
     QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
-    QFile tmptiedosto(XemaUtils::dataFileDir() + "xemadata.tmp.txt");
 
     tiedosto.open(QFile::ReadOnly);
-    tmptiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream instriimi(&tiedosto);
-    QTextStream tmp_stream(&tmptiedosto);
     instriimi.setCodec("ISO 8859-1");
-    tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
     while (instriimi.atEnd() == false)
@@ -45,8 +58,6 @@ bool TiiraExporter::exportRecord(long id) {
         if (obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Id" ||
             obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Rivi-ID")
         {
-            tmp_stream << obsLine;
-            tmp_stream << "\n";
             continue;
         }
         if (obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID).toLongLong() == id) {
@@ -55,7 +66,15 @@ bool TiiraExporter::exportRecord(long id) {
             qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
             int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
             QString exported = obsLine.section('#', exportPos, exportPos);
-            bool doNotExport = false;/*
+            QString exported_to_tiira = obsLine.section('#', exportPos+1, exportPos+1);
+            QString notiiraexp = obsLine.section('#', exportPos+2, exportPos+2);
+            QString tiira_uploadid = obsLine.section('#', exportPos+3, exportPos+3);
+            bool doNotExport = false;
+            if (QString::compare(notiiraexp, "true", Qt::CaseInsensitive) == 0) {
+                doNotExport = true;
+            }
+
+            /*
             if (date.isEmpty() == false) {
                 qDebug() << Q_FUNC_INFO << "vain pvm" << date;
                 QString obsDate = obsLine.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
@@ -95,7 +114,6 @@ bool TiiraExporter::exportRecord(long id) {
             }
             while (pos>0);
 
-            bool markAsExported = false;
             if (doNotExport == false)
             {
                 map = getFirstRowMap(obsLine);
@@ -112,37 +130,12 @@ bool TiiraExporter::exportRecord(long id) {
                     markAsExported = true;
                 }*/
             }
-            if (obsLine.length() > 20)
-            {
-                //qDebug() << "rivi ennen export settia" << obsLine;
-                QString newLine;
-                newLine = obsLine;
 
-                QString start = newLine.mid(0, pos);
-                qDebug() << "start" << start;
-
-                if (markAsExported == true) {
-                    start.append("#true#\n");
-                } else {
-                    start.append("#" + exported + "#\n");
-                }
-                //qDebug() << "uus rivi datassa export setin jalkeen" << start;
-                tmp_stream << obsLine;
-                tmp_stream << "\n";
-            }
         } else {
-            qDebug() << "Ei vietava rivi, tallennetaan takaisin";
-            tmp_stream << obsLine;
-            tmp_stream << "\n";
+            qDebug() << "Ei vietava rivi";
         }
     }
     tiedosto.close();
-    tmptiedosto.close();
-
-    QFile::remove(XemaUtils::dataFileDir() + "xemadata.backup");
-    tiedosto.rename(XemaUtils::dataFileDir() + "xemadata.backup");
-    tmptiedosto.rename(XemaUtils::dataFileDir() + "xemadata.txt");
-
 
     qDebug() << map;
     return true;
@@ -153,6 +146,7 @@ void TiiraExporter::uploadOk(long id, const QString &csvId) {
     qDebug() << Q_FUNC_INFO << id << csvId;
     QString record = mSentRecords.value(id);
     int rows = record.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT).toInt();
+    mUploadedRecords.insert(id, csvId);
     if (rows> 1) {
         for( int i = 2; i <= rows; i++) {
             QMap<QString,QString> map;
@@ -160,12 +154,11 @@ void TiiraExporter::uploadOk(long id, const QString &csvId) {
             map.insert("havaintotunnus", csvId);
             mTiiraServiceHelper->uploadRecordRow(map, id);
         }
-        // TODO, csvid
-        qDebug() << Q_FUNC_INFO << "TODO add csvid to record";
     } else {
-        // TODO, mark record as tiira exported and add csvid
-        qDebug() << Q_FUNC_INFO << "TODO mark record as tiira exported";
         mSentRecords.remove(id);
+        if(mExportInProgress == false) {
+            addCsvIdsToRecords();
+        }
     }
 }
 
@@ -174,10 +167,12 @@ void TiiraExporter::rowUploadOk(long id, int row) {
     QString record = mSentRecords.value(id);
     int rows = record.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT).toInt();
     if (row == rows) {
-        qDebug() << Q_FUNC_INFO << "TODO mark record as tiira exported";
         mSentRecords.remove(id);
+        if(mExportInProgress == false) {
+            addCsvIdsToRecords();
+        }
     } else {
-        qDebug() << Q_FUNC_INFO << "more rows";
+        qDebug() << Q_FUNC_INFO << "more rows" << rows;
     }
 
 }
@@ -198,66 +193,26 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
         hidden = "1";
     }
     QString rows = data.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT);
-    int xemaRows = rows.toInt();
     QString town = data.section("#", XemaEnums::OBS_TOWN, XemaEnums::OBS_TOWN);
     QString place = data.section("#", XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION);
     QString birdX = data.section("#", XemaEnums::OBS_BIRD_XCOORD, XemaEnums::OBS_BIRD_XCOORD);
     QString birdY = data.section("#", XemaEnums::OBS_BIRD_YCOORD, XemaEnums::OBS_BIRD_YCOORD);
     QString locationAccuracy = data.section("#", XemaEnums::OBS_ACCURACY, XemaEnums::OBS_ACCURACY);
     QString birdAccuracy = data.section("#", XemaEnums::OBS_BIRD_ACCURACY, XemaEnums::OBS_BIRD_ACCURACY);
-    QString saveTime = data.section("#", XemaEnums::OBS_SAVETIME, XemaEnums::OBS_SAVETIME);
-//    qDebug() << "EXPORT, birdX " << birdX;
-//    qDebug() << "EXPORT, birdY " << birdY;
 
-    QString exportLine = "";
-    QString locationString = "#" + town + "#" + place;
-//    qDebug() << "EXPORT, exportLine 2" << exportLine;
-
-    QString species_en;
-    QString species_sv;
-    QString species_sc;
-    QString species_fi;
     int rowCount = mSpecies->rowCount();
-
-    bool exportWgs = true;
 
     // convert bird coords if needed
     QString x = birdX;
     QString y = birdY;
     double dy = y.toDouble();
-    if (dy < 400) {
-//            qDebug() << "lintu wgs";
-    } else {
+    if (dy > 400) {
         QString ykj = birdY + ":" + birdX;
         QString wgs = mCoordinates->ykjToWgsString(ykj);
         birdY = wgs.section(":", 0, 0);
         birdX = wgs.section(":", 1, 1);
     }
 
-
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 3" << exportLine;
-    exportLine += species;
-//    qDebug() << "EXPORT, exportLine 4" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 5" << exportLine;
-//    qDebug() << "EXPORT, datetime" << datetime;
-    /*
-    if (datetime.section("#",3,3).isEmpty() == true)
-    {
-//        qDebug() << "EXPORT, exportLine 5.1" << exportLine;
-        exportLine += datetime.section("#",0,2);
-//        qDebug() << "EXPORT, exportLine 5.2" << exportLine;
-        exportLine += "#";
-//        qDebug() << "EXPORT, exportLine 5.3" << exportLine;
-        exportLine += datetime.section("#",2,2);
-//        qDebug() << "EXPORT, exportLine 5.4" << exportLine;
-    }
-    else
-    {*/
-//        exportLine += datetime;
-//        qDebug() << "EXPORT, exportLine 6" << exportLine;
-    //}
     rowCount = mLocations->rowCount();
 
     // add location coordinates if found
@@ -285,25 +240,6 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
         }
     }
 
-    exportLine += locationString;
-//    qDebug() << "EXPORT, exportLine 7" << exportLine;
-    exportLine += "#";
-    exportLine += locationAccuracy;
-    exportLine += "#";
-    exportLine += birdX;
-    exportLine += "#";
-    exportLine += birdY;
-    exportLine += "#";
-    exportLine += birdAccuracy;
-    exportLine += "#";
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 8" << exportLine;
-    exportLine += info;
-    exportLine += "#";
-    //exportLine += atlas;
-//    qDebug() << "EXPORT, exportLine 9" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 10" << exportLine;
 
     // add data saver (default name if found)
     rowCount = mPersons->rowCount();
@@ -317,16 +253,6 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
         }
     }
 
-    exportLine += saver;
-//        qDebug() << "EXPORT, exportLine 11" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 12" << exportLine;
-    // tiira saving time
-    exportLine += saveTime;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 13" << exportLine;
-
-//    qDebug() << "NIMET ennen muutosta" << nimet;
     if (nimet.length() > 1 && nimet.endsWith('#') == false) {
         nimet.replace("#", ", ");
     }
@@ -336,42 +262,6 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
     if (nimet.endsWith(", ")) {
         nimet = nimet.mid(0, nimet.length() - 2);
     }
-    exportLine += nimet;
-//    qDebug() << "EXPORT, exportLine 14" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 15" << exportLine;
-    exportLine += hidden;
-//    qDebug() << "EXPORT, exportLine 16" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 17" << exportLine;
-
-    // koontihavainto ja kuuluu havaintoon
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 18" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 19" << exportLine;
-
-    // include exported or not (24 vs 25)
-    QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
-                                 XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
-
-    loppu.prepend("#");
-    loppu.append("#");
-    loppu.append(country);
-    if (exportWgs) {
-        loppu.append("#WGS84");
-    } else {
-        loppu.append("#YKJ");
-    }
-    loppu.append("#");
-    loppu.append(species_en);
-    loppu.append("#");
-    loppu.append(species_sv);
-    loppu.append("#");
-    loppu.append(species_sc);
-    loppu.append("#");
-    loppu.append(species_fi);
-    //loppu.append("#");
 
     QString birdCount = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_BIRDCOUNT);
     QString sukupuoli = data.section('#', XemaEnums::OBS_SEX, XemaEnums::OBS_SEX);
@@ -389,48 +279,6 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
     QString parvi = data.section('#', XemaEnums::OBS_LOFT, XemaEnums::OBS_LOFT);
 
 
-    //    qDebug() << "EXPORT, exportLine 20" << exportLine;
-    exportLine += loppu;
-    //qDebug() << "EXPORT, exportLine 21, delimcount" << exportLine.count("#");
-/*
-    if (xemaRows > 1) {
-        for(int i = 1; i < xemaRows; i++)
-        {
-            exportLine += "\n";
-            //qDebug() << "EXPORT, exportLine 22.1" << exportLine;
-            QString rowLine = rowId;
-            //exportLine += rowId;
-            //exportLine += "#######################";
-            rowLine += "#######################";
-            //qDebug() << "EXPORT, rowLine " << rowLine;
-            QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+(i*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_INDIRECT+(i*XemaEnums::OBS_SUBFIELDCOUNT));
-            rivi.replace("#koiras#", "#k#");
-            rivi.replace("#naaras#", "#n#");
-            //qDebug() << "EXPORT, lisataan rivi" << rivi;
-            //exportLine += rivi;
-            rowLine += rivi;
-//            qDebug() << "EXPORT, exportLine 22.4" << exportLine;
-            //qDebug() << "EXPORT, lisataan loput" << "########";
-            //exportLine += "########";
-            rowLine += "#######";
-            //exportLine += loppu;
-            //qDebug() << "EXPORT, rowLine, delimcount" << rowLine.count("#");
-//            qDebug() << "EXPORT, exportLine 22.5" << exportLine;
-            exportLine += rowLine;
-        }
-    }
-*/
-//    qDebug() << "exportLine ENNEN MUUTOSTA" << exportLine;
-    exportLine.replace("#true","#X", Qt::CaseSensitive);
-//    qDebug() << "EXPORT, exportLine 23" << exportLine;
-    exportLine.replace("#false","#", Qt::CaseSensitive);
-//    qDebug() << "EXPORT, exportLine 24" << exportLine;
-//    qDebug() << "exportLine MUUTOKSEN JALKEEN" << exportLine;
-/*    if( exportLine.endsWith( "#") == true ) {
-        exportLine.remove(exportLine.size()-1,1);
-    }*/
-    //qDebug() << "FORMAT TO TIIRA JALKEEN" << exportLine;
-    //qDebug() << "FORMAT TO TIIRA JALKEEN DELIMS" << exportLine.count(delimiter);
     QMap<QString, QString> map;
     map.insert("laji", species);
     map.insert("maara", birdCount );
@@ -468,29 +316,12 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
 
 QMap<QString, QString> TiiraExporter::getRowMap(const QString &data, int row)
 {
-    QString rows = data.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT);
-    int xemaRows = rows.toInt();
     QString town = data.section("#", XemaEnums::OBS_TOWN, XemaEnums::OBS_TOWN);
     QString place = data.section("#", XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION);
     QString birdX = data.section("#", XemaEnums::OBS_BIRD_XCOORD, XemaEnums::OBS_BIRD_XCOORD);
     QString birdY = data.section("#", XemaEnums::OBS_BIRD_YCOORD, XemaEnums::OBS_BIRD_YCOORD);
-    QString locationAccuracy = data.section("#", XemaEnums::OBS_ACCURACY, XemaEnums::OBS_ACCURACY);
-    QString birdAccuracy = data.section("#", XemaEnums::OBS_BIRD_ACCURACY, XemaEnums::OBS_BIRD_ACCURACY);
-    QString saveTime = data.section("#", XemaEnums::OBS_SAVETIME, XemaEnums::OBS_SAVETIME);
-//    qDebug() << "EXPORT, birdX " << birdX;
-//    qDebug() << "EXPORT, birdY " << birdY;
 
-    QString exportLine = "";
-    QString locationString = "#" + town + "#" + place;
-//    qDebug() << "EXPORT, exportLine 2" << exportLine;
-
-    QString species_en;
-    QString species_sv;
-    QString species_sc;
-    QString species_fi;
     int rowCount = mSpecies->rowCount();
-
-    bool exportWgs = true;
 
     // convert bird coords if needed
     QString x = birdX;
@@ -506,29 +337,6 @@ QMap<QString, QString> TiiraExporter::getRowMap(const QString &data, int row)
     }
 
 
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 3" << exportLine;
-    //exportLine += species;
-//    qDebug() << "EXPORT, exportLine 4" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 5" << exportLine;
-//    qDebug() << "EXPORT, datetime" << datetime;
-    /*
-    if (datetime.section("#",3,3).isEmpty() == true)
-    {
-//        qDebug() << "EXPORT, exportLine 5.1" << exportLine;
-        exportLine += datetime.section("#",0,2);
-//        qDebug() << "EXPORT, exportLine 5.2" << exportLine;
-        exportLine += "#";
-//        qDebug() << "EXPORT, exportLine 5.3" << exportLine;
-        exportLine += datetime.section("#",2,2);
-//        qDebug() << "EXPORT, exportLine 5.4" << exportLine;
-    }
-    else
-    {*/
-//        exportLine += datetime;
-//        qDebug() << "EXPORT, exportLine 6" << exportLine;
-    //}
     rowCount = mLocations->rowCount();
 
     // add location coordinates if found
@@ -556,26 +364,6 @@ QMap<QString, QString> TiiraExporter::getRowMap(const QString &data, int row)
         }
     }
 
-    exportLine += locationString;
-//    qDebug() << "EXPORT, exportLine 7" << exportLine;
-    exportLine += "#";
-    exportLine += locationAccuracy;
-    exportLine += "#";
-    exportLine += birdX;
-    exportLine += "#";
-    exportLine += birdY;
-    exportLine += "#";
-    exportLine += birdAccuracy;
-    exportLine += "#";
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 8" << exportLine;
-    //exportLine += info;
-    exportLine += "#";
-    //exportLine += atlas;
-//    qDebug() << "EXPORT, exportLine 9" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 10" << exportLine;
-
     // add data saver (default name if found)
     rowCount = mPersons->rowCount();
     QString saver;
@@ -588,132 +376,23 @@ QMap<QString, QString> TiiraExporter::getRowMap(const QString &data, int row)
         }
     }
 
-    exportLine += saver;
-//        qDebug() << "EXPORT, exportLine 11" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 12" << exportLine;
-    // tiira saving time
-    exportLine += saveTime;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 13" << exportLine;
+    QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+((row-1)*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_INDIRECT+((row-1)*XemaEnums::OBS_SUBFIELDCOUNT));
+    qDebug() << "RIVIII " << rivi;
+    int offset = XemaEnums::OBS_BIRDCOUNT;
+    QString birdCount = rivi.section("#", XemaEnums::OBS_BIRDCOUNT-offset, XemaEnums::OBS_BIRDCOUNT-offset);
+    QString sukupuoli = rivi.section('#', XemaEnums::OBS_SEX-offset, XemaEnums::OBS_SEX-offset);
+    sukupuoli = sukupuoli.replace("koiras", "k");
+    sukupuoli = sukupuoli.replace("naaras", "n");
+    QString puku = rivi.section('#', XemaEnums::OBS_DRESS-offset, XemaEnums::OBS_DRESS-offset);
+    QString ika = rivi.section('#', XemaEnums::OBS_AGE-offset, XemaEnums::OBS_AGE-offset);
+    QString tila = rivi.section('#', XemaEnums::OBS_STATUS-offset, XemaEnums::OBS_STATUS-offset);
+    QString bongattu = rivi.section('#', XemaEnums::OBS_BONGAUS-offset, XemaEnums::OBS_BONGAUS-offset);
+    QString pesinta = rivi.section('#', XemaEnums::OBS_NEST-offset, XemaEnums::OBS_NEST-offset);
+    QString kello_lintu1 = rivi.section('#', XemaEnums::OBS_BIRDTIME1-offset, XemaEnums::OBS_BIRDTIME1-offset);
+    QString kello_lintu2 = rivi.section('#', XemaEnums::OBS_BIRDTIME2-offset, XemaEnums::OBS_BIRDTIME2-offset);
+    QString lisat = rivi.section('#', XemaEnums::OBS_BIRDINFO-offset, XemaEnums::OBS_BIRDINFO-offset);
+    QString parvi = rivi.section('#', XemaEnums::OBS_LOFT-offset, XemaEnums::OBS_LOFT-offset);
 
-//    qDebug() << "NIMET ennen muutosta" << nimet;
-    /*
-    if (nimet.length() > 1 && nimet.endsWith('#') == false) {
-        nimet.replace("#", ", ");
-    }
-    else {
-        nimet.replace("#", "");
-    }
-    if (nimet.endsWith(", ")) {
-        nimet = nimet.mid(0, nimet.length() - 2);
-    }
-    exportLine += nimet;*/
-//    qDebug() << "EXPORT, exportLine 14" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 15" << exportLine;
-    //exportLine += hidden;
-//    qDebug() << "EXPORT, exportLine 16" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 17" << exportLine;
-
-    // koontihavainto ja kuuluu havaintoon
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 18" << exportLine;
-    exportLine += "#";
-//    qDebug() << "EXPORT, exportLine 19" << exportLine;
-
-    // include exported or not (24 vs 25)
-    QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
-                                 XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
-
-    loppu.prepend("#");
-    loppu.append("#");
-    loppu.append(country);
-    if (exportWgs) {
-        loppu.append("#WGS84");
-    } else {
-        loppu.append("#YKJ");
-    }
-    loppu.append("#");
-    loppu.append(species_en);
-    loppu.append("#");
-    loppu.append(species_sv);
-    loppu.append("#");
-    loppu.append(species_sc);
-    loppu.append("#");
-    loppu.append(species_fi);
-    //loppu.append("#");
-/*
-    QString birdCount = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_BIRDCOUNT);
-    QString sukupuoli = data.section('#', XemaEnums::OBS_SEX, XemaEnums::OBS_SEX);
-    QString puku = data.section('#', XemaEnums::OBS_DRESS, XemaEnums::OBS_DRESS);
-    QString ika = data.section('#', XemaEnums::OBS_AGE, XemaEnums::OBS_AGE);
-    QString tila = data.section('#', XemaEnums::OBS_STATUS, XemaEnums::OBS_STATUS);
-    QString bongattu = data.section('#', XemaEnums::OBS_BONGAUS, XemaEnums::OBS_BONGAUS);
-    QString pesinta = data.section('#', XemaEnums::OBS_NEST, XemaEnums::OBS_NEST);
-    QString kello_lintu1 = data.section('#', XemaEnums::OBS_BIRDTIME1, XemaEnums::OBS_BIRDTIME1);
-    QString kello_lintu2 = data.section('#', XemaEnums::OBS_BIRDTIME2, XemaEnums::OBS_BIRDTIME2);
-    QString lisat = data.section('#', XemaEnums::OBS_BIRDINFO, XemaEnums::OBS_BIRDINFO);
-    QString parvi = data.section('#', XemaEnums::OBS_LOFT, XemaEnums::OBS_LOFT);
-*/
-
-    //    qDebug() << "EXPORT, exportLine 20" << exportLine;
-    exportLine += loppu;
-    //qDebug() << "EXPORT, exportLine 21, delimcount" << exportLine.count("#");
-/*
-    if (xemaRows > 1) {
-        for(int i = 1; i < xemaRows; i++)
-        {
-            exportLine += "\n";
-            //qDebug() << "EXPORT, exportLine 22.1" << exportLine;
-            QString rowLine = rowId;
-            //exportLine += rowId;
-            //exportLine += "#######################";
-            rowLine += "#######################";
-            //qDebug() << "EXPORT, rowLine " << rowLine;*/
-            QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+((row-1)*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_INDIRECT+((row-1)*XemaEnums::OBS_SUBFIELDCOUNT));
-            qDebug() << "RIVIII " << rivi;
-            int offset = XemaEnums::OBS_BIRDCOUNT;
-            QString birdCount = rivi.section("#", XemaEnums::OBS_BIRDCOUNT-offset, XemaEnums::OBS_BIRDCOUNT-offset);
-            QString sukupuoli = rivi.section('#', XemaEnums::OBS_SEX-offset, XemaEnums::OBS_SEX-offset);
-            QString puku = rivi.section('#', XemaEnums::OBS_DRESS-offset, XemaEnums::OBS_DRESS-offset);
-            QString ika = rivi.section('#', XemaEnums::OBS_AGE-offset, XemaEnums::OBS_AGE-offset);
-            QString tila = rivi.section('#', XemaEnums::OBS_STATUS-offset, XemaEnums::OBS_STATUS-offset);
-            QString bongattu = rivi.section('#', XemaEnums::OBS_BONGAUS-offset, XemaEnums::OBS_BONGAUS-offset);
-            QString pesinta = rivi.section('#', XemaEnums::OBS_NEST-offset, XemaEnums::OBS_NEST-offset);
-            QString kello_lintu1 = rivi.section('#', XemaEnums::OBS_BIRDTIME1-offset, XemaEnums::OBS_BIRDTIME1-offset);
-            QString kello_lintu2 = rivi.section('#', XemaEnums::OBS_BIRDTIME2-offset, XemaEnums::OBS_BIRDTIME2-offset);
-            QString lisat = rivi.section('#', XemaEnums::OBS_BIRDINFO-offset, XemaEnums::OBS_BIRDINFO-offset);
-            QString parvi = rivi.section('#', XemaEnums::OBS_LOFT-offset, XemaEnums::OBS_LOFT-offset);
-
-            //rivi.replace("#koiras#", "#k#");
-            //rivi.replace("#naaras#", "#n#");
-            //qDebug() << "EXPORT, lisataan rivi" << rivi;
-            //exportLine += rivi;
-            //rowLine += rivi;
-//            qDebug() << "EXPORT, exportLine 22.4" << exportLine;
-            //qDebug() << "EXPORT, lisataan loput" << "########";
-            //exportLine += "########";
-            //rowLine += "#######";
-            //exportLine += loppu;
-            //qDebug() << "EXPORT, rowLine, delimcount" << rowLine.count("#");
-//            qDebug() << "EXPORT, exportLine 22.5" << exportLine;
-            //exportLine += rowLine;
-//        }
-//    }
-
-//    qDebug() << "exportLine ENNEN MUUTOSTA" << exportLine;
-    exportLine.replace("#true","#X", Qt::CaseSensitive);
-//    qDebug() << "EXPORT, exportLine 23" << exportLine;
-    exportLine.replace("#false","#", Qt::CaseSensitive);
-//    qDebug() << "EXPORT, exportLine 24" << exportLine;
-//    qDebug() << "exportLine MUUTOKSEN JALKEEN" << exportLine;
-/*    if( exportLine.endsWith( "#") == true ) {
-        exportLine.remove(exportLine.size()-1,1);
-    }*/
-    //qDebug() << "FORMAT TO TIIRA JALKEEN" << exportLine;
-    //qDebug() << "FORMAT TO TIIRA JALKEEN DELIMS" << exportLine.count(delimiter);
     QMap<QString, QString> map;
     map.insert("maara", birdCount );
     map.insert("sukupuoli", sukupuoli);
@@ -727,4 +406,93 @@ QMap<QString, QString> TiiraExporter::getRowMap(const QString &data, int row)
     map.insert("lisat", lisat);
     map.insert("parvi", parvi);
     return map;
+}
+
+void TiiraExporter::login() {
+    connect(mTiiraServiceHelper,SIGNAL(loginOk(QString)),this,SIGNAL(loginOk(QString)));
+    connect(mTiiraServiceHelper,SIGNAL(wrongCredientals()),this,SIGNAL(wrongCredientals()));
+    connect(mTiiraServiceHelper,SIGNAL(noUploadRights()),this,SIGNAL(noUploadRights()));
+    connect(mTiiraServiceHelper,SIGNAL(serverLoginFailed()),this,SIGNAL(serverLoginFailed()));
+    mTiiraServiceHelper->login();
+
+}
+
+void TiiraExporter::addCsvIdsToRecords() {
+
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
+    QFile tmptiedosto(XemaUtils::dataFileDir() + "xemadata.tmp.txt");
+
+    tiedosto.open(QFile::ReadOnly);
+    tmptiedosto.open(QFile::ReadWrite|QFile::Truncate);
+    QTextStream instriimi(&tiedosto);
+    QTextStream tmp_stream(&tmptiedosto);
+    instriimi.setCodec("ISO 8859-1");
+    tmp_stream.setCodec("ISO 8859-1");
+
+    QString obsLine;
+    while (instriimi.atEnd() == false)
+    {
+        obsLine = instriimi.readLine();
+        if (obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Id" ||
+            obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Rivi-ID")
+        {
+            tmp_stream << obsLine;
+            tmp_stream << "\n";
+            continue;
+        }
+        long id = obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID).toLongLong();
+
+        if ( mUploadedRecords.contains(id)) {
+            int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
+            int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
+            QString exported = obsLine.section('#', exportPos, exportPos);
+            QString notiiraexp = obsLine.section('#', exportPos+2, exportPos+2);
+            int pos = -1;
+            int i = 0;
+            do
+            {
+                pos = obsLine.indexOf("#",pos+1);
+                //qDebug() << "pos" << pos << i << exportPos;
+                if (i == exportPos - 1)
+                {
+                    //qDebug() << "pos" << pos << "paikka" << i;
+
+                    break;
+                }
+                i++;
+            }
+            while (pos>0);
+
+            if (obsLine.length() > 20)
+            {
+                //qDebug() << "rivi ennen export settia" << obsLine;
+                QString newLine;
+                newLine = obsLine;
+
+                QString start = newLine.mid(0, pos);
+                qDebug() << "start" << start;
+
+                start.append("#" + exported + "#");
+                start.append("true#");
+                start.append(notiiraexp + "#");
+                start.append(mUploadedRecords.value(id) + "#");
+                start.append("\n");
+
+                qDebug() << "uus rivi datassa tiira export setin jalkeen" << start;
+                tmp_stream << obsLine;
+                tmp_stream << "\n";
+                mUploadedRecords.remove(id);
+            }
+        } else {
+            qDebug() << "Ei vietava rivi, tallennetaan takaisin";
+            tmp_stream << obsLine;
+            tmp_stream << "\n";
+        }
+    }
+    tiedosto.close();
+    tmptiedosto.close();
+
+    QFile::remove(XemaUtils::dataFileDir() + "xemadata.backup");
+    tiedosto.rename(XemaUtils::dataFileDir() + "xemadata.backup");
+    tmptiedosto.rename(XemaUtils::dataFileDir() + "xemadata.txt");
 }

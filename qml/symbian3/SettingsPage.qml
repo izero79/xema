@@ -39,6 +39,30 @@ Page {
         editorObject.selectedIndex(indexi)
     }
 
+    function loginOk(name) {
+        tiiraStatus.text = qsTr("Status: Signed in as %1").arg(name)
+    }
+
+    function loginFailedCredientals() {
+        tiiraStatus.text = qsTr("Status: Wrong username/password")
+    }
+
+    function loginFailedNoRights() {
+        tiiraStatus.text = qsTr("Status: Signed in. No upload rights")
+    }
+
+    function serverLoginFailed() {
+        tiiraStatus.text = qsTr("Status: Tiira environment credientals wrong")
+    }
+
+    onStatusChanged: {
+        if (settingsPage.status == PageStatus.Active) {
+            if (window.useTiira) {
+                window.tiiraLogin()
+            }
+        }
+    }
+
     Dialog {
         id: areYouSureDialog
         property alias titleText: titleTextField.text
@@ -452,6 +476,240 @@ Page {
             }
         }
 
+        Item {
+            id: tiiraItems
+            height: childrenRect.height
+            anchors.left: parent.left
+            anchors.top: row4.bottom
+            anchors.topMargin: 30
+            anchors.right: parent.right
+            CheckBox {
+                id: useTiiraLabel
+                text: qsTr("Use Tiira service")
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.right: parent.right
+                checked: window.useTiira == true
+                onCheckedChanged: {
+                    window.useTiira = checked
+                    window.saveUseTiira(checked)
+                }
+            }
+            Item {
+                anchors.top: useTiiraLabel.bottom
+                anchors.topMargin: 8
+                anchors.left: parent.left
+                anchors.right: parent.right
+                visible: useTiiraLabel.checked
+                height: visible ? childrenRect.height : 0
+                Label {
+                    id: tiiraStatus
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+                    text: qsTr("Status: Not signed in")
+                }
+                Item {
+                    id: signing
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: tiiraStatus.bottom
+                    anchors.topMargin: 8
+                    height: childrenRect.height
+                    TextField {
+                        id: tiiraUsername
+                        anchors.left: parent.left
+                        anchors.right: tiiraSignin.left
+                        anchors.top: parent.top
+                        anchors.topMargin: 8
+                        placeholderText: qsTr("Username")
+                        text: window.tiiraUsername
+                    }
+                    TextField {
+                        id: tiiraPassword
+                        anchors.left: parent.left
+                        anchors.right: tiiraSignin.left
+                        anchors.top: tiiraUsername.bottom
+                        anchors.topMargin: 8
+                        placeholderText: qsTr("Password")
+                        echoMode: TextInput.Password
+                        text: tiiraPwdHash
+
+                    }
+                    Button {
+                        id: tiiraSignin
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.topMargin: 8
+                        width: 150
+                        text: qsTr("Sign in")
+                        onClicked: {
+                            window.tiiraUsername = tiiraUsername.text
+                            window.tiiraPwdHash = tiiraPassword.text
+                            window.saveTiiraUsername(tiiraUsername.text)
+                            window.saveTiiraPwdHash(tiiraPassword.text)
+                            window.tiiraLogin()
+                        }
+                        enabled: !window.tiiraLoginOk
+                    }
+                }
+                CheckBox {
+                    id: autosaveTiira
+                    text: qsTr("Save new records to Tiira")
+                    anchors.left: parent.left
+                    anchors.top: signing.bottom
+                    anchors.topMargin: 8
+                    anchors.right: parent.right
+                    checked: window.tiiraAutosave == true
+                    onCheckedChanged: {
+                        window.tiiraAutosave = checked
+                        window.saveTiiraAutosave(checked)
+                    }
+                }
+                Label {
+                    id: tiiraEnvLabel
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: autosaveTiira.bottom
+                    anchors.topMargin: 8
+                    text: qsTr("Tiira environment")
+                }
+                Item {
+                    id: tiiraServerItem
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: tiiraEnvLabel.bottom
+                    anchors.topMargin: 8
+                    height: childrenRect.height
+                    CheckableGroup { id: serverGroup }
+                    Column {
+                        id: tiiraServerRow
+                        spacing: platformStyle.paddingMedium
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        RadioButton {
+                            id: tiiraProd
+                            text: qsTr("Production")
+                            platformExclusiveGroup: serverGroup
+                            checked: window.tiiraServer == 0
+                            property bool wasPressed: false
+                            onPressedChanged: {
+                                if (pressed == true)
+                                {
+                                    wasPressed = true
+                                }
+                            }
+
+                            onCheckedChanged: {
+                                if (checked == true && wasPressed == true)
+                                {
+                                    wasPressed = false
+                                    window.tiiraServer = 0
+                                    window.saveTiiraServer(0)
+                                    window.tiiraServerUsername = tiiraServerUsername.text
+                                    window.tiiraServerPassword = tiiraServerPassword.text
+                                    window.saveTiiraServerUsername(tiiraServerUsername.text)
+                                    window.saveTiiraServerPassword(tiiraServerPassword.text)
+                                    window.tiiraLogin()
+                                }
+                            }
+                        }
+                        RadioButton {
+                            id: tiiraTest
+                            text: qsTr("Test")
+                            platformExclusiveGroup: serverGroup
+                            checked: window.tiiraServer == 1
+                            property bool wasPressed: false
+                            onPressedChanged: {
+                                if (pressed == true)
+                                {
+                                    wasPressed = true
+                                }
+                            }
+
+                            onCheckedChanged: {
+                                if (checked == true && wasPressed == true)
+                                {
+                                    wasPressed = false
+                                    window.tiiraServer = 1
+                                    window.saveTiiraServer(1)
+                                    window.tiiraServerUsername = tiiraServerUsername.text
+                                    window.tiiraServerPassword = tiiraServerPassword.text
+                                    window.saveTiiraServerUsername(tiiraServerUsername.text)
+                                    window.saveTiiraServerPassword(tiiraServerPassword.text)
+                                    window.tiiraLogin()
+                                }
+                            }
+                        }
+                        RadioButton {
+                            id: tiiraDev
+                            text: qsTr("Dev")
+                            platformExclusiveGroup: serverGroup
+                            checked: window.tiiraServer == 2
+                            property bool wasPressed: false
+                            onPressedChanged: {
+                                if (pressed == true)
+                                {
+                                    wasPressed = true
+                                }
+                            }
+
+                            onCheckedChanged: {
+                                if (checked == true && wasPressed == true)
+                                {
+                                    wasPressed = false
+                                    window.tiiraServer = 2
+                                    window.saveTiiraServer(2)
+                                    window.tiiraServerUsername = tiiraServerUsername.text
+                                    window.tiiraServerPassword = tiiraServerPassword.text
+                                    window.saveTiiraServerUsername(tiiraServerUsername.text)
+                                    window.saveTiiraServerPassword(tiiraServerPassword.text)
+                                    window.tiiraLogin()
+                                }
+                            }
+                        }
+                    }
+
+                    TextField {
+                        id: tiiraServerUsername
+                        anchors.left: parent.left
+                        anchors.right: tiiraServerOk.left
+                        anchors.top: tiiraServerRow.bottom
+                        anchors.topMargin: 8
+                        placeholderText: qsTr("Username")
+                        text: window.tiiraServerUsername
+                    }
+                    TextField {
+                        id: tiiraServerPassword
+                        anchors.left: parent.left
+                        anchors.right: tiiraServerOk.left
+                        anchors.top: tiiraServerUsername.bottom
+                        anchors.topMargin: 8
+                        placeholderText: qsTr("Password")
+                        echoMode: TextInput.Password
+                        text: window.tiiraServerPassword
+                    }
+                    Button {
+                        id: tiiraServerOk
+                        anchors.right: parent.right
+                        anchors.top: tiiraServerRow.bottom
+                        anchors.topMargin: 8
+                        width: 150
+                        text: qsTr("Set")
+                        onClicked: {
+                            window.tiiraServerUsername = tiiraServerUsername.text
+                            window.tiiraServerPassword = tiiraServerPassword.text
+                            window.saveTiiraServerUsername(tiiraServerUsername.text)
+                            window.saveTiiraServerPassword(tiiraServerPassword.text)
+                            window.tiiraLogin()
+                        }
+                    }
+                }
+            }
+
+        }
+
         Label {
             id: editText
             text: qsTr("Manage lists")
@@ -462,7 +720,7 @@ Page {
             anchors.rightMargin: 0
             anchors.left: parent.left
             horizontalAlignment: Text.AlignLeft
-            anchors.top: row4.bottom
+            anchors.top: tiiraItems.bottom
             anchors.topMargin: 30
             color: "#ffffff"
         }

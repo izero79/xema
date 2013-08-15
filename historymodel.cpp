@@ -15,6 +15,7 @@ HistoryModel::HistoryModel(QObject *parent) :
     roles[SortableDateRole] = "sortdate";
     roles[SortableTimeRole] = "timedate";
     roles[SectionRole] = "section";
+    roles[TiiraExportedRole] = "tiiraexported";
     setRoleNames(roles);
 }
 
@@ -90,6 +91,14 @@ QVariant HistoryModel::data(const QModelIndex &index, int role) const
     else if (role == SectionRole)
     {
         return item.sectionString();
+    }
+    else if (role == TiiraExportedRole)
+    {
+        if (item.tiiraExported()) {
+            return QString(" [Tiira]");
+        } else {
+            return QString("");
+        }
     }
     return QVariant();
 }

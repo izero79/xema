@@ -24,6 +24,14 @@ public slots:
     static int statusesVersion();
     static QString lang();
 
+    bool useTiira();
+    static QString tiiraUsername();
+    static QString tiiraPwdHash();
+    bool tiiraAutosave();
+    static int tiiraServer();
+    static QString tiiraServerUsername();
+    static QString tiiraServerPassword();
+
     void setFirstStart(bool first);
     void setSystematicSorting(bool systematic);
     void setDetailLevel(int level);
@@ -35,6 +43,14 @@ public slots:
     static void setLocationsVersion(int ver);
     static void setStatusesVersion(int ver);
     void askForConnection(bool ask);
+
+    void setUseTiira(bool useTiira);
+    void setTiiraUsername(const QString &username);
+    void setTiiraPwdHash(const QString &password);
+    void setTiiraAutosave(bool autosave);
+    void setTiiraServer(int server);
+    void setTiiraServerUsername(const QString &username);
+    void setTiiraServerPassword(const QString &password);
 
     void resetSettings();
 

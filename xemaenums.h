@@ -100,7 +100,10 @@ public:
         OBS_NEST, // 35
         OBS_INDIRECT,
         OBS_WEATHER,
-        OBS_EXPORTED // 38
+        OBS_EXPORTED, // 38
+        OBS_TIIRAEXPORTED,
+        OBS_NOTIIRAEXPORT,
+        OBS_TIIRA_UPLOADID
     };
 
     enum tiiraFields {

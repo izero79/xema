@@ -75,7 +75,7 @@ Page {
             }
             if (personModel.data(i,40) == true)
             {
-                saver = personModel.data(i, 40)
+                saver = personModel.data(i, 35)
             }
         }
 
@@ -289,6 +289,12 @@ Page {
         allData += weatherTa.text
         allData += delimiter
         allData += exportedChkBox.checked
+        allData += delimiter
+        // exported to tiira
+        allData += delimiter
+        // no tiira export
+        allData += delimiter
+        // tiira uploadid
         allData += delimiter
 
         console.log("allData: " + allData)

@@ -10,14 +10,13 @@ XemaUtils::XemaUtils()
 QString XemaUtils::dataFileDir()
 {
     QString appPath;
+    QString homePath = QDir::homePath();
 #ifdef Q_OS_SYMBIAN
     appPath = QCoreApplication::applicationDirPath();
 #elif defined HARMATTAN
     appPath = QString("/home/user/MyDocs/.xema/");
-#elif defined MAC_OS_X_VERSION_10_6
-    appPath = QString("/Users/Tero/xema/");
 #else
-    appPath = QString("C:/");
+    appPath = QString(homePath + "/xema/");
 
 #endif
     return appPath;
@@ -28,6 +27,7 @@ QString XemaUtils::exportDir()
     QString appPath = QString("xema/");
     QString exportDir = appPath + QString("exported/");
     QString basePath;
+    QString homePath = QDir::homePath();
 #ifdef Q_OS_SYMBIAN
     if (QFile::exists("E:/")) {
         basePath = QString("E:/");
@@ -37,10 +37,8 @@ QString XemaUtils::exportDir()
     }
 #elif defined HARMATTAN
     basePath = QString("/home/user/MyDocs/");
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
 #else
-    basePath = QString("C:/");
+    basePath = QString(homePath + "/");
 #endif
 
 
@@ -52,6 +50,7 @@ QString XemaUtils::importDir()
     QString appPath = QString("xema/");
     QString importDir = appPath + QString("import/");
     QString basePath;
+    QString homePath = QDir::homePath();
 #ifdef Q_OS_SYMBIAN
     if (QFile::exists("E:/")) {
         basePath = QString("E:/");
@@ -61,10 +60,8 @@ QString XemaUtils::importDir()
     }
 #elif defined HARMATTAN
     basePath = QString("/home/user/MyDocs/");
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
 #else
-    basePath = QString("C:/");
+    basePath = QString(homePath + "/");
 #endif
 
 
@@ -76,6 +73,7 @@ QString XemaUtils::importedDir()
     QString appPath = QString("xema/");
     QString importDir = appPath + QString("imported/");
     QString basePath;
+    QString homePath = QDir::homePath();
 #ifdef Q_OS_SYMBIAN
     if (QFile::exists("E:/")) {
         basePath = QString("E:/");
@@ -85,10 +83,8 @@ QString XemaUtils::importedDir()
     }
 #elif defined HARMATTAN
     basePath = QString("/home/user/MyDocs/");
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
 #else
-    basePath = QString("C:/");
+    basePath = QString(homePath + "/");
 #endif
 
 
@@ -102,6 +98,7 @@ void XemaUtils::checkAndCreateDirs() {
     QString importDir = appPath + QString("import/");
     QString importedDir = appPath + QString("imported/");
     QString basePath;
+    QString homePath = QDir::homePath();
 #ifdef Q_OS_SYMBIAN
     if (QFile::exists("E:/")) {
         basePath = QString("E:/");
@@ -118,10 +115,8 @@ void XemaUtils::checkAndCreateDirs() {
         dir.mkpath(basePath+".xema/");
     }
 
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
 #else
-    basePath = QString("C:/");
+    basePath = QString(homePath + "/");
 #endif
     QDir dir;
 

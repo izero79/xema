@@ -15,6 +15,7 @@ class TiiraServiceHelper : public QObject
     Q_OBJECT
 public:
     explicit TiiraServiceHelper(const QString &username, const QString &pwdHash, QObject *parent = 0);
+    void resetServer(const QString &username, const QString &pwdHash);
     
 signals:
     void wrongCredientals();
@@ -22,10 +23,10 @@ signals:
     void loginOk(const QString &name);
     void uploadOk(long id, const QString &csvId);
     void rowUploadOk(long id, int row);
+    void serverLoginFailed();
 
 public slots:
     void init(const QNetworkConfiguration &config);
-    void testRequest();
     void login();
     void testUpload();
     void uploadRecord(const QMap<QString,QString> &map, long recordId);
@@ -46,6 +47,8 @@ private slots:
     QString readCsvId(const QString &data) const;
     QString readRowCount(const QString &data) const;
 
+    void setServer();
+
 private:
 
     QNetworkAccessManager *mNetAccessMgr;
@@ -58,6 +61,7 @@ private:
     QString mUsersName;
     QMap<long, QNetworkRequest> mRequests;
     QMap<long, QNetworkRequest> mRowRequests;
+    bool mAuthSent;
 };
 
 #endif // TIIRASERVICEHELPER_H

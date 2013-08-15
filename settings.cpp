@@ -3,6 +3,7 @@
 #include <QStringList>
 
 #include "settings.h"
+#include "tiirachecksumcalculator.h"
 
 Settings::Settings(QObject *parent) :
     QObject(parent)
@@ -181,4 +182,110 @@ void Settings::setStatusesVersion(int ver)
 {
     QSettings settings("TeSi", "xema");
     settings.setValue("statusesVersion", ver);
+}
+
+bool Settings::useTiira()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("useTiira", false).toBool();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+QString Settings::tiiraUsername()
+{
+    QSettings settings("TeSi", "xema");
+    QString value = settings.value("tiiraUsername", "").toString();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+QString Settings::tiiraPwdHash()
+{
+    QSettings settings("TeSi", "xema");
+    QString value = settings.value("tiiraPwdHash", "").toString();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+bool Settings::tiiraAutosave()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("tiiraAutosave", false).toBool();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+int Settings::tiiraServer()
+{
+    QSettings settings("TeSi", "xema");
+    int value = settings.value("tiiraServer", 1).toInt();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+QString Settings::tiiraServerUsername()
+{
+    QSettings settings("TeSi", "xema");
+    QString value = settings.value("tiiraServerUsername", "").toString();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+QString Settings::tiiraServerPassword()
+{
+    QSettings settings("TeSi", "xema");
+    QString value = settings.value("tiiraServerPassword", "").toString();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+void Settings::setUseTiira(bool useTiira)
+{
+    qDebug() << Q_FUNC_INFO << useTiira;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("useTiira", useTiira);
+}
+
+void Settings::setTiiraUsername(const QString &username)
+{
+    qDebug() << Q_FUNC_INFO << username;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraUsername", username);
+}
+
+void Settings::setTiiraPwdHash(const QString &password)
+{
+    qDebug() << Q_FUNC_INFO << password;
+    QString hash = TiiraChecksumCalculator::getMd5(password);
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraPwdHash", hash);
+}
+
+void Settings::setTiiraAutosave(bool autosave)
+{
+    qDebug() << Q_FUNC_INFO << autosave;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraAutosave", autosave);
+}
+
+void Settings::setTiiraServer(int server)
+{
+    qDebug() << Q_FUNC_INFO << server;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraServer", server);
+}
+
+void Settings::setTiiraServerUsername(const QString &username)
+{
+    qDebug() << Q_FUNC_INFO << username;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraServerUsername", username);
+}
+
+void Settings::setTiiraServerPassword(const QString &password)
+{
+    qDebug() << Q_FUNC_INFO << password;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraServerPassword", password);
 }

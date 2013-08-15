@@ -574,6 +574,13 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
             item.setSpeciesAbbr(birdAbbr);
             item.addSpeciesCount(bird, readCount.toInt());
             item.setTime(readTime);
+            int xemaRows = line.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
+            int tiiraExportPos = XemaEnums::OBS_TIIRAEXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
+            QString tiiraExported = line.section("#", tiiraExportPos, tiiraExportPos);
+            if (QString::compare(tiiraExported, "true", Qt::CaseInsensitive) == 0) {
+                item.setTiiraExported(true);
+            }
+
 
             model->addItemAtBeginning(item);
             continue;
@@ -584,6 +591,12 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
                              readPlace, line.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1));
             QString birdAbbr = line.section('#', XemaEnums::OBS_SPECIES, XemaEnums::OBS_SPECIES);
             QString bird = readBird(birdAbbr);
+            int xemaRows = line.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
+            int tiiraExportPos = XemaEnums::OBS_TIIRAEXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
+            QString tiiraExported = line.section("#", tiiraExportPos, tiiraExportPos);
+            if (QString::compare(tiiraExported, "true", Qt::CaseInsensitive) == 0) {
+                item.setTiiraExported(true);
+            }
             item.setSpecies(bird);
             item.setSpeciesAbbr(birdAbbr);
             item.addSpeciesCount(bird, readCount.toInt());

@@ -24,7 +24,8 @@ public:
         SortableDateRole,
         SortableTimeRole,
         SectionRole, // 43
-        SpeciesAbbrRole
+        SpeciesAbbrRole,
+        TiiraExportedRole
     };
 
 signals:

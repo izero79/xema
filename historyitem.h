@@ -22,6 +22,7 @@ public:
     void increasePlaceCount();
     void addSpeciesCount(const QString &name, int count);
     void setTime(const QString &time);
+    void setTiiraExported(bool exported);
 
     int id() const;
     QString place() const;
@@ -34,6 +35,7 @@ public:
     QDate sortDate() const;
     QTime sortTime() const;
     QString sectionString() const;
+    bool tiiraExported() const;
 
 private:
     qlonglong mId;
@@ -44,6 +46,7 @@ private:
     int mDateCount;
     int mPlaceCount;
     QString mTime;
+    bool mTiiraExported;
 };
 
 #endif // HISTORYITEM_H

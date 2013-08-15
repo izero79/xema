@@ -16,18 +16,27 @@ class TiiraExporter : public QObject
     Q_OBJECT
 public:
     explicit TiiraExporter(const QNetworkConfiguration &config, LocationModel *locations, PersonModel *persons, BirdModel *birds, QObject *parent = 0);
-    bool exportRecord(long id);
+    bool exportOneRecord(long id);
+    void login();
+    void resetServer();
     
 signals:
-    
+    void wrongCredientals();
+    void noUploadRights();
+    void loginOk(const QString &name);
+    void serverLoginFailed();
+
 public slots:
 
 private slots:
+    bool exportRecord(long id);
     void uploadOk(long id, const QString &csvId);
     void rowUploadOk(long id, int row);
 
     QMap<QString, QString> getFirstRowMap(const QString &data);
     QMap<QString, QString> getRowMap(const QString &data, int row);
+
+    void addCsvIdsToRecords();
 
 private:
 
@@ -37,7 +46,8 @@ private:
     BirdModel *mSpecies;
     CoordinateConverter *mCoordinates;
     QMap<long, QString> mSentRecords;
-
+    QMap<long, QString> mUploadedRecords;
+    bool mExportInProgress;
 };
 
 #endif // TIIRAEXPORTER_H

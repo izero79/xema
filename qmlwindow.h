@@ -91,6 +91,20 @@ private slots:
     void importData();
     void exportObsToTiira(const QString &id);
 
+    void saveUseTiira(bool useTiira);
+    void saveTiiraUsername(const QString &username);
+    void saveTiiraPwdHash(const QString &pwdHash);
+    void saveTiiraAutosave(bool autosave);
+    void saveTiiraServer(int server);
+    void saveTiiraServerUsername(const QString &username);
+    void saveTiiraServerPassword(const QString &password);
+
+    void tiiraLogin();
+    void tiiraLoginOk(const QString &name);
+    void tiiraWrongCredientals();
+    void tiiraNoUploadRights();
+    void tiiraServerLoginFailed();
+
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
     QDeclarativeView *mView;

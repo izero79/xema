@@ -22,6 +22,15 @@ PageStackWindow {
     property string defaultCountry: ""
     property bool exportWgs: true
 
+    property bool tiiraLoginOk: true
+    property bool useTiira: false
+    property string tiiraUsername: ""
+    property string tiiraPwdHash: ""
+    property bool tiiraAutosave: false
+    property int tiiraServer: 1
+    property string tiiraServerUsername: ""
+    property string tiiraServerPassword: ""
+
     signal writeNew(string data)
     signal readObs(string id)
     signal deleteObs(string id, string date, string place)
@@ -53,6 +62,15 @@ PageStackWindow {
     signal mouseReleasedNow;
     signal mouseMovedNow(variant deltax, variant deltay);
     signal exportObsToTiira(string id);
+
+    signal saveUseTiira(bool useTiira)
+    signal saveTiiraUsername(string username)
+    signal saveTiiraPwdHash(string pwdHash)
+    signal saveTiiraAutosave(bool autosave)
+    signal saveTiiraServer(int server)
+    signal saveTiiraServerUsername(string username)
+    signal saveTiiraServerPassword(string password)
+    signal tiiraLogin()
 
     // slots
     function doPanMap(deltaX,deltaY)
@@ -362,6 +380,54 @@ PageStackWindow {
             NetworkController.openAnyConnection()
         }
 
+    }
+
+    function setUseTiira(use) {
+        window.useTiira = use
+    }
+
+    function setTiiraUsername(value) {
+        window.tiiraUsername = value
+    }
+
+    function setTiiraPwdHash(value) {
+        window.tiiraPwdHash = value
+    }
+
+    function setTiiraAutosave(value) {
+        window.tiiraAutosave = value
+    }
+
+    function setTiiraServer(value) {
+        window.tiiraServer = value
+    }
+
+    function setTiiraServerUsername(value) {
+        window.tiiraServerUsername = value
+    }
+
+    function setTiiraServerPassword(value) {
+        window.tiiraServerPassword = value
+    }
+
+    function loginOk(name) {
+        window.tiiraLoginOk = true
+        MyScript.settingsObject.loginOk(name)
+    }
+
+    function loginFailedCredientals() {
+        window.tiiraLoginOk = false
+        MyScript.settingsObject.loginFailedCredientals()
+    }
+
+    function loginFailedNoRights() {
+        window.tiiraLoginOk = false
+        MyScript.settingsObject.loginFailedNoRights()
+    }
+
+    function serverLoginFailed() {
+        window.tiiraLoginOk = false
+        MyScript.settingsObject.serverLoginFailed()
     }
 
     Rectangle {

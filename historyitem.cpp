@@ -4,13 +4,10 @@
 
 HistoryItem::HistoryItem() :
     mId(0),
-    mPlace(),
-    mDate(),
     mSpecies(),
-    mSpeciesAbbr(),
     mDateCount(1),
     mPlaceCount(1),
-    mTime()
+    mTiiraExported(false)
 {
 }
 
@@ -19,10 +16,9 @@ HistoryItem::HistoryItem(qlonglong id, const QString &place, const QString &date
     mPlace(place),
     mDate(date),
     mSpecies(),
-    mSpeciesAbbr(),
     mDateCount(1),
     mPlaceCount(1),
-    mTime()
+    mTiiraExported(false)
 {
 
 }
@@ -184,4 +180,12 @@ QString HistoryItem::sectionString() const
 //    QString text = date.longMonthName(date.month()) + date.year();
     QString text = date.toString( QString("MMM yyyy"));
     return text;
+}
+
+void HistoryItem::setTiiraExported(bool exported) {
+    mTiiraExported = exported;
+}
+
+bool HistoryItem::tiiraExported() const {
+    return mTiiraExported;
 }

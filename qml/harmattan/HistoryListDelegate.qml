@@ -33,7 +33,7 @@ Component {
                 }
                 else
                 {
-                    species
+                    species + tiiraexported
                 }
             }
             color: "white"

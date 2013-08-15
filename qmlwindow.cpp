@@ -215,6 +215,16 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(openUrl(QString)),this,SLOT(openBrowser(QString)));
     connect(mRootObject,SIGNAL(exportObsToTiira(QString)),this,SLOT(exportObsToTiira(QString)));
 
+    connect(mRootObject,SIGNAL(saveUseTiira(bool)),this,SLOT(saveUseTiira(bool)));
+    connect(mRootObject,SIGNAL(saveTiiraUsername(QString)),this,SLOT(saveTiiraUsername(QString)));
+    connect(mRootObject,SIGNAL(saveTiiraPwdHash(QString)),this,SLOT(saveTiiraPwdHash(QString)));
+    connect(mRootObject,SIGNAL(saveTiiraAutosave(bool)),this,SLOT(saveTiiraAutosave(bool)));
+    connect(mRootObject,SIGNAL(saveTiiraServer(int)),this,SLOT(saveTiiraServer(int)));
+    connect(mRootObject,SIGNAL(saveTiiraServerUsername(QString)),this,SLOT(saveTiiraServerUsername(QString)));
+    connect(mRootObject,SIGNAL(saveTiiraServerPassword(QString)),this,SLOT(saveTiiraServerPassword(QString)));
+
+    connect(mRootObject,SIGNAL(tiiraLogin()),this,SLOT(tiiraLogin()));
+
     QString lang = Settings::lang();
     bool compassSupported = SystemInfoProvider::compassSupported();
     mRootObject->setProperty("compassSupported", compassSupported);
@@ -238,6 +248,21 @@ void QMLWindow::init()
              Q_ARG(QVariant, mSettings->defaultCountry()));
     QMetaObject::invokeMethod(mRootObject, "setExportWgs",
              Q_ARG(QVariant, mSettings->exportWgs()));
+
+    QMetaObject::invokeMethod(mRootObject, "setUseTiira",
+             Q_ARG(QVariant, mSettings->useTiira()));
+    QMetaObject::invokeMethod(mRootObject, "setTiiraUsername",
+             Q_ARG(QVariant, mSettings->tiiraUsername()));
+    QMetaObject::invokeMethod(mRootObject, "setTiiraPwdHash",
+             Q_ARG(QVariant, mSettings->tiiraPwdHash()));
+    QMetaObject::invokeMethod(mRootObject, "setTiiraAutosave",
+             Q_ARG(QVariant, mSettings->tiiraAutosave()));
+    QMetaObject::invokeMethod(mRootObject, "setTiiraServer",
+             Q_ARG(QVariant, mSettings->tiiraServer()));
+    QMetaObject::invokeMethod(mRootObject, "setTiiraServerUsername",
+             Q_ARG(QVariant, mSettings->tiiraServerUsername()));
+    QMetaObject::invokeMethod(mRootObject, "setTiiraServerPassword",
+             Q_ARG(QVariant, mSettings->tiiraServerPassword()));
 
 }
 
@@ -445,5 +470,77 @@ void QMLWindow::setProcessingFalse() {
 void QMLWindow::exportObsToTiira(const QString &id) {
     qDebug() << Q_FUNC_INFO;
     mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
-    mTiiraExporter->exportRecord(id.toLong());
+    mTiiraExporter->exportOneRecord(id.toLong());
+}
+
+void QMLWindow::saveUseTiira(bool useTiira)
+{
+    mSettings->setUseTiira(useTiira);
+}
+
+void QMLWindow::saveTiiraUsername(const QString &username)
+{
+    mSettings->setTiiraUsername(username);
+}
+
+void QMLWindow::saveTiiraPwdHash(const QString &pwdHash)
+{
+    mSettings->setTiiraPwdHash(pwdHash);
+}
+
+void QMLWindow::saveTiiraAutosave(bool autosave)
+{
+    mSettings->setTiiraAutosave(autosave);
+}
+
+void QMLWindow::saveTiiraServer(int server)
+{
+    mSettings->setTiiraServer(server);
+    if(mTiiraExporter) {
+        mTiiraExporter->resetServer();
+    }
+}
+
+void QMLWindow::saveTiiraServerUsername(const QString &username)
+{
+    mSettings->setTiiraServerUsername(username);
+    if(mTiiraExporter) {
+        mTiiraExporter->resetServer();
+    }
+}
+
+void QMLWindow::saveTiiraServerPassword(const QString &password)
+{
+    mSettings->setTiiraServerPassword(password);
+    if(mTiiraExporter) {
+        mTiiraExporter->resetServer();
+    }
+}
+
+void QMLWindow::tiiraLogin() {
+    qDebug() << Q_FUNC_INFO;
+    mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
+    connect(mTiiraExporter,SIGNAL(loginOk(QString)),this,SLOT(tiiraLoginOk(QString)));
+    connect(mTiiraExporter,SIGNAL(wrongCredientals()),this,SLOT(tiiraWrongCredientals()));
+    connect(mTiiraExporter,SIGNAL(noUploadRights()),this,SLOT(tiiraNoUploadRights()));
+    connect(mTiiraExporter,SIGNAL(serverLoginFailed()),this,SLOT(tiiraServerLoginFailed()));
+
+    mTiiraExporter->login();
+}
+
+void QMLWindow::tiiraLoginOk(const QString &name) {
+    QMetaObject::invokeMethod(mRootObject, "loginOk",
+             Q_ARG(QVariant,name));
+}
+
+void QMLWindow::tiiraWrongCredientals() {
+    QMetaObject::invokeMethod(mRootObject, "loginFailedCredientals");
+}
+
+void QMLWindow::tiiraNoUploadRights() {
+    QMetaObject::invokeMethod(mRootObject, "loginFailedNoRights");
+}
+
+void QMLWindow::tiiraServerLoginFailed() {
+    QMetaObject::invokeMethod(mRootObject, "serverLoginFailed");
 }
