@@ -474,8 +474,16 @@ void QMLWindow::setProcessingFalse() {
 
 void QMLWindow::exportObsToTiira(const QString &id) {
     qDebug() << Q_FUNC_INFO;
-    mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
+    setProcessing(true);
+    if (!mTiiraExporter) {
+        mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
+        connect(mTiiraExporter,SIGNAL(loginOk(QString)),this,SLOT(tiiraLoginOk(QString)));
+        connect(mTiiraExporter,SIGNAL(wrongCredientals()),this,SLOT(tiiraWrongCredientals()));
+        connect(mTiiraExporter,SIGNAL(noUploadRights()),this,SLOT(tiiraNoUploadRights()));
+        connect(mTiiraExporter,SIGNAL(serverLoginFailed()),this,SLOT(tiiraServerLoginFailed()));
+    }
     mTiiraExporter->exportOneRecord(id.toLong());
+    setProcessing(false);
 }
 
 void QMLWindow::saveUseTiira(bool useTiira)
@@ -524,13 +532,18 @@ void QMLWindow::saveTiiraServerPassword(const QString &password)
 
 void QMLWindow::tiiraLogin() {
     qDebug() << Q_FUNC_INFO;
-    mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
-    connect(mTiiraExporter,SIGNAL(loginOk(QString)),this,SLOT(tiiraLoginOk(QString)));
-    connect(mTiiraExporter,SIGNAL(wrongCredientals()),this,SLOT(tiiraWrongCredientals()));
-    connect(mTiiraExporter,SIGNAL(noUploadRights()),this,SLOT(tiiraNoUploadRights()));
-    connect(mTiiraExporter,SIGNAL(serverLoginFailed()),this,SLOT(tiiraServerLoginFailed()));
+    setProcessing(true);
+
+    if(!mTiiraExporter) {
+        mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
+        connect(mTiiraExporter,SIGNAL(loginOk(QString)),this,SLOT(tiiraLoginOk(QString)));
+        connect(mTiiraExporter,SIGNAL(wrongCredientals()),this,SLOT(tiiraWrongCredientals()));
+        connect(mTiiraExporter,SIGNAL(noUploadRights()),this,SLOT(tiiraNoUploadRights()));
+        connect(mTiiraExporter,SIGNAL(serverLoginFailed()),this,SLOT(tiiraServerLoginFailed()));
+    }
 
     mTiiraExporter->login();
+    setProcessing(false);
 }
 
 void QMLWindow::tiiraLoginOk(const QString &name) {

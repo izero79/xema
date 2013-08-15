@@ -551,7 +551,6 @@ Page {
                             window.saveTiiraPwdHash(tiiraPassword.text)
                             window.tiiraLogin()
                         }
-                        enabled: !window.tiiraLoginOk
                     }
                 }
                 CheckBox {

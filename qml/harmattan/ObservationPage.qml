@@ -15,6 +15,7 @@ Page {
     property variant missingInfo: null
     property bool edited: false
     property string saver: ""
+    property string csvId: ""
 
     height: parent.height
     width: parent.width
@@ -56,6 +57,9 @@ Page {
         birdCoordinatesTf.text = ""
         directionTf.text = ""
         distanceTf.text = ""
+        tiiraExported.checked = false
+        noTiiraExport.checked = false
+        csvId = ""
 
         MyScript.removeObjects();
         MyScript.createObjects();
@@ -75,7 +79,7 @@ Page {
             }
             if (personModel.data(i,40) == true)
             {
-                saver = personModel.data(i, 40)
+                saver = personModel.data(i, 35)
             }
         }
 
@@ -288,7 +292,13 @@ Page {
 
         allData += weatherTa.text
         allData += delimiter
-        allData += exportedChkBox.checked
+        allData += "false"
+        allData += delimiter
+        allData += "false"
+        allData += delimiter
+        allData += noTiiraExport.checked
+        allData += delimiter
+        allData += ""
         allData += delimiter
 
         console.log("allData: " + allData)
@@ -601,6 +611,13 @@ Page {
         }
         currentField++
         weatherTa.text = fields[currentField]
+        currentField++ //exported
+        currentField++
+        tiiraExported.checked = fields[currentField]
+        currentField++
+        noTiiraExport.checked = fields[currentField]
+        currentField++
+        csvId = fields[currentField]
         var birdCoords = fields[XemaEnums.OBS_BIRD_YCOORD] + ":" + fields[XemaEnums.OBS_BIRD_XCOORD]
         console.log("bird-koordinaatit: " + birdCoords )
         if (birdCoords.trim().length < 3) {
@@ -644,6 +661,9 @@ Page {
             moreInfoTa.text = ""
             atlasTf.text = ""
             hideChkBox.checked = false
+            tiiraExported.checked = false
+            noTiiraExport.checked = false
+            csvId = ""
 
             MyScript.removeObjects();
             MyScript.createObjects();
@@ -1851,7 +1871,7 @@ Page {
                 }
                 Item {
                     id: obsExtraInfoItem
-                    height: 200
+                    height: childrenRect.height
                     anchors.top: text8.bottom
                     anchors.topMargin: 8
                     anchors.right: parent.right
@@ -1884,7 +1904,7 @@ Page {
                         placeholderText: qsTr("Atlas index")
                         text: ""
                         anchors.top: moreInfoTa.bottom
-                        anchors.topMargin: 0
+                        anchors.topMargin: 8
                         anchors.left: parent.left
                         anchors.leftMargin: 0
                         width: 175
@@ -1902,7 +1922,7 @@ Page {
                     CheckBox {
                         id: hideChkBox
                         anchors.top: moreInfoTa.bottom
-                        anchors.topMargin: 2
+                        anchors.topMargin: 10
                         anchors.left: atlasTf.right
                         anchors.leftMargin: 10
                         anchors.right: parent.right
@@ -1921,6 +1941,56 @@ Page {
                         anchors.rightMargin: 0
                         text: ""
                         visible: false
+                    }
+                    Label {
+                        id: tiiraLabel
+                        anchors.top: hideChkBox.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        text: qsTr("Tiira info")
+                        visible: window.useTiira
+                    }
+
+                    CheckBox {
+                        id: noTiiraExport
+                        anchors.top: tiiraLabel.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        text: qsTr("Do not export to Tiira")
+                        visible: window.useTiira
+                        onCheckedChanged: {
+                            edited = true
+                        }
+                    }
+                    CheckBox {
+                        id: tiiraExported
+                        anchors.top: noTiiraExport.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        text: qsTr("Exported to Tiira")
+                        enabled: false
+                        visible: window.useTiira
+                    }
+                    Label {
+                        id: tiiraStatusLabel
+                        anchors.top: tiiraExported.bottom
+                        anchors.topMargin: 8
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        text: qsTr("Tiira csv id: %1").arg(obsPage.csvId)
+                        visible: window.useTiira
+                        height: 50
                     }
                 }
             }
