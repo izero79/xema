@@ -7,7 +7,7 @@ CONFIG -=S603x
 CONFIG -=Symbian1
 CONFIG -=performancetest
 CONFIG -=useMediaKeys
-DEFINES -=DEBUGONLYTOFILE
+DEFINES +=DEBUGONLYTOFILE
 CONFIG +=mobility
 MOBILITY +=location systeminfo
 
@@ -202,7 +202,8 @@ SOURCES += main.cpp \
     accuracymodel.cpp \
     tiirachecksumcalculator.cpp \
     tiiraservicehelper.cpp \
-    tiiraexporter.cpp
+    tiiraexporter.cpp \
+    xemautils.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -261,7 +262,8 @@ HEADERS += \
     accuracymodel.h \
     tiirachecksumcalculator.h \
     tiiraservicehelper.h \
-    tiiraexporter.h
+    tiiraexporter.h \
+    xemautils.h
 
 RESOURCES += \
     commonresources.qrc

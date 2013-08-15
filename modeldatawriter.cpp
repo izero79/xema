@@ -20,6 +20,7 @@
 #include "status.h"
 #include "settings.h"
 #include "accuracymodel.h"
+#include "xemautils.h"
 
 ModelDataWriter* ModelDataWriter::mDataWriter = 0;
 
@@ -34,7 +35,7 @@ ModelDataWriter::ModelDataWriter(QObject *parent) :
     QObject(parent)
 {
     mCoordinates = new CoordinateConverter(this);
-    checkAndCreateDirs();
+    XemaUtils::checkAndCreateDirs();
 }
 
 ModelDataWriter::~ModelDataWriter() {
@@ -60,11 +61,11 @@ void ModelDataWriter::writeNewObservation(const QString &data)
     newData.prepend(newIdNum);
 
     bool headerExists = true;
-    if (QFile::exists(dataFileDir() + "xemadata.txt") == false)
+    if (QFile::exists(XemaUtils::dataFileDir() + "xemadata.txt") == false)
     {
         headerExists = false;
     }
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadWrite|QFile::Append);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -82,8 +83,8 @@ void ModelDataWriter::writeNewObservation(const QString &data)
 void ModelDataWriter::replaceObservation(qlonglong id, const QString &data)
 {
 //    qDebug() << "KORVATAAN, ID ON" << id;
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
-    QFile tmptiedosto(dataFileDir() + "xemadata.tmp");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
+    QFile tmptiedosto(XemaUtils::dataFileDir() + "xemadata.tmp");
 
     tiedosto.open(QFile::ReadOnly);
     tmptiedosto.open(QFile::ReadWrite|QFile::Append);
@@ -108,21 +109,21 @@ void ModelDataWriter::replaceObservation(qlonglong id, const QString &data)
     }
     tiedosto.close();
     tmptiedosto.close();
-    if (QFile::exists(dataFileDir() + "xemadata.backup") == true)
+    if (QFile::exists(XemaUtils::dataFileDir() + "xemadata.backup") == true)
     {
-        QFile old(dataFileDir() + "xemadata.backup");
+        QFile old(XemaUtils::dataFileDir() + "xemadata.backup");
         old.remove();
     }
-    tiedosto.rename(dataFileDir() + "xemadata.backup");
-    tmptiedosto.rename(dataFileDir() + "xemadata.txt");
+    tiedosto.rename(XemaUtils::dataFileDir() + "xemadata.backup");
+    tmptiedosto.rename(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.remove();
 }
 
 void ModelDataWriter::deleteObservation(qlonglong id)
 {
 //    qDebug() << "DELETE ID" << id;
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
-    QFile tmptiedosto(dataFileDir() + "xemadata.tmp");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
+    QFile tmptiedosto(XemaUtils::dataFileDir() + "xemadata.tmp");
 
     tiedosto.open(QFile::ReadOnly);
     tmptiedosto.open(QFile::ReadWrite|QFile::Append);
@@ -143,20 +144,20 @@ void ModelDataWriter::deleteObservation(qlonglong id)
     }
     tiedosto.close();
     tmptiedosto.close();
-    if (QFile::exists(dataFileDir() + "xemadata.backup") == true)
+    if (QFile::exists(XemaUtils::dataFileDir() + "xemadata.backup") == true)
     {
-        QFile old(dataFileDir() + "xemadata.backup");
+        QFile old(XemaUtils::dataFileDir() + "xemadata.backup");
         old.remove();
     }
-    tiedosto.rename(dataFileDir() + "xemadata.backup");
-    tmptiedosto.rename(dataFileDir() + "xemadata.txt");
+    tiedosto.rename(XemaUtils::dataFileDir() + "xemadata.backup");
+    tmptiedosto.rename(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.remove();
 }
 
 
 void ModelDataWriter::writePersonData(PersonModel *model)
 {
-    QFile tiedosto(dataFileDir() + "xemapersondata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemapersondata.txt");
     tiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -186,7 +187,7 @@ void ModelDataWriter::writePersonData(PersonModel *model)
 
 void ModelDataWriter::writeLocationData(LocationModel *model)
 {
-    QFile tiedosto(dataFileDir() + "xemalocationdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemalocationdata.txt");
     tiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -248,7 +249,7 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
 
 void ModelDataWriter::writeStatusData(StatusModel *model)
 {
-    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemastatusdata.txt");
     tiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -279,7 +280,7 @@ void ModelDataWriter::writeStatusData(StatusModel *model)
 
 void ModelDataWriter::writeBirdData(BirdModel *model)
 {
-    QFile tiedosto(dataFileDir() + "xemabirddata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemabirddata.txt");
     tiedosto.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -330,9 +331,9 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
     fileName.append(currentDate.toString("yyyyMMdd-hhmmss"));
     fileName.append(".csv");
     qDebug() << "void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, ... , const QString &delimiter)" << onlyNew << allCountries << date << place << delimiter;
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
-    QFile tmptiedosto(dataFileDir() + "xemadata.tmp.txt");
-    QFile exporttiedosto(exportDir() + fileName);
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
+    QFile tmptiedosto(XemaUtils::dataFileDir() + "xemadata.tmp.txt");
+    QFile exporttiedosto(XemaUtils::exportDir() + fileName);
 
     tiedosto.open(QFile::ReadOnly);
     tmptiedosto.open(QFile::ReadWrite|QFile::Truncate);
@@ -438,16 +439,16 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
     tmptiedosto.close();
     exporttiedosto.close();
 
-    QFile::remove(dataFileDir() + "xemadata.backup");
-    tiedosto.rename(dataFileDir() + "xemadata.backup");
-    tmptiedosto.rename(dataFileDir() + "xemadata.txt");
+    QFile::remove(XemaUtils::dataFileDir() + "xemadata.backup");
+    tiedosto.rename(XemaUtils::dataFileDir() + "xemadata.backup");
+    tmptiedosto.rename(XemaUtils::dataFileDir() + "xemadata.txt");
 }
 
 void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, StatusModel *sModel, PersonModel *pModel) {
 //    qDebug() << "exportOwnData";
 
     // LOCATIONS
-    QFile exportfile(exportDir() + "xema_exported_locations.csv");
+    QFile exportfile(XemaUtils::exportDir() + "xema_exported_locations.csv");
 
     exportfile.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi(&exportfile);
@@ -476,7 +477,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
     }
 
     // PERSONS
-    QFile exportfile2(exportDir() + "xema_exported_observers.csv");
+    QFile exportfile2(XemaUtils::exportDir() + "xema_exported_observers.csv");
 
     exportfile2.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi2(&exportfile2);
@@ -510,7 +511,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
     }
 
     // BIRDS
-    QFile exportfile3(exportDir() + "xema_exported_species.csv");
+    QFile exportfile3(XemaUtils::exportDir() + "xema_exported_species.csv");
 
     exportfile3.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi3(&exportfile3);
@@ -538,7 +539,7 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 
 
     // STATUSES
-    QFile exportfile4(exportDir() + "xema_exported_statuses.csv");
+    QFile exportfile4(XemaUtils::exportDir() + "xema_exported_statuses.csv");
 
     exportfile4.open(QFile::ReadWrite|QFile::Truncate);
     QTextStream outstriimi4(&exportfile4);
@@ -562,11 +563,11 @@ void ModelDataWriter::exportOwnData(LocationModel *lModel, BirdModel *bModel, St
 qlonglong ModelDataWriter::getNewId()
 {
 //    qDebug() << "LUETAAN IDT";
-    if (QFile::exists(dataFileDir() + "xemadata.txt") == false)
+    if (QFile::exists(XemaUtils::dataFileDir() + "xemadata.txt") == false)
     {
         return 1;
     }
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -585,121 +586,33 @@ qlonglong ModelDataWriter::getNewId()
     return maxId;
 }
 
-QString ModelDataWriter::dataFileDir()
-{
-    QString appPath;
-#ifdef Q_OS_SYMBIAN
-    appPath = QCoreApplication::applicationDirPath();
-#elif defined HARMATTAN
-    appPath = QString("/home/user/MyDocs/.xema/");
-#elif defined MAC_OS_X_VERSION_10_6
-    appPath = QString("/Users/Tero/xema/");
-#else
-    appPath = QString("C:/");
-
-#endif
-    return appPath;
-}
-
-QString ModelDataWriter::exportDir()
-{
-    QString appPath = QString("xema/");
-    QString exportDir = appPath + QString("exported/");
-    QString basePath;
-#ifdef Q_OS_SYMBIAN
-    if (QFile::exists("E:/")) {
-        basePath = QString("E:/");
-    }
-    else {
-        basePath = QString("C:/data/");
-    }
-#elif defined HARMATTAN
-    basePath = QString("/home/user/MyDocs/");
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
-#else
-    basePath = QString("C:/");
-#endif
-
-
-    return basePath+exportDir;
-}
-
-QString ModelDataWriter::importDir()
-{
-    QString appPath = QString("xema/");
-    QString importDir = appPath + QString("import/");
-    QString basePath;
-#ifdef Q_OS_SYMBIAN
-    if (QFile::exists("E:/")) {
-        basePath = QString("E:/");
-    }
-    else {
-        basePath = QString("C:/data/");
-    }
-#elif defined HARMATTAN
-    basePath = QString("/home/user/MyDocs/");
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
-#else
-    basePath = QString("C:/");
-#endif
-
-
-    return basePath+importDir;
-}
-
-QString ModelDataWriter::importedDir()
-{
-    QString appPath = QString("xema/");
-    QString importDir = appPath + QString("imported/");
-    QString basePath;
-#ifdef Q_OS_SYMBIAN
-    if (QFile::exists("E:/")) {
-        basePath = QString("E:/");
-    }
-    else {
-        basePath = QString("C:/data/");
-    }
-#elif defined HARMATTAN
-    basePath = QString("/home/user/MyDocs/");
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
-#else
-    basePath = QString("C:/");
-#endif
-
-
-    return basePath+importDir;
-}
-
 void ModelDataWriter::removeCustomSpecies()
 {
-    QFile tiedosto(dataFileDir() + "xemabirddata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemabirddata.txt");
     tiedosto.remove();
 }
 
 void ModelDataWriter::removeCustomLocations()
 {
-    QFile tiedosto(dataFileDir() + "xemalocationdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemalocationdata.txt");
     tiedosto.remove();
 }
 
 void ModelDataWriter::removeCustomStatuses()
 {
-    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemastatusdata.txt");
     tiedosto.remove();
 }
 
 void ModelDataWriter::removeCustomObservers()
 {
-    QFile tiedosto(dataFileDir() + "xemapersondata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemapersondata.txt");
     tiedosto.remove();
 }
 
 void ModelDataWriter::removeHistory()
 {
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.remove();
 }
 
@@ -1021,14 +934,14 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
     int importError = XemaEnums::IMPORT_NOERRORS;
 //    qDebug() << "IMPORT";
     QDir dir;
-    dir.cd(importDir());
+    dir.cd(XemaUtils::importDir());
     QStringList filters;
     filters << "*history*.csv" << "*history*.txt" << "*record*.csv" << "*record*.txt";;
     QStringList importFiles;
     importFiles = dir.entryList(filters,QDir::Files);
 //    qDebug() << "IMPORT" << importFiles;
     for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
-        QFile importfile(importDir() + importFiles.at(fileno));
+        QFile importfile(XemaUtils::importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
         importstream.setCodec("ISO 8859-1");
@@ -1113,13 +1026,13 @@ int ModelDataWriter::importHistory(LocationModel *locations,  PersonModel *perso
         importedFileName.append(date.toString("yyyyMMdd-hhmmss"));
         importedFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedFileName)) {
+        while (QFile::exists(XemaUtils::importedDir()+importedFileName)) {
             QString no;
             no.setNum(nameNumber);
             importedFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedFileName);
+        importfile.rename(XemaUtils::importedDir()+importedFileName);
         if (!(importError&XemaEnums::IMPORT_HISTORY_OK)) {
         importError += XemaEnums::IMPORT_HISTORY_OK;
         }
@@ -1240,8 +1153,8 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
                 if (QString::compare(location,locations->getItem(i).place(), Qt::CaseInsensitive) == 0 ) {
                     locationExists = true;
                     QString coordinate = locations->getItem(i).ykjCoordinate();
-                    x = coordinate.section(";",0,0);
-                    y = coordinate.section(";",1,1);
+                    x = coordinate.section(":",0,0);
+                    y = coordinate.section(":",1,1);
                     break;
                 }
             }
@@ -1615,52 +1528,11 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
 }
 
 
-void ModelDataWriter::checkAndCreateDirs() {
-    qDebug() << "checkAndCreateDirs";
-    QString appPath = QString("xema/");
-    QString exportDir = appPath + QString("exported/");
-    QString importDir = appPath + QString("import/");
-    QString importedDir = appPath + QString("imported/");
-    QString basePath;
-#ifdef Q_OS_SYMBIAN
-    if (QFile::exists("E:/")) {
-        basePath = QString("E:/");
-    }
-    else {
-        basePath = QString("C:/data/");
-    }
-
-
-#elif defined HARMATTAN
-    basePath = QString("/home/user/MyDocs/");
-    if (QFile::exists(basePath+".xema/") == false) {
-        QDir dir;
-        dir.mkpath(basePath+".xema/");
-    }
-
-#elif defined MAC_OS_X_VERSION_10_6
-    basePath = QString("/Users/Tero/");
-#else
-    basePath = QString("C:/");
-#endif
-    QDir dir;
-
-    if (QFile::exists(basePath+exportDir) == false) {
-        dir.mkpath(basePath+exportDir);
-    }
-    if (QFile::exists(basePath+importDir) == false) {
-        dir.mkpath(basePath+importDir);
-    }
-    if (QFile::exists(basePath+importedDir) == false) {
-        dir.mkpath(basePath+importedDir);
-    }
-
-}
 
 int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses) {
     int importError = XemaEnums::IMPORT_NOERRORS;
     QDir dir;
-    dir.cd(importDir());
+    dir.cd(XemaUtils::importDir());
     QStringList filters;
     filters << "*location*.csv" << "*location*.txt";
     QStringList importFiles;
@@ -1668,7 +1540,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
 //    qDebug() << "IMPORT LOCATIONS" << importFiles;
 
     for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
-        QFile importfile(importDir() + importFiles.at(fileno));
+        QFile importfile(XemaUtils::importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
         importstream.setCodec("ISO 8859-1");
@@ -1783,13 +1655,13 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importedLocationFileName.append(date.toString("yyyyMMdd-hhmmss"));
         importedLocationFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedLocationFileName)) {
+        while (QFile::exists(XemaUtils::importedDir()+importedLocationFileName)) {
             QString no;
             no.setNum(nameNumber);
             importedLocationFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedLocationFileName);
+        importfile.rename(XemaUtils::importedDir()+importedLocationFileName);
         if (!(importError&XemaEnums::IMPORT_LOCATION_OK)) {
             importError += XemaEnums::IMPORT_LOCATION_OK;
         }
@@ -1805,7 +1677,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
     importFiles = dir.entryList(filters,QDir::Files);
 //    qDebug() << "IMPORT PEOPLE" << importFiles;
     for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
-        QFile importfile(importDir() + importFiles.at(fileno));
+        QFile importfile(XemaUtils::importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
         importstream.setCodec("ISO 8859-1");
@@ -1888,13 +1760,13 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importedPersonFileName.append(date.toString("yyyyMMdd-hhmmss"));
         importedPersonFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedPersonFileName)) {
+        while (QFile::exists(XemaUtils::importedDir()+importedPersonFileName)) {
             QString no;
             no.setNum(nameNumber);
             importedPersonFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedPersonFileName);
+        importfile.rename(XemaUtils::importedDir()+importedPersonFileName);
         if (!(importError&XemaEnums::IMPORT_PERSON_OK)) {
             importError += XemaEnums::IMPORT_PERSON_OK;
         }
@@ -1910,7 +1782,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
     importFiles = dir.entryList(filters,QDir::Files);
 //    qDebug() << "IMPORT BIRDS" << importFiles;
     for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
-        QFile importfile(importDir() + importFiles.at(fileno));
+        QFile importfile(XemaUtils::importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
         importstream.setCodec("ISO 8859-1");
@@ -2011,13 +1883,13 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importedBirdFileName.append(date.toString("yyyyMMdd-hhmmss"));
         importedBirdFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedBirdFileName)) {
+        while (QFile::exists(XemaUtils::importedDir()+importedBirdFileName)) {
             QString no;
             no.setNum(nameNumber);
             importedBirdFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedBirdFileName);
+        importfile.rename(XemaUtils::importedDir()+importedBirdFileName);
         if (!(importError&XemaEnums::IMPORT_BIRD_OK)) {
             importError += XemaEnums::IMPORT_BIRD_OK;
         }
@@ -2032,7 +1904,7 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
     importFiles = dir.entryList(filters,QDir::Files);
 //    qDebug() << "IMPORT STATUSES" << importFiles;
     for( int fileno = 0; fileno < importFiles.length(); fileno++ ) {
-        QFile importfile(importDir() + importFiles.at(fileno));
+        QFile importfile(XemaUtils::importDir() + importFiles.at(fileno));
         importfile.open(QFile::ReadOnly);
         QTextStream importstream(&importfile);
         importstream.setCodec("ISO 8859-1");
@@ -2110,13 +1982,13 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
         importedStatusFileName.append(date.toString("yyyyMMdd-hhmmss"));
         importedStatusFileName.append(".csv");
         int nameNumber = 0;
-        while (QFile::exists(importedDir()+importedStatusFileName)) {
+        while (QFile::exists(XemaUtils::importedDir()+importedStatusFileName)) {
             QString no;
             no.setNum(nameNumber);
             importedStatusFileName.append("_"+no);
             nameNumber++;
         }
-        importfile.rename(importedDir()+importedStatusFileName);
+        importfile.rename(XemaUtils::importedDir()+importedStatusFileName);
         if (!(importError&XemaEnums::IMPORT_STATUS_OK)) {
             importError += XemaEnums::IMPORT_STATUS_OK;
         }

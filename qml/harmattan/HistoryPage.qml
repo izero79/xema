@@ -27,11 +27,14 @@ Page {
                 }
                 else if (placeListVisible == true)
                 {
+                    currentDate = ""
+                    currentPlace = ""
                     historyListView.model = historyDateModel
                     filterTf.text = ""
                 }
                 else
                 {
+                    currentPlace = ""
                     historyListView.model = historyPlaceModel
                     filterTf.text = ""
                 }
@@ -93,6 +96,19 @@ Page {
         property string selectedDate: ""
         property string selectedPlace: ""
         MenuLayout {
+            MenuItem {
+                id: tiiraExportItem
+                text: qsTr("Export to Tiira")
+                onClicked: {
+                    console.log("EXPORT TO TIIRA " + contextMenu.selectedItem)
+                    tiiraExportItem.enabled = false
+                    historyToolBarLayout.enabled = false
+                    window.exportObsToTiira(contextMenu.selectedItem)
+                    tiiraExportItem.enabled = true
+                    historyToolBarLayout.enabled = true
+                    contextMenu.close()
+                }
+            }
             MenuItem {
                 id: removeItem
                 text: qsTr("Remove")

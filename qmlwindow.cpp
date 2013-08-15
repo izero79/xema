@@ -213,7 +213,7 @@ void QMLWindow::init()
     connect(mRootObject,SIGNAL(exportOwnData()),this,SLOT(exportOwnData()));
     connect(mRootObject,SIGNAL(importOwnData()),this,SLOT(importOwnData()));
     connect(mRootObject,SIGNAL(openUrl(QString)),this,SLOT(openBrowser(QString)));
-    connect(mRootObject,SIGNAL(tiiraExport()),this,SLOT(tiiraExport()));
+    connect(mRootObject,SIGNAL(exportObsToTiira(QString)),this,SLOT(exportObsToTiira(QString)));
 
     QString lang = Settings::lang();
     bool compassSupported = SystemInfoProvider::compassSupported();
@@ -442,9 +442,8 @@ void QMLWindow::setProcessingFalse() {
     setProcessing(false);
 }
 
-void QMLWindow::tiiraExport() {
+void QMLWindow::exportObsToTiira(const QString &id) {
     qDebug() << Q_FUNC_INFO;
-    long id = 1;
-    mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), this);
-    mTiiraExporter->exportRecord(id);
+    mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
+    mTiiraExporter->exportRecord(id.toLong());
 }

@@ -59,7 +59,6 @@ private:
     explicit ModelDataLoader(QObject *parent = 0);
     ~ModelDataLoader();
 
-    QString dataFileDir();
     QString readBird(const QString &bird);
     QString readLocation(const QString &location);
     BirdModel *mBirdModel;

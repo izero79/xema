@@ -52,6 +52,7 @@ PageStackWindow {
     signal mousePressedNow;
     signal mouseReleasedNow;
     signal mouseMovedNow(variant deltax, variant deltay);
+    signal exportObsToTiira(string id);
 
     // slots
     function doPanMap(deltaX,deltaY)

@@ -6,8 +6,8 @@ FocusScope {
 
     property int screenY: -y
     property int screenX: -x
-    property int screenWidth: window.width
-    property int screenHeight: window.height
+    property int screenWidth: window.width ? window.height : window.width
+    property int screenHeight: window.width ? window.height : window.width
 
     property string text: appName + "\n" + qsTr( "version " ) + versionString + "\nTero Siironen" + "\nizero79@gmail.com"
     property string button1text: qsTr( "Ok" )

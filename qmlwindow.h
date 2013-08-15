@@ -89,7 +89,7 @@ private slots:
     void importOwnData();
     void openBrowser( const QString &url );
     void importData();
-    void tiiraExport();
+    void exportObsToTiira(const QString &id);
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)

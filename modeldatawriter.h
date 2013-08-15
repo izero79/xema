@@ -47,12 +47,7 @@ private:
     QMap<int, int> getPersonSectionNumbers(const QString &headerLine, const QString &delimiter);
     QMap<int, int> getStatusSectionNumbers(const QString &headerLine, const QString &delimiter);
     qlonglong getNewId();
-    QString dataFileDir();
-    QString exportDir();
-    QString importDir();
-    QString importedDir();
     QString formatToTiira(const QString &data, LocationModel *locations, PersonModel *persons, BirdModel *birds, const QString &delimiter, bool allCountries);
-    void checkAndCreateDirs();
     QString fixEncoding(const QString &line);
     QString formatTime(const QString &time);
     QString formatDate(const QString &date);

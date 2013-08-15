@@ -25,6 +25,7 @@
 #include <QLocale>
 #include "settings.h"
 #include "accuracymodel.h"
+#include "xemautils.h"
 
 #ifdef PERFTEST
 #include <QTime>
@@ -96,7 +97,7 @@ void ModelDataLoader::loadDefaultBirdData(BirdModel *model, bool finOnly)
 void ModelDataLoader::loadOnlyModifiedBirdData(BirdModel *model, bool finOnly)
 {
     mBirdModel = model;
-    QFile tiedosto(dataFileDir() + "xemabirddata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemabirddata.txt");
     if (tiedosto.exists() == false)
     {
         tiedosto.setFileName(":specieslist.csv");
@@ -146,7 +147,7 @@ void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly, bool finO
     t.start();
 #endif
     mBirdModel = model;
-    QFile tiedosto(dataFileDir() + "xemabirddata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemabirddata.txt");
     if (defaultOnly == true || tiedosto.exists() == false)
     {
         tiedosto.setFileName(":specieslist.csv");
@@ -194,7 +195,7 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 {
     mLocationModel = model;
 
-    QFile tiedosto(dataFileDir() + "xemalocationdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemalocationdata.txt");
     if (defaultOnly == true || tiedosto.exists() == false)
     {
         tiedosto.setFileName(":defaultlocations.csv");
@@ -287,7 +288,7 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
 {
     mLocationModel = model;
 
-    QFile tiedosto(dataFileDir() + "xemalocationdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemalocationdata.txt");
     if (tiedosto.exists() == false)
     {
         tiedosto.setFileName(":defaultlocations.csv");
@@ -352,7 +353,7 @@ void ModelDataLoader::loadPersonData(PersonModel *model)
     QTime t;
     t.start();
 #endif
-    QFile tiedosto(dataFileDir() + "xemapersondata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemapersondata.txt");
     if (tiedosto.exists() == false)
     {
         tiedosto.setFileName(":defaultpersons.csv");
@@ -436,7 +437,7 @@ void ModelDataLoader::loadStatusData(StatusModel *model, bool defaultOnly)
     QTime t;
     t.start();
 #endif
-    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemastatusdata.txt");
     if (defaultOnly == true || tiedosto.exists() == false)
     {
         tiedosto.setFileName(":defaultstatuses.csv");
@@ -473,7 +474,7 @@ void ModelDataLoader::loadStatusData(StatusModel *model, bool defaultOnly)
 
 void ModelDataLoader::loadOnlyModifiedStatusData(StatusModel *model)
 {
-    QFile tiedosto(dataFileDir() + "xemastatusdata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemastatusdata.txt");
     if (tiedosto.exists() == false)
     {
         tiedosto.setFileName(":defaultstatuses.csv");
@@ -514,7 +515,7 @@ void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, 
     t.start();
 #endif
     qDebug() << "void ModelDataLoader::loadHistoryData(HistoryModel *model, const QString &date, const QString &place)" << date << place;
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -607,7 +608,7 @@ void ModelDataLoader::loadHistoryDateData(HistoryModel *model)
 #endif
     qDebug() << "void ModelDataLoader::loadHistoryDateData(HistoryModel *model)";
 
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -741,7 +742,7 @@ void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &d
     t.start();
 #endif
     qDebug() << "void ModelDataLoader::loadHistoryPlaceData(HistoryModel *model, const QString &date)";
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
@@ -876,22 +877,6 @@ void ModelDataLoader::loadAtlasData(AtlasIndexModel *model)
     }
 }
 
-QString ModelDataLoader::dataFileDir()
-{
-    QString appPath;
-#ifdef Q_OS_SYMBIAN
-    appPath = QCoreApplication::applicationDirPath();
-#elif defined HARMATTAN
-    appPath = QString("/home/user/MyDocs/.xema/");
-#elif defined MAC_OS_X_VERSION_10_6
-    appPath = QString("/Users/Tero/xema/");
-#else
-    appPath = QString("C:/");
-
-#endif
-    return appPath;
-}
-
 QString ModelDataLoader::readBird(const QString &bird) {
     if (!mBirdModel) {
         return bird;
@@ -981,14 +966,14 @@ QString ModelDataLoader::loadObservation(qlonglong id)
     t.start();
 #endif
 //    qDebug() << "LUETAAN" << id;
-    if (QFile::exists(dataFileDir() + "xemadata.txt") == false)
+    if (QFile::exists(XemaUtils::dataFileDir() + "xemadata.txt") == false)
     {
 #ifdef PERFTEST
     qDebug("loadObservation Time elapsed: %d ms", t.elapsed());
 #endif
         return QString();
     }
-    QFile tiedosto(dataFileDir() + "xemadata.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
