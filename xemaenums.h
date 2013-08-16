@@ -148,7 +148,10 @@ public:
         TIIRA_SPECIES_EN,
         TIIRA_SPECIES_SV,
         TIIRA_SPECIES_SC, // 40
-        TIIRA_SPECIES_FI // 40
+        TIIRA_SPECIES_FI, // 41
+        TIIRA_CSVID,
+        TIIRA_NOTTOTIIRA,
+        TIIRA_ROWID
     };
 
     enum atlasIndexFields {

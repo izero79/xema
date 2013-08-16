@@ -348,7 +348,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
     tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
-    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa#Koord_tyyppi#Species_en#Species_sv#Species_sc#Species_fi\n");
+    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa#Koord_tyyppi#Species_en#Species_sv#Species_sc#Species_fi#Tiira_csv#NotToTiira\n");
     if( delimiter != "#") {
         header.replace("#",";");
     }
@@ -865,33 +865,41 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
 //    qDebug() << "EXPORT, exportLine 19" << exportLine;
 
     // include exported or not (24 vs 25)
-    QString loppu = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
+    QString lineEnd = "#";
+    QString weather = data.section("#", XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
                                  XemaEnums::OBS_WEATHER+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
+    QString tiiracsv = data.section("#", XemaEnums::OBS_TIIRA_UPLOADID+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
+                                 XemaEnums::OBS_TIIRA_UPLOADID+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
+    QString notiiraexp = data.section("#", XemaEnums::OBS_NOTIIRAEXPORT+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT),
+                                 XemaEnums::OBS_NOTIIRAEXPORT+((xemaRows-1)*XemaEnums::OBS_SUBFIELDCOUNT));
 
-    loppu.prepend("#");
-    loppu.append("#");
-    loppu.append(country);
+    lineEnd.append(weather);
+    lineEnd.append("#");
+    lineEnd.append(country);
     if (exportWgs) {
-        loppu.append("#WGS84");
+        lineEnd.append("#WGS84");
     } else {
-        loppu.append("#YKJ");
+        lineEnd.append("#YKJ");
     }
-    loppu.append("#");
-    loppu.append(species_en);
-    loppu.append("#");
-    loppu.append(species_sv);
-    loppu.append("#");
-    loppu.append(species_sc);
-    loppu.append("#");
-    loppu.append(species_fi);
-    //loppu.append("#");
+    lineEnd.append("#");
+    lineEnd.append(species_en);
+    lineEnd.append("#");
+    lineEnd.append(species_sv);
+    lineEnd.append("#");
+    lineEnd.append(species_sc);
+    lineEnd.append("#");
+    lineEnd.append(species_fi);
+    lineEnd.append("#");
+    lineEnd.append(tiiracsv);
+    lineEnd.append("#");
+    lineEnd.append(notiiraexp);
 
     QString firstRow = data.section("#", XemaEnums::OBS_BIRDCOUNT, XemaEnums::OBS_INDIRECT);
     firstRow.replace("#koiras#", "#k#");
     firstRow.replace("#naaras#", "#n#");
     exportLine += firstRow;
 //    qDebug() << "EXPORT, exportLine 20" << exportLine;
-    exportLine += loppu;
+    exportLine += lineEnd;
     //qDebug() << "EXPORT, exportLine 21, delimcount" << exportLine.count("#");
 
     if (xemaRows > 1) {
@@ -914,7 +922,7 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
             //qDebug() << "EXPORT, lisataan loput" << "########";
             //exportLine += "########";
             rowLine += "#######";
-            //exportLine += loppu;
+            //exportLine += lineEnd;
             //qDebug() << "EXPORT, rowLine, delimcount" << rowLine.count("#");
 //            qDebug() << "EXPORT, exportLine 22.5" << exportLine;
             exportLine += rowLine;
@@ -1066,11 +1074,16 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
 //    readyLine.append(delimiter);
     readyLine.append("0#");
     QString readLine = lines.at(0);
+    int tiira_rowid = sectionMap.value(XemaEnums::TIIRA_ROWID);
+    int tiira_csvid = sectionMap.value(XemaEnums::TIIRA_CSVID);
+    int tiira_nottotiira = sectionMap.value(XemaEnums::TIIRA_NOTTOTIIRA);
     int tiira_abbr = sectionMap.value(XemaEnums::TIIRA_SPECIES_ABBR);
     int tiira_species_en = sectionMap.value(XemaEnums::TIIRA_SPECIES_EN);
     int tiira_species_sv = sectionMap.value(XemaEnums::TIIRA_SPECIES_SV);
     int tiira_species_sc = sectionMap.value(XemaEnums::TIIRA_SPECIES_SC);
     int tiira_species_fi = sectionMap.value(XemaEnums::TIIRA_SPECIES_FI);
+    QString rowId = readLine.section(delimiter, tiira_rowid, tiira_rowid);
+
     QString speciesAbbrev = readLine.section(delimiter,tiira_abbr,tiira_abbr);
     QString species_en = readLine.section(delimiter,tiira_species_en,tiira_species_en);
     QString species_sv = readLine.section(delimiter,tiira_species_sv,tiira_species_sv);
@@ -1405,7 +1418,10 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
 
     // hidden
     int tiira_hidden = sectionMap.value(XemaEnums::TIIRA_HIDDEN);
-    if(QString::compare(readLine.section(delimiter, tiira_hidden, tiira_hidden),"X", Qt::CaseInsensitive)==0)
+    QString hidden = readLine.section(delimiter, tiira_hidden, tiira_hidden);
+    if(QString::compare(hidden,"X", Qt::CaseInsensitive)==0 ||
+       QString::compare(hidden,"true", Qt::CaseInsensitive)==0 ||
+       QString::compare(hidden,"1", Qt::CaseInsensitive)==0)
     {
         readyLine.append("true#");
     }
@@ -1485,7 +1501,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
         readyLine.append("#");
         readyLine += row.section(delimiter,tiira_loft-offset,tiira_loft-offset);
         readyLine.append("#");
-        if(QString::compare(row.section(delimiter,tiira_bongaus-offset,tiira_bongaus-offset),"X", Qt::CaseInsensitive)==0)
+        QString twitched = row.section(delimiter,tiira_bongaus-offset,tiira_bongaus-offset);
+        if(QString::compare(twitched,"X", Qt::CaseInsensitive)==0 ||
+           QString::compare(twitched,"true", Qt::CaseInsensitive)==0)
         {
             readyLine.append("true#");
         }
@@ -1493,7 +1511,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
         {
             readyLine.append("false#");
         }
-        if(QString::compare(row.section(delimiter,tiira_nest-offset,tiira_nest-offset),"X", Qt::CaseInsensitive)==0)
+        QString nesting = row.section(delimiter,tiira_nest-offset,tiira_nest-offset);
+        if(QString::compare(nesting,"X", Qt::CaseInsensitive)==0 ||
+           QString::compare(nesting,"true", Qt::CaseInsensitive)==0)
         {
             readyLine.append("true#");
         }
@@ -1531,6 +1551,33 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     // exported to true
     readyLine.append("#true#");
 
+    QString csvId = readLine.section(delimiter, tiira_csvid, tiira_csvid);
+    QString notToTiira = readLine.section(delimiter, tiira_nottotiira, tiira_nottotiira);
+
+    // exported to tiira
+    if (!rowId.isEmpty() || !csvId.isEmpty()) {
+        readyLine.append("true#");
+    } else {
+        readyLine.append("false#");
+    }
+    // do not export to tiira
+    if(QString::compare(notToTiira,"X", Qt::CaseInsensitive)==0 ||
+       QString::compare(notToTiira,"true", Qt::CaseInsensitive)==0 )
+    {
+        readyLine.append("true#");
+    }
+    else
+    {
+        readyLine.append("false#");
+    }
+
+    // csv id
+    if (!csvId.isEmpty()) {
+        readyLine.append(csvId);
+    } else {
+        readyLine.append("");
+    }
+    readyLine.append("#");
     //qDebug() << "VALMIS RIVI" << readyLine;
 
     writeNewObservation(readyLine);
@@ -2020,7 +2067,7 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
     QStringList headerSections = header.split(delimiter);
 
 //    qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
-    for (int i = XemaEnums::TIIRA_ID; i <= XemaEnums::TIIRA_SPECIES_FI; i++) {
+    for (int i = XemaEnums::TIIRA_ID; i <= XemaEnums::TIIRA_ROWID; i++) {
         switch (i) {
             case XemaEnums::TIIRA_ID: {
                 int index = headerSections.indexOf("rivi-id");
@@ -2392,6 +2439,30 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                     index = 100;
                 }
                 sections.insert(XemaEnums::TIIRA_SPECIES_FI, index);
+                break;
+            }
+            case XemaEnums::TIIRA_CSVID: {
+                int index = headerSections.indexOf("tiira_csv");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_CSVID, index);
+                break;
+            }
+            case XemaEnums::TIIRA_NOTTOTIIRA: {
+                int index = headerSections.indexOf("nottotiira");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_NOTTOTIIRA, index);
+                break;
+            }
+            case XemaEnums::TIIRA_ROWID: {
+                int index = headerSections.indexOf("havainto id");
+                if (index < 0) {
+                    index = 100;
+                }
+                sections.insert(XemaEnums::TIIRA_ROWID, index);
                 break;
             }
         }
