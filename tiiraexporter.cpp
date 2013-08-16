@@ -24,9 +24,14 @@ TiiraExporter::TiiraExporter(const QNetworkConfiguration &config, LocationModel 
     QString userName = Settings::tiiraUsername();
     QString pwdHash = Settings::tiiraPwdHash();
     mTiiraServiceHelper = new TiiraServiceHelper(userName, pwdHash, this);
-    mTiiraServiceHelper->init(config);
     connect(mTiiraServiceHelper,SIGNAL(uploadOk(long,QString)),this,SLOT(uploadOk(long,QString)));
     connect(mTiiraServiceHelper,SIGNAL(rowUploadOk(long,int)),this,SLOT(rowUploadOk(long,int)));
+    connect(mTiiraServiceHelper,SIGNAL(loginOk(QString)),this,SIGNAL(loginOk(QString)));
+    connect(mTiiraServiceHelper,SIGNAL(wrongCredientals()),this,SIGNAL(wrongCredientals()));
+    connect(mTiiraServiceHelper,SIGNAL(noUploadRights()),this,SIGNAL(noUploadRights()));
+    connect(mTiiraServiceHelper,SIGNAL(serverLoginFailed()),this,SIGNAL(serverLoginFailed()));
+    connect(mTiiraServiceHelper,SIGNAL(loginFailUnknown()),this,SIGNAL(loginFailUnknown()));
+    mTiiraServiceHelper->init(config);
 }
 
 void TiiraExporter::resetServer() {
@@ -529,10 +534,6 @@ QMap<QString, QString> TiiraExporter::getRowMap(const QString &data, int row)
 }
 
 void TiiraExporter::login() {
-    connect(mTiiraServiceHelper,SIGNAL(loginOk(QString)),this,SIGNAL(loginOk(QString)));
-    connect(mTiiraServiceHelper,SIGNAL(wrongCredientals()),this,SIGNAL(wrongCredientals()));
-    connect(mTiiraServiceHelper,SIGNAL(noUploadRights()),this,SIGNAL(noUploadRights()));
-    connect(mTiiraServiceHelper,SIGNAL(serverLoginFailed()),this,SIGNAL(serverLoginFailed()));
     mTiiraServiceHelper->login();
 
 }

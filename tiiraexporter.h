@@ -27,6 +27,7 @@ signals:
     void loginOk(const QString &name);
     void serverLoginFailed();
     void tiiraExportDone();
+    void loginFailUnknown();
 
 public slots:
 

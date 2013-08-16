@@ -24,6 +24,7 @@ signals:
     void uploadOk(long id, const QString &csvId);
     void rowUploadOk(long id, int row);
     void serverLoginFailed();
+    void loginFailUnknown();
 
 public slots:
     void init(const QNetworkConfiguration &config);

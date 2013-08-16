@@ -240,6 +240,14 @@ QString Settings::tiiraServerPassword()
     return value;
 }
 
+bool Settings::tiiraLoginOk()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("tiiraLoginOk", false).toBool();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
 void Settings::setUseTiira(bool useTiira)
 {
     qDebug() << Q_FUNC_INFO << useTiira;
@@ -288,4 +296,11 @@ void Settings::setTiiraServerPassword(const QString &password)
     qDebug() << Q_FUNC_INFO << password;
     QSettings settings("TeSi", "xema");
     settings.setValue("tiiraServerPassword", password);
+}
+
+void Settings::setTiiraLoginOk(bool ok)
+{
+    qDebug() << Q_FUNC_INFO << ok;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraLoginOk", ok);
 }

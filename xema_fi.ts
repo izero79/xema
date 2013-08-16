@@ -131,7 +131,7 @@
     </message>
     <message>
         <source>Export to Tiira</source>
-        <translation>Vienti Tiiraan</translation>
+        <translation>Vie Tiiraan</translation>
     </message>
     <message>
         <source>Tiira export</source>
@@ -693,7 +693,7 @@
     </message>
     <message>
         <source>Sign in</source>
-        <translation>Kirjaudu sisään</translation>
+        <translation>Kirjaudu</translation>
     </message>
     <message>
         <source>Save new records to Tiira</source>
@@ -718,6 +718,10 @@
     <message>
         <source>Set</source>
         <translation>Aseta</translation>
+    </message>
+    <message>
+        <source>Status: Unknown error</source>
+        <translation>Tila: Tuntematon virhe</translation>
     </message>
 </context>
 <context>

@@ -22,7 +22,7 @@ PageStackWindow {
     property string defaultCountry: ""
     property bool exportWgs: true
 
-    property bool tiiraLoginOk: true
+    property bool tiiraLoginOk: false
     property bool useTiira: false
     property string tiiraUsername: ""
     property string tiiraPwdHash: ""
@@ -431,6 +431,11 @@ PageStackWindow {
         MyScript.settingsObject.serverLoginFailed()
     }
 
+    function loginFailedUnknown() {
+        window.tiiraLoginOk = false
+        MyScript.settingsObject.loginFailedUnknown()
+    }
+
     function tiiraExportDone() {
         console.log("tiira exportDone")
         if (pageStack.currentPage != MyScript.obsObject) {
@@ -440,6 +445,11 @@ PageStackWindow {
             errorDialog.dialogText = qsTr("Export to Tiira is complete.")
             errorDialog.open()
         }
+    }
+
+    function setTiiraLoginOk(ok) {
+        console.log("setTiiraLoginOk: " + ok)
+        window.tiiraLoginOk = ok
     }
 
     Rectangle {

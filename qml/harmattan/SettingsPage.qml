@@ -7,6 +7,9 @@ Page {
     id: settingsPage
     tools: toolBarLayout
 
+    property bool usernameEdited: false
+    property bool pwdEdited: false
+
     function editPeople(indexi)
     {
         var editorCompnent = Qt.createComponent(Qt.resolvedUrl("PersonEditPage.qml"))
@@ -53,6 +56,33 @@ Page {
 
     function serverLoginFailed() {
         tiiraStatus.text = qsTr("Status: Tiira environment credientals wrong")
+    }
+
+    function loginFailedUnknown() {
+        tiiraStatus.text = qsTr("Status: Unknown error")
+    }
+
+    function setServerCredientals() {
+        console.log('setServerCredientals')
+        window.tiiraServerUsername = tiiraServerUsername.text
+        window.tiiraServerPassword = tiiraServerPassword.text
+        window.saveTiiraServerUsername(tiiraServerUsername.text)
+        window.saveTiiraServerPassword(tiiraServerPassword.text)
+    }
+
+    function checkCredientalsAndLogin() {
+        console.log('checkCredientalsAndLogin')
+        if (usernameEdited) {
+            window.tiiraUsername = tiiraUsername.text
+            window.saveTiiraUsername(tiiraUsername.text)
+        }
+        if (pwdEdited) {
+            window.tiiraPwdHash = tiiraPassword.text
+            window.saveTiiraPwdHash(tiiraPassword.text)
+        }
+        usernameEdited = false
+        pwdEdited = false
+        window.tiiraLogin()
     }
 
     onStatusChanged: {
@@ -493,6 +523,9 @@ Page {
                 onCheckedChanged: {
                     window.useTiira = checked
                     window.saveUseTiira(checked)
+                    if (checked) {
+                        checkCredientalsAndLogin()
+                    }
                 }
             }
             Item {
@@ -525,6 +558,11 @@ Page {
                         anchors.topMargin: 8
                         placeholderText: qsTr("Username")
                         text: window.tiiraUsername
+                        onTextChanged: {
+                            if (activeFocus) {
+                                usernameEdited = true
+                            }
+                        }
                     }
                     TextField {
                         id: tiiraPassword
@@ -534,7 +572,12 @@ Page {
                         anchors.topMargin: 8
                         placeholderText: qsTr("Password")
                         echoMode: TextInput.Password
-                        text: tiiraPwdHash
+                        text: window.tiiraPwdHash
+                        onTextChanged: {
+                            if (activeFocus) {
+                                pwdEdited = true
+                            }
+                        }
 
                     }
                     Button {
@@ -542,15 +585,12 @@ Page {
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.topMargin: 8
-                        width: 150
+                        width: 175
                         text: qsTr("Sign in")
                         onClicked: {
-                            window.tiiraUsername = tiiraUsername.text
-                            window.tiiraPwdHash = tiiraPassword.text
-                            window.saveTiiraUsername(tiiraUsername.text)
-                            window.saveTiiraPwdHash(tiiraPassword.text)
-                            window.tiiraLogin()
+                            checkCredientalsAndLogin();
                         }
+                        enabled: !window.tiiraLoginOk || settingsPage.usernameEdited || settingsPage.pwdEdited
                     }
                 }
                 CheckBox {
@@ -558,7 +598,7 @@ Page {
                     text: qsTr("Save new records to Tiira")
                     anchors.left: parent.left
                     anchors.top: signing.bottom
-                    anchors.topMargin: 8
+                    anchors.topMargin: 32
                     anchors.right: parent.right
                     checked: window.tiiraAutosave == true
                     onCheckedChanged: {
@@ -606,11 +646,8 @@ Page {
                                     wasPressed = false
                                     window.tiiraServer = 0
                                     window.saveTiiraServer(0)
-                                    window.tiiraServerUsername = tiiraServerUsername.text
-                                    window.tiiraServerPassword = tiiraServerPassword.text
-                                    window.saveTiiraServerUsername(tiiraServerUsername.text)
-                                    window.saveTiiraServerPassword(tiiraServerPassword.text)
-                                    window.tiiraLogin()
+                                    setServerCredientals()
+                                    checkCredientalsAndLogin()
                                 }
                             }
                         }
@@ -633,11 +670,8 @@ Page {
                                     wasPressed = false
                                     window.tiiraServer = 1
                                     window.saveTiiraServer(1)
-                                    window.tiiraServerUsername = tiiraServerUsername.text
-                                    window.tiiraServerPassword = tiiraServerPassword.text
-                                    window.saveTiiraServerUsername(tiiraServerUsername.text)
-                                    window.saveTiiraServerPassword(tiiraServerPassword.text)
-                                    window.tiiraLogin()
+                                    setServerCredientals()
+                                    checkCredientalsAndLogin()
                                 }
                             }
                         }
@@ -660,11 +694,8 @@ Page {
                                     wasPressed = false
                                     window.tiiraServer = 2
                                     window.saveTiiraServer(2)
-                                    window.tiiraServerUsername = tiiraServerUsername.text
-                                    window.tiiraServerPassword = tiiraServerPassword.text
-                                    window.saveTiiraServerUsername(tiiraServerUsername.text)
-                                    window.saveTiiraServerPassword(tiiraServerPassword.text)
-                                    window.tiiraLogin()
+                                    setServerCredientals()
+                                    checkCredientalsAndLogin()
                                 }
                             }
                         }
@@ -694,14 +725,11 @@ Page {
                         anchors.right: parent.right
                         anchors.top: tiiraServerRow.bottom
                         anchors.topMargin: 8
-                        width: 150
+                        width: 175
                         text: qsTr("Set")
                         onClicked: {
-                            window.tiiraServerUsername = tiiraServerUsername.text
-                            window.tiiraServerPassword = tiiraServerPassword.text
-                            window.saveTiiraServerUsername(tiiraServerUsername.text)
-                            window.saveTiiraServerPassword(tiiraServerPassword.text)
-                            window.tiiraLogin()
+                            setServerCredientals()
+                            checkCredientalsAndLogin()
                         }
                     }
                 }

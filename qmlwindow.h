@@ -99,6 +99,7 @@ private slots:
     void saveTiiraServer(int server);
     void saveTiiraServerUsername(const QString &username);
     void saveTiiraServerPassword(const QString &password);
+    void saveTiiraLoginOk(bool ok);
 
     void tiiraLogin();
     void tiiraLoginOk(const QString &name);
@@ -106,6 +107,9 @@ private slots:
     void tiiraNoUploadRights();
     void tiiraServerLoginFailed();
     void tiiraExportDone();
+    void tiiraLoginFailUnknown();
+
+    void createTiiraExporter();
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
