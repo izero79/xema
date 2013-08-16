@@ -82,13 +82,13 @@ Page {
         }
         usernameEdited = false
         pwdEdited = false
-        window.tiiraLogin()
+        window.tiira_login()
     }
 
     onStatusChanged: {
         if (settingsPage.status == PageStatus.Active) {
             if (window.useTiira) {
-                window.tiiraLogin()
+                window.tiira_login()
             }
         }
     }

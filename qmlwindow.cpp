@@ -111,7 +111,6 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mRootContext->setContextProperty("CoordinateConverter", mCoordinateConverter);
     mNetworkController = new NetworkController(this);
     mRootContext->setContextProperty( "NetworkController", mNetworkController );
-    mNetworkController->openAnyConnection();
 
 }
 

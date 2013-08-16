@@ -57,7 +57,7 @@ Page {
         birdCoordinatesTf.text = ""
         directionTf.text = ""
         distanceTf.text = ""
-        tiiraExported.checked = false
+        tiiraExported.text = ""
         noTiiraExport.checked = false
         csvId = ""
 
@@ -613,7 +613,9 @@ Page {
         weatherTa.text = fields[currentField]
         currentField++ //exported
         currentField++
-        tiiraExported.checked = fields[currentField]
+        if (fields[currentField] == "true" || fields[currentField] == "X") {
+            tiiraExported.text = qsTr("Exported to Tiira")
+        }
         currentField++
         noTiiraExport.checked = fields[currentField]
         currentField++
@@ -661,7 +663,7 @@ Page {
             moreInfoTa.text = ""
             atlasTf.text = ""
             hideChkBox.checked = false
-            tiiraExported.checked = false
+            tiiraExported.text = ""
             noTiiraExport.checked = false
             csvId = ""
 
@@ -1968,7 +1970,7 @@ Page {
                             edited = true
                         }
                     }
-                    CheckBox {
+                    Label {
                         id: tiiraExported
                         anchors.top: noTiiraExport.bottom
                         anchors.topMargin: 8
@@ -1976,8 +1978,7 @@ Page {
                         anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
-                        text: qsTr("Exported to Tiira")
-                        enabled: false
+                        text: ""
                         visible: window.useTiira
                     }
                     Label {

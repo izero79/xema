@@ -21,6 +21,8 @@ PageStackWindow {
     property bool onlyDefaultCountry: false
     property string defaultCountry: ""
     property bool exportWgs: true
+    property string pendingOnlineTask: ""
+    property variant pendingOnlineTaskParams: []
 
     property bool tiiraLoginOk: false
     property bool useTiira: false
@@ -280,22 +282,27 @@ PageStackWindow {
 
     function showBirdMap(itemi, place_x, place_y, x, y) {
         if (hasInternetConnection() == false) {
+            pendingOnlineTask = "birdmap"
+            pendingOnlineTaskParams = [itemi, place_x, place_y, x, y]
             openInternetConnection()
-            return
+        } else {
+            cppProcessing = true
+            MyScript.showMapPage(itemi, "bird", place_x, place_y, x, y)
+            cppProcessing = false
         }
-        cppProcessing = true
-        MyScript.showMapPage(itemi, "bird", place_x, place_y, x, y)
-        cppProcessing = false
     }
 
     function showPlaceMap(itemi, x, y) {
         if (hasInternetConnection() == false) {
+            pendingOnlineTask = "placemap"
+            pendingOnlineTaskParams = [itemi, x, y]
             openInternetConnection()
             return
+        } else {
+            cppProcessing = true
+            MyScript.showMapPage(itemi, "place", x, y, null, null)
+            cppProcessing = false
         }
-        cppProcessing = true
-        MyScript.showMapPage(itemi, "place", x, y, null, null)
-        cppProcessing = false
     }
 
     function setBirdCoords(coords) {
@@ -374,7 +381,7 @@ PageStackWindow {
     }
 
     function openInternetConnection() {
-        var ask = XemaSettings.askForConnection()
+        var ask = true //XemaSettings.askForConnection()
         if (ask) {
             connectionDialog.open()
         } else {
@@ -450,6 +457,60 @@ PageStackWindow {
     function setTiiraLoginOk(ok) {
         console.log("setTiiraLoginOk: " + ok)
         window.tiiraLoginOk = ok
+    }
+
+    function tiiraExport_obs(id) {
+        if (hasInternetConnection() == false) {
+            pendingOnlineTask = "obsexport"
+            pendingOnlineTaskParams = id
+            openInternetConnection()
+        } else {
+            exportObsToTiira(id)
+        }
+    }
+
+    function tiiraExport_many(date, place) {
+        if (hasInternetConnection() == false) {
+            pendingOnlineTask = "obsexportmany"
+            pendingOnlineTaskParams = [date,place]
+            openInternetConnection()
+        } else {
+            exportToTiira(date, place)
+        }
+    }
+
+    function tiira_login() {
+        if (hasInternetConnection() == false) {
+            pendingOnlineTask = "login"
+            openInternetConnection()
+        } else {
+            tiiraLogin();
+        }
+    }
+
+    Connections {
+        target: NetworkController
+        onConnectionReady: {
+            console.log('connection ready!!!!!!')
+            if (pendingOnlineTask == "login") {
+                tiiraLogin();
+            }
+            else if (pendingOnlineTask == "obsexport") {
+                exportObsToTiira(pendingOnlineTaskParams);
+            }
+            else if (pendingOnlineTask == "obsexportmany") {
+                exportToTiira(pendingOnlineTaskParams[0],pendingOnlineTaskParams[1])
+            }
+            else if (pendingOnlineTask == "birdmap") {
+                showBirdMap(pendingOnlineTaskParams[0],pendingOnlineTaskParams[1],pendingOnlineTaskParams[2],pendingOnlineTaskParams[3],pendingOnlineTaskParams[4])
+            }
+            else if (pendingOnlineTask == "placemap") {
+                showPlaceMap(pendingOnlineTaskParams[0],pendingOnlineTaskParams[1],pendingOnlineTaskParams[2])
+            }
+
+            pendingOnlineTask = ""
+            pendingOnlineTaskParams = ""
+        }
     }
 
     Rectangle {
@@ -616,6 +677,8 @@ PageStackWindow {
                 width: parent.width / 2
                 text: qsTr("No")
                 onClicked: {
+                    pendingOnlineTask = ""
+                    pendingOnlineTaskParams = ""
                     connectionDialog.close()
                 }
             }
@@ -637,10 +700,16 @@ PageStackWindow {
             }
         }
         onClickedOutside: {
+            pendingOnlineTask = ""
+            pendingOnlineTaskParams = ""
             connectionDialogDoNotAsk = false
             connectionDialog.close()
         }
-        onRejected: { connectionDialogDoNotAsk = false }
+        onRejected: {
+            pendingOnlineTask = ""
+            pendingOnlineTaskParams = ""
+            connectionDialogDoNotAsk = false
+        }
     }
 
     Dialog {

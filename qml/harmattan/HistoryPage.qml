@@ -110,7 +110,7 @@ Page {
                     console.log("EXPORT TO TIIRA " + contextMenu.selectedItem)
                     tiiraExportItem.enabled = false
                     historyToolBarLayout.enabled = false
-                    window.exportObsToTiira(contextMenu.selectedItem)
+                    window.tiiraExport_obs(contextMenu.selectedItem)
                     tiiraExportItem.enabled = true
                     historyToolBarLayout.enabled = true
                     contextMenu.close()
@@ -426,7 +426,7 @@ Page {
                 width: parent.width / 2
                 text: qsTr("Ok")
                 onClicked: {
-                    window.exportToTiira(currentDate, currentPlace)
+                    window.tiiraExport_many(currentDate, currentPlace)
                     tiiraExportDialog.close()
                 }
             }
