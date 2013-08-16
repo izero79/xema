@@ -129,6 +129,30 @@
         <source>Exporting records with date %1. Do you want to export all data, or just new data?</source>
         <translation>Viedään havainnot päivämäärällä %1. Haluatko viedä kaikki valitun päivän havainnot vai vain uudet?</translation>
     </message>
+    <message>
+        <source>Export to Tiira</source>
+        <translation>Vienti Tiiraan</translation>
+    </message>
+    <message>
+        <source>Tiira export</source>
+        <translation>Tiira vienti</translation>
+    </message>
+    <message>
+        <source>All the records with date %1 and place %2 that haven&apos;t been exported to Tiira from Xema will be now exported.</source>
+        <translation>Kaikki havainnot päivältä %1 ja paikasta %2, joita ei ole viety Tiiraan Xemasta, viedään nyt Tiiraan.</translation>
+    </message>
+    <message>
+        <source>All the records with date %1 that haven&apos;t been exported to Tiira from Xema will be now exported.</source>
+        <translation>Kaikki havainnot päivältä %1, joita ei ole viety Tiiraan Xemasta, viedään nyt Tiiraan.</translation>
+    </message>
+    <message>
+        <source>All the records that haven&apos;t been exported to Tiira from Xema will be now exported.</source>
+        <translation>Kaikki havainnot joita ei ole viety Tiiraan Xemasta, viedään nyt Tiiraan.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
 </context>
 <context>
     <name>ListPage</name>
@@ -457,6 +481,22 @@
         <source>Accuracy</source>
         <translation>Tarkkuus</translation>
     </message>
+    <message>
+        <source>Tiira info</source>
+        <translation>Tiira info</translation>
+    </message>
+    <message>
+        <source>Do not export to Tiira</source>
+        <translation>Älä vie Tiiraan</translation>
+    </message>
+    <message>
+        <source>Exported to Tiira</source>
+        <translation>Viety Tiiraan</translation>
+    </message>
+    <message>
+        <source>Tiira csv id: %1</source>
+        <translation>Tiira csv id: %1</translation>
+    </message>
 </context>
 <context>
     <name>PersonEditPage</name>
@@ -619,6 +659,66 @@
         <source>YKJ (Used only in Finland)</source>
         <translation>YKJ (vain suomi)</translation>
     </message>
+    <message>
+        <source>Status: Signed in as %1</source>
+        <translation>Tila: Kirjautuneena %1</translation>
+    </message>
+    <message>
+        <source>Status: Wrong username/password</source>
+        <translation>Tila: Väärä käyttäjänimi/salasana</translation>
+    </message>
+    <message>
+        <source>Status: Signed in. No upload rights</source>
+        <translation>Tila: Kirjautunut. Ei latausoikeutta</translation>
+    </message>
+    <message>
+        <source>Status: Tiira environment credientals wrong</source>
+        <translation>Tila: Tiira ympäristön tunnukset väärin</translation>
+    </message>
+    <message>
+        <source>Use Tiira service</source>
+        <translation>Käytä Tiira-palveluita</translation>
+    </message>
+    <message>
+        <source>Status: Not signed in</source>
+        <translation>Tila: Ei kirjautuneena</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Käyttäjänimi</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Salasana</translation>
+    </message>
+    <message>
+        <source>Sign in</source>
+        <translation>Kirjaudu sisään</translation>
+    </message>
+    <message>
+        <source>Save new records to Tiira</source>
+        <translation>Lähetä uusi havainto Tiiraan tallennettaessa</translation>
+    </message>
+    <message>
+        <source>Tiira environment</source>
+        <translation>Tiira ympäristö</translation>
+    </message>
+    <message>
+        <source>Production</source>
+        <translation>Tuotanto</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Testi</translation>
+    </message>
+    <message>
+        <source>Dev</source>
+        <translation>Dev</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation>Aseta</translation>
+    </message>
 </context>
 <context>
     <name>StatusEditPage</name>
@@ -740,6 +840,14 @@
     <message>
         <source>Yes</source>
         <translation>Kyllä</translation>
+    </message>
+    <message>
+        <source>Tiira export complete</source>
+        <translation>Vienti Tiiraan valmis</translation>
+    </message>
+    <message>
+        <source>Export to Tiira is complete.</source>
+        <translation>Vienti Tiiraan on valmis.</translation>
     </message>
 </context>
 </TS>
