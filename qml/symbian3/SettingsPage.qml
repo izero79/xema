@@ -409,17 +409,21 @@ Page {
             anchors.rightMargin: 0
             anchors.left: parent.left
             onTextChanged: {
-                defaultCountryTimer.start()
+                if (activeFocus) {
+                    locationSetTimer.start()
+                }
             }
 
             Timer {
-                id: defaultCountryTimer
-                interval: 1000
+                id: locationSetTimer
+                interval: 2000
                 running: false
                 repeat: false
                 onTriggered: {
                     window.saveDefaultCountry(defaultCountryTf.text)
                     window.defaultCountry = defaultCountryTf.text
+                    window.saveDefaultAssociation(defaultAssociationTf.text)
+                    window.defaultAssociation = defaultAssociationTf.text
                 }
             }
         }
@@ -440,6 +444,69 @@ Page {
         }
 
         Label {
+            id: defaultAssociationText
+            text: qsTr("Default association")
+            font.pixelSize: 20
+            verticalAlignment: Text.AlignVCenter
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+            anchors.top: defaultCountryCb.bottom
+            anchors.topMargin: 30
+            color: "#ffffff"
+        }
+        TextField {
+            id: defaultAssociationTf
+            height: 50
+            placeholderText: qsTr("Default association")
+            text: window.defaultAssociation
+            anchors.top: defaultAssociationText.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            onTextChanged: {
+                if (activeFocus) {
+                    locationSetTimer.start()
+                }
+            }
+
+        }
+        CheckBox {
+            id: defaultAssociationCb
+            anchors.top: defaultAssociationTf.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            checked: window.onlyDefaultAssiciation == true
+            text: qsTr("Use only default association")
+            onCheckedChanged: {
+                window.onlyDefaultAssiciation = checked
+                window.saveOnlyDefaultAssociation(checked)
+            }
+        }
+        CheckBox {
+            id: alwaysShowOwnCb
+            anchors.top: defaultAssociationCb.bottom
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            checked: window.alwaysShowOwn == true
+            text: qsTr("Always show own/modified locations")
+            onCheckedChanged: {
+                window.alwaysShowOwn = checked
+                window.saveAlwaysShowOwn(checked)
+            }
+        }
+
+        Label {
             id: coordinateSystemText
             text: qsTr("Coordinate system in export")
             font.pixelSize: 20
@@ -450,7 +517,7 @@ Page {
             anchors.topMargin: 30
             anchors.left: parent.left
             horizontalAlignment: Text.AlignLeft
-            anchors.top: defaultCountryCb.bottom
+            anchors.top: alwaysShowOwnCb.bottom
             color: "#ffffff"
         }
 

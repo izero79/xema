@@ -53,6 +53,7 @@ signals:
     void savePersons();
     void saveBirds();
     void reloadBirds();
+    void reloadLocations();
 
 public slots:
     void orientationChanged();
@@ -82,8 +83,11 @@ private slots:
     void saveSystematicSorting(bool systematic);
     void saveWPSpecies(bool wpspecies);
     void saveOnlyDefaultCountry(bool onlydefault);
-    void saveExportWgs(bool exportWgs);
     void saveDefaultCountry(const QString &defaultCountry);
+    void saveOnlyDefaultAssociation(bool onlydefault);
+    void saveDefaultAssociation(const QString &defaultAssociation);
+    void saveAlwaysShowOwn(bool show);
+    void saveExportWgs(bool exportWgs);
     void exportData(bool onlyNew, bool allCountries, const QString &date, const QString &place, const QString &delimiter);
     void exportOwnData();
     void importOwnData();

@@ -409,12 +409,14 @@ Page {
             anchors.rightMargin: 0
             anchors.left: parent.left
             onTextChanged: {
-                defaultCountryTimer.start()
+                if (activeFocus) {
+                    defaultCountryTimer.start()
+                }
             }
 
             Timer {
                 id: defaultCountryTimer
-                interval: 1000
+                interval: 2000
                 running: false
                 repeat: false
                 onTriggered: {

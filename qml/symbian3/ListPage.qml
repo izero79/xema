@@ -68,10 +68,9 @@ Page {
     function init()
     {
         console.log("listpage init")
+        filterTf.text = ""
         selectModel()
         selectDelegate()
-        listView.model.filter("")
-        filterTf.text = ""
         console.log("listpage init - done")
     }
 
@@ -350,18 +349,12 @@ Page {
             listView.model.setSorting(1, true)
             listView.editMode = false
             listView.delegate = locationDelegate
-            if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ", ");
-            }
         }
         else if (listPageType == "editplaces")
         {
             listView.model.setSorting(1, true)
             listView.editMode = true
             listView.delegate = locationDelegate
-            if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ", ");
-            }
         }
         else if (listPageType == "editstatuses")
         {
@@ -415,78 +408,93 @@ Page {
         if (listPageType == "atlas")
         {
             listView.model = atlasModel
+            listView.model.filter("")
         }
         else if (listPageType == "birds")
         {
 //                listView.section.property = "section"
 //                listView.section.delegate = sectionDelegate
             listView.model = birdModel
+            listView.model.filter("")
         }
         else if (listPageType == "editbirds")
         {
             listView.model = birdModel
+            listView.model.filter("")
         }
         else if (listPageType == "places")
         {
-            listView.model = locationModel
+            listView.model = locationModel/*
             if (window.onlyDefaultCountry) {
                 listView.model.filter("^" + window.defaultCountry  + ", ");
-            }
+            }*/
         }
         else if (listPageType == "editplaces")
         {
-            listView.model = locationModel
+            listView.model = locationModel/*
             if (window.onlyDefaultCountry) {
                 listView.model.filter("^" + window.defaultCountry  + ", ");
-            }
+            }*/
         }
         else if (listPageType == "status")
         {
             listView.model = statusModel
+            listView.model.filter("")
         }
         else if (listPageType == "editstatuses")
         {
             listView.model = statusModel
+            listView.model.filter("")
         }
         else if (listPageType == "sex")
         {
             listView.model = sexModel
+            listView.model.filter("")
         }
         else if (listPageType == "dress")
         {
             listView.model = dressModel
+            listView.model.filter("")
         }
         else if (listPageType == "age")
         {
             listView.model = ageModel
+            listView.model.filter("")
         }
         else if (listPageType == "regpeople")
         {
             listView.model = personModel
+            listView.model.filter("")
         }
         else if (listPageType == "editallpeople")
         {
             listView.model = personModel
+            listView.model.filter("")
         }
         else if (listPageType == "people")
         {
             listView.model = personModel
+            listView.model.filter("")
         }
         else if (listPageType == "direction")
         {
             listView.model = directionModel
+            listView.model.filter("")
         }
         else if (listPageType == "birdaccuracy")
         {
             listView.model = birdAccuracyModel
+            listView.model.filter("")
         }
         else if (listPageType == "locationaccuracy")
         {
             listView.model = locationAccuracyModel
+            listView.model.filter("")
         }
         else
         {
             listView.model = emptyModel
+            listView.model.filter("")
         }
     }
 
@@ -615,7 +623,7 @@ Page {
             focus: ( listPageType == "places" || listPageType == "birds" )
             onTextChanged: {
                 //console.log("teksti muuttuu: " + text)
-                if (window.onlyDefaultCountry && ( listPageType == "places" || listPageType == "editplaces" )) {
+                if (0){//window.onlyDefaultCountry && ( listPageType == "places" || listPageType == "editplaces" )) {
                     listView.model.filter("(^" + window.defaultCountry  + ", )(.*" + text + ".*)");
                 } else {
                     listView.model.filter(text)

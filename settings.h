@@ -15,10 +15,13 @@ public slots:
     bool systematicSorting();
     int detailLevel();
     bool wpSpecies();
-    bool onlyDefaultCountry();
     bool askForConnection();
     static bool exportWgs();
+    static bool onlyDefaultCountry();
     static QString defaultCountry();
+    static bool onlyDefaultAssociation();
+    static QString defaultAssociation();
+    static bool alwaysShowOwn();
     static int speciesVersion();
     static int locationsVersion();
     static int statusesVersion();
@@ -39,6 +42,9 @@ public slots:
     void setWPSpecies(bool wpspecies);
     void setOnlyDefaultCountry(bool onlyDefault);
     void setDefaultCountry(const QString &country);
+    void setOnlyDefaultAssociation(bool onlyDefault);
+    void setDefaultAssociation(const QString &association);
+    void setAlwaysShowOwn(bool show);
     void setExportWgs(bool exportWgs);
     static void setSpeciesVersion(int ver);
     static void setLocationsVersion(int ver);

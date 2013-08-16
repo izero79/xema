@@ -59,6 +59,27 @@ void Settings::setDefaultCountry(const QString &country)
     settings.setValue("defaultCountry", country);
 }
 
+void Settings::setOnlyDefaultAssociation(bool onlyDefault)
+{
+    qDebug() << "void Settings::setOnlyDefaultAssociation()" << onlyDefault;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("onlyDefaultAssociation", onlyDefault);
+}
+
+void Settings::setDefaultAssociation(const QString &association)
+{
+    qDebug() << "void Settings::setDefaultAssociation()" << association;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("defaultAssociation", association);
+}
+
+void Settings::setAlwaysShowOwn(bool show)
+{
+    qDebug() << "void Settings::setAlwaysShowOwn()" << show;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("alwaysShowOwn", show);
+}
+
 void Settings::setExportWgs(bool exportWgs)
 {
     qDebug() << "void Settings::setExportWgs()" << exportWgs;
@@ -93,13 +114,6 @@ bool Settings::wpSpecies()
     return value;
 }
 
-bool Settings::onlyDefaultCountry()
-{
-    QSettings settings("TeSi", "xema");
-    bool value = settings.value("onlyDefaultCountry", false).toBool();
-    return value;
-}
-
 bool Settings::askForConnection()
 {
     QSettings settings("TeSi", "xema");
@@ -111,6 +125,13 @@ bool Settings::exportWgs()
 {
     QSettings settings("TeSi", "xema");
     bool value = settings.value("exportWgs", true).toBool();
+    return value;
+}
+
+bool Settings::onlyDefaultCountry()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("onlyDefaultCountry", false).toBool();
     return value;
 }
 
@@ -127,6 +148,28 @@ QString Settings::defaultCountry()
         defaultSetting = "Finland";
     }
     QString value = settings.value("defaultCountry", defaultSetting).toString();
+    return value;
+}
+
+QString Settings::defaultAssociation()
+{
+    QSettings settings("TeSi", "xema");
+    QString value = settings.value("defaultAssociation", "").toString();
+    return value;
+}
+
+bool Settings::onlyDefaultAssociation()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("onlyDefaultAssociation", false).toBool();
+    return value;
+}
+
+bool Settings::alwaysShowOwn()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("alwaysShowOwn", false).toBool();
+    qDebug() << "alwaysShowOwn" << value;
     return value;
 }
 

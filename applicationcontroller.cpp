@@ -149,6 +149,7 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(saveBirds()),this,SLOT(saveBirds()));
     connect(mQMLWin,SIGNAL(clearHistory()),this,SLOT(clearHistory()));
     connect(mQMLWin,SIGNAL(reloadBirds()),this,SLOT(reloadBirds()));
+    connect(mQMLWin,SIGNAL(reloadLocations()),this,SLOT(reloadLocations()));
 
     mModelWriter = ModelDataWriter::instance();
     mQMLWin->setProcessing(false);
@@ -259,6 +260,15 @@ void ApplicationController::reloadBirds()
     mBirdModel->clear();
     bool finOnly = !mSettings->wpSpecies();
     mModelLoader->reloadInitialBirdData(mBirdModel, finOnly);
+    mQMLWin->setProcessing(false);
+}
+
+void ApplicationController::reloadLocations()
+{
+    qDebug() << "void ApplicationController::reloadLocations()";
+    mQMLWin->setProcessing(true);
+    mLocationModel->clear();
+    mModelLoader->reloadInitialLocationData(mLocationModel);
     mQMLWin->setProcessing(false);
 }
 

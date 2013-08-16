@@ -54,6 +54,7 @@ private slots:
     void saveBirds();
     void clearHistory();
     void reloadBirds();
+    void reloadLocations();
     //void importData();
 
 private:

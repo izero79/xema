@@ -28,6 +28,7 @@ public:
     void loadPersonData(PersonModel *model);
 
     void loadInitialLocationData(LocationModel *model);
+    void reloadInitialLocationData(LocationModel *model);
     void loadDefaultLocationData(LocationModel *model);
 
     void loadInitialStatusData(StatusModel *model);

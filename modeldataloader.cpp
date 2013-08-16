@@ -204,6 +204,14 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
+
+    bool onlyDefaulCountry = Settings::onlyDefaultCountry();
+    QString onlyCountry = Settings::defaultCountry();
+
+    bool onlyDefaultAssociation = Settings::onlyDefaultAssociation();
+    QString onlyAssociation = Settings::defaultAssociation();
+    bool showAlwaysOwn = Settings::alwaysShowOwn();
+
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -213,6 +221,26 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
         QString locationLine;
         locationLine = striimi.readLine();
         int delimCount = locationLine.count(";");
+        if (!showAlwaysOwn && delimCount > 9 && onlyDefaulCountry) {
+            QString lang = Settings::lang();
+            QString country = "";
+            if (lang == "sv") {
+                country = locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY);
+            } else if (lang == "en") {
+                country = locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY);
+            }
+            else {
+                country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
+            }
+            if ( QString::compare(onlyCountry, country)!= 0) {
+                continue;
+            }
+        } else if (!showAlwaysOwn && delimCount > 9 && onlyDefaultAssociation) {
+            QString association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+            if ( QString::compare(onlyAssociation, association)!= 0) {
+                continue;
+            }
+        }
         Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
                           locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                           locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
@@ -279,6 +307,12 @@ void ModelDataLoader::loadInitialLocationData(LocationModel *model)
     }
 }
 
+void ModelDataLoader::reloadInitialLocationData(LocationModel *model)
+{
+    loadOnlyModifiedLocationData( model);
+    loadDefaultLocationData( model);
+}
+
 void ModelDataLoader::loadDefaultLocationData(LocationModel *model)
 {
     loadLocationData(model, true);
@@ -297,6 +331,14 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
 
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
+
+    bool onlyDefaulCountry = Settings::onlyDefaultCountry();
+    QString onlyCountry = Settings::defaultCountry();
+
+    bool onlyDefaultAssociation = Settings::onlyDefaultAssociation();
+    QString onlyAssociation = Settings::defaultAssociation();
+    bool showAlwaysOwn = Settings::alwaysShowOwn();
+
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -308,6 +350,29 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
         //qDebug() << "loadOnlyModifiedLocationData" << "luettiin rivi" << locationLine;
         int delimCount = locationLine.count(";");
         //qDebug() << "loadOnlyModifiedLocationData" << "delimCount" << delimCount;
+
+        if (!showAlwaysOwn && delimCount > 9 && onlyDefaulCountry) {
+            QString lang = Settings::lang();
+            QString country = "";
+            if (lang == "sv") {
+                country = locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY);
+            } else if (lang == "en") {
+                country = locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY);
+            }
+            else {
+                country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
+            }
+            if ( QString::compare(onlyCountry, country)!= 0) {
+                continue;
+            }
+        } else if (!showAlwaysOwn && delimCount > 9 && onlyDefaultAssociation) {
+            QString association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+            if ( QString::compare(onlyAssociation, association)!= 0) {
+                continue;
+            }
+        }
+
+
         if( delimCount > 9) {
             if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "false") {
                 continue;
