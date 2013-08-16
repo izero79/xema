@@ -17,6 +17,7 @@ class TiiraExporter : public QObject
 public:
     explicit TiiraExporter(const QNetworkConfiguration &config, LocationModel *locations, PersonModel *persons, BirdModel *birds, QObject *parent = 0);
     bool exportOneRecord(long id);
+    bool exportAllRecords(const QString &date, const QString &wantedplace);
     void login();
     void resetServer();
     
@@ -25,11 +26,13 @@ signals:
     void noUploadRights();
     void loginOk(const QString &name);
     void serverLoginFailed();
+    void tiiraExportDone();
 
 public slots:
 
 private slots:
     bool exportRecord(long id);
+    bool exportRecords(const QString &date, const QString &place);
     void uploadOk(long id, const QString &csvId);
     void rowUploadOk(long id, int row);
 

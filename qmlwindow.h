@@ -90,6 +90,7 @@ private slots:
     void openBrowser( const QString &url );
     void importData();
     void exportObsToTiira(const QString &id);
+    void exportToTiira(const QString &date, const QString &place);
 
     void saveUseTiira(bool useTiira);
     void saveTiiraUsername(const QString &username);
@@ -104,6 +105,7 @@ private slots:
     void tiiraWrongCredientals();
     void tiiraNoUploadRights();
     void tiiraServerLoginFailed();
+    void tiiraExportDone();
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)

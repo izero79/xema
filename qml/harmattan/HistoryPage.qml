@@ -67,6 +67,13 @@ Page {
         visualParent: pageStack
         MenuLayout {
             MenuItem {
+                text: qsTr("Export to Tiira")
+                visible: window.useTiira && window.tiiraLoginOk
+                onClicked: {
+                    tiiraExportDialog.open()
+                }
+            }
+            MenuItem {
                 text: qsTr("Import")
                 visible: true
                 onClicked: {
@@ -370,6 +377,59 @@ Page {
         onRejected: { 
             exportDialog.step = 1
 
+        }
+    }
+
+    Dialog {
+        id: tiiraExportDialog
+
+        title: Label {
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr("Tiira export")
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        content:Item {
+            height: 150
+            width: parent.width
+            anchors.margins: 10
+            Label {
+                id: tiiraExportDialogText
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: {
+                    if ( currentDate !== "" && currentPlace !== "") {
+                        return qsTr("All the records with date %1 and place %2 that haven\'t been exported to Tiira from Xema will be now exported.").arg(currentPlace).arg(currentDate)
+                    } else if ( currentDate !== "" && currentPlace === "") {
+                        return qsTr("All the records with date %1 that haven't been exported to Tiira from Xema will be now exported.").arg(currentDate)
+                    } else {
+                        return qsTr("All the records that haven't been exported to Tiira from Xema will be now exported.")
+                    }
+                }
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Item { height: tiiraExportDialogOkButton.height + 2 * 20; width: parent.width - 20
+            Button {
+                id: tiiraExportDialogOkButton
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("Ok")
+                onClicked: {
+                    window.exportToTiira(currentDate, currentPlace)
+                    tiiraExportDialog.close()
+                }
+            }
         }
     }
 

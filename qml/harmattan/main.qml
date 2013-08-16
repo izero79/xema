@@ -62,6 +62,7 @@ PageStackWindow {
     signal mouseReleasedNow;
     signal mouseMovedNow(variant deltax, variant deltay);
     signal exportObsToTiira(string id);
+    signal exportToTiira(string date, string place);
 
     signal saveUseTiira(bool useTiira)
     signal saveTiiraUsername(string username)
@@ -428,6 +429,17 @@ PageStackWindow {
     function serverLoginFailed() {
         window.tiiraLoginOk = false
         MyScript.settingsObject.serverLoginFailed()
+    }
+
+    function tiiraExportDone() {
+        console.log("tiira exportDone")
+        if (pageStack.currentPage != MyScript.obsObject) {
+
+            errorDialog.dialogText = ""
+            errorDialog.titleText = qsTr("Tiira export complete")
+            errorDialog.dialogText = qsTr("Export to Tiira is complete.")
+            errorDialog.open()
+        }
     }
 
     Rectangle {

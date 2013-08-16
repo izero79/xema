@@ -42,6 +42,14 @@ bool TiiraExporter::exportOneRecord(long id) {
     return true;
 }
 
+bool TiiraExporter::exportAllRecords(const QString &date, const QString &place) {
+    qDebug() << Q_FUNC_INFO << date << place;
+    mExportInProgress = true;
+    exportRecords(date, place);
+    mExportInProgress = false;
+    return true;
+}
+
 bool TiiraExporter::exportRecord(long id) {
     QMap<QString,QString> map;
 
@@ -65,6 +73,7 @@ bool TiiraExporter::exportRecord(long id) {
             int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
             qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
             int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
+            QString tiiraexported = obsLine.section('#', exportPos+1, exportPos+1);
             QString notiiraexp = obsLine.section('#', exportPos+2, exportPos+2);
             QString town = obsLine.section("#", XemaEnums::OBS_TOWN, XemaEnums::OBS_TOWN);
             QString place = obsLine.section("#", XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION);
@@ -91,29 +100,15 @@ bool TiiraExporter::exportRecord(long id) {
                 doNotExport = true;
             }
 
-
-            if (QString::compare(notiiraexp, "true", Qt::CaseInsensitive) == 0) {
+            if (!doNotExport && QString::compare(tiiraexported, "true", Qt::CaseInsensitive) == 0) {
+                qDebug() << "already tiira export";
                 doNotExport = true;
             }
 
-            /*
-            if (date.isEmpty() == false) {
-                qDebug() << Q_FUNC_INFO << "vain pvm" << date;
-                QString obsDate = obsLine.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
-                if (QString::compare(obsDate, date, Qt::CaseInsensitive) != 0) {
-                    qDebug() << "do not export!!!";
-                    doNotExport = true;
-                }
+            if (!doNotExport && QString::compare(notiiraexp, "true", Qt::CaseInsensitive) == 0) {
+                doNotExport = true;
             }
-            if (place.isEmpty() == false) {
-                qDebug() << Q_FUNC_INFO << "vain place" << place;
-                QString location = obsLine.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
-                location = location.replace("#", ", ");
-                if (QString::compare(location, place, Qt::CaseInsensitive) != 0) {
-                    qDebug() << "do not export!!!";
-                    doNotExport = true;
-                }
-            }*/
+
             int pos = -1;
             int i = 0;
             do
@@ -145,6 +140,112 @@ bool TiiraExporter::exportRecord(long id) {
     tiedosto.close();
 
     qDebug() << map;
+    return true;
+
+}
+
+bool TiiraExporter::exportRecords(const QString &date, const QString &wantedplace) {
+    QMap<QString,QString> map;
+
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemadata.txt");
+
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream instriimi(&tiedosto);
+    instriimi.setCodec("ISO 8859-1");
+
+    QString obsLine;
+    while (instriimi.atEnd() == false)
+    {
+        obsLine = instriimi.readLine();
+        if (obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Id" ||
+            obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID) == "Rivi-ID")
+        {
+            continue;
+        }
+        long id = obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID).toLong();
+        qDebug() << "ObsRivi tiira exportiin" << id;
+        int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
+        //qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
+        int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
+        QString tiiraexported = obsLine.section('#', exportPos+1, exportPos+1);
+        QString notiiraexp = obsLine.section('#', exportPos+2, exportPos+2);
+        QString town = obsLine.section("#", XemaEnums::OBS_TOWN, XemaEnums::OBS_TOWN);
+        QString location = obsLine.section("#", XemaEnums::OBS_LOCATION, XemaEnums::OBS_LOCATION);
+        QString place = town + ", " + location;
+
+
+        int locationRowCount = mLocations->rowCount();
+
+        QString country = "";
+
+        for(int i = 0; i < locationRowCount; i++)
+        {
+            if (mLocations->getItem(i).town() == town && mLocations->getItem(i).place() == location)
+            {
+                country =  mLocations->getItem(i).localizedCountry();
+                break;
+            }
+        }
+        bool doNotExport = false;
+
+        if ((QString::compare(country, "suomi", Qt::CaseInsensitive) != 0 &&
+            QString::compare(country, "finland", Qt::CaseInsensitive) != 0) &&
+            !country.isEmpty()) {
+            qDebug() << "not in finland";
+            doNotExport = true;
+        }
+
+        if (!doNotExport && QString::compare(tiiraexported, "true", Qt::CaseInsensitive) == 0) {
+            qDebug() << "already tiira export";
+            doNotExport = true;
+        }
+
+        if (!doNotExport && QString::compare(notiiraexp, "true", Qt::CaseInsensitive) == 0) {
+            qDebug() << "no tiira export";
+            doNotExport = true;
+        }
+
+
+        if (!doNotExport && date.isEmpty() == false) {
+            //qDebug() << Q_FUNC_INFO << "vain pvm" << date;
+            QString obsDate = obsLine.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
+            if (QString::compare(obsDate, date, Qt::CaseInsensitive) != 0) {
+                qDebug() << "wrong date, do not export!!!";
+                doNotExport = true;
+            }
+        }
+        if (!doNotExport && wantedplace.isEmpty() == false) {
+            qDebug() << Q_FUNC_INFO << "vain place" << wantedplace;
+            if (QString::compare(place, wantedplace, Qt::CaseInsensitive) != 0) {
+                qDebug() << "wrong place, do not export!!!";
+                doNotExport = true;
+            }
+        }
+        int pos = -1;
+        int i = 0;
+        do
+        {
+            pos = obsLine.indexOf("#",pos+1);
+            //qDebug() << "pos" << pos << i << exportPos;
+            if (i == exportPos - 1)
+            {
+                //qDebug() << "pos" << pos << "paikka" << i;
+
+                break;
+            }
+            i++;
+        }
+        while (pos>0);
+
+        if (doNotExport == false)
+        {
+            map = getFirstRowMap(obsLine);
+            qDebug() << "MAP" << map;
+            mSentRecords.insert(id, obsLine);
+            mTiiraServiceHelper->uploadRecord(map, id);
+        }
+    }
+    tiedosto.close();
     return true;
 
 }
@@ -219,6 +320,12 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
         birdY = wgs.section(":", 0, 0);
         birdX = wgs.section(":", 1, 1);
     }
+    while (birdY.endsWith('0')) {
+        birdY.remove(birdY.length()-1, 1);
+    }
+    while (birdX.endsWith('0')) {
+        birdX.remove(birdX.length()-1, 1);
+    }
 
     rowCount = mLocations->rowCount();
 
@@ -245,6 +352,12 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
 
             break;
         }
+    }
+    while (place_y.endsWith('0')) {
+        place_y.remove(place_y.length()-1, 1);
+    }
+    while (place_x.endsWith('0')) {
+        place_x.remove(place_x.length()-1, 1);
     }
 
 
@@ -501,4 +614,5 @@ void TiiraExporter::addCsvIdsToRecords() {
     QFile::remove(XemaUtils::dataFileDir() + "xemadata.backup");
     tiedosto.rename(XemaUtils::dataFileDir() + "xemadata.backup");
     tmptiedosto.rename(XemaUtils::dataFileDir() + "xemadata.txt");
+    emit tiiraExportDone();
 }
