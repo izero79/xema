@@ -221,7 +221,17 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
         QString locationLine;
         locationLine = striimi.readLine();
         int delimCount = locationLine.count(";");
-        if (!showAlwaysOwn && delimCount > 9 && onlyDefaulCountry) {
+        bool forceRead = false;
+        QString modified = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
+        bool custom = false;
+        if (QString::compare(modified, "true", Qt::CaseInsensitive) == 0) {
+            custom = true;
+        }
+        if (custom && showAlwaysOwn) {
+            forceRead = true;
+        }
+
+        if (!forceRead && delimCount > 9 && onlyDefaulCountry) {
             QString lang = Settings::lang();
             QString country = "";
             if (lang == "sv") {
@@ -232,10 +242,11 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
             else {
                 country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
             }
-            if ( QString::compare(onlyCountry, country)!= 0) {
+            if (QString::compare(onlyCountry, country)!= 0) {
                 continue;
             }
-        } else if (!showAlwaysOwn && delimCount > 9 && onlyDefaultAssociation) {
+        }
+        if (!forceRead && delimCount > 9 && onlyDefaultAssociation) {
             QString association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
             if ( QString::compare(onlyAssociation, association)!= 0) {
                 continue;
@@ -349,9 +360,17 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
         locationLine = striimi.readLine();
         //qDebug() << "loadOnlyModifiedLocationData" << "luettiin rivi" << locationLine;
         int delimCount = locationLine.count(";");
-        //qDebug() << "loadOnlyModifiedLocationData" << "delimCount" << delimCount;
+        bool forceRead = false;
+        QString modified = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
+        bool custom = false;
+        if (QString::compare(modified, "true", Qt::CaseInsensitive) == 0) {
+            custom = true;
+        }
+        if (custom && showAlwaysOwn) {
+            forceRead = true;
+        }
 
-        if (!showAlwaysOwn && delimCount > 9 && onlyDefaulCountry) {
+        if (!forceRead && delimCount > 9 && onlyDefaulCountry) {
             QString lang = Settings::lang();
             QString country = "";
             if (lang == "sv") {
@@ -362,10 +381,11 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
             else {
                 country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
             }
-            if ( QString::compare(onlyCountry, country)!= 0) {
+            if (QString::compare(onlyCountry, country)!= 0) {
                 continue;
             }
-        } else if (!showAlwaysOwn && delimCount > 9 && onlyDefaultAssociation) {
+        }
+        if (!forceRead && delimCount > 9 && onlyDefaultAssociation) {
             QString association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
             if ( QString::compare(onlyAssociation, association)!= 0) {
                 continue;

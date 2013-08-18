@@ -24,6 +24,10 @@ PageStackWindow {
     property string pendingOnlineTask: ""
     property variant pendingOnlineTaskParams: []
 
+    property string defaultAssociation: ""
+    property bool onlyDefaultAssiciation: false
+    property bool alwaysShowOwn: false
+
     property bool tiiraLoginOk: false
     property bool useTiira: false
     property string tiiraUsername: ""
@@ -42,6 +46,9 @@ PageStackWindow {
     signal saveDetailLevel(int level)
     signal saveDefaultCountry(string defaultCountry)
     signal saveOnlyDefaultCountry(bool onlyDefault)
+    signal saveDefaultAssociation(string defaultAssociation)
+    signal saveOnlyDefaultAssociation(bool onlyDefault)
+    signal saveAlwaysShowOwn(bool alwaysShowOwn)
     signal saveExportWgs(bool exportWgs)
     signal quit()
     signal loadHistoryWithDate(string date)
@@ -105,6 +112,21 @@ PageStackWindow {
     function setDefaultCountry(defaultCountry)
     {
         window.defaultCountry = defaultCountry
+    }
+
+    function setOnlyDefaultAssociation(onlyDefault)
+    {
+        window.onlyDefaultAssiciation = onlyDefault
+    }
+
+    function setDefaultAssociation(defaultAssociation)
+    {
+        window.defaultAssociation = defaultAssociation
+    }
+
+    function setAlwaysShowOwn(showOwn)
+    {
+        window.alwaysShowOwn = showOwn
     }
 
     function setExportWgs(exportWgs)
