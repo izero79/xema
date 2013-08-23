@@ -9,7 +9,7 @@ TiiraChecksumCalculator::TiiraChecksumCalculator(QObject *parent) :
 }
 
 QString TiiraChecksumCalculator::getMd5(const QString &text) {
-    QString found = QCryptographicHash::hash( text.toUtf8(), QCryptographicHash::Md5 ).toHex();
+    QString found = QCryptographicHash::hash( text.toLatin1(), QCryptographicHash::Md5 ).toHex();
     qDebug() << text << found;
     return found;
 }
