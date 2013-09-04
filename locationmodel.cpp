@@ -58,11 +58,15 @@ QVariant LocationModel::data(const QModelIndex &index, int role) const
 
     if (role == FilterRole)
     {
+        QString custom = "xxfalsexx";
+        if (item.custom()) {
+            custom = "xxtruexx";
+        }
         return QString( item.localizedCountry() + ", " +
+                        item.orgAbbrev() + ", " +
+                        custom + ", " +
                         item.localizedPlace() + ", " +
                         item.localizedTown() + ", " +
-                        item.organization() + ", " +
-                        item.orgAbbrev() + ", " +
                         item.wgsCoordinateForFilter());
     }
     else if (role == IndexRole)

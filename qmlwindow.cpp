@@ -421,31 +421,31 @@ void QMLWindow::saveWPSpecies(bool wpspecies)
 void QMLWindow::saveOnlyDefaultCountry(bool onlydefault)
 {
     mSettings->setOnlyDefaultCountry(onlydefault);
-    emit reloadLocations();
+    //emit reloadLocations();
 }
 
 void QMLWindow::saveDefaultCountry(const QString &defaultCountry)
 {
     mSettings->setDefaultCountry(defaultCountry);
-    emit reloadLocations();
+    //emit reloadLocations();
 }
 
 void QMLWindow::saveOnlyDefaultAssociation(bool onlydefault)
 {
     mSettings->setOnlyDefaultAssociation(onlydefault);
-    emit reloadLocations();
+    //emit reloadLocations();
 }
 
 void QMLWindow::saveDefaultAssociation(const QString &defaultAssociation)
 {
     mSettings->setDefaultAssociation(defaultAssociation);
-    emit reloadLocations();
+    //emit reloadLocations();
 }
 
 void QMLWindow::saveAlwaysShowOwn(bool show)
 {
     mSettings->setAlwaysShowOwn(show);
-    emit reloadLocations();
+    //emit reloadLocations();
 }
 
 void QMLWindow::saveExportWgs(bool exportWgs)

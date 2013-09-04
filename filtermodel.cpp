@@ -113,7 +113,7 @@ void FilterModel::sectionAlphas()
 
 void FilterModel::filter(const QString &str)
 {
-    qDebug() << "filter" << str;
+//    qDebug() << "filter" << str;
     setFilterRole(Qt::UserRole + 1);
     QString filter = str;
     QRegExp exp(filter, Qt::CaseInsensitive, QRegExp::RegExp);

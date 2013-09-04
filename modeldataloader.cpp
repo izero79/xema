@@ -193,6 +193,7 @@ void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly, bool finO
 
 void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 {
+    qDebug() << Q_FUNC_INFO << defaultOnly;
     mLocationModel = model;
 
     QFile tiedosto(XemaUtils::dataFileDir() + "xemalocationdata.txt");
@@ -204,14 +205,17 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-
+    /*
     bool onlyDefaulCountry = Settings::onlyDefaultCountry();
     QString onlyCountry = Settings::defaultCountry();
 
     bool onlyDefaultAssociation = Settings::onlyDefaultAssociation();
     QString onlyAssociation = Settings::defaultAssociation();
-    bool showAlwaysOwn = Settings::alwaysShowOwn();
-
+    bool showAlwaysOwn = true; //Settings::alwaysShowOwn();
+    qDebug() << "onlyCountry" << onlyCountry << onlyDefaulCountry;
+    qDebug() << "onlyAssociation" << onlyAssociation << onlyDefaultAssociation;
+    qDebug() << "showAlwaysOwn" << showAlwaysOwn;
+    */
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -221,15 +225,19 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
         QString locationLine;
         locationLine = striimi.readLine();
         int delimCount = locationLine.count(";");
-        bool forceRead = false;
+        //bool forceRead = false;
+        /*
+        qDebug() << "loadLocationData" << "luettiin rivi" << locationLine;
         QString modified = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
         bool custom = false;
         if (QString::compare(modified, "true", Qt::CaseInsensitive) == 0) {
             custom = true;
         }
         if (custom && showAlwaysOwn) {
+            qDebug() << "aina omat";
             forceRead = true;
         }
+        qDebug() << "delimCount" << delimCount;
 
         if (!forceRead && delimCount > 9 && onlyDefaulCountry) {
             QString lang = Settings::lang();
@@ -242,16 +250,24 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
             else {
                 country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
             }
+            qDebug() << "maalla" << country;
             if (QString::compare(onlyCountry, country)!= 0) {
                 continue;
             }
         }
         if (!forceRead && delimCount > 9 && onlyDefaultAssociation) {
-            QString association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+            QString association = "";
+            if (delimCount == 12) {
+                association = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+            } else {
+                association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+            }
+
+            qDebug() << "yhdistyksella" << association;
             if ( QString::compare(onlyAssociation, association)!= 0) {
                 continue;
             }
-        }
+        }*/
         Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
                           locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                           locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
@@ -288,7 +304,7 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 
 void ModelDataLoader::loadInitialLocationData(LocationModel *model)
 {
-    //    qDebug() << Q_FUNC_INFO;
+    qDebug() << Q_FUNC_INFO;
     int currentLocationVersion = Settings::locationsVersion();
     int savedVersion = 0;
     qDebug() << "current location version" << currentLocationVersion;
@@ -320,36 +336,45 @@ void ModelDataLoader::loadInitialLocationData(LocationModel *model)
 
 void ModelDataLoader::reloadInitialLocationData(LocationModel *model)
 {
+    qDebug() << Q_FUNC_INFO;
+
     loadOnlyModifiedLocationData( model);
     loadDefaultLocationData( model);
 }
 
 void ModelDataLoader::loadDefaultLocationData(LocationModel *model)
 {
+    qDebug() << Q_FUNC_INFO;
     loadLocationData(model, true);
 }
 
 void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
 {
+    qDebug() << Q_FUNC_INFO;
     mLocationModel = model;
 
     QFile tiedosto(XemaUtils::dataFileDir() + "xemalocationdata.txt");
     if (tiedosto.exists() == false)
     {
-        tiedosto.setFileName(":defaultlocations.csv");
+        return;
     }
     tiedosto.open(QFile::ReadOnly);
 
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
+    /*
 
     bool onlyDefaulCountry = Settings::onlyDefaultCountry();
     QString onlyCountry = Settings::defaultCountry();
 
     bool onlyDefaultAssociation = Settings::onlyDefaultAssociation();
     QString onlyAssociation = Settings::defaultAssociation();
-    bool showAlwaysOwn = Settings::alwaysShowOwn();
+    bool showAlwaysOwn = true; //Settings::alwaysShowOwn();
 
+    qDebug() << "onlyCountry" << onlyCountry << onlyDefaulCountry;
+    qDebug() << "onlyAssociation" << onlyAssociation << onlyDefaultAssociation;
+    qDebug() << "showAlwaysOwn" << showAlwaysOwn;
+    */
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -360,6 +385,7 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
         locationLine = striimi.readLine();
         //qDebug() << "loadOnlyModifiedLocationData" << "luettiin rivi" << locationLine;
         int delimCount = locationLine.count(";");
+        /*
         bool forceRead = false;
         QString modified = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
         bool custom = false;
@@ -367,8 +393,10 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
             custom = true;
         }
         if (custom && showAlwaysOwn) {
+            qDebug() << "aina omat";
             forceRead = true;
         }
+        qDebug() << "delimCount" << delimCount;
 
         if (!forceRead && delimCount > 9 && onlyDefaulCountry) {
             QString lang = Settings::lang();
@@ -381,17 +409,24 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
             else {
                 country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
             }
+            qDebug() << "maalla" << country;
             if (QString::compare(onlyCountry, country)!= 0) {
                 continue;
             }
         }
         if (!forceRead && delimCount > 9 && onlyDefaultAssociation) {
-            QString association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+            QString association = "";
+            if (delimCount == 12) {
+                association = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+            } else {
+                association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+            }
+            qDebug() << "yhdistyksella" << association;
             if ( QString::compare(onlyAssociation, association)!= 0) {
                 continue;
             }
         }
-
+        */
 
         if( delimCount > 9) {
             if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "false") {

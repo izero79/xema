@@ -423,17 +423,13 @@ Page {
         }
         else if (listPageType == "places")
         {
-            listView.model = locationModel/*
-            if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ", ");
-            }*/
+            listView.model = locationModel
+            listView.model.filter(getFilterString(""));
         }
         else if (listPageType == "editplaces")
         {
-            listView.model = locationModel/*
-            if (window.onlyDefaultCountry) {
-                listView.model.filter("^" + window.defaultCountry  + ", ");
-            }*/
+            listView.model = locationModel
+            listView.model.filter(getFilterString(""));
         }
         else if (listPageType == "status")
         {
@@ -523,6 +519,40 @@ Page {
         calibrateDialog.close()
     }
 
+    function getFilterString(text) {
+        var filterString = text;
+        if (listPageType == "places" || listPageType == "editplaces" ) {
+            var filter = "(^"
+            if (window.onlyDefaultCountry && window.defaultCountry != "") {
+                filter += window.defaultCountry + ", ";
+                if (window.onlyDefaultAssiciation && window.defaultAssociation != "") {
+                    filter += window.defaultAssociation + ", ";
+                } else {
+                    filter += ".*, ";
+                }
+                if (window.alwaysShowOwn) {
+                    filter = "(" + filter + ")|(xxtruexx, )";
+                } else {
+                    filter += ")(.*, ";
+                }
+            }
+            else if (window.onlyDefaultAssiciation && window.defaultAssociation != "") {
+                filter = "(^.*, " + window.defaultAssociation + ", ";
+                if (window.alwaysShowOwn) {
+                    filter = "(" + filter + ")|(xxtruexx, )";
+                } else {
+                    filter += ")(.*, ";
+                }
+            } else {
+                filter = ""
+            }
+
+            if (filter != "") {
+                filterString = filter + ")(.*" + text + ".*)";
+            }
+        }
+        return filterString;
+    }
 
     Component.onCompleted: {
         console.log("ListPage loaded")
@@ -530,6 +560,17 @@ Page {
         for(var i = 0; i < listView.model.rowCount(); i++)
         {
             listView.model.setData(i, false, 2)
+        }
+    }
+
+    Timer {
+        id: filterTimer
+        interval: 1000
+        running: false
+        repeat: false
+        onTriggered: {
+            var filterString = getFilterString(filterTf.text);
+            listView.model.filter(filterString);
         }
     }
 
@@ -624,12 +665,13 @@ Page {
             inputMethodHints: Qt.ImhNoPredictiveText
             focus: ( listPageType == "places" || listPageType == "birds" )
             onTextChanged: {
-                //console.log("teksti muuttuu: " + text)
-                if (0){//window.onlyDefaultCountry && ( listPageType == "places" || listPageType == "editplaces" )) {
-                    listView.model.filter("(^" + window.defaultCountry  + ", )(.*" + text + ".*)");
+                if (text != "") {
+                    filterTimer.restart();
                 } else {
-                    listView.model.filter(text)
+                    var filterString = getFilterString(filterTf.text);
+                    listView.model.filter(filterString);
                 }
+                //console.log("teksti muuttuu: " + text)
             }
             Image {
                 anchors { top: parent.top; right: parent.right; margins: 1 }
