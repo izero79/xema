@@ -18,6 +18,7 @@ public:
     explicit TiiraExporter(const QNetworkConfiguration &config, LocationModel *locations, PersonModel *persons, BirdModel *birds, QObject *parent = 0);
     bool exportOneRecord(long id);
     bool exportAllRecords(const QString &date, const QString &wantedplace);
+    void getAd();
     void login();
     void resetServer();
     
@@ -28,6 +29,8 @@ signals:
     void serverLoginFailed();
     void tiiraExportDone();
     void loginFailUnknown();
+    void adLoaded(const QString &iconUrl, const QString &url);
+    void tiiraClosed();
 
 public slots:
 

@@ -276,7 +276,17 @@ void QMLWindow::init()
              Q_ARG(QVariant, mSettings->tiiraServerPassword()));
     QMetaObject::invokeMethod(mRootObject, "setTiiraLoginOk",
              Q_ARG(QVariant, mSettings->tiiraLoginOk()));
-
+    if (!mTiiraExporter) {
+        createTiiraExporter();
+    }
+    if (Settings::useTiira()) {
+        if(mNetworkController->isConnected() == false) {
+            connect(mNetworkController,SIGNAL(connectionReady()),this,SLOT(loadAd()));
+            mNetworkController->openAnyConnection();
+        } else {
+            loadAd();
+        }
+    }
 }
 
 void QMLWindow::setBirdModel(BirdModel *model)
@@ -633,5 +643,22 @@ void QMLWindow::createTiiraExporter() {
         connect(mTiiraExporter,SIGNAL(serverLoginFailed()),this,SLOT(tiiraServerLoginFailed()));
         connect(mTiiraExporter,SIGNAL(tiiraExportDone()),this,SLOT(tiiraExportDone()));
         connect(mTiiraExporter,SIGNAL(loginFailUnknown()),this,SLOT(tiiraLoginFailUnknown()));
+        connect(mTiiraExporter,SIGNAL(adLoaded(QString,QString)),this,SLOT(adReadyToShow(QString,QString)));
+        connect(mTiiraExporter,SIGNAL(tiiraClosed()),this,SLOT(tiiraClosed()));
+
     }
+}
+
+void QMLWindow::adReadyToShow(const QString &iconUrl, const QString &url) {
+    QMetaObject::invokeMethod(mRootObject, "adReady",
+             Q_ARG(QVariant,iconUrl),Q_ARG(QVariant,url));
+}
+
+void QMLWindow::tiiraClosed() {
+    QMetaObject::invokeMethod(mRootObject, "tiiraClosed");
+}
+
+void QMLWindow::loadAd() {
+    disconnect(mNetworkController,SIGNAL(connectionReady()),this,SLOT(loadAd()));
+    mTiiraExporter->getAd();
 }

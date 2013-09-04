@@ -37,6 +37,8 @@ PageStackWindow {
     property string tiiraServerUsername: ""
     property string tiiraServerPassword: ""
 
+    property string adUrl: ""
+
     signal writeNew(string data)
     signal readObs(string id)
     signal deleteObs(string id, string date, string place)
@@ -510,6 +512,23 @@ PageStackWindow {
         }
     }
 
+    function adReady(iconUrl, url) {
+        console.log('adReady: ' + iconUrl)
+        adUrl = url;
+        MyScript.historyObject.showAd(iconUrl)
+    }
+
+    function tiiraClosed()
+    {
+        errorDialog.dialogText = ""
+        console.log("Tiira closed")
+        errorDialog.titleText = qsTr("Tiira not available")
+        errorDialog.dialogText = qsTr("Tiira seems to be unavailable at the moment. Tiira functions are now disabled.")
+        tiiraLoginOk = false;
+        errorDialog.open()
+    }
+
+
     Connections {
         target: NetworkController
         onConnectionReady: {
@@ -784,6 +803,8 @@ PageStackWindow {
     }
 
     Component.onCompleted: {
-        pageStack.push(Qt.resolvedUrl("HistoryPage.qml"))
+        MyScript.historyPageComponent = Qt.createComponent(Qt.resolvedUrl("HistoryPage.qml"))
+        MyScript.historyObject = MyScript.historyPageComponent.createObject(window)
+        pageStack.push(MyScript.historyObject)
     }
 }

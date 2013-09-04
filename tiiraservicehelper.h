@@ -25,10 +25,13 @@ signals:
     void rowUploadOk(long id, int row);
     void serverLoginFailed();
     void loginFailUnknown();
+    void adLoaded(const QString &iconUrl, const QString &url);
+    void tiiraClosed();
 
 public slots:
     void init(const QNetworkConfiguration &config);
     void login();
+    void getAd();
     void testUpload();
     void uploadRecord(const QMap<QString,QString> &map, long recordId);
     void uploadRecordRow(const QMap<QString,QString> &map, long recordId);
@@ -36,6 +39,7 @@ public slots:
 private slots:
     void requestFinished(QNetworkReply *reply);
     void loginRequestFinished(QNetworkReply *reply);
+    void adRequestFinished(QNetworkReply *reply);
     void testUploadRequestFinished(QNetworkReply *reply);
     void provideAuthenication(QNetworkReply *reply, QAuthenticator *ator);
     void uploadRequestFinished(QNetworkReply *reply);
@@ -57,6 +61,7 @@ private:
     bool mReady;
     QString mServerUsername;
     QString mServerPassword;
+    QByteArray mSoapServerAddress;
     QByteArray mServerAddress;
     QString mUsername;
     QString mPwdhash;

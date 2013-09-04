@@ -114,6 +114,9 @@ private slots:
     void tiiraLoginFailUnknown();
 
     void createTiiraExporter();
+    void adReadyToShow(const QString &iconUrl, const QString &url);
+    void tiiraClosed();
+    void loadAd();
 
 private:
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)

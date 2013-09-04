@@ -31,6 +31,8 @@ TiiraExporter::TiiraExporter(const QNetworkConfiguration &config, LocationModel 
     connect(mTiiraServiceHelper,SIGNAL(noUploadRights()),this,SIGNAL(noUploadRights()));
     connect(mTiiraServiceHelper,SIGNAL(serverLoginFailed()),this,SIGNAL(serverLoginFailed()));
     connect(mTiiraServiceHelper,SIGNAL(loginFailUnknown()),this,SIGNAL(loginFailUnknown()));
+    connect(mTiiraServiceHelper,SIGNAL(adLoaded(QString,QString)),this,SIGNAL(adLoaded(QString,QString)));
+    connect(mTiiraServiceHelper,SIGNAL(tiiraClosed()),this,SIGNAL(tiiraClosed()));
     mTiiraServiceHelper->init(config);
 }
 
@@ -53,6 +55,10 @@ bool TiiraExporter::exportAllRecords(const QString &date, const QString &place) 
     exportRecords(date, place);
     mExportInProgress = false;
     return true;
+}
+
+void TiiraExporter::getAd() {
+    mTiiraServiceHelper->getAd();
 }
 
 bool TiiraExporter::exportRecord(long id) {

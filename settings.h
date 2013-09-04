@@ -27,7 +27,7 @@ public slots:
     static int statusesVersion();
     static QString lang();
 
-    bool useTiira();
+    static bool useTiira();
     static QString tiiraUsername();
     static QString tiiraPwdHash();
     bool tiiraAutosave();

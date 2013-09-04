@@ -202,6 +202,22 @@ Page {
         return name
     }
 
+    function showAd(url) {
+        console.log('load image: ' + url)
+        adImage.source = url
+        adTimer.start()
+    }
+
+    Timer {
+        id: adTimer
+        running: false
+        interval: 7000
+        repeat: false
+        onTriggered: {
+            adImage.source = ""
+        }
+
+    }
 
     Loader {
         id: aboutDialog
@@ -512,6 +528,19 @@ Page {
         section.criteria: ViewSection.FullString
         section.property: model == historyDateModel ? "section" : ""
         section.delegate: model == historyDateModel ? sectionDelegate : emptySectionDelegate
+    }
+
+    Image {
+        id: adImage
+        source: ""
+        asynchronous: true
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: source == "" ? 0 : 1
+        MouseArea {
+            anchors.fill: parent
+            onClicked: window.openUrl(window.adUrl)
+        }
     }
 
     Component {
