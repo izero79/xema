@@ -516,6 +516,7 @@ PageStackWindow {
         console.log('adReady: ' + iconUrl)
         adUrl = url;
         MyScript.historyObject.showAd(iconUrl)
+        window.tiira_login()
     }
 
     function tiiraClosed()
@@ -718,7 +719,7 @@ PageStackWindow {
             }
         }
 //        onClickedOutside: connectionDialog.close()
-        onRejected: { 
+        onRejected: {
             pendingOnlineTask = ""
             pendingOnlineTaskParams = ""
             connectionDialogDoNotAsk = false

@@ -723,6 +723,18 @@
         <source>Status: Unknown error</source>
         <translation>Tila: Tuntematon virhe</translation>
     </message>
+    <message>
+        <source>Default association</source>
+        <translation>Oletusyhdistys</translation>
+    </message>
+    <message>
+        <source>Use only default association</source>
+        <translation>Näytä vain oletusyhdistyksen paikat</translation>
+    </message>
+    <message>
+        <source>Always show own/modified locations</source>
+        <translation>Näytä aina omat/muutetut paikat</translation>
+    </message>
 </context>
 <context>
     <name>StatusEditPage</name>
@@ -852,6 +864,14 @@
     <message>
         <source>Export to Tiira is complete.</source>
         <translation>Vienti Tiiraan on valmis.</translation>
+    </message>
+    <message>
+        <source>Tiira not available</source>
+        <translation>Tiira ei ole käytettävissä</translation>
+    </message>
+    <message>
+        <source>Tiira seems to be unavailable at the moment. Tiira functions are now disabled.</source>
+        <translation>Tiira ei ole käytettävissä juuri nyt. Tiira toiminnot ovat poissa käytöstä.</translation>
     </message>
 </context>
 </TS>

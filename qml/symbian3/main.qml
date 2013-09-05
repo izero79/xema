@@ -516,6 +516,7 @@ PageStackWindow {
         console.log('adReady: ' + iconUrl)
         adUrl = url;
         MyScript.historyObject.showAd(iconUrl)
+        window.tiira_login()
     }
 
     function tiiraClosed()
