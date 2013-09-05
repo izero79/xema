@@ -28,5 +28,8 @@
         <file>birdaccuracies.version</file>
         <file>locationaccuracies.csv</file>
         <file>locationaccuracies.version</file>
+        <file>qml/common_icons/havainnoija.png</file>
+        <file>qml/common_icons/torni.png</file>
+        <file>qml/common_icons/xema.png</file>
     </qresource>
 </RCC>
