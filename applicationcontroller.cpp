@@ -83,8 +83,12 @@ void ApplicationController::initObjects()
     mModelLoader->loadPersonData(mPersonModel);
     mQMLWin->setPersonModel(mPersonModel);
 
+    mAssociationModel = new AssociationModel(this);
+//    mModelLoader->loadAssociationData(mAssociationModel);
+    mQMLWin->setAssociationModel(mAssociationModel);
+
     mLocationModel = new LocationModel(this);
-    mModelLoader->loadInitialLocationData(mLocationModel);
+    mModelLoader->loadInitialLocationData(mLocationModel, mAssociationModel);
     mQMLWin->setLocationModel(mLocationModel);
 
     mStatusModel = new StatusModel(this);
@@ -118,9 +122,6 @@ void ApplicationController::initObjects()
     mHistoryPlaceModel = new HistoryModel(this);
     mQMLWin->setHistoryPlaceModel(mHistoryPlaceModel);
 
-    mAssociationModel = new AssociationModel(this);
-    mModelLoader->loadAssociationData(mAssociationModel);
-    mQMLWin->setAssociationModel(mAssociationModel);
 
     qRegisterMetaType<QModelIndex>("QModelIndex");
 
@@ -222,7 +223,7 @@ void ApplicationController::restoreLocations()
     mQMLWin->setProcessing(true);
     mModelWriter->removeCustomLocations();
     mLocationModel->clear();
-    mModelLoader->loadDefaultLocationData(mLocationModel);
+    mModelLoader->loadDefaultLocationData(mLocationModel, mAssociationModel);
     mQMLWin->setProcessing(false);
 }
 
@@ -273,7 +274,7 @@ void ApplicationController::reloadLocations()
     qDebug() << "void ApplicationController::reloadLocations()";
     mQMLWin->setProcessing(true);
     mLocationModel->clear();
-    mModelLoader->reloadInitialLocationData(mLocationModel);
+    mModelLoader->reloadInitialLocationData(mLocationModel, mAssociationModel);
     mQMLWin->setProcessing(false);
 }
 
@@ -282,7 +283,7 @@ void ApplicationController::saveLocations()
     qDebug() << "void ApplicationController::saveLocations()";
     mModelWriter->writeLocationData(mLocationModel);
     mLocationModel->clear();
-    mModelLoader->loadInitialLocationData(mLocationModel);
+    mModelLoader->loadInitialLocationData(mLocationModel, mAssociationModel);
 
 }
 

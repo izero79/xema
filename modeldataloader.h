@@ -28,9 +28,9 @@ public:
 
     void loadPersonData(PersonModel *model);
 
-    void loadInitialLocationData(LocationModel *model);
-    void reloadInitialLocationData(LocationModel *model);
-    void loadDefaultLocationData(LocationModel *model);
+    void loadInitialLocationData(LocationModel *model, AssociationModel *assModel);
+    void reloadInitialLocationData(LocationModel *model, AssociationModel *assModel);
+    void loadDefaultLocationData(LocationModel *model, AssociationModel *assModel);
 
     void loadInitialStatusData(StatusModel *model);
     void loadDefaultStatusData(StatusModel *model);
@@ -53,8 +53,8 @@ public slots:
 
 private:
     void loadOnlyModifiedBirdData(BirdModel *model, bool finOnly);
-    void loadLocationData(LocationModel *model, bool defaultOnly);
-    void loadOnlyModifiedLocationData(LocationModel *model);
+    void loadLocationData(LocationModel *model, AssociationModel *assModel, bool defaultOnly);
+    void loadOnlyModifiedLocationData(LocationModel *model, AssociationModel *assModel);
     void loadStatusData(StatusModel *model, bool defaultOnly);
     void loadOnlyModifiedStatusData(StatusModel *model);
     void loadBirdData(BirdModel *model, bool defaultOnly, bool finOnly);

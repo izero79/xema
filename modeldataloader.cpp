@@ -192,7 +192,7 @@ void ModelDataLoader::loadBirdData(BirdModel *model, bool defaultOnly, bool finO
 #endif
 }
 
-void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
+void ModelDataLoader::loadLocationData(LocationModel *model, AssociationModel *assModel, bool defaultOnly)
 {
     qDebug() << Q_FUNC_INFO << defaultOnly;
     mLocationModel = model;
@@ -206,17 +206,7 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
 
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-    /*
-    bool onlyDefaulCountry = Settings::onlyDefaultCountry();
-    QString onlyCountry = Settings::defaultCountry();
 
-    bool onlyDefaultAssociation = Settings::onlyDefaultAssociation();
-    QString onlyAssociation = Settings::defaultAssociation();
-    bool showAlwaysOwn = true; //Settings::alwaysShowOwn();
-    qDebug() << "onlyCountry" << onlyCountry << onlyDefaulCountry;
-    qDebug() << "onlyAssociation" << onlyAssociation << onlyDefaultAssociation;
-    qDebug() << "showAlwaysOwn" << showAlwaysOwn;
-    */
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -226,49 +216,9 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
         QString locationLine;
         locationLine = striimi.readLine();
         int delimCount = locationLine.count(";");
-        //bool forceRead = false;
-        /*
-        qDebug() << "loadLocationData" << "luettiin rivi" << locationLine;
-        QString modified = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
-        bool custom = false;
-        if (QString::compare(modified, "true", Qt::CaseInsensitive) == 0) {
-            custom = true;
-        }
-        if (custom && showAlwaysOwn) {
-            qDebug() << "aina omat";
-            forceRead = true;
-        }
-        qDebug() << "delimCount" << delimCount;
+        QString assoAbbrev;
+        QString assoName;
 
-        if (!forceRead && delimCount > 9 && onlyDefaulCountry) {
-            QString lang = Settings::lang();
-            QString country = "";
-            if (lang == "sv") {
-                country = locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY);
-            } else if (lang == "en") {
-                country = locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY);
-            }
-            else {
-                country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
-            }
-            qDebug() << "maalla" << country;
-            if (QString::compare(onlyCountry, country)!= 0) {
-                continue;
-            }
-        }
-        if (!forceRead && delimCount > 9 && onlyDefaultAssociation) {
-            QString association = "";
-            if (delimCount == 12) {
-                association = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
-            } else {
-                association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
-            }
-
-            qDebug() << "yhdistyksella" << association;
-            if ( QString::compare(onlyAssociation, association)!= 0) {
-                continue;
-            }
-        }*/
         Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
                           locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                           locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
@@ -285,11 +235,15 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
                 location.setCustom(true);
             }
             if (delimCount == 12) {
-                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM));
-                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
+                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
+                assoName = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+                location.setOrganization(assoAbbrev);
+                location.setOrgAbbrev(assoName);
             } else if (delimCount == 13) {
-                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
-                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
+                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+                assoName = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+                location.setOrganization(assoAbbrev);
+                location.setOrgAbbrev(assoName);
             }
 
         } else {
@@ -300,10 +254,25 @@ void ModelDataLoader::loadLocationData(LocationModel *model, bool defaultOnly)
         }
 
         model->addItem(location);
+        if (assoAbbrev.length() > 0) {
+            int assoRowCount = assModel->rowCount();
+            bool found = false;
+            for(int i = 0; i < assoRowCount; i++) {
+                if(QString::compare(assModel->getItem(i).abbrev(), assoAbbrev) == 0) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found == false) {
+                qDebug()<< "assoName" << assoName;
+                qDebug()<< "assoAbbrev" << assoAbbrev;
+                assModel->addItem(Association(assoAbbrev,assoName));
+            }
+        }
     }
 }
 
-void ModelDataLoader::loadInitialLocationData(LocationModel *model)
+void ModelDataLoader::loadInitialLocationData(LocationModel *model, AssociationModel *assModel)
 {
     qDebug() << Q_FUNC_INFO;
     int currentLocationVersion = Settings::locationsVersion();
@@ -323,33 +292,33 @@ void ModelDataLoader::loadInitialLocationData(LocationModel *model)
     qDebug() << "saved location version" << savedVersion;
     if( savedVersion > currentLocationVersion ) {
         qDebug() << "There's new version of location list installed. Using it. Model has now" << model->rowCount() << "rows";
-        loadOnlyModifiedLocationData( model );
+        loadOnlyModifiedLocationData( model, assModel );
         qDebug() << "Only modified rows loaded. Model has now" << model->rowCount() << "rows";
-        loadDefaultLocationData( model );
+        loadDefaultLocationData( model, assModel );
         qDebug() << "All rows laoded. Model has now" << model->rowCount() << "rows";
         Settings::setLocationsVersion(savedVersion);
     }
     else {
-        loadLocationData( model, false );
+        loadLocationData( model, assModel, false );
         return;
     }
 }
 
-void ModelDataLoader::reloadInitialLocationData(LocationModel *model)
+void ModelDataLoader::reloadInitialLocationData(LocationModel *model, AssociationModel *assModel)
 {
     qDebug() << Q_FUNC_INFO;
 
-    loadOnlyModifiedLocationData( model);
-    loadDefaultLocationData( model);
+    loadOnlyModifiedLocationData( model, assModel);
+    loadDefaultLocationData( model, assModel);
 }
 
-void ModelDataLoader::loadDefaultLocationData(LocationModel *model)
+void ModelDataLoader::loadDefaultLocationData(LocationModel *model, AssociationModel *assModel)
 {
     qDebug() << Q_FUNC_INFO;
-    loadLocationData(model, true);
+    loadLocationData(model, assModel, true);
 }
 
-void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
+void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model, AssociationModel *assModel)
 {
     qDebug() << Q_FUNC_INFO;
     mLocationModel = model;
@@ -363,19 +332,7 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
 
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
-    /*
 
-    bool onlyDefaulCountry = Settings::onlyDefaultCountry();
-    QString onlyCountry = Settings::defaultCountry();
-
-    bool onlyDefaultAssociation = Settings::onlyDefaultAssociation();
-    QString onlyAssociation = Settings::defaultAssociation();
-    bool showAlwaysOwn = true; //Settings::alwaysShowOwn();
-
-    qDebug() << "onlyCountry" << onlyCountry << onlyDefaulCountry;
-    qDebug() << "onlyAssociation" << onlyAssociation << onlyDefaultAssociation;
-    qDebug() << "showAlwaysOwn" << showAlwaysOwn;
-    */
     if (striimi.atEnd() == false)
     {
         striimi.readLine();
@@ -386,48 +343,8 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
         locationLine = striimi.readLine();
         //qDebug() << "loadOnlyModifiedLocationData" << "luettiin rivi" << locationLine;
         int delimCount = locationLine.count(";");
-        /*
-        bool forceRead = false;
-        QString modified = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
-        bool custom = false;
-        if (QString::compare(modified, "true", Qt::CaseInsensitive) == 0) {
-            custom = true;
-        }
-        if (custom && showAlwaysOwn) {
-            qDebug() << "aina omat";
-            forceRead = true;
-        }
-        qDebug() << "delimCount" << delimCount;
-
-        if (!forceRead && delimCount > 9 && onlyDefaulCountry) {
-            QString lang = Settings::lang();
-            QString country = "";
-            if (lang == "sv") {
-                country = locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY);
-            } else if (lang == "en") {
-                country = locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY);
-            }
-            else {
-                country = locationLine.section(';', XemaEnums::LOCATION_COUNTRY, XemaEnums::LOCATION_COUNTRY);
-            }
-            qDebug() << "maalla" << country;
-            if (QString::compare(onlyCountry, country)!= 0) {
-                continue;
-            }
-        }
-        if (!forceRead && delimCount > 9 && onlyDefaultAssociation) {
-            QString association = "";
-            if (delimCount == 12) {
-                association = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
-            } else {
-                association = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
-            }
-            qDebug() << "yhdistyksella" << association;
-            if ( QString::compare(onlyAssociation, association)!= 0) {
-                continue;
-            }
-        }
-        */
+        QString assoAbbrev;
+        QString assoName;
 
         if( delimCount > 9) {
             if(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM) == "false") {
@@ -440,7 +357,6 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
 
         }
 
-        //locationLine = striimi.readLine();
         Location location(locationLine.section(';', XemaEnums::LOCATION_TOWN, XemaEnums::LOCATION_TOWN),
                           locationLine.section(';', XemaEnums::LOCATION_PLACE, XemaEnums::LOCATION_PLACE),
                           locationLine.section(';', XemaEnums::LOCATION_WGS, XemaEnums::LOCATION_WGS),
@@ -454,16 +370,35 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model)
             location.setSweCountry(locationLine.section(';', XemaEnums::LOCATION_SWECOUNTRY, XemaEnums::LOCATION_SWECOUNTRY));
             location.setEngCountry(locationLine.section(';', XemaEnums::LOCATION_ENGCOUNTRY, XemaEnums::LOCATION_ENGCOUNTRY));
             if (delimCount == 12) {
-                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM));
-                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
+                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
+                assoName = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+                location.setOrganization(assoAbbrev);
+                location.setOrgAbbrev(assoName);
             } else if (delimCount == 13) {
-                location.setOrganization(locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION));
-                location.setOrgAbbrev(locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV));
+                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+                assoName = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+                location.setOrganization(assoAbbrev);
+                location.setOrgAbbrev(assoName);
             }
         }
         location.setCustom(true);
 
         model->addItem(location);
+        if (assoAbbrev.length() > 0) {
+            int assoRowCount = assModel->rowCount();
+            bool found = false;
+            for(int i = 0; i < assoRowCount; i++) {
+                if(QString::compare(assModel->getItem(i).abbrev(), assoAbbrev) == 0) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found == false) {
+                qDebug()<< "assoName" << assoName;
+                qDebug()<< "assoAbbrev" << assoAbbrev;
+                assModel->addItem(Association(assoAbbrev,assoName));
+            }
+        }
     }
 }
 
@@ -1281,26 +1216,23 @@ void ModelDataLoader::loadBirdAccuracyData(AccuracyModel *model) {
 }
 
 void ModelDataLoader::loadAssociationData(AssociationModel *model) {
-    QFile tiedosto(XemaUtils::dataFileDir() + "associations.txt");
+    QFile tiedosto(XemaUtils::dataFileDir() + "xemaassociations.txt");
     tiedosto.open(QFile::ReadOnly);
     QTextStream striimi(&tiedosto);
-    striimi.setCodec("ISO 8859-1");
-    if (striimi.atEnd() == false)
-    {
-        striimi.readLine();
-    }/*
+    striimi.setCodec("ISO 8859-1");/*
     while (striimi.atEnd() == false)
     {
         QString line;
         line = striimi.readLine();
         if (line.isEmpty() == false)
         {
-            //qDebug() << "loadBirdAccuracyData" << line;
+            qDebug() << "loadBirdAccuracyData" << line;
             Association item(line.section(';', XemaEnums::ASSOCIATION_ABBREV, XemaEnums::ASSOCIATION_ABBREV),
                        line.section(';', XemaEnums::ASSOCIATION_NAME, XemaEnums::ASSOCIATION_NAME));
             model->addItem(item);
         }
-    }*/
+    }
+    */
     Association item("KPLY", "Kepari");
     model->addItem(item);
     Association item2("PPLY", "Popari");

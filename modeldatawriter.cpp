@@ -239,8 +239,10 @@ void ModelDataWriter::writeLocationData(LocationModel *model)
             line.append("false");
         }
         line.append(";");
+        qDebug() << "lisataan nimi" << model->getItem(i).organization();
         line.append(model->getItem(i).organization());
         line.append(";");
+        qDebug() << "lisataan lyhenne" << model->getItem(i).orgAbbrev();
         line.append(model->getItem(i).orgAbbrev());
         line.append("\n");
         striimi << line;
