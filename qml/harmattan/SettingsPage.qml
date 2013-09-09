@@ -490,9 +490,18 @@ Page {
                 window.saveOnlyDefaultAssociation(checked)
             }
         }
+        Button {
+            id: selectAssociations
+            anchors.top: defaultAssociationCb.bottom
+            anchors.topMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            text: qsTr("Select")
+            onClicked: window.showListPage("associations", defaultAssociationTf.text);
+        }
         CheckBox {
             id: alwaysShowOwnCb
-            anchors.top: defaultAssociationCb.bottom
+            anchors.top: selectAssociations.bottom
             anchors.topMargin: 8
             anchors.right: parent.right
             anchors.leftMargin: 0

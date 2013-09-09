@@ -23,6 +23,7 @@
 #include "dataloader.h"
 #include "xemaenums.h"
 #include "accuracymodel.h"
+#include "associationmodel.h"
 
 
 ApplicationController::ApplicationController(QObject *parent) :
@@ -43,7 +44,8 @@ ApplicationController::ApplicationController(QObject *parent) :
     mDirectionModel(0),
     mSettings(0),
     mAccuracyModel(0),
-    mBirdAccuracyModel(0)
+    mBirdAccuracyModel(0),
+    mAssociationModel(0)
 {
     qDebug() << "\n\nSystem Info:" << SystemInfoProvider::versionInfo() << "\n\n";
     initGUI();
@@ -116,6 +118,9 @@ void ApplicationController::initObjects()
     mHistoryPlaceModel = new HistoryModel(this);
     mQMLWin->setHistoryPlaceModel(mHistoryPlaceModel);
 
+    mAssociationModel = new AssociationModel(this);
+    mModelLoader->loadAssociationData(mAssociationModel);
+    mQMLWin->setAssociationModel(mAssociationModel);
 
     qRegisterMetaType<QModelIndex>("QModelIndex");
 

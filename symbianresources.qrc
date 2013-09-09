@@ -28,5 +28,6 @@
         <file>qml/symbian3/MapItem.qml</file>
         <file>qml/symbian3/MapPage.qml</file>
         <file>qml/symbian3/AccuracyDelegate.qml</file>
+        <file>qml/symbian3/AssociationDelegate.qml</file>
     </qresource>
 </RCC>

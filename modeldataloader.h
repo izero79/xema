@@ -14,6 +14,7 @@ class DressModel;
 class SexModel;
 class DirectionModel;
 class AccuracyModel;
+class AssociationModel;
 
 class ModelDataLoader : public QObject
 {
@@ -45,6 +46,7 @@ public:
     void loadDirectionData(DirectionModel *model);
     void loadAccuracyData(AccuracyModel *model);
     void loadBirdAccuracyData(AccuracyModel *model);
+    void loadAssociationData(AssociationModel *model);
 signals:
 
 public slots:

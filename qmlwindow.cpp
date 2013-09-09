@@ -31,6 +31,7 @@
 #include "networkcontroller.h"
 #include "accuracymodel.h"
 #include "tiiraexporter.h"
+#include "associationmodel.h"
 
 QMLWindow::QMLWindow(QWidget *parent) :
     #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -66,7 +67,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mFilteredBirdAccuracyModel(0),
     mLocationAccuracyModel(0),
     mBirdAccuracyModel(0),
-    mTiiraExporter(0)
+    mTiiraExporter(0),
+    mFilteredAssociationModel(0)
 
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -154,6 +156,7 @@ void QMLWindow::init()
     mFilteredDirectionModel = new FilterModel(this);
     mFilteredAccuracyModel = new FilterModel(this);
     mFilteredBirdAccuracyModel = new FilterModel(this);
+    mFilteredAssociationModel = new FilterModel(this);
 
     mRootContext->setContextProperty("birdModel", mFilteredBirdModel);
     mRootContext->setContextProperty("personModel", mFilteredPersonModel);
@@ -169,6 +172,7 @@ void QMLWindow::init()
     mRootContext->setContextProperty("directionModel", mFilteredDirectionModel);
     mRootContext->setContextProperty("locationAccuracyModel", mFilteredAccuracyModel);
     mRootContext->setContextProperty("birdAccuracyModel", mFilteredBirdAccuracyModel);
+    mRootContext->setContextProperty("associationModel", mFilteredAssociationModel);
 
     QString majorVersion;
     majorVersion.setNum( MAJORVERSION );
@@ -377,6 +381,11 @@ void QMLWindow::setHistoryPlaceModel(HistoryModel *model)
 void QMLWindow::setAtlasModel(AtlasIndexModel *model)
 {
     mFilteredAtlasModel->setSourceModel(model);
+}
+
+void QMLWindow::setAssociationModel(AssociationModel *model)
+{
+    mFilteredAssociationModel->setSourceModel(model);
 }
 
 void QMLWindow::writeNewObservation(const QString &data)

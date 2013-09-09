@@ -196,6 +196,11 @@ public:
         ACCURACY_ENG
     };
 
+    enum associationFields {
+        ASSOCIATION_ABBREV = 0,
+        ASSOCIATION_NAME
+    };
+
     static const int OBS_SUBFIELDCOUNT = 12;
 
     enum importErrors {

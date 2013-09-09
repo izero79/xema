@@ -203,7 +203,9 @@ SOURCES += main.cpp \
     tiirachecksumcalculator.cpp \
     tiiraservicehelper.cpp \
     tiiraexporter.cpp \
-    xemautils.cpp
+    xemautils.cpp \
+    association.cpp \
+    associationmodel.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -219,7 +221,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/changelog \
     qmldir \
     qml/symbian3/AccuracyDelegate.qml \
-    qml/harmattan/AccuracyDelegate.qml
+    qml/harmattan/AccuracyDelegate.qml \
+    qml/symbian3/AssociationDelegate.qml
 
 HEADERS += \
     person.h \
@@ -263,7 +266,9 @@ HEADERS += \
     tiirachecksumcalculator.h \
     tiiraservicehelper.h \
     tiiraexporter.h \
-    xemautils.h
+    xemautils.h \
+    association.h \
+    associationmodel.h
 
 RESOURCES += \
     commonresources.qrc

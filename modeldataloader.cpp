@@ -26,6 +26,7 @@
 #include "settings.h"
 #include "accuracymodel.h"
 #include "xemautils.h"
+#include "associationmodel.h"
 
 #ifdef PERFTEST
 #include <QTime>
@@ -1277,6 +1278,33 @@ void ModelDataLoader::loadBirdAccuracyData(AccuracyModel *model) {
             model->addItem(item);
         }
     }
+}
+
+void ModelDataLoader::loadAssociationData(AssociationModel *model) {
+    QFile tiedosto(XemaUtils::dataFileDir() + "associations.txt");
+    tiedosto.open(QFile::ReadOnly);
+    QTextStream striimi(&tiedosto);
+    striimi.setCodec("ISO 8859-1");
+    if (striimi.atEnd() == false)
+    {
+        striimi.readLine();
+    }/*
+    while (striimi.atEnd() == false)
+    {
+        QString line;
+        line = striimi.readLine();
+        if (line.isEmpty() == false)
+        {
+            //qDebug() << "loadBirdAccuracyData" << line;
+            Association item(line.section(';', XemaEnums::ASSOCIATION_ABBREV, XemaEnums::ASSOCIATION_ABBREV),
+                       line.section(';', XemaEnums::ASSOCIATION_NAME, XemaEnums::ASSOCIATION_NAME));
+            model->addItem(item);
+        }
+    }*/
+    Association item("KPLY", "Kepari");
+    model->addItem(item);
+    Association item2("PPLY", "Popari");
+    model->addItem(item2);
 }
 
 void ModelDataLoader::loadSexData(SexModel *model)

@@ -23,6 +23,7 @@ class KineticScroller;
 class NetworkController;
 class AccuracyModel;
 class TiiraExporter;
+class AssociationModel;
 
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
 class QMLWindow : public QMainWindow
@@ -74,6 +75,7 @@ public slots:
     void setProcessingFalse();
     void setAccuracyModel(AccuracyModel *model);
     void setBirdAccuracyModel(AccuracyModel *model);
+    void setAssociationModel(AssociationModel *model);
 
 private slots:
     void writeNewObservation(const QString &data);
@@ -151,6 +153,7 @@ private:
     AccuracyModel *mLocationAccuracyModel;
     AccuracyModel *mBirdAccuracyModel;
     TiiraExporter *mTiiraExporter;
+    FilterModel *mFilteredAssociationModel;
 };
 
 #endif // QMLWINDOW_H

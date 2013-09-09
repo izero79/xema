@@ -526,7 +526,8 @@ Page {
             if (window.onlyDefaultCountry && window.defaultCountry != "") {
                 filter += window.defaultCountry + ", ";
                 if (window.onlyDefaultAssiciation && window.defaultAssociation != "") {
-                    filter += window.defaultAssociation + ", ";
+                    var associations = "("+ window.defaultAssociation.replace("#", "|") + ")";
+                    filter += associations + ", ";
                 } else {
                     filter += ".*, ";
                 }
@@ -537,7 +538,8 @@ Page {
                 }
             }
             else if (window.onlyDefaultAssiciation && window.defaultAssociation != "") {
-                filter = "(^.*, " + window.defaultAssociation + ", ";
+                var associations = "("+ window.defaultAssociation.replace("#", "|") + ")";
+                filter = "(^.*, " + associations + ", ";
                 if (window.alwaysShowOwn) {
                     filter = "(" + filter + ")|(xxtruexx, )";
                 } else {

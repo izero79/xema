@@ -71,6 +71,11 @@ function showListPage(type, selectedItems, itemi)
         currentStatusBox = itemi
         listObject.selectStatus(selectedItems)
     }
+    else if (type == "associations")
+    {
+        currentStatusBox = itemi
+        listObject.selectAssociations(selectedItems)
+    }
     else if (type == "sex" || type == "age" || type == "dress" || type == "atlas" || type == "direction"
              || type == "locationaccuracy" || type == "birdaccuracy")
     {
@@ -339,6 +344,31 @@ function fillStatusBox()
             names += ","
         }
         names += selectedStatuses[k]
+    }
+
+    currentStatusBox.text = names
+}
+
+function fillAssociationBox()
+{
+    var selectedItems = new Array();
+    var j = 0;
+    for(var i = 0; i < associationModel.rowCount(); i++)
+    {
+        if (associationModel.data(i, 2) == true)
+        {
+            selectedItems[j] = associationModel.data(i, 35)
+            j++;
+        }
+    }
+    var names = "";
+    for(var k = 0; k < selectedItems.length; k++)
+    {
+        if (names != "")
+        {
+            names += "#"
+        }
+        names += selectedItems[k]
     }
 
     currentStatusBox.text = names
