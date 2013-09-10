@@ -220,9 +220,6 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog \
     qmldir \
-    qml/symbian3/AccuracyDelegate.qml \
-    qml/harmattan/AccuracyDelegate.qml \
-    qml/symbian3/AssociationDelegate.qml
 
 HEADERS += \
     person.h \

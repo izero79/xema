@@ -68,7 +68,8 @@ QMLWindow::QMLWindow(QWidget *parent) :
     mLocationAccuracyModel(0),
     mBirdAccuracyModel(0),
     mTiiraExporter(0),
-    mFilteredAssociationModel(0)
+    mFilteredAssociationModel(0),
+    mAssociationModel(0)
 
 {
 #if defined(Q_OS_SYMBIAN) && !defined(SYMBIAN3)
@@ -385,6 +386,7 @@ void QMLWindow::setAtlasModel(AtlasIndexModel *model)
 
 void QMLWindow::setAssociationModel(AssociationModel *model)
 {
+    mAssociationModel = model;
     mFilteredAssociationModel->setSourceModel(model);
 }
 
@@ -491,7 +493,7 @@ void QMLWindow::exportOwnData()
 void QMLWindow::importOwnData()
 {
     setProcessing(true);
-    int err = mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel,mStatusModel);
+    int err = mDataWriter->importOwnData(mLocationModel,mPersonModel,mBirdModel,mStatusModel,mAssociationModel);
     setProcessing(false);
     QMetaObject::invokeMethod(mRootObject, "importError",
              Q_ARG(QVariant,err));

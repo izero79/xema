@@ -20,7 +20,7 @@ public:
         CoordinateRole,
         YkjCoordinateRole,
         WgsCoordinateRole, // 39
-        SweTownRole,
+        SweTownRole, // 40
         SwePlaceRole,
         EngTownRole,
         EngPlaceRole, // 43
@@ -38,7 +38,7 @@ public:
         LocalizedCountryRole, // 55
         SweCountryOnlyRole,
         EngCountryOnlyRole,
-        OrganizationRole,
+        OrganizationRole, // 58
         OrgAbbrevRole, // 59
         SortingNameRole = Qt::UserRole + 100
     };

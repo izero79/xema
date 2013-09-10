@@ -562,7 +562,7 @@ Page {
                     var associations = "("+ window.defaultAssociation.replace("#", "|") + ")";
                     filter += associations + ", ";
                 } else {
-                    filter += ".*, ";
+                    filter += ", ";
                 }
                 if (window.alwaysShowOwn) {
                     filter = "(" + filter + ")|(xxtruexx, )";
@@ -579,7 +579,7 @@ Page {
                     filter += ")(.*, ";
                 }
             } else {
-                filter = ""
+                filter = "(^.*, )(, )(.*, "
             }
 
             if (filter != "") {
@@ -703,7 +703,6 @@ Page {
                     var filterString = getFilterString(filterTf.text);
                     listView.model.filter(filterString);
                 }
-
                 //console.log("teksti muuttuu: " + text)
             }
             Image {

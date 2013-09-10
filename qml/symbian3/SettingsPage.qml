@@ -422,8 +422,8 @@ Page {
                 onTriggered: {
                     window.saveDefaultCountry(defaultCountryTf.text)
                     window.defaultCountry = defaultCountryTf.text
-                    window.saveDefaultAssociation(defaultAssociationTf.text)
-                    window.defaultAssociation = defaultAssociationTf.text
+                    //window.saveDefaultAssociation(defaultAssociationTf.text)
+                    //window.defaultAssociation = defaultAssociationTf.text
                 }
             }
         }
@@ -456,7 +456,7 @@ Page {
             anchors.top: defaultCountryCb.bottom
             anchors.topMargin: 30
             color: "#ffffff"
-        }
+        }/*
         TextField {
             id: defaultAssociationTf
             height: 50
@@ -489,15 +489,15 @@ Page {
                 window.onlyDefaultAssiciation = checked
                 window.saveOnlyDefaultAssociation(checked)
             }
-        }
+        }*/
         Button {
             id: selectAssociations
-            anchors.top: defaultAssociationCb.bottom
+            anchors.top: defaultAssociationText.bottom
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
             text: qsTr("Select")
-            onClicked: window.showListPage("associations", defaultAssociationTf.text, defaultAssociationTf);
+            onClicked: window.showListPage("associations", window.defaultAssociation);
         }
         CheckBox {
             id: alwaysShowOwnCb

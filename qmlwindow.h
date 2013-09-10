@@ -154,6 +154,7 @@ private:
     AccuracyModel *mBirdAccuracyModel;
     TiiraExporter *mTiiraExporter;
     FilterModel *mFilteredAssociationModel;
+    AssociationModel *mAssociationModel;
 };
 
 #endif // QMLWINDOW_H

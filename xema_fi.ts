@@ -725,15 +725,15 @@
     </message>
     <message>
         <source>Default association</source>
-        <translation>Oletusyhdistys</translation>
-    </message>
-    <message>
-        <source>Use only default association</source>
-        <translation>Näytä vain oletusyhdistyksen paikat</translation>
+        <translation>Yhdistyspaikat</translation>
     </message>
     <message>
         <source>Always show own/modified locations</source>
         <translation>Näytä aina omat/muutetut paikat</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>Valitse</translation>
     </message>
 </context>
 <context>

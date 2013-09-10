@@ -247,6 +247,10 @@ PageStackWindow {
         {
             MyScript.fillNonRegPersonBox()
         }
+        else if (listPageType == "associations")
+        {
+            MyScript.fillAssociationBox()
+        }
         else if (listPageType == "status")
         {
             MyScript.fillStatusBox()

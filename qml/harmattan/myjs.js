@@ -71,6 +71,11 @@ function showListPage(type, selectedItems, itemi)
         currentStatusBox = itemi
         listObject.selectStatus(selectedItems)
     }
+    else if (type == "associations")
+    {
+        currentStatusBox = itemi
+        listObject.selectAssociations(selectedItems)
+    }
     else if (type == "sex" || type == "age" || type == "dress" || type == "atlas" || type == "direction"
              || type == "locationaccuracy" || type == "birdaccuracy")
     {
@@ -342,6 +347,43 @@ function fillStatusBox()
     }
 
     currentStatusBox.text = names
+}
+
+function fillAssociationBox()
+{
+    var selectedItems = new Array();
+    var j = 0;
+    for(var i = 0; i < associationModel.rowCount(); i++)
+    {
+        if (associationModel.data(i, 2) == true)
+        {
+            selectedItems[j] = associationModel.data(i, 35)
+            j++;
+        }
+    }
+    var names = "";
+    for(var k = 0; k < selectedItems.length; k++)
+    {
+        if (names != "")
+        {
+            names += "#"
+        }
+        names += selectedItems[k]
+    }
+
+    //currentStatusBox.text = names
+    if (names.length > 0) {
+        console.log("onlyDefaultAssiciation: " + true)
+        window.onlyDefaultAssiciation = true
+        window.saveOnlyDefaultAssociation(true)
+    } else {
+        console.log("onlyDefaultAssiciation: " + false)
+        window.onlyDefaultAssiciation = false
+        window.saveOnlyDefaultAssociation(false)
+    }
+    console.log("defaultAssociation: " + defaultAssociation)
+    window.saveDefaultAssociation(names)
+    window.defaultAssociation = names
 }
 
 function fillSexBox(index)

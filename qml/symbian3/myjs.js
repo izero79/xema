@@ -371,7 +371,19 @@ function fillAssociationBox()
         names += selectedItems[k]
     }
 
-    currentStatusBox.text = names
+    //currentStatusBox.text = names
+    if (names.length > 0) {
+        console.log("onlyDefaultAssiciation: " + true)
+        window.onlyDefaultAssiciation = true
+        window.saveOnlyDefaultAssociation(true)
+    } else {
+        console.log("onlyDefaultAssiciation: " + false)
+        window.onlyDefaultAssiciation = false
+        window.saveOnlyDefaultAssociation(false)
+    }
+    console.log("defaultAssociation: " + defaultAssociation)
+    window.saveDefaultAssociation(names)
+    window.defaultAssociation = names
 }
 
 function fillSexBox(index)

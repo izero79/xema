@@ -26,5 +26,6 @@
         <file>qml/harmattan/MapPage.qml</file>
         <file>qml/harmattan/MapItem.qml</file>
         <file>qml/harmattan/AccuracyDelegate.qml</file>
+        <file>qml/harmattan/AssociationDelegate.qml</file>
     </qresource>
 </RCC>

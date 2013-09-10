@@ -235,15 +235,17 @@ void ModelDataLoader::loadLocationData(LocationModel *model, AssociationModel *a
                 location.setCustom(true);
             }
             if (delimCount == 12) {
-                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
-                assoName = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
-                location.setOrganization(assoAbbrev);
-                location.setOrgAbbrev(assoName);
+                assoName = locationLine.section(';', XemaEnums::LOCATION_CUSTOM, XemaEnums::LOCATION_CUSTOM);
+                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+                //qDebug() << "luettiin location (12) yhdistys" << assoName << "lyhenne" << assoAbbrev;
+                location.setOrganization(assoName);
+                location.setOrgAbbrev(assoAbbrev);
             } else if (delimCount == 13) {
                 assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
                 assoName = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
-                location.setOrganization(assoAbbrev);
-                location.setOrgAbbrev(assoName);
+                //qDebug() << "luettiin location (13) yhdistys" << assoName << "lyhenne" << assoAbbrev;
+                location.setOrganization(assoName);
+                location.setOrgAbbrev(assoAbbrev);
             }
 
         } else {
@@ -264,8 +266,6 @@ void ModelDataLoader::loadLocationData(LocationModel *model, AssociationModel *a
                 }
             }
             if (found == false) {
-                qDebug()<< "assoName" << assoName;
-                qDebug()<< "assoAbbrev" << assoAbbrev;
                 assModel->addItem(Association(assoAbbrev,assoName));
             }
         }
@@ -375,8 +375,9 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model, Associa
                 location.setOrganization(assoAbbrev);
                 location.setOrgAbbrev(assoName);
             } else if (delimCount == 13) {
-                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
                 assoName = locationLine.section(';', XemaEnums::LOCATION_ORGANIZATION, XemaEnums::LOCATION_ORGANIZATION);
+                assoAbbrev = locationLine.section(';', XemaEnums::LOCATION_ORGABBREV, XemaEnums::LOCATION_ORGABBREV);
+                //qDebug() << "luettiin modified (13) yhdistys" << assoName;
                 location.setOrganization(assoAbbrev);
                 location.setOrgAbbrev(assoName);
             }
@@ -394,8 +395,6 @@ void ModelDataLoader::loadOnlyModifiedLocationData(LocationModel *model, Associa
                 }
             }
             if (found == false) {
-                qDebug()<< "assoName" << assoName;
-                qDebug()<< "assoAbbrev" << assoAbbrev;
                 assModel->addItem(Association(assoAbbrev,assoName));
             }
         }

@@ -11,6 +11,7 @@ class StatusModel;
 class HistoryModel;
 class CoordinateConverter;
 class AccuracyModel;
+class AssociationModel;
 
 class ModelDataWriter : public QObject
 {
@@ -36,7 +37,7 @@ public:
     void removeHistory();
     int importHistory(LocationModel *locations, PersonModel *persons, StatusModel *statuses, BirdModel *birds, AccuracyModel *locationAccuracies, AccuracyModel *birdAccuracies);
     void importLineWithSections(const QMap<int, int> sectionMap, const QStringList &lines, LocationModel *locations, PersonModel *persons, const QString &delimiter, StatusModel *statuses, BirdModel *birds, AccuracyModel *locationAccuracies, AccuracyModel *birdAccuracies);
-    int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses);
+    int importOwnData( LocationModel *locations, PersonModel *persons, BirdModel *birds, StatusModel *statuses, AssociationModel *assModel);
 
 private:
     explicit ModelDataWriter(QObject *parent = 0);

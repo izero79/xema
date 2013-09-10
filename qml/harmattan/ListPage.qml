@@ -271,6 +271,27 @@ Page {
                 if (personModel.data(j, 35).trim() == selNames[i].trim())
                 {
                     personModel.setData(j, true, 2)
+                } else {
+                    personModel.setData(j, false, 2)
+                }
+            }
+        }
+    }
+
+    function selectAssociations(names)
+    {
+        var selItems = new Array();
+        console.log("names: " + names)
+
+        selItems = names.split("#")
+
+        for(var i = 0; i < selItems.length; i++)
+        {
+            for(var j = 0; j < associationModel.rowCount(); j++)
+            {
+                if (associationModel.data(j, 35).trim() == selItems[i].trim())
+                {
+                    associationModel.setData(j, true, 2)
                     break;
                 }
             }
@@ -393,6 +414,12 @@ Page {
             listView.editMode = false
             listView.delegate = accuracyDelegate
         }
+        else if (listPageType == "associations")
+        {
+            listView.model.setSorting(1, true)
+            listView.editMode = false
+            listView.delegate = associationDelegate
+        }
         else
         {
             listView.model.setSorting(1, true)
@@ -486,6 +513,11 @@ Page {
             listView.model = locationAccuracyModel
             listView.model.filter("")
         }
+        else if (listPageType == "associations")
+        {
+            listView.model = associationModel
+            listView.model.filter("")
+        }
         else
         {
             listView.model = emptyModel
@@ -529,7 +561,7 @@ Page {
                     var associations = "("+ window.defaultAssociation.replace("#", "|") + ")";
                     filter += associations + ", ";
                 } else {
-                    filter += ".*, ";
+                    filter += ", ";
                 }
                 if (window.alwaysShowOwn) {
                     filter = "(" + filter + ")|(xxtruexx, )";
@@ -546,7 +578,7 @@ Page {
                     filter += ")(.*, ";
                 }
             } else {
-                filter = ""
+                filter = "(^.*, )(, )(.*, "
             }
 
             if (filter != "") {
@@ -872,6 +904,9 @@ Page {
     }
     AccuracyDelegate {
         id: accuracyDelegate
+    }
+    AssociationDelegate {
+        id: associationDelegate
     }
 
     Component {
