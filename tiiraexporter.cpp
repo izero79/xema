@@ -139,13 +139,13 @@ bool TiiraExporter::exportRecord(long id) {
             if (doNotExport == false)
             {
                 map = getFirstRowMap(obsLine);
-                qDebug() << "MAP" << map;
+                //qDebug() << "MAP" << map;
                 mSentRecords.insert(id, obsLine);
                 mTiiraServiceHelper->uploadRecord(map, id);
             }
 
         } else {
-            qDebug() << "Ei vietava rivi";
+            //qDebug() << "Ei vietava rivi";
         }
     }
     tiedosto.close();
@@ -176,7 +176,7 @@ bool TiiraExporter::exportRecords(const QString &date, const QString &wantedplac
         long id = obsLine.section("#",XemaEnums::OBS_ID,XemaEnums::OBS_ID).toLong();
         qDebug() << "ObsRivi tiira exportiin" << id;
         int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
-        //qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
+        qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
         int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
         QString tiiraexported = obsLine.section('#', exportPos+1, exportPos+1);
         QString notiiraexp = obsLine.section('#', exportPos+2, exportPos+2);
@@ -185,7 +185,9 @@ bool TiiraExporter::exportRecords(const QString &date, const QString &wantedplac
         QString place = town + ", " + location;
 
 
+        qDebug() << Q_FUNC_INFO << "locationRowCount";
         int locationRowCount = mLocations->rowCount();
+        qDebug() << Q_FUNC_INFO << "locationRowCount - done";
 
         QString country = "";
 
@@ -218,7 +220,7 @@ bool TiiraExporter::exportRecords(const QString &date, const QString &wantedplac
 
 
         if (!doNotExport && date.isEmpty() == false) {
-            //qDebug() << Q_FUNC_INFO << "vain pvm" << date;
+            qDebug() << Q_FUNC_INFO << "vain pvm" << date;
             QString obsDate = obsLine.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
             if (QString::compare(obsDate, date, Qt::CaseInsensitive) != 0) {
                 qDebug() << "wrong date, do not export!!!";
@@ -287,6 +289,7 @@ void TiiraExporter::rowUploadOk(long id, int row) {
     int rows = record.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT).toInt();
     if (row == rows) {
         mSentRecords.remove(id);
+        mTiiraServiceHelper->removeId(id);
         if(mExportInProgress == false) {
             addCsvIdsToRecords();
         }
@@ -610,7 +613,7 @@ void TiiraExporter::addCsvIdsToRecords() {
                 mUploadedRecords.remove(id);
             }
         } else {
-            qDebug() << "Ei vietava rivi, tallennetaan takaisin";
+            //qDebug() << "Ei vietava rivi, tallennetaan takaisin";
             tmp_stream << obsLine;
             tmp_stream << "\n";
         }

@@ -32,15 +32,14 @@ public slots:
     void init(const QNetworkConfiguration &config);
     void login();
     void getAd();
-    void testUpload();
     void uploadRecord(const QMap<QString,QString> &map, long recordId);
     void uploadRecordRow(const QMap<QString,QString> &map, long recordId);
+    void removeId(long id);
 
 private slots:
     void requestFinished(QNetworkReply *reply);
     void loginRequestFinished(QNetworkReply *reply);
     void adRequestFinished(QNetworkReply *reply);
-    void testUploadRequestFinished(QNetworkReply *reply);
     void provideAuthenication(QNetworkReply *reply, QAuthenticator *ator);
     void uploadRequestFinished(QNetworkReply *reply);
     void uploadRowRequestFinished(QNetworkReply *reply);

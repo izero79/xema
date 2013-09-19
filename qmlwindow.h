@@ -59,6 +59,7 @@ signals:
 public slots:
     void orientationChanged();
     void init();
+    void createConnection();
     void setBirdModel(BirdModel *model);
     void setPersonModel(PersonModel *model);
     void setLocationModel(LocationModel *model);

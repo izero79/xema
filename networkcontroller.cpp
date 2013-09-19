@@ -60,7 +60,7 @@ bool NetworkController::isConnected()
 {
     qDebug() << "bool NetworkController::isConnected()";
     bool connected = activeConnectionExists();
-    emit connectionReady();
+    //emit connectionReady();
     return connected;
 }
 

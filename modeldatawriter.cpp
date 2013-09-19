@@ -73,8 +73,8 @@ long ModelDataWriter::writeNewObservation(const QString &data)
     striimi.setCodec("ISO 8859-1");
     if (headerExists == false)
     {
-        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#LisÃ¤tietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Havainnoijat2#Salattu#Koontihavainto#Kuuluu havaintoon#RivejÃ¤#MÃ¤Ã¤rÃ¤#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#IkÃ¤#Tila#LisÃ¤tietoja_2#Parvi#Bongattu#PesintÃ¤#EpÃ¤suora havainto#SÃ¤Ã¤#Exported#exported_to_tiira#notiiraexp#tiira_uploadid#\n");
-//        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Paikka#LisÃ¤tietoja#Atlaskoodi#Havainnoijat#Havainnoijat2#Salattu#RivejÃ¤#MÃ¤Ã¤rÃ¤#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#IkÃ¤#Tila#LisÃ¤tietoja_2#Parvi#Bongattu#PesintÃ¤#SÃ¤Ã¤#Exported#exported_to_tiira#notiiraexp#tiira_uploadid#\n");
+        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Havainnoijat2#Salattu#Koontihavainto#Kuuluu havaintoon#Rivejä#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Exported#exported_to_tiira#notiiraexp#tiira_uploadid#\n");
+//        QString header = QString::fromUtf8("Id#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Paikka#Lisätietoja#Atlaskoodi#Havainnoijat#Havainnoijat2#Salattu#Rivejä#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Sää#Exported#exported_to_tiira#notiiraexp#tiira_uploadid#\n");
         striimi << header;
     }
     striimi << newData;
@@ -290,7 +290,7 @@ void ModelDataWriter::writeBirdData(BirdModel *model)
     QTextStream striimi(&tiedosto);
     striimi.setCodec("ISO 8859-1");
     int rows = model->rowCount();
-    striimi << QString("Id;RyhmÃ¤t;RyhmÃ¤t_eng;RyhmÃ¤t_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;RyhmÃ¤t_swe;muokattu;\n");
+    striimi << QString("Id;Ryhmät;Ryhmät_eng;Ryhmät_tiet;SUOMI;RUOTSI;LYHENNE;TIETEELLINEN;KATEGORIA;ENGLANTI;Ryhmät_swe;muokattu;\n");
     for(int i = 0; i < rows; i++)
     {
         QString line;
@@ -351,7 +351,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
     tmp_stream.setCodec("ISO 8859-1");
 
     QString obsLine;
-    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#LisÃ¤tietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#MÃ¤Ã¤rÃ¤#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#IkÃ¤#Tila#LisÃ¤tietoja_2#Parvi#Bongattu#PesintÃ¤#EpÃ¤suora havainto#SÃ¤Ã¤#Maa#Koord_tyyppi#Species_en#Species_sv#Species_sc#Species_fi#Tiira_csv#NotToTiira\n");
+    QString header = QString::fromUtf8("Rivi-ID#Laji#Pvm1#Pvm2#Kello_hav_1#Kello_hav_2#Kunta#Paikka#X-koord#Y-koord#Tarkkuus#X-koord-linnun#Y-koord-linnun#Tarkkuus_linnun#Paikannettu#Lisätietoja#Atlaskoodi#Tallentaja#Tallennusaika#Havainnoijat#Salattu#Koontihavainto#Kuuluu havaintoon#Määrä#Kello_lintu_1#Kello_lintu_2#Sukupuoli#Puku#Ikä#Tila#Lisätietoja_2#Parvi#Bongattu#Pesintä#Epäsuora havainto#Sää#Maa#Koord_tyyppi#Species_en#Species_sv#Species_sc#Species_fi#Tiira_csv#NotToTiira\n");
     if( delimiter != "#") {
         header.replace("#",";");
     }
@@ -366,9 +366,9 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
             tmp_stream << "\n";
             continue;
         }
-        qDebug() << "ObsRivi ennen exporttia" << obsLine;
+        //qDebug() << "ObsRivi ennen exporttia" << obsLine;
         int xemaRows = obsLine.section("#", XemaEnums::OBS_ROWCOUNT, XemaEnums::OBS_ROWCOUNT).toInt();
-        qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
+        //qDebug() << Q_FUNC_INFO << "XEMAROWS" << xemaRows;
         int exportPos = XemaEnums::OBS_EXPORTED + ((xemaRows-1) * XemaEnums::OBS_SUBFIELDCOUNT);
         QString exported = obsLine.section('#', exportPos, exportPos);
         QString exported_to_tiira = obsLine.section('#', exportPos+1, exportPos+1);
@@ -376,19 +376,19 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
         QString tiira_uploadid = obsLine.section('#', exportPos+3, exportPos+3);
         bool doNotExport = false;
         if (date.isEmpty() == false) {
-            qDebug() << Q_FUNC_INFO << "vain pvm" << date;
+            //qDebug() << Q_FUNC_INFO << "vain pvm" << date;
             QString obsDate = obsLine.section('#', XemaEnums::OBS_DATE1, XemaEnums::OBS_DATE1);
             if (QString::compare(obsDate, date, Qt::CaseInsensitive) != 0) {
-                qDebug() << "do not export!!!";
+                //qDebug() << "do not export!!!";
                 doNotExport = true;
             }
         }
         if (place.isEmpty() == false) {
-            qDebug() << Q_FUNC_INFO << "vain place" << place;
+            //qDebug() << Q_FUNC_INFO << "vain place" << place;
             QString location = obsLine.section('#', XemaEnums::OBS_TOWN, XemaEnums::OBS_LOCATION);
             location = location.replace("#", ", ");
             if (QString::compare(location, place, Qt::CaseInsensitive) != 0) {
-                qDebug() << "do not export!!!";
+                //qDebug() << "do not export!!!";
                 doNotExport = true;
             }
         }
@@ -397,7 +397,7 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
             doNotExport = true;
         }
 
-        qDebug() << Q_FUNC_INFO << "EXPORTED" << exported;
+        //qDebug() << Q_FUNC_INFO << "EXPORTED" << exported;
         int pos = -1;
         int i = 0;
         do
@@ -427,12 +427,12 @@ void ModelDataWriter::exportHistory(bool onlyNew, bool allCountries, const QStri
         }
         if (obsLine.length() > 20)
         {
-            qDebug() << "rivi ennen export settia" << obsLine;
+            //qDebug() << "rivi ennen export settia" << obsLine;
             QString newLine;
             newLine = obsLine;
 
             QString start = newLine.mid(0, pos);
-            qDebug() << "start" << start;
+            //qDebug() << "start" << start;
 
             if (markAsExported == true) {
                 start.append("#true#");
@@ -785,12 +785,12 @@ QString ModelDataWriter::formatToTiira(const QString &data, LocationModel *locat
                 ykjX.setNum(newX);
                 QString ykjY;
                 ykjY.setNum(newY);
-                // tiiraan koordinaatit toisinpÃ¤in
+                // tiiraan koordinaatit toisinpäin
                 locationString.append("#" + ykjY + "#" + ykjX);
             } else {
                 QString x = coordinate.section(":", 0, 0);
                 QString y = coordinate.section(":", 1, 1);
-                // tiiraan koordinaatit toisinpÃ¤in
+                // tiiraan koordinaatit toisinpäin
                 locationString.append("#" + y + "#" + x);
             }
 
@@ -1121,6 +1121,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     QString date2 = readLine.section(delimiter, tiira_date2, tiira_date2);
     date1 = formatDate(date1);
     date2 = formatDate(date2);
+    if (QString::compare(date1, date2) == 0) {
+        date2 = "";
+    }
 
     int faultyLine = 0;
     readyLine.append("#");
@@ -1147,6 +1150,10 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     int tiira_time2 = sectionMap.value(XemaEnums::TIIRA_TIME2);
     QString time2 = readLine.section(delimiter, tiira_time2, tiira_time2);
     time2 = formatTime(time2);
+    if (QString::compare(time1, time2) == 0 && date2.isEmpty()) {
+        time2 = "";
+    }
+
     readyLine += time2;
     readyLine.append("#");
 
@@ -1206,7 +1213,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
                 // coords are ykj
                 bool importWgs = true;
                 if (dx > 360 || dy > 360) {
-                    qDebug() << "luettu paikka ykj:nä";
+                    qDebug() << "luettu paikka ykj:n�";
                     newCoord = mCoordinates->ykjTowgs(dx, dy);
                     ykjx = dx;
                     ykjy = dy;
@@ -1226,7 +1233,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
                     x = tmp_x;
                     y = tmp_y;
                 } else {
-                    qDebug() << "luettu paikka wgs:nä";
+                    qDebug() << "luettu paikka wgs:n�";
                     newCoord = mCoordinates->wgsToykj(dx, dy);
                     wgsx = dx;
                     wgsy = dy;
@@ -1245,9 +1252,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
                     x = ykjX;
                     y = ykjY;
                 }
-                qDebug() << "lisätään paikkaan ykj" << ykj;
+                qDebug() << "lis�t��n paikkaan ykj" << ykj;
                 tmp.setYKJCoordinate(ykj);
-                qDebug() << "lisätään paikkaan wgs" << wgs;
+                qDebug() << "lis�t��n paikkaan wgs" << wgs;
                 tmp.setWGSCoordinate(wgs);
             }
             if (country.isEmpty() == false) {
@@ -1278,9 +1285,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     QString accuracyString = readLine.section(delimiter, tiira_accuracy, tiira_accuracy);
     QString accuracyValue = "";
     if (accuracyString.contains("m") == true) {
-        qDebug() << "kaytetaan tekstia" << accuracyString;
+        //qDebug() << "kaytetaan tekstia" << accuracyString;
         for( int i = 0; i < locationAccuracies->rowCount();i++) {
-            qDebug() << "etsitaan tarkkuus" << accuracyString << locationAccuracies->getItem(i).localizedName();
+            //qDebug() << "etsitaan tarkkuus" << accuracyString << locationAccuracies->getItem(i).localizedName();
             if  (QString::compare(locationAccuracies->getItem(i).localizedName(), accuracyString) == 0) {
                 accuracyValue = locationAccuracies->getItem(i).value();
                 break;
@@ -1290,7 +1297,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
             readyLine += accuracyValue;
         }
     } else {
-        qDebug() << "kaytetaan lukua" << accuracyString;
+        //qDebug() << "kaytetaan lukua" << accuracyString;
         readyLine += accuracyString;
     }
     readyLine.append("#");
@@ -1337,9 +1344,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     QString birdAccuracyString = readLine.section(delimiter, tiira_bird_accuracy, tiira_bird_accuracy);
     QString birdAccuracyValue = "";
     if (birdAccuracyString.contains("m") == true) {
-        qDebug() << "kaytetaan tekstia" << birdAccuracyString;
+        //qDebug() << "kaytetaan tekstia" << birdAccuracyString;
         for( int i = 0; i < birdAccuracies->rowCount();i++) {
-            qDebug() << "etsitaan tarkkuus" << birdAccuracyString << birdAccuracies->getItem(i).localizedName();
+            //qDebug() << "etsitaan tarkkuus" << birdAccuracyString << birdAccuracies->getItem(i).localizedName();
             if  (QString::compare(birdAccuracies->getItem(i).localizedName(), birdAccuracyString) == 0) {
                 birdAccuracyValue = birdAccuracies->getItem(i).value();
                 break;
@@ -1349,7 +1356,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
             readyLine += birdAccuracyValue;
         }
     } else {
-        qDebug() << "kaytetaan lukua" << birdAccuracyString;
+        //qDebug() << "kaytetaan lukua" << birdAccuracyString;
         readyLine += birdAccuracyString;
     }
     readyLine.append("#");
@@ -1474,6 +1481,9 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
         readyLine.append("#");
         QString birdTime2 = row.section(delimiter,tiira_birdtime2-offset,tiira_birdtime2-offset);
         birdTime2 = formatTime(birdTime2);
+        if (QString::compare(birdTime1, birdTime2) == 0) {
+            birdTime2 = "";
+        }
         readyLine += birdTime2;
         if (row.section(delimiter,tiira_sex-offset,tiira_sex-offset) == "k")
         {
@@ -1722,7 +1732,6 @@ int ModelDataWriter::importOwnData( LocationModel *locations, PersonModel *perso
                     assModel->addItem(Association(assoAbbrev,association));
                 }
             }
-
         }
         QDateTime date;
         date = QDateTime::currentDateTime();
@@ -2076,12 +2085,12 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
     //qDebug() << Q_FUNC_INFO << "header" << headerLine;
     QString header = headerLine;
     header = header.toLower();/*
-    header.replace(QRegExp(delimiter + "s.{2}(?![a-zA-Z])"), delimiter + "sÃ¤Ã¤");
-    header.replace(QRegExp(delimiter + "ik.{1}(?![a-zA-Z])"), delimiter + "ikÃ¤");
-    header.replace(QRegExp(delimiter + "lis.{1}tietoja"), delimiter + "lisÃ¤tietoja");
-    header.replace(QRegExp(delimiter + "m.{2}r.{1}(?![a-zA-Z])"), delimiter + "mÃ¤Ã¤rÃ¤");
-    header.replace(QRegExp(delimiter + "pesint.{1}(?![a-zA-Z])"), delimiter + "pesintÃ¤");
-    header.replace(QRegExp(delimiter + "ep.{1}suora"), delimiter + "epÃ¤suora");*/
+    header.replace(QRegExp(delimiter + "s.{2}(?![a-zA-Z])"), delimiter + "sää");
+    header.replace(QRegExp(delimiter + "ik.{1}(?![a-zA-Z])"), delimiter + "ikä");
+    header.replace(QRegExp(delimiter + "lis.{1}tietoja"), delimiter + "lisätietoja");
+    header.replace(QRegExp(delimiter + "m.{2}r.{1}(?![a-zA-Z])"), delimiter + "määrä");
+    header.replace(QRegExp(delimiter + "pesint.{1}(?![a-zA-Z])"), delimiter + "pesintä");
+    header.replace(QRegExp(delimiter + "ep.{1}suora"), delimiter + "epäsuora");*/
 //    qDebug() << Q_FUNC_INFO << "header nyt" << header;
     QStringList headerSections = header.split(delimiter);
 
@@ -2221,9 +2230,9 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_INFO: {
-                int index = headerSections.indexOf("lisÃ¤tietoja");
+                int index = headerSections.indexOf("lisätietoja");
                 if (index < 0) {
-                    index = headerSections.indexOf("lisätietoja");
+                    index = headerSections.indexOf("lis�tietoja");
                 }
                 if (index < 0) {
                     index = 100;
@@ -2288,9 +2297,9 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_BIRDCOUNT: {
-                int index = headerSections.indexOf("mÃ¤Ã¤rÃ¤");
+                int index = headerSections.indexOf("määrä");
                 if (index < 0) {
-                    index = headerSections.indexOf("määrä");
+                    index = headerSections.indexOf("m��r�");
                 }
                 if (index < 0) {
                     index = -100;
@@ -2331,9 +2340,9 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_AGE: {
-                int index = headerSections.indexOf("ikÃ¤");
+                int index = headerSections.indexOf("ikä");
                 if (index < 0) {
-                    index = headerSections.indexOf("ikä");
+                    index = headerSections.indexOf("ik�");
                 }
                 if (index < 0) {
                     index = 100;
@@ -2350,9 +2359,9 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_BIRDINFO: {
-                int index = headerSections.indexOf("lisÃ¤tietoja_2");
+                int index = headerSections.indexOf("lisätietoja_2");
                 if (index < 0) {
-                    index = headerSections.indexOf("lisätietoja_2");
+                    index = headerSections.indexOf("lis�tietoja_2");
                 }
                 if (index < 0) {
                     index = 100;
@@ -2377,9 +2386,9 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_NEST: {
-                int index = headerSections.indexOf("pesintÃ¤");
+                int index = headerSections.indexOf("pesintä");
                 if (index < 0) {
-                    index = headerSections.indexOf("pesintä");
+                    index = headerSections.indexOf("pesint�");
                 }
                 if (index < 0) {
                     index = 100;
@@ -2388,9 +2397,9 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_INDIRECT: {
-                int index = headerSections.indexOf("epÃ¤suora havainto");
+                int index = headerSections.indexOf("epäsuora havainto");
                 if (index < 0) {
-                    index = headerSections.indexOf("epäsuora havainto");
+                    index = headerSections.indexOf("ep�suora havainto");
                 }
                 if (index < 0) {
                     index = 100;
@@ -2399,9 +2408,9 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_EXTRA_WEATHER: {
-                int index = headerSections.indexOf(QString("sÃ¤Ã¤"));
+                int index = headerSections.indexOf(QString("sää"));
                 if (index < 0) {
-                    index = headerSections.indexOf("sää");
+                    index = headerSections.indexOf("s��");
                 }
                 if (index < 0) {
                     index = headerSections.indexOf("weather");
@@ -2494,7 +2503,7 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
     QMap<int, int> sections;
     QString header = headerLine;
     //qDebug() << Q_FUNC_INFO << "header" << header;
-    header.replace(QRegExp("ryhmÃ¤"), "group_fi");
+    header.replace(QRegExp("ryhmä"), "group_fi");
     //qDebug() << Q_FUNC_INFO << "header nyt" << header;
     QStringList headerSections = header.toLower().split(delimiter);
     //qDebug() << Q_FUNC_INFO << "headerSections" << headerSections;
@@ -2509,13 +2518,13 @@ QMap<int, int> ModelDataWriter::getBirdSectionNumbers(const QString &headerLine,
             case XemaEnums::BIRD_FIN_GROUP: {
                 int index = headerSections.indexOf("group_fi");
                 if (index < 0) {
+                    index = headerSections.indexOf("ryhm�");
+                }
+                if (index < 0) {
+                    index = headerSections.indexOf("ryhmã¤");
+                }
+                if (index < 0) {
                     index = headerSections.indexOf("ryhmä");
-                }
-                if (index < 0) {
-                    index = headerSections.indexOf("ryhmÃ£Â¤");
-                }
-                if (index < 0) {
-                    index = headerSections.indexOf("ryhmÃ¤");
                 }
                 if (index < 0) {
                     index = 100;
@@ -2866,8 +2875,8 @@ QMap<int, int> ModelDataWriter::getStatusSectionNumbers(const QString &headerLin
 QString ModelDataWriter::fixEncoding(const QString &line) {
     QString newText = line;
     //qDebug() << "QString ModelDataWriter::fixEncoding(const QString line)" << "ennen korjausta" << newText;
-    if (newText.contains("Ã?") || newText.contains("Ã¥") || newText.contains("Ã?") || newText.contains("Ã¶") ||
-        newText.contains("Ã?") || newText.contains("Ã¤")) {
+    if (newText.contains("�?") || newText.contains("å") || newText.contains("�?") || newText.contains("ö") ||
+        newText.contains("�?") || newText.contains("ä")) {
 
         newText = QString::fromUtf8(newText.toLatin1());
     }

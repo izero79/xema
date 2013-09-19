@@ -281,6 +281,9 @@ void QMLWindow::init()
              Q_ARG(QVariant, mSettings->tiiraServerPassword()));
     QMetaObject::invokeMethod(mRootObject, "setTiiraLoginOk",
              Q_ARG(QVariant, mSettings->tiiraLoginOk()));
+}
+
+void QMLWindow::createConnection() {
     if (!mTiiraExporter) {
         createTiiraExporter();
     }
@@ -292,6 +295,7 @@ void QMLWindow::init()
             loadAd();
         }
     }
+
 }
 
 void QMLWindow::setBirdModel(BirdModel *model)
@@ -311,6 +315,7 @@ void QMLWindow::setPersonModel(PersonModel *model)
 
 void QMLWindow::setLocationModel(LocationModel *model)
 {
+    qDebug() << Q_FUNC_INFO;
     mLocationModel = model;
     mFilteredLocationModel->setSourceModel(model);
     mFilteredLocationModel->setSortRole(LocationModel::TownRole);
@@ -646,6 +651,7 @@ void QMLWindow::exportToTiira(const QString &date, const QString &place) {
 }
 
 void QMLWindow::createTiiraExporter() {
+    qDebug() << Q_FUNC_INFO;
     if(!mTiiraExporter) {
         mTiiraExporter = new TiiraExporter(mNetworkController->currentConfiguration(), mLocationModel, mPersonModel, mBirdModel, this);
         connect(mTiiraExporter,SIGNAL(loginOk(QString)),this,SLOT(tiiraLoginOk(QString)));
@@ -671,5 +677,8 @@ void QMLWindow::tiiraClosed() {
 
 void QMLWindow::loadAd() {
     disconnect(mNetworkController,SIGNAL(connectionReady()),this,SLOT(loadAd()));
+    if (!mTiiraExporter) {
+        createTiiraExporter();
+    }
     mTiiraExporter->getAd();
 }

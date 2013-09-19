@@ -158,6 +158,7 @@ void ApplicationController::initObjects()
     connect(mQMLWin,SIGNAL(reloadLocations()),this,SLOT(reloadLocations()));
 
     mModelWriter = ModelDataWriter::instance();
+    mQMLWin->createConnection();
     mQMLWin->setProcessing(false);
 }
 
