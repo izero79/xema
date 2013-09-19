@@ -700,7 +700,7 @@ Page {
                     CheckableGroup { id: serverGroup }
                     ButtonColumn {
                         id: tiiraServerRow
-                        spacing: platformStyle.paddingMedium
+                        spacing: 10 // platformStyle.paddingMedium
                         anchors.top: parent.top
                         anchors.left: parent.left
                         RadioButton {

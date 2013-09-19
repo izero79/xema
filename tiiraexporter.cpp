@@ -113,7 +113,7 @@ bool TiiraExporter::exportRecord(long id) {
 
             if (!doNotExport && QString::compare(tiiraexported, "true", Qt::CaseInsensitive) == 0) {
                 qDebug() << "already tiira export";
-                doNotExport = true;
+                //doNotExport = true; // manually exporting is done always
             }
 
             if (!doNotExport && QString::compare(notiiraexp, "true", Qt::CaseInsensitive) == 0) {
