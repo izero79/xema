@@ -35,6 +35,7 @@ public slots:
     static QString tiiraServerUsername();
     static QString tiiraServerPassword();
     bool tiiraLoginOk();
+    static QString tiiraSavername();
 
     void setFirstStart(bool first);
     void setSystematicSorting(bool systematic);
@@ -59,6 +60,7 @@ public slots:
     void setTiiraServerUsername(const QString &username);
     void setTiiraServerPassword(const QString &password);
     void setTiiraLoginOk(bool ok);
+    void setTiiraSavername(const QString &user);
 
     void resetSettings();
 

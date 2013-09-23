@@ -610,6 +610,7 @@ void QMLWindow::tiiraLogin() {
 
 void QMLWindow::tiiraLoginOk(const QString &name) {
     mSettings->setTiiraLoginOk(true);
+    mSettings->setTiiraSavername(name);
     QMetaObject::invokeMethod(mRootObject, "loginOk",
              Q_ARG(QVariant,name));
 }

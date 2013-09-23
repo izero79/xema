@@ -374,18 +374,7 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
         place_x.remove(place_x.length()-1, 1);
     }
 
-
-    // add data saver (default name if found)
-    rowCount = mPersons->rowCount();
-    QString saver;
-    for(int i = 0; i < rowCount; i++)
-    {
-        if (mPersons->getItem(i).saver() == true)
-        {
-            saver = mPersons->getItem(i).firstName() + " " + mPersons->getItem(i).surName();
-            break;
-        }
-    }
+    QString saver = Settings::tiiraSavername();
 
     if (nimet.length() > 1 && nimet.endsWith('#') == false) {
         nimet.replace("#", ", ");

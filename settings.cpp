@@ -347,3 +347,18 @@ void Settings::setTiiraLoginOk(bool ok)
     QSettings settings("TeSi", "xema");
     settings.setValue("tiiraLoginOk", ok);
 }
+
+void Settings::setTiiraSavername(const QString &user)
+{
+    qDebug() << Q_FUNC_INFO << user;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraSaverName", user);
+}
+
+QString Settings::tiiraSavername()
+{
+    QSettings settings("TeSi", "xema");
+    QString value = settings.value("tiiraSaverName", "").toString();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
