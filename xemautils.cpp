@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QDir>
+#include <QCoreApplication>
 
 #include "xemautils.h"
 
