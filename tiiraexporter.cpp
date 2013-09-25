@@ -487,18 +487,6 @@ QMap<QString, QString> TiiraExporter::getRowMap(const QString &data, int row)
         }
     }
 
-    // add data saver (default name if found)
-    rowCount = mPersons->rowCount();
-    QString saver;
-    for(int i = 0; i < rowCount; i++)
-    {
-        if (mPersons->getItem(i).saver() == true)
-        {
-            saver = mPersons->getItem(i).firstName() + " " + mPersons->getItem(i).surName();
-            break;
-        }
-    }
-
     QString rivi = data.section("#", XemaEnums::OBS_BIRDCOUNT+((row-1)*XemaEnums::OBS_SUBFIELDCOUNT), XemaEnums::OBS_INDIRECT+((row-1)*XemaEnums::OBS_SUBFIELDCOUNT));
     qDebug() << "RIVIII " << rivi;
     int offset = XemaEnums::OBS_BIRDCOUNT;
