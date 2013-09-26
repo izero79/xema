@@ -842,10 +842,6 @@
         <translation>Internet-yhteys</translation>
     </message>
     <message>
-        <source>Internet connection is needed for map usage, connect now?</source>
-        <translation>Internet-yhteys tarvitaan kartan käyttöön. Yhdistetäänkö nyt?</translation>
-    </message>
-    <message>
         <source>Connect automatically when needed</source>
         <translation>Yhdistä automaattisesti</translation>
     </message>
@@ -872,6 +868,10 @@
     <message>
         <source>Tiira seems to be unavailable at the moment. Tiira functions are now disabled.</source>
         <translation>Tiira ei ole käytettävissä juuri nyt. Tiira toiminnot ovat poissa käytöstä.</translation>
+    </message>
+    <message>
+        <source>Internet connection is needed, connect now?</source>
+        <translation>Internet-yhteys tarvitaan, yhdistä nyt?</translation>
     </message>
 </context>
 </TS>

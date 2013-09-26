@@ -697,7 +697,7 @@ PageStackWindow {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: qsTr("Internet connection is needed for map usage, connect now?")
+                text: qsTr("Internet connection is needed, connect now?")
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 font.pixelSize: 20
             }

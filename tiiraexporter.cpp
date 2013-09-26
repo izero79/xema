@@ -310,7 +310,7 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
     QString info = data.section("#",XemaEnums::OBS_INFO,XemaEnums::OBS_INFO);
     QString nimet = data.section("#",XemaEnums::OBS_REGPERSON, XemaEnums::OBS_OTHERPERSON);
     QString hidden_string = data.section("#",XemaEnums::OBS_HIDDEN, XemaEnums::OBS_HIDDEN);
-    QString hidden = "0";
+    QString hidden = "";
     if (QString::compare(hidden_string, "true")) {
         hidden = "1";
     }

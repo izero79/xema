@@ -1339,7 +1339,8 @@
     <message>
         <location filename="qml/harmattan/main.qml" line="677"/>
         <location filename="qml/symbian3/main.qml" line="700"/>
-        <source>Internet connection is needed for map usage, connect now?</source>
+        <source>Internet connection is needed, connect now?</source>
+        <oldsource>Internet connection is needed for map usage, connect now?</oldsource>
         <translation>Internetuppkoppling behövs för karta. Anslut nu?</translation>
     </message>
     <message>
