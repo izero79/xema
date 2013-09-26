@@ -311,7 +311,7 @@ QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
     QString nimet = data.section("#",XemaEnums::OBS_REGPERSON, XemaEnums::OBS_OTHERPERSON);
     QString hidden_string = data.section("#",XemaEnums::OBS_HIDDEN, XemaEnums::OBS_HIDDEN);
     QString hidden = "";
-    if (QString::compare(hidden_string, "true")) {
+    if (QString::compare(hidden_string, "true") == 0) {
         hidden = "1";
     }
     QString rows = data.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT);
