@@ -22,6 +22,7 @@ signals:
     void noUploadRights();
     void loginOk(const QString &name);
     void uploadOk(long id, const QString &csvId);
+    void uploadFailed(const QString &error);
     void rowUploadOk(long id, int row);
     void serverLoginFailed();
     void loginFailUnknown();
@@ -51,6 +52,7 @@ private slots:
     QString recordRowNodes(const QMap<QString,QString> &map) const;
     QString readCsvId(const QString &data) const;
     QString readRowCount(const QString &data) const;
+    QString readError(const QString &data) const;
 
     void setServer();
 

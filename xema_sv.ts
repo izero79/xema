@@ -1313,63 +1313,71 @@
         <translation>Tiira Exporten är klar.</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="530"/>
-        <location filename="qml/symbian3/main.qml" line="530"/>
+        <location filename="qml/harmattan/main.qml" line="489"/>
+        <location filename="qml/symbian3/main.qml" line="489"/>
+        <source>Error in export to Tiira: </source>
+        <translation>Fel i Tiira Exporten:</translation>
+    </message>
+    <message>
+        <location filename="qml/harmattan/main.qml" line="538"/>
+        <location filename="qml/symbian3/main.qml" line="538"/>
         <source>Tiira not available</source>
         <translation>Tiira är stängt</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="531"/>
-        <location filename="qml/symbian3/main.qml" line="531"/>
+        <location filename="qml/harmattan/main.qml" line="539"/>
+        <location filename="qml/symbian3/main.qml" line="539"/>
         <source>Tiira seems to be unavailable at the moment. Tiira functions are now disabled.</source>
         <translation>Tiira är stängt just nu. Tiira funktioner är nu inaktiverad.</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="579"/>
-        <location filename="qml/symbian3/main.qml" line="580"/>
+        <location filename="qml/harmattan/main.qml" line="587"/>
+        <location filename="qml/symbian3/main.qml" line="588"/>
         <source>Please, wait...</source>
         <translation>Var så god, vänta...</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="663"/>
-        <location filename="qml/symbian3/main.qml" line="686"/>
+        <location filename="qml/harmattan/main.qml" line="671"/>
+        <location filename="qml/symbian3/main.qml" line="694"/>
         <source>Connection needed</source>
         <translation>Internetuppkoppling</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="677"/>
-        <location filename="qml/symbian3/main.qml" line="700"/>
+        <location filename="qml/harmattan/main.qml" line="685"/>
+        <location filename="qml/symbian3/main.qml" line="708"/>
         <source>Internet connection is needed, connect now?</source>
         <oldsource>Internet connection is needed for map usage, connect now?</oldsource>
         <translation>Internetuppkoppling behövs för karta. Anslut nu?</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="690"/>
-        <location filename="qml/symbian3/main.qml" line="713"/>
+        <location filename="qml/harmattan/main.qml" line="698"/>
+        <location filename="qml/symbian3/main.qml" line="721"/>
         <source>Connect automatically when needed</source>
         <translation>Anslut automatiskt</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="701"/>
-        <location filename="qml/symbian3/main.qml" line="724"/>
+        <location filename="qml/harmattan/main.qml" line="709"/>
+        <location filename="qml/symbian3/main.qml" line="732"/>
         <source>No</source>
         <translation>Nej</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="714"/>
-        <location filename="qml/symbian3/main.qml" line="737"/>
+        <location filename="qml/harmattan/main.qml" line="722"/>
+        <location filename="qml/symbian3/main.qml" line="745"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="745"/>
-        <location filename="qml/symbian3/main.qml" line="773"/>
+        <location filename="qml/harmattan/main.qml" line="488"/>
+        <location filename="qml/harmattan/main.qml" line="753"/>
+        <location filename="qml/symbian3/main.qml" line="488"/>
+        <location filename="qml/symbian3/main.qml" line="781"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="qml/harmattan/main.qml" line="773"/>
-        <location filename="qml/symbian3/main.qml" line="801"/>
+        <location filename="qml/harmattan/main.qml" line="781"/>
+        <location filename="qml/symbian3/main.qml" line="809"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>

@@ -25,6 +25,7 @@ TiiraExporter::TiiraExporter(const QNetworkConfiguration &config, LocationModel 
     QString pwdHash = Settings::tiiraPwdHash();
     mTiiraServiceHelper = new TiiraServiceHelper(userName, pwdHash, this);
     connect(mTiiraServiceHelper,SIGNAL(uploadOk(long,QString)),this,SLOT(uploadOk(long,QString)));
+    connect(mTiiraServiceHelper,SIGNAL(uploadFailed(QString)),this,SIGNAL(uploadFailed(QString)));
     connect(mTiiraServiceHelper,SIGNAL(rowUploadOk(long,int)),this,SLOT(rowUploadOk(long,int)));
     connect(mTiiraServiceHelper,SIGNAL(loginOk(QString)),this,SIGNAL(loginOk(QString)));
     connect(mTiiraServiceHelper,SIGNAL(wrongCredientals()),this,SIGNAL(wrongCredientals()));
@@ -298,7 +299,6 @@ void TiiraExporter::rowUploadOk(long id, int row) {
     }
 
 }
-
 
 QMap<QString, QString> TiiraExporter::getFirstRowMap(const QString &data)
 {

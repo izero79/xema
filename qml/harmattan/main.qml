@@ -482,6 +482,14 @@ PageStackWindow {
         }
     }
 
+    function tiiraExportFailed(error) {
+        console.log("tiira export failed")
+        errorDialog.dialogText = ""
+        errorDialog.titleText = qsTr("Error")
+        errorDialog.dialogText = qsTr("Error in export to Tiira: ") + error
+        errorDialog.open()
+    }
+
     function setTiiraLoginOk(ok) {
         console.log("setTiiraLoginOk: " + ok)
         window.tiiraLoginOk = ok

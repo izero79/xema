@@ -115,6 +115,7 @@ private slots:
     void tiiraServerLoginFailed();
     void tiiraExportDone();
     void tiiraLoginFailUnknown();
+    void tiiraExportFailed(const QString &error);
 
     void createTiiraExporter();
     void adReadyToShow(const QString &iconUrl, const QString &url);

@@ -873,5 +873,9 @@
         <source>Internet connection is needed, connect now?</source>
         <translation>Internet-yhteys tarvitaan, yhdistä nyt?</translation>
     </message>
+    <message>
+        <source>Error in export to Tiira: </source>
+        <translation>Virhe Tiira viennissä:</translation>
+    </message>
 </context>
 </TS>

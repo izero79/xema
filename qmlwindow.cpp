@@ -641,6 +641,12 @@ void QMLWindow::tiiraExportDone() {
     QMetaObject::invokeMethod(mRootObject, "tiiraExportDone");
 }
 
+void QMLWindow::tiiraExportFailed(const QString &error) {
+    qDebug() << Q_FUNC_INFO;
+    QMetaObject::invokeMethod(mRootObject, "tiiraExportFailed",
+                              Q_ARG(QVariant,error));
+}
+
 void QMLWindow::exportToTiira(const QString &date, const QString &place) {
     qDebug() << Q_FUNC_INFO;
     setProcessing(true);
@@ -663,6 +669,7 @@ void QMLWindow::createTiiraExporter() {
         connect(mTiiraExporter,SIGNAL(loginFailUnknown()),this,SLOT(tiiraLoginFailUnknown()));
         connect(mTiiraExporter,SIGNAL(adLoaded(QString,QString)),this,SLOT(adReadyToShow(QString,QString)));
         connect(mTiiraExporter,SIGNAL(tiiraClosed()),this,SLOT(tiiraClosed()));
+        connect(mTiiraExporter,SIGNAL(uploadFailed(QString)),this,SLOT(tiiraExportFailed(QString)));
 
     }
 }

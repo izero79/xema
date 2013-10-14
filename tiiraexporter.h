@@ -31,6 +31,7 @@ signals:
     void loginFailUnknown();
     void adLoaded(const QString &iconUrl, const QString &url);
     void tiiraClosed();
+    void uploadFailed(const QString &error);
 
 public slots:
 
