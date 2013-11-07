@@ -269,7 +269,7 @@ void TiiraExporter::uploadOk(long id, const QString &csvId) {
     QString record = mSentRecords.value(id);
     int rows = record.section("#",XemaEnums::OBS_ROWCOUNT,XemaEnums::OBS_ROWCOUNT).toInt();
     mUploadedRecords.insert(id, csvId);
-    if (rows> 1) {
+    if (rows > 1) {
         for( int i = 2; i <= rows; i++) {
             QMap<QString,QString> map;
             map = getRowMap(record, i);
@@ -278,7 +278,7 @@ void TiiraExporter::uploadOk(long id, const QString &csvId) {
         }
     } else {
         mSentRecords.remove(id);
-        if(mExportInProgress == false) {
+        if(mExportInProgress == false && mSentRecords.size() == 0) {
             addCsvIdsToRecords();
         }
     }
@@ -291,7 +291,7 @@ void TiiraExporter::rowUploadOk(long id, int row) {
     if (row == rows) {
         mSentRecords.remove(id);
         mTiiraServiceHelper->removeId(id);
-        if(mExportInProgress == false) {
+        if(mExportInProgress == false && mSentRecords.size() == 0) {
             addCsvIdsToRecords();
         }
     } else {

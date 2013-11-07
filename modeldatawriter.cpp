@@ -1575,7 +1575,7 @@ void ModelDataWriter::importLineWithSections(const QMap<int, int> sectionMap, co
     }
     // do not export to tiira
     if(QString::compare(notToTiira,"X", Qt::CaseInsensitive)==0 ||
-       QString::compare(notToTiira,"true", Qt::CaseInsensitive)==0 )
+       QString::compare(notToTiira,"true", Qt::CaseInsensitive)==0 || !csvId.isEmpty() || !rowId.isEmpty() )
     {
         readyLine.append("true#");
     }
