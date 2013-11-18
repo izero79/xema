@@ -500,6 +500,7 @@ function readAndSaveData()
     var allData = "";
     var delimiter = "#";
     allData = obsObject.readAllData()
+    var tiiraExported = obsObject.exportedToTiira()
     if (allData == "-1")
     {
         console.log("Pakollinen tieto puuttuu")
@@ -514,6 +515,10 @@ function readAndSaveData()
         window.writeNew(allData)
         dataSaved()
         unsavedData = false
+        console.log("this was exported to tiira: " + tiiraExported)
+        if (XemaSettings.useTiira && tiiraExported) {
+            obsObject.showTiiraEditDialog()
+        }
         return true
     }
 }

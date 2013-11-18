@@ -156,6 +156,50 @@ Page {
 //        onClickedOutside: {areYouSureDialog.cancelsignal(); areYouSureDialog.close()}
     }
 
+    Dialog {
+        id: tiiraFeaturesDialog
+        signal oksignal()
+
+        title: Label {
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr("Xema")
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        content:Item {
+            height: 150
+            width: parent.width
+            anchors.topMargin: 10
+            Label {
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: qsTr("Note that Xema currently supports just sending of records to Tiira. Locations, species and observers are not synced with Tiira.")
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Button {
+                id: tiiraDialogOk
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("Ok")
+                onClicked: {
+                    tiiraFeaturesDialog.oksignal()
+                    tiiraFeaturesDialog.close()
+                }
+        }
+        //onClickedOutside: {tiiraFeaturesDialog.oksignal(); tiiraFeaturesDialog.close()}
+    }
+
     Flickable {
         contentWidth: width
         contentHeight: restoreHistory.y + restoreHistory.height + 10
@@ -601,6 +645,14 @@ Page {
                     window.saveUseTiira(checked)
                     if (checked) {
                         checkCredientalsAndLogin()
+                    } else {
+                        XemaSettings.firstTiiraDelete = true
+                        XemaSettings.firstTiiraEdit = true
+                    }
+                }
+                onClicked: {
+                    if (checked) {
+                        tiiraFeaturesDialog.open()
                     }
                 }
             }
@@ -654,7 +706,11 @@ Page {
                                 pwdEdited = true
                             }
                         }
-
+                        onActiveFocusChanged: {
+                            if (activeFocus) {
+                                text = ""
+                            }
+                        }
                     }
                     Button {
                         id: tiiraSignin

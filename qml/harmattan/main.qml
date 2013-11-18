@@ -409,7 +409,7 @@ PageStackWindow {
     }
 
     function openInternetConnection() {
-        var ask = true //XemaSettings.askForConnection()
+        var ask = false //XemaSettings.askForConnection()
         if (ask) {
             connectionDialog.open()
         } else {

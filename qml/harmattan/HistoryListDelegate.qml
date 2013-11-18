@@ -152,7 +152,7 @@ Component {
             onPressAndHold: {
                 if (historyListView.model === historyModel)
                 {
-                    historyPage.showContextMenu(itemid, place, date)
+                    historyPage.showContextMenu(itemid, place, date, tiiraexported)
                 }
             }
         }

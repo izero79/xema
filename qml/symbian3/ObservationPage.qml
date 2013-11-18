@@ -146,6 +146,11 @@ Page {
         window.showBirdMap(birdCoordinatesTf, place_x, place_y, x, y)
     }
 
+    function exportedToTiira() {
+        console.log("csvId: " + csvId)
+        return csvId != ""
+    }
+
     function readAllData()
     {
         var missingData = new Array();
@@ -713,6 +718,15 @@ Page {
         currentId = 0
     }
 
+    function showTiiraEditDialog()
+    {
+        if(XemaSettings.firstTiiraEdit && XemaSettings.tiiraAutosave) {
+            console.log("Show Tiira edit dialog");
+            tiiraNoteDialog.open();
+            XemaSettings.firstTiiraEdit = false
+        }
+    }
+
     function dateSelected(object, d, m, y) {
         console.log('parametrit: ' +y +", "+m+", "+d)
         d = d + ""
@@ -793,6 +807,49 @@ Page {
         onRejected: {timeRejected(targetObject)}
     }
 
+    Dialog {
+        id: tiiraNoteDialog
+        signal oksignal()
+
+        title: Label {
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr("Xema")
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        content:Item {
+            height: 150
+            width: parent.width
+            anchors.topMargin: 10
+            Label {
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: qsTr("Updated record is send to Tiira as new record. Remove original record from Tiira with web browser.")
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Button {
+                id: tiiraDialogOk
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("Ok")
+                onClicked: {
+                    tiiraNoteDialog.oksignal()
+                    tiiraNoteDialog.close()
+                }
+        }
+        onClickedOutside: {tiiraNoteDialog.oksignal(); tiiraNoteDialog.close()}
+    }
 
     Dialog {
         id: saveErrorDialog

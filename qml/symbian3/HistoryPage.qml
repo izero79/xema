@@ -102,6 +102,7 @@ Page {
         property int selectedItem: -1
         property string selectedDate: ""
         property string selectedPlace: ""
+        property bool exportedToTiira: false
         MenuLayout {
             MenuItem {
                 id: tiiraExportItem
@@ -128,16 +129,20 @@ Page {
                     removeItem.enabled = true
                     historyToolBarLayout.enabled = true
                     contextMenu.close()
+                    if (contextMenu.exportedToTiira && XemaSettings.useTiira) {
+                        showTiiraNoteDialog()
+                    }
                 }
             }
         }
     }
 
-    function showContextMenu(itemid, place, date)
+    function showContextMenu(itemid, place, date, tiiraExported)
     {
         contextMenu.selectedItem = itemid
         contextMenu.selectedPlace = place
         contextMenu.selectedDate = date
+        contextMenu.exportedToTiira = tiiraExported
         contextMenu.open()
     }
 
@@ -206,6 +211,59 @@ Page {
         console.log('load image: ' + url)
         adImage.source = url
         adTimer.start()
+    }
+
+    function showTiiraNoteDialog()
+    {
+        if(XemaSettings.firstTiiraDelete) {
+            console.log("Show Tiira delete dialog");
+            tiiraNoteDialog.open();
+            XemaSettings.firstTiiraDelete = false
+        }
+    }
+
+    Dialog {
+        id: tiiraNoteDialog
+        signal oksignal()
+
+        title: Label {
+            height: 30
+            anchors.centerIn: parent
+            width: parent.width
+            color: "white"
+            font.pixelSize: 36
+            text: qsTr("Xema")
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        content:Item {
+            height: 150
+            width: parent.width
+            anchors.topMargin: 10
+            Label {
+                width: parent.width
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "white"
+                text: qsTr("Note that record is deleted only from Xema, you need to delete the record from Tiira with web browser.")
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                font.pixelSize: 20
+            }
+        }
+
+        buttons: Button {
+                id: tiiraDialogOk
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: 5
+                width: parent.width / 2
+                text: qsTr("Ok")
+                onClicked: {
+                    tiiraNoteDialog.oksignal()
+                    tiiraNoteDialog.close()
+                }
+        }
+        onClickedOutside: {tiiraNoteDialog.oksignal(); tiiraNoteDialog.close()}
     }
 
     Timer {

@@ -7,8 +7,13 @@
 class Settings : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool firstTiiraEdit READ firstTiiraEdit WRITE setFirstTiiraEdit)
+    Q_PROPERTY(bool firstTiiraDelete READ firstTiiraDelete WRITE setFirstTiiraDelete)
+    Q_PROPERTY(bool useTiira READ useTiira WRITE setUseTiira)
+    Q_PROPERTY(bool tiiraAutosave READ tiiraAutosave WRITE setTiiraAutosave)
 public:
     explicit Settings(QObject *parent = 0);
+
 
 public slots:
     bool firstStart();
@@ -63,6 +68,12 @@ public slots:
     void setTiiraSavername(const QString &user);
 
     void resetSettings();
+
+    bool firstTiiraEdit() const;
+    bool firstTiiraDelete() const;
+
+    void setFirstTiiraEdit(bool value);
+    void setFirstTiiraDelete(bool value);
 
 signals:
 

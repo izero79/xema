@@ -362,3 +362,29 @@ QString Settings::tiiraSavername()
     qDebug() << Q_FUNC_INFO << value;
     return value;
 }
+
+bool Settings::firstTiiraEdit() const {
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("firstTiiraEdit", true).toBool();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+bool Settings::firstTiiraDelete() const {
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("firstTiiraDelete", true).toBool();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}
+
+void Settings::setFirstTiiraEdit(bool value) {
+    QSettings settings("TeSi", "xema");
+    settings.setValue("firstTiiraEdit", value);
+    qDebug() << Q_FUNC_INFO << value;
+}
+
+void Settings::setFirstTiiraDelete(bool value) {
+    QSettings settings("TeSi", "xema");
+    settings.setValue("firstTiiraDelete", value);
+    qDebug() << Q_FUNC_INFO << value;
+}

@@ -153,6 +153,14 @@
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
+    <message>
+        <source>Xema</source>
+        <translation>Xema</translation>
+    </message>
+    <message>
+        <source>Note that record is deleted only from Xema, you need to delete the record from Tiira with web browser.</source>
+        <translation>Huomioi että havainto on poistettu vain Xemasta. Poista havainto Tiirasta www-selaimella.</translation>
+    </message>
 </context>
 <context>
     <name>ListPage</name>
@@ -497,6 +505,14 @@
         <source>Tiira csv id: %1</source>
         <translation>Tiira csv id: %1</translation>
     </message>
+    <message>
+        <source>Xema</source>
+        <translation>Xema</translation>
+    </message>
+    <message>
+        <source>Updated record is send to Tiira as new record. Remove original record from Tiira with web browser.</source>
+        <translation>Päivitetty havainto on lähetetty Tiiraan uutena havaintona. Poista alkuperäinen havainto Tiirasta www-selaimella.</translation>
+    </message>
 </context>
 <context>
     <name>PersonEditPage</name>
@@ -734,6 +750,18 @@
     <message>
         <source>Select</source>
         <translation>Valitse</translation>
+    </message>
+    <message>
+        <source>Xema</source>
+        <translation>Xema</translation>
+    </message>
+    <message>
+        <source>Note that Xema currently supports just sending of records to Tiira. Locations, species and observers are not synced with Tiira.</source>
+        <translation>Huomaa että Xema tukee tällä hetkellä vain havaintojen lähettämistä Tiiraan. Lajeja, paikkoja ja havainnoijia ei synkronoida Tiiran kanssa.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
