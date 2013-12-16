@@ -864,6 +864,18 @@ Page {
                             checkCredientalsAndLogin()
                         }
                     }
+                    CheckBox {
+                        id: tiiraDebug
+                        text: qsTr("Debug mode")
+                        anchors.left: parent.left
+                        anchors.top: tiiraServerPassword.bottom
+                        anchors.topMargin: 32
+                        anchors.right: parent.right
+                        checked: XemaSettings.tiiraDebugMode
+                        onCheckedChanged: {
+                            XemaSettings.tiiraDebugMode = checked
+                        }
+                    }
                 }
             }
 

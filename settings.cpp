@@ -388,3 +388,18 @@ void Settings::setFirstTiiraDelete(bool value) {
     settings.setValue("firstTiiraDelete", value);
     qDebug() << Q_FUNC_INFO << value;
 }
+
+void Settings::setTiiraDebugMode(bool debug)
+{
+    qDebug() << Q_FUNC_INFO << debug;
+    QSettings settings("TeSi", "xema");
+    settings.setValue("tiiraDebugMode", debug);
+}
+
+bool Settings::tiiraDebugMode()
+{
+    QSettings settings("TeSi", "xema");
+    bool value = settings.value("tiiraDebugMode", "").toBool();
+    qDebug() << Q_FUNC_INFO << value;
+    return value;
+}

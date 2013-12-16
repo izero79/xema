@@ -763,6 +763,10 @@
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
+    <message>
+        <source>Debug mode</source>
+        <translation>Debug tila</translation>
+    </message>
 </context>
 <context>
     <name>StatusEditPage</name>

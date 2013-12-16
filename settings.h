@@ -11,6 +11,7 @@ class Settings : public QObject
     Q_PROPERTY(bool firstTiiraDelete READ firstTiiraDelete WRITE setFirstTiiraDelete)
     Q_PROPERTY(bool useTiira READ useTiira WRITE setUseTiira)
     Q_PROPERTY(bool tiiraAutosave READ tiiraAutosave WRITE setTiiraAutosave)
+    Q_PROPERTY(bool tiiraDebugMode READ tiiraDebugMode WRITE setTiiraDebugMode)
 public:
     explicit Settings(QObject *parent = 0);
 
@@ -41,6 +42,7 @@ public slots:
     static QString tiiraServerPassword();
     bool tiiraLoginOk();
     static QString tiiraSavername();
+    static bool tiiraDebugMode();
 
     void setFirstStart(bool first);
     void setSystematicSorting(bool systematic);
@@ -66,6 +68,7 @@ public slots:
     void setTiiraServerPassword(const QString &password);
     void setTiiraLoginOk(bool ok);
     void setTiiraSavername(const QString &user);
+    void setTiiraDebugMode(bool debug);
 
     void resetSettings();
 
