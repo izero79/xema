@@ -232,7 +232,7 @@ bool Settings::useTiira()
     QSettings settings("TeSi", "xema");
     bool value = settings.value("useTiira", false).toBool();
     qDebug() << Q_FUNC_INFO << value;
-    return false;//value;
+    return value;
 }
 
 QString Settings::tiiraUsername()
@@ -256,7 +256,7 @@ bool Settings::tiiraAutosave()
     QSettings settings("TeSi", "xema");
     bool value = settings.value("tiiraAutosave", false).toBool();
     qDebug() << Q_FUNC_INFO << value;
-    return false;//value;
+    return value;
 }
 
 int Settings::tiiraServer()
@@ -288,7 +288,7 @@ bool Settings::tiiraLoginOk()
     QSettings settings("TeSi", "xema");
     bool value = settings.value("tiiraLoginOk", false).toBool();
     qDebug() << Q_FUNC_INFO << value;
-    return false;//value;
+    return value;
 }
 
 void Settings::setUseTiira(bool useTiira)
@@ -399,7 +399,7 @@ void Settings::setTiiraDebugMode(bool debug)
 bool Settings::tiiraDebugMode()
 {
     QSettings settings("TeSi", "xema");
-    bool value = settings.value("tiiraDebugMode", "").toBool();
+    bool value = settings.value("tiiraDebugMode", false).toBool();
     qDebug() << Q_FUNC_INFO << value;
     return value;
 }

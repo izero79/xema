@@ -58,6 +58,7 @@ Page {
         directionTf.text = ""
         distanceTf.text = ""
         tiiraExported.text = ""
+        tiiraExported.checked = false
         noTiiraExport.checked = false
         csvId = ""
 
@@ -148,7 +149,7 @@ Page {
 
     function exportedToTiira() {
         console.log("csvId: " + csvId)
-        return csvId != ""
+        return tiiraExported.checked
     }
 
     function readAllData()
@@ -299,11 +300,11 @@ Page {
         allData += delimiter
         allData += "false"
         allData += delimiter
-        allData += "false"
+        allData += tiiraExported.checked
         allData += delimiter
         allData += noTiiraExport.checked
         allData += delimiter
-        allData += ""
+        allData += csvId
         allData += delimiter
 
         console.log("allData: " + allData)
@@ -620,6 +621,7 @@ Page {
         currentField++
         if (fields[currentField] == "true" || fields[currentField] == "X") {
             tiiraExported.text = qsTr("Exported to Tiira")
+            tiiraExported.checked = true
         }
         currentField++
         noTiiraExport.checked = fields[currentField]
@@ -669,6 +671,7 @@ Page {
             atlasTf.text = ""
             hideChkBox.checked = false
             tiiraExported.text = ""
+            tiiraExported.checked = false
             noTiiraExport.checked = false
             csvId = ""
 
@@ -720,11 +723,11 @@ Page {
 
     function showTiiraEditDialog()
     {
-        if(XemaSettings.firstTiiraEdit && XemaSettings.tiiraAutosave) {
+        //if(XemaSettings.firstTiiraEdit && XemaSettings.tiiraAutosave) {
             console.log("Show Tiira edit dialog");
             tiiraNoteDialog.open();
-            XemaSettings.firstTiiraEdit = false
-        }
+        //    XemaSettings.firstTiiraEdit = false
+        //}
     }
 
     function dateSelected(object, d, m, y) {
@@ -830,7 +833,7 @@ Page {
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 color: "white"
-                text: qsTr("Updated record is send to Tiira as new record. Remove original record from Tiira with web browser.")
+                text: qsTr("Updating record to Tiira is not currently supported. Please, edit the record from Tiira with web browser.")
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 font.pixelSize: 20
             }
@@ -2029,6 +2032,7 @@ Page {
                     }
                     Label {
                         id: tiiraExported
+                        property bool checked: false
                         anchors.top: noTiiraExport.bottom
                         anchors.topMargin: 8
                         anchors.left: parent.left

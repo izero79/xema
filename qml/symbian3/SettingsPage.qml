@@ -628,7 +628,6 @@ Page {
 
         Item {
             id: tiiraItems
-            visible: false
             height: childrenRect.height
             anchors.left: parent.left
             anchors.top: row4.bottom

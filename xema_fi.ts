@@ -510,8 +510,8 @@
         <translation>Xema</translation>
     </message>
     <message>
-        <source>Updated record is send to Tiira as new record. Remove original record from Tiira with web browser.</source>
-        <translation>Päivitetty havainto on lähetetty Tiiraan uutena havaintona. Poista alkuperäinen havainto Tiirasta www-selaimella.</translation>
+        <source>Updating record to Tiira is not currently supported. Please, edit the record from Tiira with web browser.</source>
+        <translation>Havainnon päivitys Tiiraan ei ole tällä hetkellä tuettu. Muokkaa havaintoa Tiirassa www-selaimella.</translation>
     </message>
 </context>
 <context>

@@ -116,7 +116,7 @@ Page {
                     historyToolBarLayout.enabled = true
                     contextMenu.close()
                 }
-                visible: window.useTiira && window.tiiraLoginOk
+                visible: window.useTiira && window.tiiraLoginOk && !contextMenu.exportedToTiira
             }
             MenuItem {
                 id: removeItem

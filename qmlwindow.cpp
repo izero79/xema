@@ -604,7 +604,9 @@ void QMLWindow::tiiraLogin() {
         createTiiraExporter();
     }
 
-    mTiiraExporter->login();
+    if (mSettings->tiiraUsername().isEmpty() == false) {
+        mTiiraExporter->login();
+    }
     setProcessing(false);
 }
 
