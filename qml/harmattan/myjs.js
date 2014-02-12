@@ -554,14 +554,14 @@ function readDelegateDatas()
     {
         var delegateData = "";
         delegateData += sprite[i].delegateData()
-        if (delegateData != "-1")
+        if (delegateData != "-1" && delegateData != "-2")
         {
             delegateData += delimiter
             allData += delegateData
         }
         else
         {
-            allData = "-1"
+            allData = delegateData
             break;
         }
     }

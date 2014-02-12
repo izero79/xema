@@ -282,7 +282,11 @@ Page {
         var delegateData = MyScript.readDelegateDatas()
         if (delegateData == "-1")
         {
-            missingData[missingData.length] = qsTr("Count")
+            missingData[missingData.length] = qsTr("Amount")
+        }
+        else if (delegateData == "-2")
+        {
+            missingData[missingData.length] = qsTr("Amount not even")
         }
         else
         {

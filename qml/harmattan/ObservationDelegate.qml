@@ -27,6 +27,13 @@ Item {
             return "-1"
         }
 
+        if (findSex(sexTf.text) == "pariutuneet") {
+            var count = parseInt(countTf.text);
+            if (count % 2) {
+                return "-2"
+            }
+        }
+
         allData += countTf.text + delimiter
         allData += startTimeTf.text + delimiter
         if (startTimeTf.text != endTimeTf.text) {

@@ -366,10 +366,6 @@
         <translation>Paikka</translation>
     </message>
     <message>
-        <source>Count</source>
-        <translation>Määrä</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
@@ -512,6 +508,14 @@
     <message>
         <source>Updating record to Tiira is not currently supported. Please, edit the record from Tiira with web browser.</source>
         <translation>Havainnon päivitys Tiiraan ei ole tällä hetkellä tuettu. Muokkaa havaintoa Tiirassa www-selaimella.</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Määrä</translation>
+    </message>
+    <message>
+        <source>Amount not even</source>
+        <translation>Määrä ei parillinen</translation>
     </message>
 </context>
 <context>
