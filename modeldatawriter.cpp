@@ -2486,7 +2486,10 @@ QMap<int, int> ModelDataWriter::getHistorySectionNumbers(const QString &headerLi
                 break;
             }
             case XemaEnums::TIIRA_ROWID: {
-                int index = headerSections.indexOf("havainto id");
+                int index = headerSections.indexOf("rivi-id");
+                if (index < 0) {
+                    index = headerSections.indexOf("havainto id");
+                }
                 if (index < 0) {
                     index = 100;
                 }
